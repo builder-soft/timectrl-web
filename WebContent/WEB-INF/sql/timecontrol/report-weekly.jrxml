@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report-weekly" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="168d9298-3a82-43d1-ad71-e3dffc6f2e98">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="UserId" class="java.lang.Integer"/>
+	<parameter name="StartDate" class="java.util.Date"/>
+	<parameter name="EndDate" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[call pListTurnos($P{UserId}, $P{StartDate}, $P{EndDate});]]>
+	</queryString>
+	<field name="cDate" class="java.lang.String"/>
+	<field name="cActivity" class="java.lang.String"/>
+	<field name="cLunch" class="java.lang.String"/>
+	<field name="cInTime" class="java.lang.String"/>
+	<field name="cInMark" class="java.lang.String"/>
+	<field name="cInExtra" class="java.lang.String"/>
+	<field name="cOutTime" class="java.lang.String"/>
+	<field name="cOutMark" class="java.lang.String"/>
+	<field name="cOutExtra" class="java.lang.String"/>
+	<field name="CHECKTIME" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="JournalString" class="java.lang.String"/>
+	<field name="cOutExtraAsMins" class="java.lang.Integer"/>
+	<field name="cInExtraAsMins" class="java.lang.Integer"/>
+	<variable name="cOutExtraAsMins_1" class="java.lang.Integer" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$F{cOutExtraAsMins}]]></variableExpression>
+	</variable>
+	<variable name="cOutExtraAsMins_2" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{cOutExtraAsMins}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="189" y="14" width="197" height="27" forecolor="#990000" uuid="0e7fc151-5a5a-4521-8e1b-748edf8c7761"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Informe de Asistencia]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="10" width="131" height="31" uuid="3398b4ba-d64d-48ca-80b5-aa9fb48777d1"/>
+				<imageExpression><![CDATA["D:\\workspace\\timectrl-web\\WebContent\\WEB-INF\\sql\\timecontrol\\logo.gif"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="545" y="0" width="10" height="20" uuid="4b328ead-e4f2-4198-93ce-9d7fecc2fb76"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="86" splitType="Stretch">
+			<textField>
+				<reportElement x="310" y="41" width="100" height="20" uuid="2c4c947a-f7b5-401f-b36f-32fa7f39c536"/>
+				<textFieldExpression><![CDATA[$F{JournalString}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="1" width="49" height="20" uuid="3d578479-66fa-49f9-aeb1-8622acc40098"/>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="58" height="20" uuid="d857193f-ac98-47d8-a0e7-9e9f7c505c4b"/>
+				<text><![CDATA[cDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="218" y="0" width="60" height="20" uuid="ceb84101-081d-4d2a-92b2-08e147a8e109"/>
+				<text><![CDATA[cInMark]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="0" width="60" height="20" uuid="cee956c3-c545-433f-a1ef-2e870d25c954"/>
+				<text><![CDATA[cOutMark]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="63" y="2" width="50" height="20" uuid="b93b6871-8e2d-4b2b-a15c-e02014637235"/>
+				<text><![CDATA[cActivity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="117" y="2" width="49" height="20" uuid="1665025f-9272-4a04-b358-312895a1cbec"/>
+				<text><![CDATA[cLunch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="0" width="52" height="20" uuid="8cf9fd42-dfdf-497f-99c0-c983e559f205"/>
+				<text><![CDATA[cInTime]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="2" width="43" height="20" uuid="094e50c9-b076-4a56-8d69-430c957928b3"/>
+				<text><![CDATA[cInExtra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="328" y="2" width="47" height="20" uuid="41d2efa6-4c57-40bf-94b1-88149e22db7e"/>
+				<text><![CDATA[cOutTime]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="2" width="76" height="20" uuid="0bd37df8-b928-49e1-ae7d-4f56a0288b58"/>
+				<text><![CDATA[cOutExtra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="511" y="0" width="44" height="20" uuid="31549493-34f1-4d38-be20-e9a229571550"/>
+				<text><![CDATA[cOutExtraAsMins]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="58" height="20" uuid="b6fe493e-e896-4480-97ad-031fd0db5396"/>
+				<textFieldExpression><![CDATA[$F{cDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="0" width="60" height="20" uuid="057d6e0d-4ce0-4aeb-a10b-1309df8ab8a1"/>
+				<textFieldExpression><![CDATA[$F{cInMark}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="63" y="2" width="50" height="20" uuid="cbaf6fe6-1053-4591-9c87-561d6de17678"/>
+				<textFieldExpression><![CDATA[$F{cActivity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="117" y="2" width="49" height="20" uuid="118ba598-29c7-442b-8e10-f69edbb4c6bd"/>
+				<textFieldExpression><![CDATA[$F{cLunch}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="2" width="43" height="20" uuid="842befd8-98c8-4e2e-8038-8e55746a0cc0"/>
+				<textFieldExpression><![CDATA[$F{cInExtra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="328" y="2" width="47" height="20" uuid="adac8ce7-da77-4667-8ee8-4aa92e5d916b"/>
+				<textFieldExpression><![CDATA[$F{cOutTime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="375" y="1" width="60" height="20" uuid="ffe5fc7b-2ef0-47d1-84e7-f00b4292fb1d"/>
+				<textFieldExpression><![CDATA[$F{cOutMark}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="3" width="76" height="20" uuid="9d91a81d-7c99-4e50-a652-47c4360cd5fd"/>
+				<textFieldExpression><![CDATA[$F{cOutExtra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="166" y="1" width="48" height="19" uuid="ae97c1d8-03c6-4db5-8834-a7a095822024"/>
+				<textFieldExpression><![CDATA[$F{cInTime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="513" y="2" width="100" height="20" uuid="5c51d27f-80dc-4ea6-9a72-14ba5ea3e593"/>
+				<textFieldExpression><![CDATA[$F{cOutExtraAsMins}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="27" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="513" y="0" width="42" height="20" uuid="29cca02f-7343-4098-92a1-cfe4fd4d70b8"/>
+				<textFieldExpression><![CDATA[$V{cOutExtraAsMins_1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="166" y="2" width="73" height="20" uuid="931395d0-531a-4def-a160-26367c7a02d1"/>
+				<textFieldExpression><![CDATA[$V{cOutExtraAsMins_2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

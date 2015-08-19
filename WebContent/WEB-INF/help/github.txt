@@ -1,0 +1,4 @@
+Ir a Help -> Install new Software.
+Utilizar la siguente URL
+http://download.eclipse.org/egit/updates
+

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Inasistencas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d09c827a-6234-41f7-805d-5a2e6ed433a4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Personas" uuid="db5c7e14-3690-4608-b1e4-5f8a6976813c">
+		<parameter name="absenceDate" class="java.util.Date"/>
+		<queryString>
+			<![CDATA[call pAbsence($P{absenceDate});]]>
+		</queryString>
+		<field name="UserId" class="java.lang.Long"/>
+		<field name="SSN" class="java.lang.String"/>
+		<field name="UserName" class="java.lang.String"/>
+		<field name="cArea" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="absenceDate" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[select 1]]>
+	</queryString>
+	<field name="1" class="java.lang.Long"/>
+	<detail>
+		<band height="148" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="0" width="555" height="148" uuid="412b0eb0-0de8-4aef-87d2-a56405d39f7d"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Personas" uuid="dae7d56c-4f44-4c01-8dce-17a09d1d0a4a">
+						<datasetParameter name="absenceDate">
+							<datasetParameterExpression><![CDATA[$P{absenceDate}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="0f89992c-9c71-4dff-944d-c35d1012f8a3">
+						<jr:columnHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="90" height="20" forecolor="#FFFFFF" backcolor="#990099" uuid="5a49802b-be9c-4e3f-856a-88a8cc80461b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+									<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[RUT]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="8b4560d7-b257-4e03-9e6b-68d650cfa8a5"/>
+								<textFieldExpression><![CDATA[$F{SSN}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="220" uuid="3646d04a-36dc-4db6-98b1-ac9b2dec3fb4">
+						<jr:columnHeader height="20">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="220" height="20" forecolor="#FFFFFF" backcolor="#990099" uuid="ce2bc131-f91c-430b-a702-ff917907f9a8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+									<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Nombre]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="220" height="20" uuid="8f5dd48d-697b-4c14-b401-53b743123c81"/>
+								<textFieldExpression><![CDATA[$F{UserName}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="200" uuid="52891eea-ba6e-4b11-99ca-c19e8cf6cb85">
+						<jr:columnHeader height="20">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="200" height="20" forecolor="#FFFFFF" backcolor="#990099" uuid="64e799ba-5758-441c-9cfa-f53d5be246d0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+									<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<text><![CDATA[Gerencia]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="200" height="20" uuid="27dc6630-4536-472f-b59b-c6ec2e783ec9"/>
+								<textFieldExpression><![CDATA[$F{cArea}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

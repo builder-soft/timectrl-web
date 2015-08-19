@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="weekly-weeks-detail" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2b028bad-590a-41f8-9079-209c8918d2e9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="EmployeeId" class="java.lang.Long"/>
+	<parameter name="StartDate" class="java.util.Date"/>
+	<parameter name="EndDate" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[call pListAttendance3($P{EmployeeId},$P{StartDate} , $P{EndDate} )]]>
+	</queryString>
+	<field name="cId" class="java.lang.Long"/>
+	<field name="cDate" class="java.sql.Date"/>
+	<field name="cStartTime" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cStartMark" class="java.lang.String"/>
+	<field name="cStartDiffI" class="java.lang.String"/>
+	<field name="cStartDiffM" class="java.lang.String"/>
+	<field name="cLunchMark" class="java.lang.String"/>
+	<field name="cReturnMark" class="java.lang.String"/>
+	<field name="cEndTime" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cEndMark" class="java.lang.String"/>
+	<field name="cEndDiffI" class="java.lang.String"/>
+	<field name="cEndDiffM" class="java.lang.String"/>
+	<field name="cComment" class="java.lang.String"/>
+	<field name="cMachine" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cDayOfWeek" class="java.lang.String"/>
+	<field name="cRUT" class="java.lang.String">
+		<fieldDescription><![CDATA[Rut]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="6"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="2" width="52" height="20" uuid="0babe284-89bf-41d3-92d9-a54d12133484"/>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="4" width="41" height="36" uuid="ef0c302f-ce60-4c7c-b57e-70bac3fd0b6e"/>
+				<text><![CDATA[Hora
+Ingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="155" y="4" width="42" height="36" uuid="e3848143-9005-48a6-aa94-4b6783cbef1a"/>
+				<text><![CDATA[Hora
+Llegada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="197" y="4" width="48" height="36" uuid="90899c1a-25f8-4006-910f-ac2bd2895e6f"/>
+				<text><![CDATA[Minutos
+Diferencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="245" y="4" width="45" height="36" uuid="1c30e9d2-a17a-4cb3-b4af-6cb3db5e29b1"/>
+				<text><![CDATA[Hora
+Salida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="4" width="39" height="36" uuid="0fc86bb4-6c28-4e84-b7ad-884b8a91ef54"/>
+				<text><![CDATA[Marca
+Salida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="329" y="4" width="51" height="36" uuid="3657f9d3-cc7c-426a-b174-35f35f18ad95"/>
+				<text><![CDATA[Minutos
+Diferencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="4" width="49" height="36" uuid="d4c2c0d5-9508-4e32-81b2-88cdef14ddf0"/>
+				<text><![CDATA[Minutos
+Diferencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="2" width="100" height="20" uuid="671763f5-aba6-4629-8db7-0e68fc73e6bc"/>
+				<text><![CDATA[Comentario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="2" width="59" height="20" uuid="9fd4fbfb-f673-404c-9acb-1d2cd8de9d0a"/>
+				<text><![CDATA[Día]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="3" y="0" width="52" height="20" uuid="6120ea0d-97bb-47c7-8826-e8e3bb69c73d"/>
+				<textFieldExpression><![CDATA[$F{cDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="2" width="38" height="20" uuid="932e0234-4b72-4a3c-bf8e-206848ce8bba"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{cStartDiffI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="245" y="2" width="45" height="20" uuid="9cce6d9a-aa2b-4757-882d-cdcc0dbcc9ad"/>
+				<textFieldExpression><![CDATA[$F{cEndTime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="2" width="41" height="20" uuid="1e121c1f-7c72-4444-a16a-2e759629244b"/>
+				<textFieldExpression><![CDATA[$F{cStartTime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="2" width="42" height="20" uuid="c6b8fcb1-f761-4c2e-ae6d-1073242213e1"/>
+				<textFieldExpression><![CDATA[$F{cStartMark}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="2" width="39" height="20" uuid="739bad81-2ea1-4c8b-814d-4a089ef46854"/>
+				<textFieldExpression><![CDATA[$F{cEndMark}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="3" width="39" height="20" uuid="3ee83ef8-a404-45e1-a6b7-6a8bac988400"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{cEndDiffI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="3" width="49" height="20" uuid="90af1d93-3e5f-4be2-b1a3-58441ddd5714"/>
+				<textFieldExpression><![CDATA[$F{cEndDiffM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="429" y="3" width="126" height="20" uuid="46685db5-2bcf-487d-b126-23353c18355b"/>
+				<textFieldExpression><![CDATA[$F{cComment}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="55" y="3" width="59" height="20" uuid="823ff0d2-1a7b-4ace-b11a-8036cbf45d64"/>
+				<textFieldExpression><![CDATA[$F{cDayOfWeek}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
+
+

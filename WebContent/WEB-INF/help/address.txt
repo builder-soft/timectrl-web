@@ -1,0 +1,7 @@
+Webservice
+http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=WebServicesAxis2
+
+UTF8 en tomcat
+http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=tomcatUTF8
+http://www.programacionenjava.com/blog/2008/04/01/j2ee/configuracion-del-juego-de-caracteres-charset-en-una-aplicacion-web-en-tomcat/
+ 

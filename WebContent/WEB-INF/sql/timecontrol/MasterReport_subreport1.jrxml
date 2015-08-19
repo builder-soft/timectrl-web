@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MasterReport_subreport1" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a72de04f-b90b-4671-9f6a-29d5fe4826f9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="UserId" class="java.lang.Integer"/>
+	<parameter name="StartDate" class="java.util.Date"/>
+	<parameter name="EndDate" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[call pListAttendance3($P{UserId}, $P{StartDate}, $P{EndDate} )]]>
+	</queryString>
+	<field name="cId" class="java.lang.Long"/>
+	<field name="cDate" class="java.sql.Date"/>
+	<field name="cStartTime" class="java.lang.String"/>
+	<field name="cStartMark" class="java.lang.String"/>
+	<field name="cStartDiffI" class="java.lang.Integer"/>
+	<field name="cStartDiffM" class="java.lang.String"/>
+	<field name="cLunchMark" class="java.lang.String"/>
+	<field name="cReturnMark" class="java.lang.String"/>
+	<field name="cEndTime" class="java.lang.String"/>
+	<field name="cEndMark" class="java.lang.String"/>
+	<field name="cEndDiffI" class="java.lang.Integer"/>
+	<field name="cEndDiffM" class="java.lang.String"/>
+	<field name="cComment" class="java.lang.String"/>
+	<field name="cMachine" class="java.lang.Long"/>
+	<field name="cDayOfWeek" class="java.lang.String"/>
+	<field name="cRUT" class="java.lang.String">
+		<fieldDescription><![CDATA[Rut]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="0" width="100" height="20" uuid="20919588-0753-4ec2-99c2-db4615b317e1"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Marcas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="18" y="0" width="100" height="20" uuid="fc6c0c06-d79d-4f9f-a69a-be7f2755bc3a"/>
+				<textFieldExpression><![CDATA[$F{cDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="118" y="0" width="100" height="20" uuid="775c9c2b-229e-4ab0-b9bc-dce699e5f815"/>
+				<textFieldExpression><![CDATA[$F{cStartTime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="0" width="100" height="20" uuid="fe5e7927-38bb-4a5c-bec1-02f8c30c0207"/>
+				<textFieldExpression><![CDATA[$F{cStartMark}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="0" width="100" height="20" uuid="e71e5550-1224-40fd-bcdb-3a12bb6fe868"/>
+				<textFieldExpression><![CDATA[$F{cStartDiffM}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="32" splitType="Stretch"/>
+	</summary>
+</jasperReport>
