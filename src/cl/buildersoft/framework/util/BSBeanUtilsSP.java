@@ -10,7 +10,6 @@ import cl.buildersoft.framework.beans.BSBean;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSDataBaseException;
-import cl.buildersoft.framework.exception.BSProgrammerException;
 
 public class BSBeanUtilsSP extends BSBeanUtils {
 	public List<? extends BSBean> list(Connection conn, BSBean bean, String spName) {
@@ -43,9 +42,11 @@ public class BSBeanUtilsSP extends BSBeanUtils {
 				out.add((BSBean) object);
 			}
 		} catch (SQLException e) {
-			throw new BSDataBaseException("", e.getMessage());
-		} catch (Exception e) {
-			throw new BSProgrammerException("", e.getMessage());
+			throw new BSDataBaseException(e);
+		} catch (InstantiationException e) {
+			throw new BSDataBaseException(e);
+		} catch (IllegalAccessException e) {
+			throw new BSDataBaseException(e);
 		}
 
 		return out;
@@ -71,9 +72,11 @@ public class BSBeanUtilsSP extends BSBeanUtils {
 				super.search(conn, out);
 			}
 		} catch (SQLException e) {
-			throw new BSDataBaseException("", e.getMessage());
-		} catch (Exception e) {
-			throw new BSProgrammerException("", e.getMessage());
+			throw new BSDataBaseException(e);
+		} catch (InstantiationException e) {
+			throw new BSDataBaseException(e);
+		} catch (IllegalAccessException e) {
+			throw new BSDataBaseException(e);
 		}
 
 		return out;

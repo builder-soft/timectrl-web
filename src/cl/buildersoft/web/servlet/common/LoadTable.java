@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cl.buildersoft.framework.beans.BSTableConfig;
 import cl.buildersoft.framework.database.BSmySQL;
-import cl.buildersoft.framework.util.BSPaging;
+import cl.buildersoft.framework.util.crud.BSPaging;
+import cl.buildersoft.framework.util.crud.BSTableConfig;
  
  
 

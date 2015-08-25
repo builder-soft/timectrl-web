@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cl.buildersoft.framework.beans.BSField;
-import cl.buildersoft.framework.beans.BSTableConfig;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSWeb;
+import cl.buildersoft.framework.util.crud.BSField;
+import cl.buildersoft.framework.util.crud.BSTableConfig;
 
 @WebServlet("/servlet/common/UpdateRecord")
 public class UpdateRecord extends AbstractServletUtil {

@@ -1,11 +1,9 @@
+<%@page import="cl.buildersoft.framework.dataType.BSDataTypeFactory"%>
+<%@page import="cl.buildersoft.framework.dataType.BSDataTypeEnum"%>
+<%@page import="cl.buildersoft.framework.dataType.BSDataType"%>
 <%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
-<%@page import="cl.buildersoft.framework.beans.BSCss"%>
-<%@page import="cl.buildersoft.framework.beans.BSScript"%>
-<%@page import="cl.buildersoft.framework.beans.BSHeadConfig"%>
-<%@page import="cl.buildersoft.framework.util.BSWeb"%>
-<%@page import="cl.buildersoft.framework.type.BSFieldType"%>
-<%@page import="cl.buildersoft.framework.beans.BSField"%>
-<%@page import="cl.buildersoft.framework.beans.BSTableConfig"%>
+<%@page import="cl.buildersoft.framework.util.crud.BSField"%> 
+<%@page import="cl.buildersoft.framework.util.crud.BSTableConfig"%>
 <%@page import="java.sql.ResultSet"%>
 <%
 	BSTableConfig table = (BSTableConfig) session.getAttribute("BSTable");
@@ -15,6 +13,7 @@ BSField[] fields = table.getFields();
 %>
 <%@ include file="/WEB-INF/jsp/common/header.jsp"%>
 <%
+	/** <code>
 	BSHeadConfig head = (BSHeadConfig) session.getAttribute("BSHead");
 	if (head != null) {
 		BSScript script = head.getScript();
@@ -28,13 +27,13 @@ BSField[] fields = table.getFields();
 	+ ".css'/>");
 		}
 	}
+</code>	*/
 %>
 <script type="text/javascript">
 function onLoadPage(){
-	<%
-	String fieldName=null;
+	<%String fieldName=null;
 	String html = "";
-	BSFieldType type=null;
+	BSDataType type=null;
 	String typeHtml = null;
 	Boolean showThis = null;
 	
@@ -44,23 +43,18 @@ function onLoadPage(){
 		typeHtml = field.getTypeHtml();
 		showThis = field.isReadonly();
 		
-		if(type.equals(BSFieldType.Date)){
-			%>
+		if(type.equals(BSDataTypeEnum.DATE)){%>
 			$("#<%=fieldName%>").datepicker({
 					dateFormat : fixDateFormat(dateFormat)
 				});
-			<%
-		}
-	}
-	%>
+			<%}
+	}%>
 	
 	}
 
 	function sendForm() {
 		var msg = null;
-<%
-	
-	for (BSField field : fields) {
+<%for (BSField field : fields) {
 		type = field.getType();
 		fieldName = field.getName();
 		typeHtml = field.getTypeHtml();
@@ -68,11 +62,11 @@ function onLoadPage(){
 		html = "";
 
 		if(!showThis){
-			if(type.equals(BSFieldType.Double) || type.equals(BSFieldType.Integer)|| type.equals(BSFieldType.Date)|| "email".equalsIgnoreCase(typeHtml)) {
-				if(type.equals(BSFieldType.Double)){
+			if(type.equals(BSDataTypeEnum.DOUBLE) || type.equals(BSDataTypeEnum.INTEGER)|| type.equals(BSDataTypeEnum.DATE)|| "email".equalsIgnoreCase(typeHtml)) {
+				if(type.equals(BSDataTypeEnum.DOUBLE)){
 					html = "var " + fieldName + " = formated2double(document.getElementById('"+fieldName+"').value);\n";
 				}
-				if(type.equals(BSFieldType.Integer)){
+				if(type.equals(BSDataTypeEnum.INTEGER)){
 					html = "var " + fieldName + " = formated2integer(document.getElementById('"+fieldName+"').value);\n";
 				}
 				/**
@@ -98,15 +92,14 @@ function onLoadPage(){
 	if (msg != null) {
 			alert(msg);
 		} else {
-<%
-			html = "";
+<%html = "";
 			for (BSField field : fields) {
 					type = field.getType();
 					fieldName = field.getName();
 					showThis = field.isReadonly();
 					
 					if(!showThis) {
-						if (type.equals(BSFieldType.Double) || type.equals(BSFieldType.Integer)) {
+						if (type.equals(BSDataTypeEnum.DOUBLE) || type.equals(BSDataTypeEnum.INTEGER)) {
 							html += "document.getElementById('" + fieldName + "').value = " + fieldName + ";\n";
 						}
 					}%>
@@ -161,7 +154,7 @@ function onLoadPage(){
 
 	private String writeHTMLField(BSField field, HttpServletRequest request) {
 		String out = "";
-		BSFieldType type = field.getType();
+		BSDataType type = field.getType();
 		Object value = field.getValue();
 		Integer maxlength = 0;
 		String name = field.getName();
@@ -173,10 +166,12 @@ function onLoadPage(){
 		Boolean isReadOnly = isPk ? Boolean.TRUE : field.isReadonly();
 		String validationOnBlur = field.getValidationOnBlur() != null ? field.getValidationOnBlur() : "";
 
+		BSDataTypeFactory dtf = new BSDataTypeFactory();
+		
 		if (isFK(field)) {
 			out += getFKSelect(field);
 		} else {
-			if (type.equals(BSFieldType.Boolean)) {
+			if (type.getDataTypeEnum().equals(BSDataTypeEnum.BOOLEAN)) {
 				out += "<SELECT name='" + name + "' ";
 				out += isReadOnly ? " DISABLED " : "";
 				out += ">";
@@ -186,36 +181,36 @@ function onLoadPage(){
 
 				out += "</SELECT>";
 			} else {
-				if (type.equals(BSFieldType.String)) {
+				if (type.getDataTypeEnum().equals(BSDataTypeEnum.STRING)) {
 					value = value == null ? "" : value;
 					maxlength = field.getLength();
 					size = maxlength;
 					if (size > 75) {
 						size = 75;
 					}
-				} else if (type.equals(BSFieldType.Date)) {
+				} else if (type.getDataTypeEnum().equals(BSDataTypeEnum.DATE)) {
 					maxlength = 10;
 					format = BSDateTimeUtil.getFormatDate(request);
 					value = BSDateTimeUtil.date2String(value, format);
 					size = maxlength;
 					afterInput = "(formato: " + format + ")";
-type = BSFieldType.Text;
-				} else if (type.equals(BSFieldType.Timestamp)) {
+					type =  dtf.create(  BSDataTypeEnum.TEXT);
+				} else if (type.getDataTypeEnum().equals(BSDataTypeEnum.TIMESTAMP)) {
 					maxlength = 16;
 					format = BSDateTimeUtil.getFormatDatetime(request);
 					value = BSDateTimeUtil.date2String(value, format);
 					size = maxlength;
 					afterInput = "(formato: " + format + ")";
-type = BSFieldType.Text;
-				} else if (type.equals(BSFieldType.Double)) {
+					type =  dtf.create(  BSDataTypeEnum.TIMESTAMP);
+				} else if (type.getDataTypeEnum().equals(BSDataTypeEnum.DOUBLE)) {
 					maxlength = 15;
 					value = BSWeb.formatDouble(request, (Double) value);
 					size = maxlength;
-				} else if (type.equals(BSFieldType.Integer)) {
+				} else if (type.getDataTypeEnum().equals(BSDataTypeEnum.INTEGER)) {
 					maxlength = 8;
 					value = BSWeb.formatInteger(request, (Integer) value);
 					size = maxlength;
-				} else if (type.equals(BSFieldType.Long)) {
+				} else if (type.getDataTypeEnum(). equals(BSDataTypeEnum.LONG)) {
 					maxlength = 10;
 					if (isPk && value == null) {
 						value = NEW;
@@ -247,7 +242,7 @@ type = BSFieldType.Text;
 	}
 
 	private String drawInputText(String type, String name, Integer maxlength, Boolean isReadonly, Object value, Integer size,
-			String afterInput, String validationOnBlur, Boolean isPk, BSFieldType dataType) {
+			String afterInput, String validationOnBlur, Boolean isPk, BSDataType dataType) {
 		String out = "";
 
 		if (isPk) {
@@ -255,7 +250,8 @@ type = BSFieldType.Text;
 			type = isPk ? "hidden" : type;
 		}
 
-		if(type.equals(BSFieldType.Date) || type.equals(BSFieldType.Timestamp)){
+		if(dataType.isTime()){
+//		if(type.equals(BSDataTypeEnum.DATE) || type.equals(BSDataTypeEnum.TIMESTAMP)){
 			out += "$('#" + name + "').datepicker({	dateFormat : fixDateFormat(dateFormat)});\n";
 			out += "$('#" + name + "').datepicker('setDate', value);\n";
 		} else {		
@@ -279,15 +275,15 @@ type = BSFieldType.Text;
 		return out;
 	}
 
-	private String addScript(BSFieldType dataType, String type) {
+	private String addScript(BSDataType dataType, String type) {
 		String out = "";
-		if (dataType.equals(BSFieldType.Double)) {
+		if (dataType.getDataTypeEnum().equals(BSDataTypeEnum.DOUBLE)) {
 			out = "onfocus='javascript:doubleFocus(this);' ";
 			out += "onblur='javascript:doubleBlur(this);' ";
-		} else if (dataType.equals(BSFieldType.Integer)) {
+		} else if (dataType.getDataTypeEnum().equals(BSDataTypeEnum.INTEGER)) {
 			out = "onfocus='javascript:integerFocus(this);' ";
 			out += "onblur='javascript:integerBlur(this);' ";
-		} else if (dataType.equals(BSFieldType.Date)) {
+		} else if (dataType.getDataTypeEnum().equals(BSDataTypeEnum.DATE)) {
 			out += "onblur='javascript:dateBlur(this);' ";
 		} else {
 			if (type.equalsIgnoreCase("email")) {

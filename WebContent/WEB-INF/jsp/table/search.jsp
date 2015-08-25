@@ -1,4 +1,4 @@
-<%@page import="cl.buildersoft.framework.beans.BSTableConfig"%>
+<%@page import="cl.buildersoft.framework.util.crud.BSTableConfig"%>
 <div align="right" width="100%" class="cLabel">
 
 	<!-- Busqueda:--><%=write_input_field_for_search(request)%>

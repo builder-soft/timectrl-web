@@ -1,4 +1,4 @@
-<%@page import="cl.buildersoft.framework.beans.BSTableConfig"%>
+<%@page import="cl.buildersoft.framework.util.crud.BSTableConfig"%>
 <div class="row">
 	<div class="col-md-4 col-md-offset-8">
 		<div class="input-group">

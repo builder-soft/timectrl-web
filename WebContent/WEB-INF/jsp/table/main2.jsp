@@ -1,9 +1,9 @@
+<%@page import="cl.buildersoft.framework.util.crud.BSActionType"%>
+<%@page import="cl.buildersoft.framework.util.crud.BSAction"%>
 <%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
 <%@page import="cl.buildersoft.framework.type.Semaphore"%>
 <%@page import="cl.buildersoft.web.servlet.common.HttpServletCRUD"%>
 <%@page import="cl.buildersoft.framework.database.BSmySQL"%>
-<%@page import="cl.buildersoft.framework.type.BSActionType"%>
-<%@page import="cl.buildersoft.framework.beans.BSAction"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.ResultSet"%>
 <%
@@ -77,114 +77,116 @@
 
 <%@ include file="/WEB-INF/jsp/table/search2.jsp"%>
 <div class="row">
-<form method="post"
-	action="${pageContext.request.contextPath}/servlet/common/crud/DeleteRecords"
-	id='frm'>
+	<form method="post"
+		action="${pageContext.request.contextPath}/servlet/common/crud/DeleteRecords"
+		id='frm'>
 
-	<div class="table-responsive">
-		<table
-			class="table table-striped table-bordered table-hover table-condensed"
-			id="MainTable">
-			<%
-				BSField[] fields = table.getFields();
-				String name = null;
-				String pkName = null;
+		<div class="table-responsive">
+			<table
+				class="table table-striped table-bordered table-hover table-condensed"
+				id="MainTable">
+				<%
+					BSField[] fields = table.getFields();
+					String name = null;
+					String pkName = null;
 
-				int rowCount = 0;
-				Object[] values = null;
-				out.println("<thead><tr>");
+					int rowCount = 0;
+					Object[] values = null;
+					out.println("<thead><tr>");
 
-				if (selectorType > 0) {
-					String type = selectorType == 1 ? "radio" : "CHECKBOX";
-					out.print("<th class='text-center'>");
-					if (selectorType >= 2) {
-						out.print("<input id='mainCheck' type='" + type + "' onclick='javascript:swapAllCheck(this);'>");
+					if (selectorType > 0) {
+						String type = selectorType == 1 ? "radio" : "CHECKBOX";
+						out.print("<th class='text-center'>");
+						if (selectorType >= 2) {
+							out.print("<input id='mainCheck' type='" + type + "' onclick='javascript:swapAllCheck(this);'>");
+						}
+						out.print("</th>");
 					}
-					out.print("</th>");
-				}
 
-				for (BSField field : fields) {
-					if (field.showField()) {
-						out.print("<th");
+					for (BSField field : fields) {
+						if (field.showField()) {
+							out.print("<th");
 
-						out.print(getAlign(field));
+							out.print(getAlign(field));
 
-						out.print(">" + field.getLabel() + "</th>");
+							out.print(">" + field.getLabel() + "</th>");
+						}
+						if (field.isPK()) {
+							pkName = field.getName();
+						}
 					}
-					if (field.isPK()) {
-						pkName = field.getName();
+					out.println("</tr></thead><tbody>");
+
+					while (rs.next()) {
+						values = values2Array(rs, pkName, fields);
+
+						out.println(writeValues(values, fields, rowCount, ctxPath, request, selectorType, conn));
+						rowCount++;
 					}
-				}
-				out.println("</tr></thead><tbody>");
 
-				while (rs.next()) {
-					values = values2Array(rs, pkName, fields);
+					rs.close();
+				%>
+				</tbody>
+			</table>
+		</div>
+		<div class="row">
+			<%@ include file="/WEB-INF/jsp/common/pagination2.jsp"%>
+		</div>
 
-					out.println(writeValues(values, fields, rowCount, ctxPath, request, selectorType, conn));
-					rowCount++;
-				}
+		<div class="row">
+			<div class="btn-group">
+				<%
+					out.print("<br>");
+					out.print("<div id='TableActions' style='float:left;'>");
+					for (BSAction action : tableActions) {
+						if (BSWeb.canUse(action.getCode(), request, conn)) {
+							String id = capitalize(action.getCode());
+							out.print("<button class='btn btn-default' type='button' ");
+							out.print("id='o" + id + "' ");
+							out.print(action.getDisabled() ? "disabled" : "");
 
-				rs.close();
-			%>
-</tbody>		</table>
-	</div>
-<div class="row">
-	<%@ include file="/WEB-INF/jsp/common/pagination2.jsp"%>
-</div>
+							out.print(" onclick='javascript:window.location.href=\"" + ctxPath + action.getUrl() + "\"'");
+							out.print(">" + action.getLabel() + "</button>");
+						}
 
-<div class="row">
-<div class="btn-group">
-	<%
-		out.print("<br>");
-		out.print("<div id='TableActions' style='float:left;'>");
-		for (BSAction action : tableActions) {
-			if (BSWeb.canUse(action.getCode(), request, conn)) {
-				String id = capitalize(action.getCode());
-				out.print("<button class='btn btn-default' type='button' ");
-				out.print("id='o" + id + "' ");
-				out.print(action.getDisabled() ? "disabled" : "");
+					}
+					out.print("</div>");
 
-				out.print(" onclick='javascript:window.location.href=\"" + ctxPath + action.getUrl() + "\"'");
-				out.print(">" + action.getLabel() + "</button>");
-			}
+					out.print("<div id='MultirecordActions' style='float:left;display:none;'>");
+					for (BSAction action : multirecordActions) {
+						if (BSWeb.canUse(action.getCode(), request, conn)) {
+							String id = capitalize(action.getDefaultCode());
+							out.print("<button class='btn btn-default' type='button' ");
+							out.print("id='o" + id + "' ");
+							out.print(action.getDisabled() ? "disabled" : "");
 
-		}
-		out.print("</div>");
+							out.print(" onclick='javascript:f" + id + "();'");
+							out.print(">" + action.getLabel() + "</button>");
+						}
+					}
+					out.print("</div>");
 
-		out.print("<div id='MultirecordActions' style='float:left;display:none;'>");
-		for (BSAction action : multirecordActions) {
-			if (BSWeb.canUse(action.getCode(), request, conn)) {
-				String id = capitalize(action.getDefaultCode());
-				out.print("<button class='btn btn-default' type='button' ");
-				out.print("id='o" + id + "' ");
-				out.print(action.getDisabled() ? "disabled" : "");
+					out.print("<div id='RecordActions' style='float:left;display:none;'>");
+					for (BSAction action : recordActions) {
+						if (BSWeb.canUse(action.getCode(), request, conn)) {
+							String id = capitalize(action.getCode());
+							String method = action.getMethod() != null ? "&Method=" + action.getMethod() : "";
+							out.print("<button class='btn btn-default' type='button' ");
+							out.print("id='o" + id + "' ");
 
-				out.print(" onclick='javascript:f" + id + "();'");
-				out.print(">" + action.getLabel() + "</button>");
-			}
-		}
-		out.print("</div>");
+							out.print(action.getDisabled() ? "disabled" : "");
 
-		out.print("<div id='RecordActions' style='float:left;display:none;'>");
-		for (BSAction action : recordActions) {
-			if (BSWeb.canUse(action.getCode(), request, conn)) {
-				String id = capitalize(action.getCode());
-				String method = action.getMethod() != null ? "&Method=" + action.getMethod() : "";
-				out.print("<button class='btn btn-default' type='button' ");
-				out.print("id='o" + id + "' ");
+							out.print(" onclick='javascript:doAction(\"" + ctxPath + action.getUrl() + "\", \"" + action.getCode()
+									+ method + "\");'");
 
-				out.print(action.getDisabled() ? "disabled" : "");
-
-				out.print(" onclick='javascript:doAction(\"" + ctxPath + action.getUrl() + "\", \"" + action.getCode()
-						+ method + "\");'");
-
-				out.print(">" + action.getLabel() + "</button>");
-			}
-		}
-		out.print("</div>");
-	%>
-	</div></div>
-</form>
+							out.print(">" + action.getLabel() + "</button>");
+						}
+					}
+					out.print("</div>");
+				%>
+			</div>
+		</div>
+	</form>
 </div>
 
 <%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>
@@ -238,7 +240,7 @@
 
 			out += "</td>";
 		}
-		BSFieldType type = null;
+		BSDataType type = null;
 		for (BSField field : fields) {
 			type = field.getType();
 
@@ -251,18 +253,19 @@
 				if (field.isFK()) {
 					out += getFKValue(field, value);
 				} else {
-					if (type.equals(BSFieldType.Boolean)) {
+					if (type.isBoolean()  ) {
+//					if (type.getDataTypeEnum().equals(BSDataTypeEnum.BOOLEAN)) {
 						Boolean b = (Boolean) value;
 						if (b.booleanValue() == Boolean.TRUE) {
 							out += "Si";
 						} else {
 							out += "No";
 						}
-					} else if (type.equals(BSFieldType.Double)) {
+					} else if (type.getDataTypeEnum().equals(BSDataTypeEnum.DOUBLE)) {
 						out += BSWeb.formatDouble(request, (Double) value);
-					} else if (type.equals(BSFieldType.Date)) {
+					} else if (type.isTime()) {
 						out += BSDateTimeUtil.date2String(request, value);
-					} else if (type.equals(BSFieldType.Integer)) {
+					} else if (type.getDataTypeEnum().equals(BSDataTypeEnum.INTEGER)) {
 						out += BSWeb.formatInteger(request, (Integer) value);
 					}
 

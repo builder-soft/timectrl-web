@@ -5,13 +5,14 @@ import java.sql.Connection;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import cl.buildersoft.framework.beans.BSAction;
-import cl.buildersoft.framework.beans.BSTableConfig;
+import cl.buildersoft.framework.dataType.BSDataTypeEnum;
+import cl.buildersoft.framework.dataType.BSDataTypeFactory;
 import cl.buildersoft.framework.database.BSmySQL;
-import cl.buildersoft.framework.type.BSActionType;
-import cl.buildersoft.framework.type.BSFieldType;
 import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.BSConfig;
+import cl.buildersoft.framework.util.crud.BSAction;
+import cl.buildersoft.framework.util.crud.BSActionType;
+import cl.buildersoft.framework.util.crud.BSTableConfig;
 import cl.buildersoft.web.servlet.common.HttpServletCRUD;
 
 /**
@@ -26,7 +27,9 @@ public class EmployeeManager extends HttpServletCRUD {
 		BSTableConfig table = initTable(request, "tEmployee", this);
 		table.setSortField(getSortField(request));
 
-		table.getField("cFingerprint").setType(BSFieldType.Text);
+		BSDataTypeFactory dtf = new BSDataTypeFactory();
+
+		table.getField("cFingerprint").setType(dtf.create(BSDataTypeEnum.TEXT));
 		// table.getField("cFingerprint").setType(cl.buildersoft.framework.type.bst);
 		table.setTitle("Mantención de empleados");
 		// table.setDeleteSP("pDelEmployee");
@@ -40,7 +43,7 @@ public class EmployeeManager extends HttpServletCRUD {
 		table.getField("cEnabled").setLabel("Activado");
 		table.getField("cUsername").setLabel("Nombre Usuario");
 		table.getField("cMail").setLabel("Correo electrónico");
-		
+
 		table.getField("cFingerprint").setReadonly(true);
 		table.getField("cFingerprint").setVisible(false);
 		table.getField("cFingerIndex").setReadonly(true);

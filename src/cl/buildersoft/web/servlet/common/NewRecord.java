@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cl.buildersoft.framework.beans.BSField;
-import cl.buildersoft.framework.beans.BSTableConfig;
+import cl.buildersoft.framework.util.crud.BSField;
+import cl.buildersoft.framework.util.crud.BSTableConfig;
 
 @WebServlet("/servlet/common/NewRecord")
 public class NewRecord extends AbstractServletUtil {

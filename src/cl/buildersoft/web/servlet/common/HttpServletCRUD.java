@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cl.buildersoft.framework.beans.BSTableConfig;
 import cl.buildersoft.framework.beans.Domain;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.util.crud.BSTableConfig;
 
 public abstract class HttpServletCRUD extends BSHttpServlet {
 	private static final long serialVersionUID = 713819586332712332L;

@@ -1,5 +1,5 @@
-<%@page import="cl.buildersoft.framework.beans.BSTableConfig"%>
-<%@page import="cl.buildersoft.framework.util.BSPaging"%>
+<%@page import="cl.buildersoft.framework.util.crud.BSTableConfig"%>
+<%@page import="cl.buildersoft.framework.util.crud.BSPaging"%>
 <%
 	if (paginationRequerid(request)) {
 %>

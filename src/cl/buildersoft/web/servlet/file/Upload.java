@@ -45,7 +45,7 @@ public class Upload extends HttpServlet {
 		try {
 			items = upload.parseRequest(request);
 		} catch (FileUploadException e) {
-			throw new BSSystemException("0201", e.getMessage());
+			throw new BSSystemException(e);
 		}
 		PrintWriter w = response.getWriter();
 		DatabaseFile file = new DatabaseFile();

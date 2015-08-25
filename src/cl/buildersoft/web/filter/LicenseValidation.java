@@ -86,7 +86,7 @@ public class LicenseValidation implements Filter {
 			chain.doFilter(rq, rs);
 		} else {
 			request.getSession().invalidate();
-			throw new BSConfigurationException("", "Some configuration files are wrong!");
+			throw new BSConfigurationException("Some configuration files are wrong!");
 			// request.getRequestDispatcher(failUrl).forward(request,
 			// response);
 		}

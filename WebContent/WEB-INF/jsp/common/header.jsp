@@ -132,7 +132,8 @@
 				class="cData"> <%
  	Domain currentDomains = (Domain) session.getAttribute("Domain");
  	List<Domain> domains = (List<Domain>) session.getAttribute("Domains");
- 	if (domains.size() > 1) {
+ 	if(domains!=null){
+ 		if (domains.size() > 1) {
  %><select name="cId" onchange="javascript:changeDomain(this)">
 						<%
 							for (Domain domain : domains) {
@@ -143,7 +144,8 @@
 							}
 						%>
 				</select> <%
- 	} else {
+ 		}
+ 		} else {
  %> &nbsp;${sessionScope.Domain.alias} <%
  	}
  %>

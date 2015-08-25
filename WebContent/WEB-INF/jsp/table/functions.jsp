@@ -1,25 +1,36 @@
-<%@page import="cl.buildersoft.framework.type.BSFieldType"%>
-<%@page import="cl.buildersoft.framework.beans.BSField"%>
+<%@page import="cl.buildersoft.framework.dataType.BSDataType"%>
+<%@page import="cl.buildersoft.framework.dataType.BSDataTypeEnum"%>
+<%@page import="cl.buildersoft.framework.util.crud.BSField"%>
 <%@page import="java.util.List"%>
 <%@page import="java.io.PrintWriter"%>
- 
+
 <%!private String getAlign(BSField field) {
+		BSDataType type = field.getType();
 		String out = " align='left' ";
-		if (field.isTime() || field.getType().equals(BSFieldType.Boolean)
-				|| field.isFK()) {
+
+		if (type.isTime() || type.getDataTypeEnum().equals(BSDataTypeEnum.BOOLEAN) || field.isFK()) {
 			out = " align='center' ";
-		} else if (field.isNumber()) {
+		} else if (type.isNumber()) {
 			out = " align='right' ";
 		}
+
+		/**<code>
+			String out = " align='left' ";
+			if (field.isTime() || field.getType().equals(BSDataType.BOOLEAN)
+					|| field.isFK()) {
+				out = " align='center' ";
+			} else if (field.isNumber()) {
+				out = " align='right' ";
+			}
+			</code>*/
 		return out;
 	}
 
-	
+
 	private String capitalize(String s) {
 		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
 	}
-
-	/**<code>
+	/** <code>
 	private void configHead(HttpSession session, HttpServletRequest request, JspWriter out ){
 		BSHeadConfig head = (BSHeadConfig) session.getAttribute("BSHead");
 		BSScript script = head.getScript();

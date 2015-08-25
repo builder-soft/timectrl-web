@@ -33,7 +33,7 @@ public class ChangePassword extends HttpServlet {
 		// String currentPassword = null;
 
 		if (!newPassword.equals(commitPassword)) {
-			throw new BSUserException("0002", "Las claves no coinciden");
+			throw new BSUserException("Las claves no coinciden");
 		}
 
 		Long id = Long.parseLong(request.getParameter("cId"));
@@ -53,7 +53,7 @@ public class ChangePassword extends HttpServlet {
 			String oldPasswordMD5 = md5(oldPassword);
 
 			if (!currentPasswordMD5.equals(oldPasswordMD5)) {
-				throw new BSUserException("0003", "La clave actual no conicide");
+				throw new BSUserException("La clave actual no conicide");
 			}
 		}
 

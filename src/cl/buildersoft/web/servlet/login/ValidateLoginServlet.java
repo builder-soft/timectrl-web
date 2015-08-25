@@ -64,7 +64,7 @@ public class ValidateLoginServlet extends HttpServlet {
 			if (user != null) {
 				domains = getDomains(connBSframework, user);
 				if (domains.size() == 0) {
-					throw new BSUserException("", "El usuario '" + user.getMail() + "' no esta completamente configurado");
+					throw new BSUserException("El usuario '" + user.getMail() + "' no esta completamente configurado");
 				}
 				defaultDomain = domains.get(0);
 				domainAttribute = getDomainAttribute(connBSframework, defaultDomain);
@@ -72,7 +72,7 @@ public class ValidateLoginServlet extends HttpServlet {
 
 				rols = userService.getRols(connDomain, user);
 				if (rols.size() == 0) {
-					throw new BSUserException("0001", "Usuario no tiene roles configurados");
+					throw new BSUserException("Usuario no tiene roles configurados");
 				}
 			}
 
@@ -113,7 +113,7 @@ public class ValidateLoginServlet extends HttpServlet {
 			}
 			mysql.closeSQL(rs);
 		} catch (SQLException e) {
-			throw new BSDataBaseException("1000", e.getMessage());
+			throw new BSDataBaseException(e);
 		}
 
 		return out;
@@ -136,7 +136,7 @@ public class ValidateLoginServlet extends HttpServlet {
 			}
 			mysql.closeSQL(rs);
 		} catch (SQLException e) {
-			throw new BSDataBaseException("1000", e.getMessage());
+			throw new BSDataBaseException(e);
 		}
 
 		return out;

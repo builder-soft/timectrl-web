@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cl.buildersoft.framework.beans.BSAction;
-import cl.buildersoft.framework.beans.BSTableConfig;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSDataBaseException;
+import cl.buildersoft.framework.util.crud.BSAction;
+import cl.buildersoft.framework.util.crud.BSTableConfig;
 
 /**
  * Servlet implementation class SaveRelation
@@ -57,7 +57,7 @@ public class SaveRelation extends HttpServlet {
 
 		} catch (Exception e) {
 			mysql.rollback(conn);
-			throw new BSDataBaseException("0300", e.getMessage());
+			throw new BSDataBaseException(e);
 		} finally {
 			mysql.closeSQL();
 			mysql.closeConnection(conn);
