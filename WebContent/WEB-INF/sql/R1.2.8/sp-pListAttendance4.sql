@@ -21,7 +21,7 @@ BEGIN
 	DECLARE vComment	VARCHAR(120) DEFAULT '';
 	DECLARE vTurnDesc	VARCHAR(13) DEFAULT '';
 	DECLARE vMachine	BIGINT(20);
-	DECLARE	vTotal		DECIMAL(6,2) DEFAULT '0';
+	DECLARE	vTotal		DECIMAL(8,2) DEFAULT '0';
 	
 /**Variables locales */	
 	DECLARE vTurnDayId		BIGINT(20);
@@ -61,7 +61,7 @@ BEGIN
 		cComment	VARCHAR(120),
 		cTurnDesc	VARCHAR(13),
 		
-		cTotal		DECIMAL(6,2),
+		cTotal		DECIMAL(8,2),
 		
 		cMachine	BIGINT(20)
     ) Engine=memory;
