@@ -74,11 +74,13 @@ public class AbstractServletUtil extends BSHttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Method doGet of class AbstractServletUtil is deprecated, will be delete.");
 		this.doPost(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Method doPost of class AbstractServletUtil is deprecated, will be delete.");
 		Object[] parameters = { request, response };
 		String servletName = "cl.buildersoft.web." + request.getRequestURI().substring(12).replaceAll("/", ".");
 		String methodName = request.getParameter("Method");
