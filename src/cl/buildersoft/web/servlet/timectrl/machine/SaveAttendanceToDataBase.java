@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
+import cl.buildersoft.framework.exception.BSException;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.api._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.AttendanceLog;
@@ -40,7 +41,12 @@ public class SaveAttendanceToDataBase extends BSHttpServlet {
 
 		for (AttendanceLog attendance : attendanceList) {
 			if (!service.existsAttendanceLog(conn, attendance)) {
-				service.saveAttendanceLog(conn, attendance);
+				try {
+					service.saveAttendanceLog(conn, attendance);
+				} catch (BSException e) {
+					log("Fail to save (WEB Channel)" + attendance.toString() + " Detail:" + e.toString());
+				}
+//				service.saveAttendanceLog(conn, attendance);
 				// bu.save(conn, attendance);
 			} else {
 				noSavedCount++;
