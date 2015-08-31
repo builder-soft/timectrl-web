@@ -1,13 +1,13 @@
 <%@page import="cl.buildersoft.framework.database.BSmySQL"%>
 <%@page
-	import="cl.buildersoft.timectrl.business.beans.ReportInputParameterBean"%>
+	import="cl.buildersoft.timectrl.business.beans.ReportParameterBean"%>
 <%@ include file="/WEB-INF/jsp/common/header.jsp"%>
 <%@ include file="/WEB-INF/jsp/common/menu.jsp"%>
 <script
 	src="${pageContext.request.contextPath}/js/timectrl/report/execute/params-report.js?<%=Math.random()%>">	
 </script>
 <%
-	List<ReportInputParameterBean> paramList = (List<ReportInputParameterBean>) request.getAttribute("ReportInputParameter");
+	List<ReportParameterBean> paramList = (List<ReportParameterBean>) request.getAttribute("ReportInputParameter");
 %>
 
 
@@ -25,7 +25,7 @@
 	<table width="50%">
 		<%
 			String component = null;
-			for (ReportInputParameterBean param : paramList) {
+			for (ReportParameterBean param : paramList) {
 				component = "/WEB-INF/jsp/timectrl/report/execute/params/" + param.getHtmlFile();
 		%>
 

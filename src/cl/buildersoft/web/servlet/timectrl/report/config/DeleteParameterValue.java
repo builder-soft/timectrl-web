@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSHttpServlet;
-import cl.buildersoft.timectrl.business.beans.ReportInputParameter;
+import cl.buildersoft.timectrl.business.beans.ReportParameter;
 
 /**
  * Servlet implementation class DeleteParameterValue
@@ -23,7 +23,7 @@ public class DeleteParameterValue extends BSHttpServlet {
 		Long reportId = Long.parseLong(request.getParameter("Report"));
 
 		BSBeanUtils bu = new BSBeanUtils();
-		ReportInputParameter rip = new ReportInputParameter();
+		ReportParameter rip = new ReportParameter();
 		rip.setId(id);
 
 		bu.delete(getConnection(request), rip);

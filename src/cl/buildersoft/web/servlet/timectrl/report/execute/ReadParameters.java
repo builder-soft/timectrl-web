@@ -15,7 +15,7 @@ import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Report;
-import cl.buildersoft.timectrl.business.beans.ReportInputParameterBean;
+import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
 import cl.buildersoft.timectrl.business.beans.ReportType;
 import cl.buildersoft.timectrl.business.services.ReportService;
 
@@ -38,17 +38,20 @@ public class ReadParameters extends BSHttpServlet {
 
 		ReportService reportService = getInstance(reportType);
 
-		List<ReportInputParameterBean> reportInputParameterList = reportService.loadInputParameter(conn, reportId);
+		List<ReportParameterBean> reportParameterList = reportService.loadParameter(conn, reportId);
 		String source = null;
-		for (ReportInputParameterBean reportInputParameter : reportInputParameterList) {
-			source = reportInputParameter.getTypeSource();
+		for (ReportParameterBean reportParameter : reportParameterList) {
+			source = reportParameter.getTypeSource();
+
 			if (source != null && source.length() > 0) {
-				ResultSet rs = executeSP(conn, reportInputParameter.getTypeSource());
-				request.setAttribute(reportInputParameter.getTypeKey(), rs);
+				Object data = reportService.getParameterData(conn, reportParameter);
+
+				// ResultSet rs = executeSP(conn, source);
+				request.setAttribute(reportParameter.getTypeKey(), data);
 			}
 		}
 
-		request.setAttribute("ReportInputParameter", reportInputParameterList);
+		request.setAttribute("ReportInputParameter", reportParameterList);
 		request.setAttribute("Report", report);
 
 		// closeConnection(conn);

@@ -17,7 +17,7 @@ import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Report;
-import cl.buildersoft.timectrl.business.beans.ReportInputParameterBean;
+import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
 import cl.buildersoft.timectrl.business.beans.ReportPropertyBean;
 import cl.buildersoft.timectrl.business.beans.ReportType;
 import cl.buildersoft.timectrl.business.services.ReportService;
@@ -38,11 +38,11 @@ public class BuildReport extends BSHttpServlet {
 
 		ReportService reportService = getInstance(reportType);
 
-		List<ReportInputParameterBean> reportInputParamList = reportService.loadInputParameter(conn, report.getId());
+		List<ReportParameterBean> reportInputParamList = reportService.loadParameter(conn, report.getId());
 		List<String> parameters = readParametersFromPage(reportInputParamList, request);
 
 		List<ReportPropertyBean> reportPropertyList = reportService.loadReportProperties(conn, report.getId());
-		reportService.fillInputParameters(reportInputParamList, parameters);
+		reportService.fillParameters(reportInputParamList, parameters);
 
 		List<String> responseList = reportService.execute(conn, report.getId(), reportType, reportPropertyList,
 				reportInputParamList);
@@ -89,10 +89,10 @@ public class BuildReport extends BSHttpServlet {
 
 	}
 
-	private List<String> readParametersFromPage(List<ReportInputParameterBean> reportInputParamList, HttpServletRequest request) {
+	private List<String> readParametersFromPage(List<ReportParameterBean> reportInputParamList, HttpServletRequest request) {
 		List<String> out = new ArrayList<String>();
 		String name = null;
-		for (ReportInputParameterBean reportInputParam : reportInputParamList) {
+		for (ReportParameterBean reportInputParam : reportInputParamList) {
 			name = reportInputParam.getName();
 
 			out.add(request.getParameter(name));

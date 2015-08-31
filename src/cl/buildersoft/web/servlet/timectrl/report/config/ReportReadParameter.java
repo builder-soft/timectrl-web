@@ -13,8 +13,8 @@ import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Report;
-import cl.buildersoft.timectrl.business.beans.ReportInputParameterBean;
-import cl.buildersoft.timectrl.business.beans.ReportParamType;
+import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
+import cl.buildersoft.timectrl.business.beans.ReportParameterType;
 import cl.buildersoft.timectrl.business.beans.ReportType;
 import cl.buildersoft.timectrl.business.services.ReportService;
 
@@ -36,8 +36,8 @@ public class ReportReadParameter extends BSHttpServlet {
 
 		ReportService reportService = getInstance(reportType);
 
-		List<ReportInputParameterBean> parameterList = reportService.loadInputParameter(conn, reportId);
-		List<ReportParamType> parameterTypeList = listReportParamType(conn);
+		List<ReportParameterBean> parameterList = reportService.loadParameter(conn, reportId);
+		List<ReportParameterType> parameterTypeList = listReportParamType(conn);
 		// treportparamtype
 
 		Integer lastOrder = getLastOrder(parameterList);
@@ -51,14 +51,14 @@ public class ReportReadParameter extends BSHttpServlet {
 		forward(request, response, "/WEB-INF/jsp/timectrl/report/config/report-read-parameter.jsp");
 	}
 
-	private Integer getLastOrder(List<ReportInputParameterBean> parameterList) {
+	private Integer getLastOrder(List<ReportParameterBean> parameterList) {
 		return parameterList.size() + 1;
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<ReportParamType> listReportParamType(Connection conn) {
+	private List<ReportParameterType> listReportParamType(Connection conn) {
 		BSBeanUtils bu = new BSBeanUtils();
-		return (List<ReportParamType>) bu.listAll(conn, new ReportParamType());
+		return (List<ReportParameterType>) bu.listAll(conn, new ReportParameterType());
 	}
 
 	private Report getReport(Connection conn, Long reportId) {

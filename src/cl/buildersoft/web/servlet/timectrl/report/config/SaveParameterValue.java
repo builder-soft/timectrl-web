@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSHttpServlet;
-import cl.buildersoft.timectrl.business.beans.ReportInputParameter;
+import cl.buildersoft.timectrl.business.beans.ReportParameter;
 
 /**
  * Servlet implementation class SaveParameterValue
@@ -46,7 +46,7 @@ Order
 		Integer order = Integer.parseInt(request.getParameter("Order"));
 
 		BSBeanUtils bu = new BSBeanUtils();
-		ReportInputParameter rip = new ReportInputParameter();
+		ReportParameter rip = new ReportParameter();
 
 //		rip.setFromUser(fromUser);
 		rip.setName(name);

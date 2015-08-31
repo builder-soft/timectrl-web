@@ -1,11 +1,11 @@
-<%@page import="cl.buildersoft.timectrl.business.beans.ReportParamType"%>
+<%@page import="cl.buildersoft.timectrl.business.beans.ReportParameterType"%>
 <%@page
-	import="cl.buildersoft.timectrl.business.beans.ReportInputParameterBean"%>
+	import="cl.buildersoft.timectrl.business.beans.ReportParameterBean"%>
 <%@ include file="/WEB-INF/jsp/common/header.jsp"%>
 <%@ include file="/WEB-INF/jsp/common/menu.jsp"%>
 <%
-	List<ReportInputParameterBean> parameterList = (List<ReportInputParameterBean>) request.getAttribute("ParameterList");
-	List<ReportParamType> parameterTypeList = (List<ReportParamType>) request.getAttribute("ParameterTypeList");
+	List<ReportParameterBean> parameterList = (List<ReportParameterBean>) request.getAttribute("ParameterList");
+	List<ReportParameterType> parameterTypeList = (List<ReportParameterType>) request.getAttribute("ParameterTypeList");
 	Integer lastOrder = (Integer) request.getAttribute("LastOrder");
 %>
 <script
@@ -34,9 +34,9 @@
 		Integer i = 0;
 		String color = "";
 
-		ReportParamType parameterType = null;
+		ReportParameterType parameterType = null;
 		Object source = null;
-		for (ReportInputParameterBean reportInParam : parameterList) {
+		for (ReportParameterBean reportInParam : parameterList) {
 			color = i % 2 == 0 ? "cDataTD_odd" : "cDataTD";
 			parameterType = getParameterType(reportInParam.getTypeId(), parameterTypeList);
 			source = parameterType.getSource();
@@ -58,7 +58,7 @@
 	</tr>
 	<%
 		i++;
-		}
+			}
 	%>
 
 </table>
@@ -93,7 +93,7 @@
 				<td class="cLabel">Tipo</td>
 				<td><select id="Type" name="Type">
 						<%
-							for (ReportParamType reportParamType : parameterTypeList) {
+							for (ReportParameterType reportParamType : parameterTypeList) {
 						%>
 						<option value="<%=reportParamType.getId()%>"><%=reportParamType.getName()%></option>
 						<%
@@ -133,9 +133,9 @@
 
 <%@ include file="/WEB-INF/jsp/common/footer.jsp"%>
 
-<%!private ReportParamType getParameterType(Long id, List<ReportParamType> list) {
-		ReportParamType out = null;
-		for (ReportParamType current : list) {
+<%!private ReportParameterType getParameterType(Long id, List<ReportParameterType> list) {
+		ReportParameterType out = null;
+		for (ReportParameterType current : list) {
 			if (current.getId() == id) {
 				out = current;
 				break;

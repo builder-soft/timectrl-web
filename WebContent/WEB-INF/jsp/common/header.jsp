@@ -22,7 +22,7 @@
 <title>DALEA T&amp;A - Buildersoft</title>
 <script>
 	var contextPath = "${pageContext.request.contextPath}";
-	var speed = "fast";// "slow" "fast";
+	var speed = "slow";// "slow" "fast";
 	var dateFormat = "${applicationScope.DateFormat}";
 
 	function fixDateFormat(dateFormat) {
