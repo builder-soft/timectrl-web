@@ -17,6 +17,7 @@ import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
 import cl.buildersoft.timectrl.business.beans.ReportType;
+import cl.buildersoft.timectrl.business.services.ParameterService;
 import cl.buildersoft.timectrl.business.services.ReportService;
 
 /**
@@ -44,7 +45,9 @@ public class ReadParameters extends BSHttpServlet {
 			source = reportParameter.getTypeSource();
 
 			if (source != null && source.length() > 0) {
-				Object data = reportService.getParameterData(conn, reportParameter);
+				// Object data = reportService.getParameterData(conn,
+				// reportParameter);
+				Object data = getParameterData(conn, reportParameter);
 
 				// ResultSet rs = executeSP(conn, source);
 				request.setAttribute(reportParameter.getTypeKey(), data);
@@ -57,6 +60,12 @@ public class ReadParameters extends BSHttpServlet {
 		// closeConnection(conn);
 		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params-report.jsp");
 
+	}
+
+	private Object getParameterData(Connection conn, ReportParameterBean reportParameter) {
+		// TODO Auto-generated method stub
+		ParameterService ps = null; // new buildrepo
+		return null;
 	}
 
 	private ResultSet executeSP(Connection conn, String typeSource) {

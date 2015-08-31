@@ -4,3 +4,6 @@ RENAME TABLE tReportInParam TO tReportParameter;
 RENAME TABLE tReportParamType TO tReportParameterType;
 
 ALTER TABLE tReportParameterType MODIFY COLUMN cSource VARCHAR(512);
+
+UPDATE tReportParameterType SET cSource='cl.buildersoft.timectrl.business.services.impl.EmpliyeeParameterImpl' WHERE cKey = 'EMPLOYEE_LIST';
+
