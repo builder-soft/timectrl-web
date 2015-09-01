@@ -7,7 +7,7 @@
 	src="${pageContext.request.contextPath}/js/timectrl/report/execute/params-report.js?<%=Math.random()%>">	
 </script>
 <%
-	List<ReportParameterBean> paramList = (List<ReportParameterBean>) request.getAttribute("ReportInputParameter");
+	List<ReportParameterBean> paramList = (List<ReportParameterBean>) request.getAttribute("ReportParameter");
 %>
 
 

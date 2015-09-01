@@ -1,7 +1,7 @@
 <%@page import="java.sql.ResultSet"%>
 <%
 String param = (String)request.getParameter("Key");
-ResultSet employeeList = (ResultSet) request.getAttribute(param);
+//ResultSet employeeList = (ResultSet) request.getAttribute(param);
 %>
 <style>
 <!--
@@ -86,13 +86,7 @@ function changeTab(clicked){
 </td>
 
 <datalist id='EmployeeRutList'>
-<%
-			while (employeeList.next()) {
-%>
-<option value='<%=employeeList.getString("cRut")%>'>
-<%
-			}
-%>
+ 
 </datalist>
 		
 <!-- 
