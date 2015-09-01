@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cl.buildersoft.framework.beans.BSBean;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSProgrammerException;
@@ -17,6 +19,7 @@ import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
 import cl.buildersoft.timectrl.business.beans.ReportType;
+import cl.buildersoft.timectrl.business.console.BuildReport3;
 import cl.buildersoft.timectrl.business.services.ParameterService;
 import cl.buildersoft.timectrl.business.services.ReportService;
 
@@ -54,18 +57,23 @@ public class ReadParameters extends BSHttpServlet {
 			}
 		}
 
-		request.setAttribute("ReportInputParameter", reportParameterList);
+		request.setAttribute("ReportParameter", reportParameterList);
 		request.setAttribute("Report", report);
 
-		// closeConnection(conn);
+		closeConnection(conn);
 		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params-report.jsp");
 
 	}
 
-	private Object getParameterData(Connection conn, ReportParameterBean reportParameter) {
-		// TODO Auto-generated method stub
-		ParameterService ps = null; // new buildrepo
-		return null;
+	private Map<String, List<? extends BSBean>> getParameterData(Connection conn, ReportParameterBean reportParameter) {
+
+		BuildReport3 br3 = new BuildReport3();
+		ParameterService parameterService = br3.getInstanceOfParameter(reportParameter);
+
+		Map<String, List<? extends BSBean>> out = parameterService.getParameterData(conn, reportParameter);
+
+		return out;
+
 	}
 
 	private ResultSet executeSP(Connection conn, String typeSource) {

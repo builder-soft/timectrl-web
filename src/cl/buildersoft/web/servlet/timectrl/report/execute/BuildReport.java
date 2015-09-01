@@ -20,6 +20,7 @@ import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
 import cl.buildersoft.timectrl.business.beans.ReportPropertyBean;
 import cl.buildersoft.timectrl.business.beans.ReportType;
+import cl.buildersoft.timectrl.business.console.BuildReport3;
 import cl.buildersoft.timectrl.business.services.ReportService;
 
 /**
@@ -75,8 +76,11 @@ public class BuildReport extends BSHttpServlet {
 		return reportType;
 	}
 
-	@SuppressWarnings("unchecked")
 	public ReportService getInstance(ReportType reportType) {
+		BuildReport3 br3 = new BuildReport3();
+		return br3.getInstance(reportType);
+		
+		/**<code>
 		ReportService instance = null;
 		try {
 			Class<ReportService> javaClass = (Class<ReportService>) Class.forName(reportType.getJavaClass());
@@ -86,7 +90,7 @@ public class BuildReport extends BSHttpServlet {
 			throw new BSProgrammerException(e);
 		}
 		return instance;
-
+</code>*/
 	}
 
 	private List<String> readParametersFromPage(List<ReportParameterBean> reportInputParamList, HttpServletRequest request) {
