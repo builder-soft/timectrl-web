@@ -1,3 +1,5 @@
+<%@page import="java.util.Comparator"%>
+<%@page import="java.util.Collections"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.Area"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.Employee"%>
 <%@page import="cl.buildersoft.framework.beans.BSBean"%>
@@ -110,7 +112,7 @@ ul.tabHolder li.active {
 				</tr>
 				<tr>
 					<td><input list='RutList' id='Rut'></td>
-					<td><input list='NameList' id='Name'></td>
+					<td><input list='NameList' id='Name' autocomplete="off"></td>
 				</tr>
 				<tr>
 					<td colspan='2'>
@@ -163,15 +165,17 @@ ul.tabHolder li.active {
 
 <datalist id='RutList'>
 	<%
+	sortByRut(employeeList);
 		for (Employee employee : employeeList) {
 	%>
-	<option value='<%=employee.getRut()%>' />
+	<option value='<%=employee.getRut()%> (<%=employee.getName()%>)' />
 	<%
 		}
 	%>
 </datalist>
 <datalist id='NameList'>
 	<%
+	sortByName(employeeList);
 		for (Employee employee : employeeList) {
 	%>
 	<option value='<%=employee.getName()%>' />
@@ -206,3 +210,24 @@ o	Centro de Costo
 	X Nombre
 	X Número
  -->
+<%!
+private void sortByName(List<Employee> employeeList){
+	Collections.sort(employeeList, new Comparator<Employee>() {
+        @Override
+        public int compare(final Employee object1, final Employee object2) {
+            return object1.getName().compareTo(object2.getName());
+        }
+       } );
+	
+}
+
+private void sortByRut(List<Employee> employeeList){
+	Collections.sort(employeeList, new Comparator<Employee>() {
+        @Override
+        public int compare(final Employee object1, final Employee object2) {
+            return object1.getRut().compareTo(object2.getRut());
+        }
+       } );
+	
+}
+%>
