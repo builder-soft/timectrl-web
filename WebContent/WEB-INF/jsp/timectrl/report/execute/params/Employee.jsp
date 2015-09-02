@@ -1,7 +1,23 @@
+<%@page import="cl.buildersoft.timectrl.business.beans.Area"%>
+<%@page import="cl.buildersoft.timectrl.business.beans.Employee"%>
+<%@page import="cl.buildersoft.framework.beans.BSBean"%>
+<%@page import="java.util.Map"%>
+<%@page
+	import="cl.buildersoft.timectrl.business.beans.ReportParameterBean"%>
+<%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%
 	String param = (String) request.getParameter("Key");
-	Object data = request.getAttribute(param);
+Map<String, List<? extends BSBean>> dataList = (Map<String, List<? extends BSBean>>)request.getAttribute(param);
+//List<ReportParameterBean> dataList = (List<ReportParameterBean>)request.getAttribute(param);
+
+List<Employee> employeeList = (List<Employee>)dataList.get("EMPLOYEE_LIST");
+List<Area> areaList = (List<Area>)dataList.get("AREA_LIST");
+List<Employee> bossList = (List<Employee>)dataList.get("BOSS_LIST");
+
+// EMPLOYEE_LIST
+// AREA_LIST
+// BOSS_LIST
 %>
 <style>
 <!--
@@ -21,10 +37,8 @@ ul.tabHolder li {
 	list-style: none;
 	display: inline-block;
 	margin: 0 3px;
-	padding: 3px 8px 0; #
-	background-color: #444;
-	border: 1px solid #666; #
-	font-size: 15px;
+	padding: 3px 8px 0;
+	border: 1px solid #666;
 }
 
 ul.tabHolder li.active {
@@ -45,20 +59,37 @@ ul.tabHolder li.active {
 
 		for ( var i in tables) {
 			document.getElementById(tables[i]).style.display = 'none';
-			document.getElementById(tables[i].replace('Table', 'Tab')).className = '';
+			document.getElementById(tables[i].replace('Div', 'Tab')).className = '';
 		}
 
-		$(document.getElementById(clicked.id.replace('Tab', 'Table'))).fadeIn(
+		$(document.getElementById(clicked.id.replace('Tab', 'Div'))).fadeIn(
 				speed);
 		//	document.getElementById(clicked.id.replace('Tab', 'Table') ).style.display = '';
 		document.getElementById(clicked.id).className = 'active';
 	}
+
+	function onLoadPage() {
+		setInterval(verifyChanges, 1000);
+	}
+	var rut = '';
+	var name = '';
+	function verifyChanges() {
+		var rutValue = document.getElementById('Rut').value;
+		var nameValue = document.getElementById('Name').value;
+
+		if (rut != rutValue || name != nameValue) {
+			rut = rutValue;
+			name = nameValue;
+//			alert('submit');
+			label.innerHTML = 'submit ' + rut + ' ' + rutValue + ' - ' + name + ' ' + nameValue;
+		}
+	}
 </script>
 <!-- 
-<label class="cLabel">
-<%=data.getClass().getName()%>
+<label class='cLabel'>
+<%=dataList.getClass().getName()%>
 </label>
- -->
+-->
 <td class='cLabel' colspan=2>Seleccion de empleado
 	<div class="menu">
 		<ul class="tabHolder">
@@ -72,41 +103,83 @@ ul.tabHolder li.active {
 	</div>
 	<div class="content">
 		<div id='DivEmployee'>
-			<table>
+			<table border=0 width='100%'>
 				<tr>
-					<td>Rut</td><td>Nombre</td>
+					<td>Rut</td>
+					<td>Nombre</td>
 				</tr>
 				<tr>
-					<td><input list='EmployeeRutList'></td>
-				 
-					<td><input></td>
+					<td><input list='RutList' id='Rut'></td>
+					<td><input list='NameList' id='Name'></td>
 				</tr>
 				<tr>
-				<td><table class="cTable">
-				<tr><td></td></tr>
-				</table>
+					<td colspan='2'>
+						<div style='height: 100px; overflow: auto'>
+							<table class="cList" cellpadding="0" cellspacing="0" width='50%'>
+								<tr>
+									<td class='cHeadTD'>Selecci&oacute;n</td>
+									<td class='cHeadTD'>Rut</td>
+									<td class='cHeadTD'>Nombre</td>
+								</tr>
+								<%
+									for (Employee employee : employeeList) {
+								%>
+								<tr>
+									<td class='cDataTD'><input type="radio"></td>
+									<td class='cDataTD'><%=employee.getRut()%></td>
+									<td class='cDataTD'><%=employee.getName()%></td>
+								</tr>
+								<%
+									}
+								%>
+							</table>
+						</div>
+					</td>
+				</tr>
 			</table>
 		</div>
-		
+
 		<div id='DivBoss' style='display: none'>
-			<tr>
-				<td>Jefatura:</td>
-				<td><select></td>
-			</tr>
+			<table>
+				<tr>
+					<td>Jefatura:</td>
+					<td><select></td>
+				</tr>
+			</table>
 		</div>
 		<div id='DivArea' style='display: none'>
-			<tr>
-				<td>Area:</td>
-				<td><select></td>
-			</tr>
+			<table>
+				<tr>
+					<td>Area:</td>
+					<td><select></td>
+				</tr>
+			</table>
 		</div>
 	</div>
+	<br>
+<label class='cLabel' id='label'/>
 
 </td>
 
-<datalist id='EmployeeRutList'>
-
+<datalist id='RutList'>
+	<%
+		for (Employee employee : employeeList) {
+	%>
+	<option value='<%=employee.getRut()%>' />
+	<%
+		}
+	%>
 </datalist>
+<datalist id='NameList'>
+	<%
+		for (Employee employee : employeeList) {
+	%>
+	<option value='<%=employee.getName()%>' />
+	<%
+		}
+	%>
+</datalist>
+
 
 <!-- 
 <td class='cLabel'>Seleccion de empleado
@@ -121,8 +194,6 @@ ul.tabHolder li.active {
 		<li>Jefatura</li>
 		<li>&Aacute;rea</li>
 	</ul>
-	
-	
 	
 	 <!-- 
 •	Jefatura
