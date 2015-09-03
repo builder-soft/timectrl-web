@@ -82,8 +82,10 @@ ul.tabHolder li.active {
 		if (rut != rutValue || name != nameValue) {
 			rut = rutValue;
 			name = nameValue;
+			
 //			alert('submit');
-			label.innerHTML = 'submit ' + rut + ' ' + rutValue + ' - ' + name + ' ' + nameValue;
+//			label.innerHTML = 'submit ' + rut + ' ' + rutValue + ' - ' + name + ' ' + nameValue;
+			
 		}
 	}
 </script>
@@ -124,6 +126,7 @@ ul.tabHolder li.active {
 									<td class='cHeadTD'>Nombre</td>
 								</tr>
 								<%
+									sortByName(employeeList);
 									for (Employee employee : employeeList) {
 								%>
 								<tr>
@@ -159,26 +162,27 @@ ul.tabHolder li.active {
 		</div>
 	</div>
 	<br>
+<!-- 
 <label class='cLabel' id='label'/>
-
+ -->
 </td>
 
+<datalist id='NameList'>
+	<%
+	
+		for (Employee employee : employeeList) {
+	%>
+	<option value='<%=employee.getName()%>' />
+	<%
+		}
+	%>
+</datalist>
 <datalist id='RutList'>
 	<%
 	sortByRut(employeeList);
 		for (Employee employee : employeeList) {
 	%>
 	<option value='<%=employee.getRut()%> (<%=employee.getName()%>)' />
-	<%
-		}
-	%>
-</datalist>
-<datalist id='NameList'>
-	<%
-	sortByName(employeeList);
-		for (Employee employee : employeeList) {
-	%>
-	<option value='<%=employee.getName()%>' />
 	<%
 		}
 	%>
