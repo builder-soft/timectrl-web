@@ -1,3 +1,7 @@
+<%@page
+	import="cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl"%>
+<%@page
+	import="cl.buildersoft.timectrl.business.services.EmployeeService"%>
 <%@page import="java.util.Comparator"%>
 <%@page import="java.util.Collections"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.Area"%>
@@ -82,11 +86,21 @@ ul.tabHolder li.active {
 		if (rut != rutValue || name != nameValue) {
 			rut = rutValue;
 			name = nameValue;
-			
-//			alert('submit');
-//			label.innerHTML = 'submit ' + rut + ' ' + rutValue + ' - ' + name + ' ' + nameValue;
-			
+
+			var url = contextPath
+					+ "/servlet/timectrl/report/execute/ListEmployeeAjax?Rut="
+					+ rut + "&Name=" + name;
+			$.get(url, retieveEmployeeList);
+
+			//			alert('submit');
+			//			label.innerHTML = 'submit ' + rut + ' ' + rutValue + ' - ' + name + ' ' + nameValue;
+
 		}
+	}
+	function retieveEmployeeList(data, status){
+		alert(data);
+		
+		
 	}
 </script>
 <!-- 
@@ -160,16 +174,13 @@ ul.tabHolder li.active {
 				</tr>
 			</table>
 		</div>
-	</div>
-	<br>
-<!-- 
+	</div> <br> <!-- 
 <label class='cLabel' id='label'/>
  -->
 </td>
 
 <datalist id='NameList'>
 	<%
-	
 		for (Employee employee : employeeList) {
 	%>
 	<option value='<%=employee.getName()%>' />
@@ -179,7 +190,7 @@ ul.tabHolder li.active {
 </datalist>
 <datalist id='RutList'>
 	<%
-	sortByRut(employeeList);
+		sortByRut(employeeList);
 		for (Employee employee : employeeList) {
 	%>
 	<option value='<%=employee.getRut()%> (<%=employee.getName()%>)' />
@@ -214,24 +225,16 @@ o	Centro de Costo
 	X Nombre
 	X Número
  -->
-<%!
-private void sortByName(List<Employee> employeeList){
-	Collections.sort(employeeList, new Comparator<Employee>() {
-        @Override
-        public int compare(final Employee object1, final Employee object2) {
-            return object1.getName().compareTo(object2.getName());
-        }
-       } );
-	
-}
+<%!private void sortByName(List<Employee> employeeList) {
+		EmployeeService es = new EmployeeServiceImpl();
 
-private void sortByRut(List<Employee> employeeList){
-	Collections.sort(employeeList, new Comparator<Employee>() {
-        @Override
-        public int compare(final Employee object1, final Employee object2) {
-            return object1.getRut().compareTo(object2.getRut());
-        }
-       } );
-	
-}
-%>
+		es.sortByName(employeeList);
+
+	}
+
+	private void sortByRut(List<Employee> employeeList) {
+		EmployeeService es = new EmployeeServiceImpl();
+
+		es.sortByRut(employeeList);
+
+	}%>
