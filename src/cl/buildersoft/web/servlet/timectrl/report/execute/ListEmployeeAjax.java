@@ -30,35 +30,37 @@ public class ListEmployeeAjax extends BSHttpServlet {
 			name = "";
 		}
 
+		rut = rut.trim();
+		name = name.trim();
+		
 		BSBeanUtils bu = new BSBeanUtils();
-
 		Connection conn = getConnection(request);
 
 		String where = null;
 		String[] params = null;
 
 		if (rut.length() == 0 && name.length() == 0) {
-			where = "";
-			params = new String[0];
+			where = null;
+			params = null; // new String[0];
 		} else if (rut.length() > 0 && name.length() == 0) {
-			where = "cRut=?";
+			where = "cRut LIKE ?";
 			params = new String[1];
-			params[0] = rut;
+			params[0] = rut + "%";
 		} else if (rut.length() > 0 && name.length() > 0) {
-			where = "cRut=? OR cName=?";
+			where = "cRut LIKE ? AND cName LIKE ?";
 			params = new String[2];
-			params[0] = rut;
-			params[1] = name;
+			params[0] = rut + "%";
+			params[1] = name + "%";
 		} else if (rut.length() == 0 && name.length() > 0) {
-			where = "cName=?";
+			where = "cName LIKE ?";
 			params = new String[1];
-			params[0] = name;
+			params[0] = name + "%";
 		}
 
 		List<Employee> list = (List<Employee>) bu.list(conn, new Employee(), where, params);
 		request.setAttribute("EmployeeList", list);
-		
-		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params/list-employees.jsp");
+
+		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params/list-employees-ajax.jsp");
 
 	}
 }

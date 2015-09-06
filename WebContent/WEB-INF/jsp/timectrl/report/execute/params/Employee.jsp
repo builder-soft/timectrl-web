@@ -76,8 +76,9 @@ ul.tabHolder li.active {
 
 	function onLoadPage() {
 		setInterval(verifyChanges, 1000);
+
 	}
-	var rut = '';
+	var rut = '_';
 	var name = '';
 	function verifyChanges() {
 		var rutValue = document.getElementById('Rut').value;
@@ -88,19 +89,63 @@ ul.tabHolder li.active {
 			name = nameValue;
 
 			var url = contextPath
-					+ "/servlet/timectrl/report/execute/ListEmployeeAjax?Rut="
-					+ rut + "&Name=" + name;
-			$.get(url, retieveEmployeeList);
+					+ "/servlet/timectrl/report/execute/ListEmployeeAjax"; // ?Rut="
+			//					+ rut + "&Name=" + name;
 
-			//			alert('submit');
+			//			alert('will submit');
+
+			$.ajax({
+				type : "GET",
+				cache : false,
+				url : url,
+				data : {
+					Rut : rut,
+					Name : name
+				},
+				async : false,
+				success : retieveEmployeeList,
+				error : function(data, textStatus, xhr) {
+					alert(xhr);
+				}
+			});
+
+			//			$.get(url, retieveEmployeeList);
+
 			//			label.innerHTML = 'submit ' + rut + ' ' + rutValue + ' - ' + name + ' ' + nameValue;
 
 		}
 	}
-	function retieveEmployeeList(data, status){
-		alert(data);
-		
-		
+	function retieveEmployeeList(data, status) {
+		//		alert(status);
+		var table = document.getElementById("EmployeeTable");
+		for ( var i = table.rows.length; i > 1; i--) {
+			table.deleteRow(i - 1);
+		}
+
+		for ( var i in data) {
+			var row = table.insertRow(-1);
+			var cell = row.insertCell(0);
+			cell.className = 'cDataTD';
+			cell.innerHTML = '<input onclick="selectRow(this)" name="cId" type="radio" value="'
+					+ data[i].id + '">';
+
+			cell = row.insertCell(1);
+			cell.className = 'cDataTD';
+			cell.innerHTML = data[i].rut;
+
+			cell = row.insertCell(2);
+			cell.className = 'cDataTD';
+			cell.innerHTML = data[i].name;
+
+			$(row).fadeIn(speed);
+
+		}
+
+	}
+
+	function selectRow(r) {
+		//		alert(r);
+		document.getElementById("Id").value = r.value;
 	}
 </script>
 <!-- 
@@ -133,24 +178,18 @@ ul.tabHolder li.active {
 				<tr>
 					<td colspan='2'>
 						<div style='height: 100px; overflow: auto'>
-							<table class="cList" cellpadding="0" cellspacing="0" width='50%'>
+							<table id='EmployeeTable' class="cList" cellpadding="0"
+								cellspacing="0" width='50%'>
 								<tr>
 									<td class='cHeadTD'>Selecci&oacute;n</td>
 									<td class='cHeadTD'>Rut</td>
 									<td class='cHeadTD'>Nombre</td>
 								</tr>
-								<%
-									sortByName(employeeList);
-									for (Employee employee : employeeList) {
-								%>
 								<tr>
-									<td class='cDataTD'><input type="radio"></td>
-									<td class='cDataTD'><%=employee.getRut()%></td>
-									<td class='cDataTD'><%=employee.getName()%></td>
+									<td style='text-align: center' valign='center' class='cDataTD'
+										colspan='3'><br> <img
+										src="${pageContext.request.contextPath}/img/loading/6.gif"><br></td>
 								</tr>
-								<%
-									}
-								%>
 							</table>
 						</div>
 					</td>
@@ -176,31 +215,25 @@ ul.tabHolder li.active {
 		</div>
 	</div> <br> <!-- 
 <label class='cLabel' id='label'/>
- -->
-</td>
-
-<datalist id='NameList'>
-	<%
-		for (Employee employee : employeeList) {
-	%>
-	<option value='<%=employee.getName()%>' />
-	<%
-		}
-	%>
-</datalist>
-<datalist id='RutList'>
-	<%
-		sortByRut(employeeList);
-		for (Employee employee : employeeList) {
-	%>
-	<option value='<%=employee.getRut()%> (<%=employee.getName()%>)' />
-	<%
-		}
-	%>
-</datalist>
-
-
-<!-- 
+ --> <input name='Id' id='Id' type='text'> <datalist
+		id='NameList'>
+		<%
+			for (Employee employee : employeeList) {
+		%>
+		<option value='<%=employee.getName()%>' />
+		<%
+			}
+		%>
+	</datalist> <datalist id='RutList'>
+		<%
+			sortByRut(employeeList);
+			for (Employee employee : employeeList) {
+		%>
+		<option value='<%=employee.getRut()%>' />
+		<%
+			}
+		%>
+	</datalist> <!-- 
 <td class='cLabel'>Seleccion de empleado
 
 	<ul>
@@ -225,6 +258,9 @@ o	Centro de Costo
 	X Nombre
 	X Número
  -->
+
+</td>
+
 <%!private void sortByName(List<Employee> employeeList) {
 		EmployeeService es = new EmployeeServiceImpl();
 
