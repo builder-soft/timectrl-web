@@ -13,17 +13,17 @@
 <%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%
-	String param = (String) request.getParameter("Key");
-Map<String, List<? extends BSBean>> dataList = (Map<String, List<? extends BSBean>>)request.getAttribute(param);
-//List<ReportParameterBean> dataList = (List<ReportParameterBean>)request.getAttribute(param);
+	//	String param = (String) request.getParameter("Key");
+	//Map<String, List<? extends BSBean>> dataList = (Map<String, List<? extends BSBean>>)request.getAttribute(param);
+	//List<ReportParameterBean> dataList = (List<ReportParameterBean>)request.getAttribute(param);
 
-List<Employee> employeeList = (List<Employee>)dataList.get("EMPLOYEE_LIST");
-List<Area> areaList = (List<Area>)dataList.get("AREA_LIST");
-List<Employee> bossList = (List<Employee>)dataList.get("BOSS_LIST");
+	//List<Employee> employeeList = (List<Employee>)dataList.get("EMPLOYEE_LIST");
+	//List<Area> areaList = (List<Area>)dataList.get("AREA_LIST");
+	//List<Employee> bossList = (List<Employee>)dataList.get("BOSS_LIST");
 
-// EMPLOYEE_LIST
-// AREA_LIST
-// BOSS_LIST
+	// EMPLOYEE_LIST
+	// AREA_LIST
+	// BOSS_LIST
 %>
 <style>
 <!--
@@ -60,6 +60,10 @@ ul.tabHolder li.active {
 -->
 </style>
 <script type="text/javascript">
+	var rut = '_';
+	var name = '';
+	var refreshTime = 500;
+
 	function changeTab(clicked) {
 		var tables = [ 'DivEmployee', 'DivBoss', 'DivArea' ];
 
@@ -70,16 +74,31 @@ ul.tabHolder li.active {
 
 		$(document.getElementById(clicked.id.replace('Tab', 'Div'))).fadeIn(
 				speed);
-		//	document.getElementById(clicked.id.replace('Tab', 'Table') ).style.display = '';
+
 		document.getElementById(clicked.id).className = 'active';
+
+//		alert(clicked.id);
+		
+		switch (clicked.id) {
+		case "TabEmployee":
+			alert("empleado");
+			break;
+		case "TabBoss":
+			alert("jefe");
+			break;
+		case "TabArea":
+			alert("area");
+			break;
+		default:
+			break;
+		}
+
 	}
 
 	function onLoadPage() {
-		setInterval(verifyChanges, 1000);
+		setInterval(verifyChanges, refreshTime);
 
 	}
-	var rut = '_';
-	var name = '';
 	function verifyChanges() {
 		var rutValue = document.getElementById('Rut').value;
 		var nameValue = document.getElementById('Name').value;
@@ -89,10 +108,7 @@ ul.tabHolder li.active {
 			name = nameValue;
 
 			var url = contextPath
-					+ "/servlet/timectrl/report/execute/ListEmployeeAjax"; // ?Rut="
-			//					+ rut + "&Name=" + name;
-
-			//			alert('will submit');
+					+ "/servlet/timectrl/report/execute/ListEmployeeAjax";
 
 			$.ajax({
 				type : "GET",
@@ -102,16 +118,12 @@ ul.tabHolder li.active {
 					Rut : rut,
 					Name : name
 				},
-				async : false,
+				async : true,
 				success : retieveEmployeeList,
 				error : function(data, textStatus, xhr) {
 					alert(xhr);
 				}
 			});
-
-			//			$.get(url, retieveEmployeeList);
-
-			//			label.innerHTML = 'submit ' + rut + ' ' + rutValue + ' - ' + name + ' ' + nameValue;
 
 		}
 	}
@@ -144,15 +156,10 @@ ul.tabHolder li.active {
 	}
 
 	function selectRow(r) {
-		//		alert(r);
 		document.getElementById("Id").value = r.value;
 	}
 </script>
-<!-- 
-<label class='cLabel'>
-<%=dataList.getClass().getName()%>
-</label>
--->
+
 <td class='cLabel' colspan=2>Seleccion de empleado
 	<div class="menu">
 		<ul class="tabHolder">
@@ -213,27 +220,12 @@ ul.tabHolder li.active {
 				</tr>
 			</table>
 		</div>
-	</div> <br> <!-- 
-<label class='cLabel' id='label'/>
- --> <input name='Id' id='Id' type='text'> <datalist
-		id='NameList'>
-		<%
-			for (Employee employee : employeeList) {
-		%>
-		<option value='<%=employee.getName()%>' />
-		<%
-			}
-		%>
-	</datalist> <datalist id='RutList'>
-		<%
-			sortByRut(employeeList);
-			for (Employee employee : employeeList) {
-		%>
-		<option value='<%=employee.getRut()%>' />
-		<%
-			}
-		%>
-	</datalist> <!-- 
+	</div> <br> <input name='${param["Name"]}' id='Id' type='text'>
+
+
+
+
+	<!-- 
 <td class='cLabel'>Seleccion de empleado
 
 	<ul>
@@ -261,16 +253,3 @@ o	Centro de Costo
 
 </td>
 
-<%!private void sortByName(List<Employee> employeeList) {
-		EmployeeService es = new EmployeeServiceImpl();
-
-		es.sortByName(employeeList);
-
-	}
-
-	private void sortByRut(List<Employee> employeeList) {
-		EmployeeService es = new EmployeeServiceImpl();
-
-		es.sortByRut(employeeList);
-
-	}%>

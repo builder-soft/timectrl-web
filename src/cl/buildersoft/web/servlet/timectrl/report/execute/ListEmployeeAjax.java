@@ -13,11 +13,9 @@ import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Employee;
 
-/**
- * Servlet implementation class ListEmployeeAjax
- */
 @WebServlet("/servlet/timectrl/report/execute/ListEmployeeAjax")
 public class ListEmployeeAjax extends BSHttpServlet {
+	private static final long serialVersionUID = Long.MAX_VALUE - Long.MIN_VALUE;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String rut = request.getParameter("Rut");
@@ -32,7 +30,7 @@ public class ListEmployeeAjax extends BSHttpServlet {
 
 		rut = rut.trim();
 		name = name.trim();
-		
+
 		BSBeanUtils bu = new BSBeanUtils();
 		Connection conn = getConnection(request);
 
@@ -60,7 +58,7 @@ public class ListEmployeeAjax extends BSHttpServlet {
 		List<Employee> list = (List<Employee>) bu.list(conn, new Employee(), where, params);
 		request.setAttribute("EmployeeList", list);
 
-		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params/list-employees-ajax.jsp");
+		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params/list-employees-json.jsp");
 
 	}
 }
