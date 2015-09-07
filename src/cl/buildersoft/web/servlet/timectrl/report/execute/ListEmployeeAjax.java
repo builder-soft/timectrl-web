@@ -20,12 +20,16 @@ public class ListEmployeeAjax extends BSHttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String rut = request.getParameter("Rut");
 		String name = request.getParameter("Name");
+		String type = request.getParameter("Type");
 
 		if (rut == null) {
 			rut = "";
 		}
 		if (name == null) {
 			name = "";
+		}
+		if (type == null) {
+			type = "Employee";
 		}
 
 		rut = rut.trim();
@@ -57,6 +61,7 @@ public class ListEmployeeAjax extends BSHttpServlet {
 
 		List<Employee> list = (List<Employee>) bu.list(conn, new Employee(), where, params);
 		request.setAttribute("EmployeeList", list);
+		request.setAttribute("Type", type);
 
 		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params/list-employees-json.jsp");
 

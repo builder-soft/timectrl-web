@@ -5,11 +5,13 @@
 	pageEncoding="UTF-8"%>
 <%
 List<Employee> employees = (List<Employee>)request.getAttribute("EmployeeList");
+String type = (String)request.getAttribute("Type");
 
 Integer size = employees.size();
 Integer i = 0;
 %>
-
+{ "type": "<%=type%>",
+"employees" :
 [
 <%for(Employee employee : employees){
 	i++;
@@ -17,3 +19,4 @@ Integer i = 0;
     {"id": "<%=employee.getId()%>", "rut":"<%=employee.getRut()%>", "name":"<%=employee.getName()%>"}<%=i<size?",":""%> 
 <%}%>
 ]
+}

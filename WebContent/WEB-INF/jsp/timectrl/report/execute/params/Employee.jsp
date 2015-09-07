@@ -63,6 +63,10 @@ ul.tabHolder li.active {
 	var rut = '_';
 	var name = '';
 	var refreshTime = 500;
+	
+	var employeeTimerId = null;
+	var bossTimerId = null;
+	var areaTimerId = null;
 
 	function changeTab(clicked) {
 		var tables = [ 'DivEmployee', 'DivBoss', 'DivArea' ];
@@ -77,12 +81,17 @@ ul.tabHolder li.active {
 
 		document.getElementById(clicked.id).className = 'active';
 
+		clearInterval(employeeTimerId);
+		clearInterval(bossTimerId);
+		clearInterval(areaTimerId);
+		
+		rut = '_';
 		switch (clicked.id) {
 		case "TabEmployee":
-			alert("empleado");
+			employeeTimerId = setInterval(verifyChanges, refreshTime, 'Employee');
 			break;
 		case "TabBoss":
-			setInterval(verifyChanges, refreshTime);
+			bossTimerId = setInterval(verifyChanges, refreshTime, 'Boss');
 			break;
 		case "TabArea":
 			alert("area");
@@ -93,12 +102,13 @@ ul.tabHolder li.active {
 	}
 
 	function onLoadPage() {
-		setInterval(verifyChanges, refreshTime);
-
+		changeTab(document.getElementById("TabEmployee"));
+//		employeeTimerId = setInterval(verifyChanges, refreshTime, 'Employee');
+		 
 	}
-	function verifyChanges() {
-		var rutValue = document.getElementById('EmployeeRut').value;
-		var nameValue = document.getElementById('EmployeeName').value;
+	function verifyChanges(entity) {
+		var rutValue = document.getElementById(entity + 'Rut').value;
+		var nameValue = document.getElementById(entity + 'Name').value;
 
 		if (rut != rutValue || name != nameValue) {
 			rut = rutValue;
@@ -106,14 +116,15 @@ ul.tabHolder li.active {
 
 			var url = contextPath
 					+ "/servlet/timectrl/report/execute/ListEmployeeAjax";
-
+ 
 			$.ajax({
 				type : "GET",
 				cache : false,
 				url : url,
 				data : {
 					Rut : rut,
-					Name : name
+					Name : name,
+					Type : entity
 				},
 				async : true,
 				success : retieveEmployeeList,
@@ -125,25 +136,29 @@ ul.tabHolder li.active {
 		}
 	}
 	function retieveEmployeeList(data, status) {
-		var table = document.getElementById("EmployeeTable");
+		var type = data.type;
+		var table = document.getElementById(type + "Table");
+		
 		for ( var i = table.rows.length; i > 1; i--) {
 			table.deleteRow(i - 1);
 		}
 
-		for ( var i in data) {
+		var employees = data.employees;
+		
+		for (var i in employees) {
 			var row = table.insertRow(-1);
 			var cell = row.insertCell(0);
 			cell.className = 'cDataTD';
 			cell.innerHTML = '<input onclick="selectRow(this)" name="cId" type="radio" value="'
-					+ data[i].id + '">';
+					+ employees[i].id + '">';
 
 			cell = row.insertCell(1);
 			cell.className = 'cDataTD';
-			cell.innerHTML = data[i].rut;
+			cell.innerHTML = employees[i].rut;
 
 			cell = row.insertCell(2);
 			cell.className = 'cDataTD';
-			cell.innerHTML = data[i].name;
+			cell.innerHTML = employees[i].name;
 
 		}
 	}
