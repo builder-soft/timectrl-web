@@ -77,14 +77,12 @@ ul.tabHolder li.active {
 
 		document.getElementById(clicked.id).className = 'active';
 
-//		alert(clicked.id);
-		
 		switch (clicked.id) {
 		case "TabEmployee":
 			alert("empleado");
 			break;
 		case "TabBoss":
-			alert("jefe");
+			setInterval(verifyChanges, refreshTime);
 			break;
 		case "TabArea":
 			alert("area");
@@ -92,7 +90,6 @@ ul.tabHolder li.active {
 		default:
 			break;
 		}
-
 	}
 
 	function onLoadPage() {
@@ -100,8 +97,8 @@ ul.tabHolder li.active {
 
 	}
 	function verifyChanges() {
-		var rutValue = document.getElementById('Rut').value;
-		var nameValue = document.getElementById('Name').value;
+		var rutValue = document.getElementById('EmployeeRut').value;
+		var nameValue = document.getElementById('EmployeeName').value;
 
 		if (rut != rutValue || name != nameValue) {
 			rut = rutValue;
@@ -128,7 +125,6 @@ ul.tabHolder li.active {
 		}
 	}
 	function retieveEmployeeList(data, status) {
-		//		alert(status);
 		var table = document.getElementById("EmployeeTable");
 		for ( var i = table.rows.length; i > 1; i--) {
 			table.deleteRow(i - 1);
@@ -149,10 +145,7 @@ ul.tabHolder li.active {
 			cell.className = 'cDataTD';
 			cell.innerHTML = data[i].name;
 
-			$(row).fadeIn(speed);
-
 		}
-
 	}
 
 	function selectRow(r) {
@@ -179,8 +172,8 @@ ul.tabHolder li.active {
 					<td>Nombre</td>
 				</tr>
 				<tr>
-					<td><input list='RutList' id='Rut'></td>
-					<td><input list='NameList' id='Name' autocomplete="off"></td>
+					<td><input id='EmployeeRut' autocomplete="off"></td>
+					<td><input id='EmployeeName' autocomplete="off"></td>
 				</tr>
 				<tr>
 					<td colspan='2'>
@@ -193,7 +186,7 @@ ul.tabHolder li.active {
 									<td class='cHeadTD'>Nombre</td>
 								</tr>
 								<tr>
-									<td style='text-align: center' valign='center' class='cDataTD'
+									<td style='text-align: center' valign="middle" class='cDataTD'
 										colspan='3'><br> <img
 										src="${pageContext.request.contextPath}/img/loading/6.gif"><br></td>
 								</tr>
@@ -205,12 +198,36 @@ ul.tabHolder li.active {
 		</div>
 
 		<div id='DivBoss' style='display: none'>
-			<table>
+			<table border=0 width='100%'>
 				<tr>
-					<td>Jefatura:</td>
-					<td><select></td>
+					<td>Rut</td>
+					<td>Nombre</td>
+				</tr>
+				<tr>
+					<td><input id='BossRut' autocomplete="off"></td>
+					<td><input id='BossName' autocomplete="off"></td>
+				</tr>
+				<tr>
+					<td colspan='2'>
+						<div style='height: 100px; overflow: auto'>
+							<table id='BossTable' class="cList" cellpadding="0"
+								cellspacing="0" width='50%'>
+								<tr>
+									<td class='cHeadTD'>Selecci&oacute;n</td>
+									<td class='cHeadTD'>Rut</td>
+									<td class='cHeadTD'>Nombre</td>
+								</tr>
+								<tr>
+									<td style='text-align: center' valign="middle" class='cDataTD'
+										colspan='3'><br> <img
+										src="${pageContext.request.contextPath}/img/loading/6.gif"><br></td>
+								</tr>
+							</table>
+						</div>
+					</td>
 				</tr>
 			</table>
+
 		</div>
 		<div id='DivArea' style='display: none'>
 			<table>
