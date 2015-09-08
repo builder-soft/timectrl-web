@@ -168,9 +168,31 @@ ul.tabHolder li.active {
 	function selectRow(r, type) {
 		if (type.toLowerCase() == 'boss') {
 			alert("Buscar empleados para " + r.value);
+			retrieveEmployees(r.value);
 		} else {
 			document.getElementById("Id").value = r.value;
 		}
+	}
+
+	function retrieveEmployees(bossId) {
+		var url = contextPath
+				+ "/servlet/timectrl/report/execute/RetrieveEmployeeAjax";
+
+		$.ajax({
+			type : "GET",
+			cache : false,
+			url : url,
+			data : {
+				BossId : bossId
+			},
+			async : true,
+			success : function(data, status) {
+				alert(data);
+			},
+			error : function(data, textStatus, xhr) {
+				alert(xhr);
+			}
+		});
 	}
 </script>
 
