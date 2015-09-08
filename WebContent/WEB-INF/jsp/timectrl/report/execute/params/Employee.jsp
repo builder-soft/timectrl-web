@@ -63,7 +63,7 @@ ul.tabHolder li.active {
 	var rut = '_';
 	var name = '';
 	var refreshTime = 500;
-	
+
 	var employeeTimerId = null;
 	var bossTimerId = null;
 	var areaTimerId = null;
@@ -84,11 +84,12 @@ ul.tabHolder li.active {
 		clearInterval(employeeTimerId);
 		clearInterval(bossTimerId);
 		clearInterval(areaTimerId);
-		
+
 		rut = '_';
 		switch (clicked.id) {
 		case "TabEmployee":
-			employeeTimerId = setInterval(verifyChanges, refreshTime, 'Employee');
+			employeeTimerId = setInterval(verifyChanges, refreshTime,
+					'Employee');
 			break;
 		case "TabBoss":
 			bossTimerId = setInterval(verifyChanges, refreshTime, 'Boss');
@@ -103,8 +104,8 @@ ul.tabHolder li.active {
 
 	function onLoadPage() {
 		changeTab(document.getElementById("TabEmployee"));
-//		employeeTimerId = setInterval(verifyChanges, refreshTime, 'Employee');
-		 
+		//		employeeTimerId = setInterval(verifyChanges, refreshTime, 'Employee');
+
 	}
 	function verifyChanges(entity) {
 		var rutValue = document.getElementById(entity + 'Rut').value;
@@ -116,7 +117,7 @@ ul.tabHolder li.active {
 
 			var url = contextPath
 					+ "/servlet/timectrl/report/execute/ListEmployeeAjax";
- 
+
 			$.ajax({
 				type : "GET",
 				cache : false,
@@ -138,19 +139,20 @@ ul.tabHolder li.active {
 	function retieveEmployeeList(data, status) {
 		var type = data.type;
 		var table = document.getElementById(type + "Table");
-		
-		for ( var i = table.rows.length; i > 1; i--) {
+
+		for (var i = table.rows.length; i > 1; i--) {
 			table.deleteRow(i - 1);
 		}
 
 		var employees = data.employees;
-		
-		for (var i in employees) {
+
+		for ( var i in employees) {
 			var row = table.insertRow(-1);
 			var cell = row.insertCell(0);
 			cell.className = 'cDataTD';
-			cell.innerHTML = '<input onclick="selectRow(this)" name="cId" type="radio" value="'
-					+ employees[i].id + '">';
+			cell.innerHTML = '<input onclick="selectRow(this,\'' + type
+					+ '\')" name="cId" type="radio" value="' + employees[i].id
+					+ '">';
 
 			cell = row.insertCell(1);
 			cell.className = 'cDataTD';
@@ -163,8 +165,12 @@ ul.tabHolder li.active {
 		}
 	}
 
-	function selectRow(r) {
-		document.getElementById("Id").value = r.value;
+	function selectRow(r, type) {
+		if (type.toLowerCase() == 'boss') {
+			alert("Buscar empleados para " + r.value);
+		} else {
+			document.getElementById("Id").value = r.value;
+		}
 	}
 </script>
 

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Employee;
+import cl.buildersoft.timectrl.business.services.EmployeeService;
+import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 
 @WebServlet("/servlet/timectrl/report/execute/ListEmployeeAjax")
 public class ListEmployeeAjax extends BSHttpServlet {
@@ -34,11 +36,11 @@ public class ListEmployeeAjax extends BSHttpServlet {
 
 		rut = rut.trim();
 		name = name.trim();
-		
+
 		if ("employee".equalsIgnoreCase(type) || "boss".equalsIgnoreCase(type)) {
 			listEmployeeOrBoss(request, rut, name, type);
-		}else{
-			
+		} else {
+
 		}
 
 		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params/list-employees-json.jsp");
@@ -48,6 +50,7 @@ public class ListEmployeeAjax extends BSHttpServlet {
 	private void listEmployeeOrBoss(HttpServletRequest request, String rut, String name, String type) {
 		BSBeanUtils bu = new BSBeanUtils();
 		Connection conn = getConnection(request);
+		List<Employee> list = null;
 
 		String where = null;
 		String[] params = null;
@@ -69,13 +72,14 @@ public class ListEmployeeAjax extends BSHttpServlet {
 			params = new String[1];
 			params[0] = name + "%";
 		}
-		
-		if("boss".equalsIgnoreCase(type)){
-			where = (where ==null? " cBoss":where);
-		}
-		
 
-		List<Employee> list = (List<Employee>) bu.list(conn, new Employee(), where, params);
+		if ("boss".equalsIgnoreCase(type)) {
+			where = (where == null ? "" : where + " AND ");
+			where += "cId IN (SELECT DISTINCT(cBoss) FROM tEmployee WHERE NOT cBoss IS NULL)";
+
+		}
+		list = (List<Employee>) bu.list(conn, new Employee(), where, params);
+
 		request.setAttribute("EmployeeList", list);
 		request.setAttribute("Type", type);
 	}
