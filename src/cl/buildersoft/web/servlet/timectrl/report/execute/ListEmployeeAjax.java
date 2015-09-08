@@ -34,7 +34,18 @@ public class ListEmployeeAjax extends BSHttpServlet {
 
 		rut = rut.trim();
 		name = name.trim();
+		
+		if ("employee".equalsIgnoreCase(type) || "boss".equalsIgnoreCase(type)) {
+			listEmployeeOrBoss(request, rut, name, type);
+		}else{
+			
+		}
 
+		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params/list-employees-json.jsp");
+
+	}
+
+	private void listEmployeeOrBoss(HttpServletRequest request, String rut, String name, String type) {
 		BSBeanUtils bu = new BSBeanUtils();
 		Connection conn = getConnection(request);
 
@@ -58,12 +69,14 @@ public class ListEmployeeAjax extends BSHttpServlet {
 			params = new String[1];
 			params[0] = name + "%";
 		}
+		
+		if("boss".equalsIgnoreCase(type)){
+			where = (where ==null? " cBoss":where);
+		}
+		
 
 		List<Employee> list = (List<Employee>) bu.list(conn, new Employee(), where, params);
 		request.setAttribute("EmployeeList", list);
 		request.setAttribute("Type", type);
-
-		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params/list-employees-json.jsp");
-
 	}
 }
