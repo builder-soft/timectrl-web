@@ -167,7 +167,6 @@ ul.tabHolder li.active {
 
 	function selectRow(r, type) {
 		if (type.toLowerCase() == 'boss') {
-			alert("Buscar empleados para " + r.value);
 			retrieveEmployees(r.value);
 		} else {
 			document.getElementById("Id").value = r.value;
@@ -187,7 +186,7 @@ ul.tabHolder li.active {
 			},
 			async : true,
 			success : function(data, status) {
-				alert(data);
+				document.getElementById("Id").value = data;
 			},
 			error : function(data, textStatus, xhr) {
 				alert(xhr);
