@@ -202,8 +202,10 @@ ul.tabHolder li.active {
 				por Empleado</li>
 			<li id='TabBoss' onclick='changeTab(this)'>B&uacute;squeda por
 				Jefatura</li>
-			<li id='TabArea' onclick='changeTab(this)'>B&uacute;squeda por
+				  
+			<li style='display: none' id='TabArea' onclick='changeTab(this)'>B&uacute;squeda por
 				&Aacute;rea</li>
+				 
 		</ul>
 	</div>
 	<div class="content">
@@ -270,7 +272,7 @@ ul.tabHolder li.active {
 				</tr>
 			</table>
 
-		</div>
+		</div>  
 		<div id='DivArea' style='display: none'>
 			<table>
 				<tr>
@@ -278,7 +280,7 @@ ul.tabHolder li.active {
 					<td><select></td>
 				</tr>
 			</table>
-		</div>
+		</div>  
 	</div> <br> <input name='${param["Name"]}' id='Id' type='text'>
 
 
