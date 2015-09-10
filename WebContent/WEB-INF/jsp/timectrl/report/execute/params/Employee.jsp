@@ -105,7 +105,7 @@ ul.tabHolder li.active {
 	function onLoadPage() {
 		changeTab(document.getElementById("TabEmployee"));
 		//		employeeTimerId = setInterval(verifyChanges, refreshTime, 'Employee');
-
+		selectAllEmployee(document.getElementById("AllEmployees"));
 	}
 	function verifyChanges(entity) {
 		var rutValue = document.getElementById(entity + 'Rut').value;
@@ -140,7 +140,7 @@ ul.tabHolder li.active {
 		var type = data.type;
 		var table = document.getElementById(type + "Table");
 
-		for (var i = table.rows.length; i > 1; i--) {
+		for ( var i = table.rows.length; i > 1; i--) {
 			table.deleteRow(i - 1);
 		}
 
@@ -193,124 +193,116 @@ ul.tabHolder li.active {
 			}
 		});
 	}
+
+	function selectAllEmployee(inputObject) {
+		if (inputObject.checked) {
+			$(document.getElementById("Filtres")).fadeOut(speed);
+			document.getElementById("Id").value = "0";
+			//			document.getElementById("Filtres").style.display = "none";
+		} else {
+			$(document.getElementById("Filtres")).fadeIn(speed);
+			rut = '_';
+			document.getElementById("Id").value = "";
+			//			document.getElementById("Filtres").style.display = "";
+		}
+	}
 </script>
 
-<td class='cLabel' colspan=2>Seleccion de empleado
-	<div class="menu">
-		<ul class="tabHolder">
-			<li id='TabEmployee' class="active" onclick='changeTab(this)'>B&uacute;scar
-				por Empleado</li>
-			<li id='TabBoss' onclick='changeTab(this)'>B&uacute;squeda por
-				Jefatura</li>
-				  
-			<li style='display: none' id='TabArea' onclick='changeTab(this)'>B&uacute;squeda por
-				&Aacute;rea</li>
-				 
-		</ul>
-	</div>
-	<div class="content">
-		<div id='DivEmployee'>
-			<table border=0 width='100%'>
-				<tr>
-					<td>Rut</td>
-					<td>Nombre</td>
-				</tr>
-				<tr>
-					<td><input id='EmployeeRut' autocomplete="off"></td>
-					<td><input id='EmployeeName' autocomplete="off"></td>
-				</tr>
-				<tr>
-					<td colspan='2'>
-						<div style='height: 100px; overflow: auto'>
-							<table id='EmployeeTable' class="cList" cellpadding="0"
-								cellspacing="0" width='50%'>
-								<tr>
-									<td class='cHeadTD'>Selecci&oacute;n</td>
-									<td class='cHeadTD'>Rut</td>
-									<td class='cHeadTD'>Nombre</td>
-								</tr>
-								<tr>
-									<td style='text-align: center' valign="middle" class='cDataTD'
-										colspan='3'><br> <img
-										src="${pageContext.request.contextPath}/img/loading/6.gif"><br></td>
-								</tr>
-							</table>
-						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
-
-		<div id='DivBoss' style='display: none'>
-			<table border=0 width='100%'>
-				<tr>
-					<td>Rut</td>
-					<td>Nombre</td>
-				</tr>
-				<tr>
-					<td><input id='BossRut' autocomplete="off"></td>
-					<td><input id='BossName' autocomplete="off"></td>
-				</tr>
-				<tr>
-					<td colspan='2'>
-						<div style='height: 100px; overflow: auto'>
-							<table id='BossTable' class="cList" cellpadding="0"
-								cellspacing="0" width='50%'>
-								<tr>
-									<td class='cHeadTD'>Selecci&oacute;n</td>
-									<td class='cHeadTD'>Rut</td>
-									<td class='cHeadTD'>Nombre</td>
-								</tr>
-								<tr>
-									<td style='text-align: center' valign="middle" class='cDataTD'
-										colspan='3'><br> <img
-										src="${pageContext.request.contextPath}/img/loading/6.gif"><br></td>
-								</tr>
-							</table>
-						</div>
-					</td>
-				</tr>
-			</table>
-
-		</div>  
-		<div id='DivArea' style='display: none'>
-			<table>
-				<tr>
-					<td>Area:</td>
-					<td><select></td>
-				</tr>
-			</table>
-		</div>  
-	</div> <br> <input name='${param["Name"]}' id='Id' type='text'>
+<td class='cLabel' colspan=2><h3>Seleccion de empleado</h3> <br>
 
 
+	<input id="AllEmployees" type="checkbox"
+	onclick="javascript:selectAllEmployee(this)" checked="true"> <label
+	for="AllEmployees">Seleccionar todos los empleados de la
+		empresa.</label><br>
 
+	<div id="Filtres" style="display: none">
+		<div class="menu">
+			<ul class="tabHolder">
+				<li id='TabEmployee' class="active" onclick='changeTab(this)'>B&uacute;scar
+					por Empleado</li>
+				<li id='TabBoss' onclick='changeTab(this)'>B&uacute;squeda por
+					Jefatura</li>
 
-	<!-- 
-<td class='cLabel'>Seleccion de empleado
+				<li style='display: none' id='TabArea' onclick='changeTab(this)'>B&uacute;squeda
+					por &Aacute;rea</li>
 
-	<ul>
-		<li>Persona
-			<ul>
-				<li>X RUT</li>
-				<li>X Nombre</li>
 			</ul>
-		</li>
-		<li>Jefatura</li>
-		<li>&Aacute;rea</li>
-	</ul>
-	
-	 <!-- 
-•	Jefatura
-o	Nombre del Jefe (Supervisor, Jefe, Sub-Gerente, Gerente y Vicepresidente)
-•	Área
-o	Sub-Gerencia
-o	Gerencia
-o	Vicepresidencia
-o	Centro de Costo
-	X Nombre
-	X Número
- -->
+		</div>
+		<div class="content">
+			<div id='DivEmployee'>
+				<table border=0 width='100%'>
+					<tr>
+						<td>Rut</td>
+						<td>Nombre</td>
+					</tr>
+					<tr>
+						<td><input id='EmployeeRut' autocomplete="off"></td>
+						<td><input id='EmployeeName' autocomplete="off"></td>
+					</tr>
+					<tr>
+						<td colspan='2'>
+							<div style='height: 100px; overflow: auto'>
+								<table id='EmployeeTable' class="cList" cellpadding="0"
+									cellspacing="0" width='50%'>
+									<tr>
+										<td class='cHeadTD'>Selecci&oacute;n</td>
+										<td class='cHeadTD'>Rut</td>
+										<td class='cHeadTD'>Nombre</td>
+									</tr>
+									<tr>
+										<td style='text-align: center' valign="middle" class='cDataTD'
+											colspan='3'><br> <img
+											src="${pageContext.request.contextPath}/img/loading/6.gif"><br></td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+			<div id='DivBoss' style='display: none'>
+				<table border=0 width='100%'>
+					<tr>
+						<td>Rut</td>
+						<td>Nombre</td>
+					</tr>
+					<tr>
+						<td><input id='BossRut' autocomplete="off"></td>
+						<td><input id='BossName' autocomplete="off"></td>
+					</tr>
+					<tr>
+						<td colspan='2'>
+							<div style='height: 100px; overflow: auto'>
+								<table id='BossTable' class="cList" cellpadding="0"
+									cellspacing="0" width='50%'>
+									<tr>
+										<td class='cHeadTD'>Selecci&oacute;n</td>
+										<td class='cHeadTD'>Rut</td>
+										<td class='cHeadTD'>Nombre</td>
+									</tr>
+									<tr>
+										<td style='text-align: center' valign="middle" class='cDataTD'
+											colspan='3'><br> <img
+											src="${pageContext.request.contextPath}/img/loading/6.gif"><br></td>
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id='DivArea' style='display: none'>
+				<table>
+					<tr>
+						<td>Area:</td>
+						<td><select></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div> <br> <input name='${param["Name"]}' id='Id' type='hidden'>
 
 </td>
 
