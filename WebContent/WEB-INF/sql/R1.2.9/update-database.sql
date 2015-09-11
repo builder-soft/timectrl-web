@@ -6,6 +6,8 @@ RENAME TABLE tReportParamType TO tReportParameterType;
 ALTER TABLE tReportParameterType MODIFY COLUMN cSource VARCHAR(512);
 
 UPDATE tReportParameterType SET cSource='cl.buildersoft.timectrl.business.services.impl.ParameterEmployeeImpl' WHERE cKey = 'EMPLOYEE_LIST';
+UPDATE tReportParameterType SET cSource='cl.buildersoft.timectrl.business.services.impl.ParameterListBoss' WHERE cKey = 'BOSS_LIST';
+
 
 DROP INDEX AttendanceLog_index_MarkType ON tAttendanceLog;
 ALTER TABLE tAttendanceLog ADD INDEX AttendanceLog_index_MarkType (cMarkType ASC);
