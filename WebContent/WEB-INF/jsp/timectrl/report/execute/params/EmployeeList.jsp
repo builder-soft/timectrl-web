@@ -1,3 +1,6 @@
+<%@page import="cl.buildersoft.timectrl.business.beans.Employee"%>
+<%@page import="java.util.Map"%>
+<%@page import="cl.buildersoft.framework.beans.BSBean"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,17 +8,20 @@
 
 <%
 String param = (String)request.getParameter("Key");
-	ResultSet customerList = (ResultSet) request.getAttribute(param);
+Map<String, List<? extends BSBean>> employeeMap = (Map<String, List<? extends BSBean>>) request.getAttribute(param);
+	
+List<Employee> bossList=	(List<Employee>)employeeMap.get("BOSS_LIST");
+	
 %>
 <td class="cLabel">${param["Label"]}:</td>
 <td class="cData"><select name='${param["Name"]}'>
 		<option value="0">- Todas las personas -</option>
 		<%
-			while (customerList.next()) {
+			for (Employee boss : bossList ) {
 		%>
-		<option value="<%=customerList.getString("cId")%>"><%=customerList.getString("cRut")%>
+		<option value="<%=boss.getId()%>"><%=boss.getRut()%>
 			-
-			<%=customerList.getString("cName")%></option>
+			<%=boss.getName()%></option>
 		<%
 			}
 		%>

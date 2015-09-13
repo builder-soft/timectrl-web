@@ -172,8 +172,9 @@ BEGIN
 				cEmployeeName									AS 'Nombre Empleado',
 #				cBusinessDayCount								AS 'Total Marcas',
 				CONCAT(cMarkCount, '/', cBusinessDayCount)		AS 'Marcas realizadas',
-				ROUND((cMarkCount*100)/cBusinessDayCount, 0)	AS 'Cumplimiento %',
-				cDelayCount										AS 'Total atrasos',
+				ROUND((cMarkCount*100)/cBusinessDayCount, 0)	AS '% Asistencia',
+				cDelayCount										AS 'Atrasos',
+				ROUND((cDelayCount*100)/cMarkCount, 0)			AS '% Atrasos',
 				cExtraTimeAM									AS 'Minutos Extras AM',
 				cExtraTimePM									AS 'Minutos Extras PM'
 		FROM tTemp 
