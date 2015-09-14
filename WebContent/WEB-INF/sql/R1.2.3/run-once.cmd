@@ -1,4 +1,3 @@
-rem @echo off
 echo -- 1.2.3 --
 IF "%1" == "" GOTO error
 call ..\msg.cmd "Actualizando estructuras y datos de base de datos"

@@ -1,4 +1,3 @@
-@echo off
 IF "%1" == "" GOTO error
 
 echo Actualizando tablas

@@ -1,4 +1,3 @@
-echo on
 IF "%1" == "" GOTO error
 	call ..\msg.cmd Creando base de datos %1... (create-timectrl.sql)
 	mysql -t -u root -padmin --default-character-set=utf8 -e "DROP DATABASE IF EXISTS %1;CREATE DATABASE %1;";
@@ -29,7 +28,6 @@ IF "%1" == "" GOTO error
 goto fin
 
 :error
-	@echo off
 	echo No se indico nombre de la base de datos, ejecute: 
 	echo $ run-all timectrl
 

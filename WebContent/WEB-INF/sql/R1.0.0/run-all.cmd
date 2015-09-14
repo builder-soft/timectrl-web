@@ -39,7 +39,6 @@ call ..\msg.cmd Ejecutando pruebas...(testSP.sql)
 goto fin
 
 :error
-	@echo off
 	echo No se indico nombre de la base de datos, ejecute: 
 	echo $ run-all timectrl
 

@@ -11,7 +11,6 @@ IF "%1" == "" GOTO error
 	echo $ run-sp DataBaseName
 
 :fin
-	@echo off
 	echo ***********
 	echo *** FIN ***
 	echo ***********

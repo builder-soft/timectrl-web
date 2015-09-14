@@ -1,4 +1,3 @@
-@echo off
 IF "%1" == "" GOTO error
 call ..\msg.cmd "Actualizando estructuras y datos de base de datos"
 	mysql -D%1 -t -u root -padmin --default-character-set=utf8 < update-database.sql

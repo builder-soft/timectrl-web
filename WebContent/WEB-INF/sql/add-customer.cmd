@@ -1,4 +1,3 @@
-@echo off
 IF "%1" == "" GOTO err_handler
 	cls
 	call msg.cmd Version R1.0.0 
@@ -63,7 +62,6 @@ IF "%1" == "" GOTO err_handler
 	cd ..
 	goto end_handler
 :err_handler
-	@echo off
 	echo No se indico nombre de la base de datos, ejecute: 
 	echo $ run-all timectrl
 	

@@ -1,4 +1,3 @@
-@echo off
 echo -- 1.2.8 --
 IF "%1" == "" GOTO error
 call ..\msg.cmd "Creando funciones de sistema..."
