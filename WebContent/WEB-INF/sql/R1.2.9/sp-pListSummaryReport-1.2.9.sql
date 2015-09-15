@@ -26,6 +26,7 @@ BEGIN
 	DECLARE vBusinessDayCount	INTEGER DEFAULT 0;
 	DECLARE vMarkCount			INTEGER DEFAULT 0;
 	DECLARE vDelayCount			INTEGER DEFAULT 0;
+	DECLARE vStartMarkCount		INTEGER DEFAULT 0;
 	DECLARE vExtraTimeAM		INTEGER DEFAULT 0;
 	DECLARE vExtraTimePM		INTEGER DEFAULT 0;
 	DECLARE vI					INTEGER;
@@ -60,6 +61,7 @@ BEGIN
 		cBusinessDayCount	INTEGER DEFAULT 0,
 		cMarkCount			INTEGER DEFAULT 0,
 		cDelayCount			INTEGER DEFAULT 0,
+		cStartMarkCount		INTEGER DEFAULT 0,
 		cExtraTimeAM		INTEGER DEFAULT 0,
 		cExtraTimePM		INTEGER DEFAULT 0,
 		PRIMARY KEY (cId)
@@ -135,8 +137,16 @@ BEGIN
 				IF(NOT vStartMark IS NULL AND NOT vEndMark IS NULL) THEN /* Si Tiene marca de entrada y de salida, suma uno */
 					SET vMarkCount := vMarkCount + 1;
 				END IF;
+
+				IF(NOT vStartMark IS NULL) THEN
+					SET vStartMarkCount = vStartMarkCount + 1;
+				END IF;
 				
-				IF(vStartDiffI<0) THEN
+				if(NOT vStartMark IS NULL AND vEmployeeKey = '119' and month(vCurrent)=6) THEN
+select vStartMark, vStartDiffI;
+END IF;
+
+				IF(vStartDiffI<=0 AND NOT vStartMark IS NULL) THEN
 					SET vDelayCount := vDelayCount + 1;
 				END IF;
 				
@@ -156,6 +166,7 @@ BEGIN
 			cBusinessDayCount = vBusinessDayCount,
 			cMarkCount = vMarkCount,
 			cDelayCount = vDelayCount,
+			cStartMarkCount = vStartMarkCount,
 			cExtraTimeAM = vExtraTimeAM,
 			cExtraTimePM = vExtraTimePM
 		WHERE cId = vI;
@@ -174,7 +185,7 @@ BEGIN
 				CONCAT(cMarkCount, '/', cBusinessDayCount)		AS 'Marcas realizadas',
 				ROUND((cMarkCount*100)/cBusinessDayCount, 0)	AS '% Asistencia',
 				cDelayCount										AS 'Atrasos',
-				ROUND((cDelayCount*100)/cMarkCount, 0)			AS '% Atrasos',
+				ROUND((cDelayCount*100)/cStartMarkCount, 0)			AS '% Atrasos',
 				cExtraTimeAM									AS 'Minutos Extras AM',
 				cExtraTimePM									AS 'Minutos Extras PM'
 		FROM tTemp 
