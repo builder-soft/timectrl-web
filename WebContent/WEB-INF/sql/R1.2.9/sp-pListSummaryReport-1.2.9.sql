@@ -142,10 +142,6 @@ BEGIN
 					SET vStartMarkCount = vStartMarkCount + 1;
 				END IF;
 				
-				if(NOT vStartMark IS NULL AND vEmployeeKey = '119' and month(vCurrent)=6) THEN
-select vStartMark, vStartDiffI;
-END IF;
-
 				IF(vStartDiffI<=0 AND NOT vStartMark IS NULL) THEN
 					SET vDelayCount := vDelayCount + 1;
 				END IF;
