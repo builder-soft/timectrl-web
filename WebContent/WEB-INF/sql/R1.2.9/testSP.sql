@@ -4,4 +4,6 @@
 #call pAbsence('2015-07-03');
 #call pAbsence('2015-07-04');
 
-call pListSummaryReport(84, '82,86,87,88,81,85', 6, 2015, 9, 2015);
+#call pListSummaryReport(84, '82,86,87,88,81,85', 6, 2015, 9, 2015);
+
+call pTopAbsence('2015-05-01', '2015-05-31', 10);
