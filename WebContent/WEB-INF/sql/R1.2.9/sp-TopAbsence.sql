@@ -27,14 +27,13 @@ BEGIN
 			LEAVE cursorEmployee_loop;
 		END IF;
 
-		IF NOT EXISTS(SELECT cDate FROM tAttendanceLog WHERE DATE(cDate) BETWEEN vStartDate AND vEndDate AND cEmployeeKey = vKey) THEN
-			
+		#IF NOT EXISTS(SELECT cDate FROM tAttendanceLog WHERE DATE(cDate) BETWEEN vStartDate AND vEndDate AND cEmployeeKey = vKey) THEN
 		    INSERT INTO tEmployee_temp(idEmployee, absenceCount) 
 		    	VALUES(vId, 
 		    		(SELECT count(cId) FROM tAttendanceLog WHERE cEmployeeKey = vKey)
 		    	
 		    	);
-		END IF;
+		#END IF;
 		
 	END LOOP cursorEmployee_loop;
 	CLOSE cursorEmployee;
@@ -57,7 +56,17 @@ BEGIN
 	ORDER BY a.cName;
 	
 	*/
-	select * from tEmployee_temp order by absenceCount;
+#	select * from tEmployee_temp order by absenceCount;
+#	select * from tAttendanceLog where DATE(cDate) BETWEEN vStartDate AND vEndDate;
+
+
+select count(a.ckey) # a.cid, a.ckey, b.*
+from tEmployee AS a LEFT JOIN tAttendanceLog AS b ON a.cKey = b.cEmployeeKey and b.cDate = null
+#group by a.ckey
+order by a.cId;
+
+select count(*) from tEmployee;
+
 	
 	DROP TEMPORARY TABLE IF EXISTS tEmployee_temp;
 END$$
