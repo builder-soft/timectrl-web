@@ -6,6 +6,9 @@ CREATE PROCEDURE pTopAbsence(IN vStartDate DATE, IN vEndDate DATE, IN vTop INTEG
 BEGIN
 	DECLARE vId		BIGINT(20);
 	DECLARE vKey 	VARCHAR(15);
+	DECLARE vCurrent	DATE;
+	DECLARE vCount	INTEGER;
+	DECLARE vCountTemp	INTEGER;
 	DECLARE vDone BOOLEAN DEFAULT FALSE;
 	DECLARE cursorEmployee CURSOR FOR
 		SELECT	cId, cKey
@@ -28,17 +31,34 @@ BEGIN
 		END IF;
 
 		#IF NOT EXISTS(SELECT cDate FROM tAttendanceLog WHERE DATE(cDate) BETWEEN vStartDate AND vEndDate AND cEmployeeKey = vKey) THEN
-		    INSERT INTO tEmployee_temp(idEmployee, absenceCount) 
-		    	VALUES(vId, 
-		    		(SELECT count(cId) FROM tAttendanceLog WHERE cEmployeeKey = vKey)
-		    	
-		    	);
+		
+		SET vCount = 0;
+		SET vCurrent = vStartDate;
+		WHILE vCurrent < vEndDate DO
+#select 1;
+#			SELECT count(cId) INTO vCountTemp
+#			FROM tAttendanceLog 
+#			WHERE DATE(vCurrent) = DATE(cDate) AND cEmployeeKey = vKey;
+			
+#			IF (vCountTemp = 0) THEN
+#				SET vCount = vCount + 1;
+#			END IF;
+			
+			IF NOT EXISTS(SELECT cId FROM tAttendanceLog WHERE DATE(vCurrent) = DATE(cDate) AND cEmployeeKey = vKey) THEN
+				SET vCount = vCount + 1;
+			END IF;
+
+#			select vCount ;
+
+			SET vCurrent = DATE_ADD(vCurrent, INTERVAL 1 DAY);
+		END WHILE;
+				
+	    INSERT INTO tEmployee_temp(idEmployee, absenceCount) 
+	    	VALUES(vId, vCount);
 		#END IF;
 		
 	END LOOP cursorEmployee_loop;
 	CLOSE cursorEmployee;
-	
-	
 	
 	/**
 	SELECT	a.cId			AS 'Id Empleado',
@@ -56,18 +76,27 @@ BEGIN
 	ORDER BY a.cName;
 	
 	*/
-#	select * from tEmployee_temp order by absenceCount;
+	select b.cId			AS 'Id Empleado',
+			b.cRut			AS 'RUT',
+			b.cName			AS 'Nombre',
+			a.absenceCount	AS 'Inasistencias'
+	from tEmployee_temp AS a
+		LEFT JOIN tEmployee AS b ON a.idEmployee = b.cId
+#		LEFT JOIN tAttendanceLog AS c ON b.cKey = c.cEmployeeKey 
+	order by absenceCount desc 
+	LIMIT vTop;
+
+#	select * from tEmployee_temp order by idEmployee;
+
 #	select * from tAttendanceLog where DATE(cDate) BETWEEN vStartDate AND vEndDate;
 
-
-select count(a.ckey) # a.cid, a.ckey, b.*
-from tEmployee AS a LEFT JOIN tAttendanceLog AS b ON a.cKey = b.cEmployeeKey and b.cDate = null
+#select count(a.ckey) # a.cid, a.ckey, b.*
+#from tEmployee AS a LEFT JOIN tAttendanceLog AS b ON a.cKey = b.cEmployeeKey and b.cDate = null
 #group by a.ckey
-order by a.cId;
+#order by a.cId;
 
-select count(*) from tEmployee;
+#select count(*) from tEmployee;
 
-	
 	DROP TEMPORARY TABLE IF EXISTS tEmployee_temp;
 END$$
 
