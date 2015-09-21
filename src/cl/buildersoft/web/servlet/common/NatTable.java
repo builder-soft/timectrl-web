@@ -44,7 +44,7 @@ public class NatTable extends BSHttpServlet {
 		String sql = getSQL(action, table);
 
 		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(request);
+		Connection conn =  getConnection(request);
 
 		ResultSet relation = getRelation(id, sql, mysql, conn);
 		request.setAttribute("Relation", relation);

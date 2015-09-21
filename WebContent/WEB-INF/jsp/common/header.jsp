@@ -144,9 +144,10 @@
 							}
 						%>
 				</select> <%
- 		}
+ 		
  		} else {
- %> &nbsp;${sessionScope.Domain.alias} <%
+ %> &nbsp;${sessionScope.Domain.name} <%
+ 		}
  	}
  %>
 			</span>&nbsp;&nbsp;|&nbsp;&nbsp; <span class="cLabel">Usuario:</span><span

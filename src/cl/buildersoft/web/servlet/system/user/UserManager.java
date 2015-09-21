@@ -72,7 +72,7 @@ public class UserManager extends HttpServletCRUD {
 
 		Domain domain = (Domain) session.getAttribute("Domain");
 
-		rolRelation.setNatTable(domain.getName(), "tR_UserRol", domain.getName(), "tRol");
+		rolRelation.setNatTable(domain.getAlias(), "tR_UserRol", domain.getAlias(), "tRol");
 		rolRelation.setLabel("Roles de usuario");
 		table.addAction(rolRelation);
 
