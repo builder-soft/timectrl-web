@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TopAbsence" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5785417b-01d7-4613-a8b3-3df6643c7fba">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="StartDate" class="java.util.Date"/>
+	<parameter name="EndDate" class="java.util.Date"/>
+	<parameter name="Top" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[call pTopAbsence($P{StartDate},$P{EndDate},$P{Top} )]]>
+	</queryString>
+	<field name="cId" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cEmployeeRut" class="java.lang.String"/>
+	<field name="cEmployeeName" class="java.lang.String"/>
+	<field name="cEmployeePost" class="java.lang.String"/>
+	<field name="cEmployeeArea" class="java.lang.String"/>
+	<field name="cAbsenceCount" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="47" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="75" y="3" width="100" height="20" uuid="8f19ed03-7a5e-485f-980a-9c6a57bc46e1"/>
+				<textFieldExpression><![CDATA[$P{StartDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="3" width="74" height="20" uuid="59fa885a-1c3c-4c9b-99f1-e7d5bd374925"/>
+				<text><![CDATA[Fecha Inicio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="23" width="74" height="20" uuid="bfeffa67-4ccc-4702-b36c-6a8fea3e5c05"/>
+				<text><![CDATA[Fecha Termino]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="75" y="23" width="100" height="20" uuid="ad8a9d10-b105-4b83-8828-0092b91e37c2"/>
+				<textFieldExpression><![CDATA[$P{EndDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="208" y="4" width="86" height="19" uuid="aae36a5d-c25d-4fe9-a9ae-b1380d921e41"/>
+				<text><![CDATA[Selección Top]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="301" y="5" width="100" height="20" uuid="fea4d73f-25b1-43cc-8a12-dd7c0576841e"/>
+				<textFieldExpression><![CDATA[$P{Top}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="75" height="15" uuid="f7348dc8-94c2-4e40-b15d-ede5205685d5"/>
+				<text><![CDATA[Rut]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="0" width="195" height="15" uuid="f4b13ca1-5c98-4f93-b55c-62af32134de3"/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="294" y="0" width="90" height="15" uuid="8a1b07ad-2028-46c1-867f-a220653f22ec"/>
+				<text><![CDATA[Cargo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="384" y="0" width="103" height="15" uuid="6b3b3d92-e783-48a3-8998-d88f63b99931"/>
+				<text><![CDATA[Area]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="491" y="0" width="63" height="15" uuid="a093d6f7-5faa-4df1-943e-26efd8f98f2f"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Inasistencias]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="15" width="554" height="1" uuid="8c43701c-7470-4433-8009-af3c0c4ff7a9"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="0" width="74" height="18" uuid="4efdf609-7172-43da-8cd5-7c3bfc90ae40"/>
+				<textFieldExpression><![CDATA[$F{cEmployeeRut}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="99" y="0" width="195" height="18" uuid="5cb09fcc-3167-4783-a5fb-2a9902ba8969"/>
+				<textFieldExpression><![CDATA[$F{cEmployeeName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="294" y="0" width="90" height="18" uuid="23ed8ea4-33e2-46b2-9597-2702a0d229c3"/>
+				<textFieldExpression><![CDATA[$F{cEmployeePost}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="384" y="0" width="103" height="18" uuid="e684b8de-2b6a-4287-9541-213f07bec647"/>
+				<textFieldExpression><![CDATA[$F{cEmployeeArea}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="491" y="0" width="63" height="18" uuid="0004375b-a347-4691-8b07-a105c446c4d6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{cAbsenceCount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="41" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
