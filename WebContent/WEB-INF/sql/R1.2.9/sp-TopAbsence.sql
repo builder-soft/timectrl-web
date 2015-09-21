@@ -76,14 +76,17 @@ BEGIN
 	ORDER BY a.cName;
 	
 	*/
-	select b.cId			AS 'Id Empleado',
-			b.cRut			AS 'RUT',
-			b.cName			AS 'Nombre',
-			a.absenceCount	AS 'Inasistencias'
-	from tEmployee_temp AS a
+	SELECT b.cId			AS cId,
+			b.cRut			AS cEmployeeRut,
+			b.cName			AS cEmployeeName,
+			c.cName			AS cEmployeePost,
+			d.cName			AS cEmployeeArea,
+			a.absenceCount	AS cAbsenceCount		
+	FROM tEmployee_temp AS a
 		LEFT JOIN tEmployee AS b ON a.idEmployee = b.cId
-#		LEFT JOIN tAttendanceLog AS c ON b.cKey = c.cEmployeeKey 
-	order by absenceCount desc 
+		LEFT JOIN tPost AS c ON b.cPost = c.cId
+		LEFT JOIN tArea AS d ON b.cArea = d.cId
+	ORDER BY absenceCount DESC 
 	LIMIT vTop;
 
 #	select * from tEmployee_temp order by idEmployee;

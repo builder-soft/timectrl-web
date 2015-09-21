@@ -11,3 +11,5 @@ UPDATE tReportParameterType SET cSource='cl.buildersoft.timectrl.business.servic
 
 DROP INDEX AttendanceLog_index_MarkType ON tAttendanceLog;
 ALTER TABLE tAttendanceLog ADD INDEX AttendanceLog_index_MarkType (cMarkType ASC);
+
+insert into treportparametertype( cKey, cName, cHTMLFile, cSource, cJavaType) VALUES('INTEGER', 'Valor Entero', 'Integer.jsp','', 'INTEGER');

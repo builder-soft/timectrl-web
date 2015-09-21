@@ -6,4 +6,6 @@
 
 #call pListSummaryReport(84, '82,86,87,88,81,85', 6, 2015, 9, 2015);
 
-call pTopAbsence('2015-05-01', '2015-05-15', 2000);
+#select count(cid)/2 from temployee;
+
+call pTopAbsence('2015-05-01', '2015-05-15', 576/2);
