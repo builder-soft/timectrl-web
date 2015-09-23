@@ -18,7 +18,6 @@ public class DeleteRecords extends AbstractServletUtil {
 	private static final long serialVersionUID = -2340853411641380529L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		HttpSession session = request.getSession();
 		BSTableConfig table = null;
 		synchronized (session) {

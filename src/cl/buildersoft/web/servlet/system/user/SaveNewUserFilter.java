@@ -39,7 +39,7 @@ public class SaveNewUserFilter implements Filter  {
 			domain = (Domain) session.getAttribute("Domain");
 		}
 
-		if (!userAdmin(user) && table != null) {
+		if (!userAdmin(user) && table != null && table.getTableName().equalsIgnoreCase("tUser")) {
 			Long domainId = domain.getId();
 			Long newUserId = (Long) servletRequest.getAttribute("cId");
 
