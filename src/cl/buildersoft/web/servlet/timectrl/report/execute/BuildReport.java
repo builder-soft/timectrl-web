@@ -47,8 +47,6 @@ public class BuildReport extends BSHttpServlet {
 		List<ReportPropertyBean> reportPropertyList = reportService.loadReportProperties(conn, report.getId());
 		reportService.fillParameters(reportParameterList, parameters);
 
-		processEmployeeParameter(conn, reportParameterList);
-
 		List<String> responseList = reportService.execute(conn, report.getId(), reportType, reportPropertyList,
 				reportParameterList);
 		new BSmySQL().closeConnection(conn);
@@ -70,29 +68,7 @@ public class BuildReport extends BSHttpServlet {
 		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/show-resonse.jsp");
 	}
 
-	private void processEmployeeParameter(Connection conn, List<ReportParameterBean> reportParameterList) {
-		for (ReportParameterBean parameter : reportParameterList) {
-			//System.out.println(parameter.toString());
-			if (parameter.getTypeKey().equalsIgnoreCase("EMPLOYEE_LIST") && parameter.getValue().equals("0")) {
-				replaceZeroWithAllIds(conn, parameter);
-			}
-		}
-
-	}
-
-	private void replaceZeroWithAllIds(Connection conn, ReportParameterBean parameter) {
-		BSBeanUtils bu = new BSBeanUtils();
-		String newValue = "";
-
-		List<Employee> employeeList = (List<Employee>) bu.listAll(conn, new Employee());
-		String[] idsArray = new String[employeeList.size()];
-		Integer index = 0;
-		for (Employee employee : employeeList) {
-			idsArray[index++] = employee.getId().toString();
-		}
-		newValue = BSUtils.unSplitString(idsArray, ",");
-		parameter.setValue(newValue);
-	}
+	
 
 	private ReportType getReportType(Connection conn, Report report) {
 		ReportType reportType = new ReportType();
