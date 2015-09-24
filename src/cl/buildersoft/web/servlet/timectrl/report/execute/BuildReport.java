@@ -16,6 +16,8 @@ import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.util.BSUtils;
+import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
 import cl.buildersoft.timectrl.business.beans.ReportPropertyBean;
@@ -39,14 +41,16 @@ public class BuildReport extends BSHttpServlet {
 
 		ReportService reportService = getInstance(reportType);
 
-		List<ReportParameterBean> reportInputParamList = reportService.loadParameter(conn, report.getId());
-		List<String> parameters = readParametersFromPage(reportInputParamList, request);
+		List<ReportParameterBean> reportParameterList = reportService.loadParameter(conn, report.getId());
+		List<String> parameters = readParametersFromPage(reportParameterList, request);
 
 		List<ReportPropertyBean> reportPropertyList = reportService.loadReportProperties(conn, report.getId());
-		reportService.fillParameters(reportInputParamList, parameters);
+		reportService.fillParameters(reportParameterList, parameters);
+
+		processEmployeeParameter(conn, reportParameterList);
 
 		List<String> responseList = reportService.execute(conn, report.getId(), reportType, reportPropertyList,
-				reportInputParamList);
+				reportParameterList);
 		new BSmySQL().closeConnection(conn);
 
 		Map<Integer, String> responseMap = new HashMap<Integer, String>();
@@ -66,6 +70,30 @@ public class BuildReport extends BSHttpServlet {
 		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/show-resonse.jsp");
 	}
 
+	private void processEmployeeParameter(Connection conn, List<ReportParameterBean> reportParameterList) {
+		for (ReportParameterBean parameter : reportParameterList) {
+			//System.out.println(parameter.toString());
+			if (parameter.getTypeKey().equalsIgnoreCase("EMPLOYEE_LIST") && parameter.getValue().equals("0")) {
+				replaceZeroWithAllIds(conn, parameter);
+			}
+		}
+
+	}
+
+	private void replaceZeroWithAllIds(Connection conn, ReportParameterBean parameter) {
+		BSBeanUtils bu = new BSBeanUtils();
+		String newValue = "";
+
+		List<Employee> employeeList = (List<Employee>) bu.listAll(conn, new Employee());
+		String[] idsArray = new String[employeeList.size()];
+		Integer index = 0;
+		for (Employee employee : employeeList) {
+			idsArray[index++] = employee.getId().toString();
+		}
+		newValue = BSUtils.unSplitString(idsArray, ",");
+		parameter.setValue(newValue);
+	}
+
 	private ReportType getReportType(Connection conn, Report report) {
 		ReportType reportType = new ReportType();
 		BSBeanUtils bu = new BSBeanUtils();
@@ -79,8 +107,9 @@ public class BuildReport extends BSHttpServlet {
 	public ReportService getInstance(ReportType reportType) {
 		BuildReport3 br3 = new BuildReport3();
 		return br3.getInstance(reportType);
-		
-		/**<code>
+
+		/**
+		 * <code>
 		ReportService instance = null;
 		try {
 			Class<ReportService> javaClass = (Class<ReportService>) Class.forName(reportType.getJavaClass());
@@ -90,7 +119,8 @@ public class BuildReport extends BSHttpServlet {
 			throw new BSProgrammerException(e);
 		}
 		return instance;
-</code>*/
+</code>
+		 */
 	}
 
 	private List<String> readParametersFromPage(List<ReportParameterBean> reportInputParamList, HttpServletRequest request) {

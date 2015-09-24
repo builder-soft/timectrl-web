@@ -2,7 +2,7 @@ DROP PROCEDURE IF EXISTS pAbsence2;
 
 DELIMITER $$
 
-CREATE PROCEDURE pAbsence2(IN vStartDate DATE, IN vEndDate DATE, IN vEmployees VARCHAR(2000))
+CREATE PROCEDURE pAbsence2(IN vStartDate DATE, IN vEndDate DATE, IN vEmployees VARCHAR(3000))
 BEGIN
 	DECLARE vId		BIGINT(20);
 	DECLARE vKey 	VARCHAR(15);
@@ -30,7 +30,7 @@ BEGIN
 		END IF;
 
 		SET vCurrent = vStartDate;
-		WHILE vCurrent < vEndDate DO
+		WHILE vCurrent <= vEndDate DO
 			
 			IF NOT EXISTS(SELECT cId FROM tAttendanceLog WHERE DATE(vCurrent) = DATE(cDate) AND cEmployeeKey = vKey) THEN
 				INSERT INTO tEmployee_temp(idEmployee, absenceDate) VALUES(vId, DATE(vCurrent));
@@ -43,19 +43,19 @@ BEGIN
 	CLOSE cursorEmployee;
 	
 	
-	SET @vSQL = 'SELECT b.cId			AS cId, ';
-	SET @vSQL = CONCAT(@vSQL, 'b.cRut			AS cEmployeeRut, ');
-	SET @vSQL = CONCAT(@vSQL, 'b.cName			AS cEmployeeName, ');
-	SET @vSQL = CONCAT(@vSQL, 'c.cName			AS cEmployeePost, ');
-	SET @vSQL = CONCAT(@vSQL, 'd.cName			AS cEmployeeArea, ');
-	SET @vSQL = CONCAT(@vSQL, 'a.absenceDate	AS cAbsenceDate, ');
-	SET @vSQL = CONCAT(@vSQL, 'fGetLicenseCause(a.absenceDate, b.cId) AS cCause ');
+	SET @vSQL = 'SELECT b.cId			AS Id, ';
+	SET @vSQL = CONCAT(@vSQL, 'a.absenceDate	AS Fecha, ');
+	SET @vSQL = CONCAT(@vSQL, 'b.cRut			AS Rut, ');
+	SET @vSQL = CONCAT(@vSQL, 'b.cName			AS Nombre, ');
+	SET @vSQL = CONCAT(@vSQL, 'c.cName			AS Cargo, ');
+	SET @vSQL = CONCAT(@vSQL, 'd.cName			AS Area, ');
+	SET @vSQL = CONCAT(@vSQL, 'fGetLicenseCause(a.absenceDate, b.cId) AS Causa ');
 	SET @vSQL = CONCAT(@vSQL, 'FROM tEmployee_temp AS a ');
 	SET @vSQL = CONCAT(@vSQL, 'LEFT JOIN tEmployee AS b ON a.idEmployee = b.cId ');
 	SET @vSQL = CONCAT(@vSQL, 'LEFT JOIN tPost AS c ON b.cPost = c.cId ');
 	SET @vSQL = CONCAT(@vSQL, 'LEFT JOIN tArea AS d ON b.cArea = d.cId ');
 	SET @vSQL = CONCAT(@vSQL, 'WHERE b.cId IN (',vEmployees,') ');
-	SET @vSQL = CONCAT(@vSQL, 'ORDER BY b.cName DESC; ');
+	SET @vSQL = CONCAT(@vSQL, 'ORDER BY a.absenceDate, b.cName ; ');
 
 #	select @vSQL;
 		PREPARE smpt FROM @vSQL;
