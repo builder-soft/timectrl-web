@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,12 +17,13 @@ import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.services.BSMenuService;
 import cl.buildersoft.framework.services.impl.BSMenuServiceImpl;
+import cl.buildersoft.framework.util.BSHttpServlet;
 
 /**
  * Servlet implementation class RoleDef
  */
 @WebServlet("/servlet/system/roleDef/RoleDef")
-public class RoleDef extends HttpServlet {
+public class RoleDef extends BSHttpServlet {
 	private static final long serialVersionUID = 111140893680994718L;
 
 	public RoleDef() {
@@ -32,7 +32,7 @@ public class RoleDef extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(request);
+		Connection conn = getConnection(request);
 
 		String sql = "SELECT cId, cName FROM tRol";
 		ResultSet rolsResultSet = mysql.queryResultSet(conn, sql, null);
@@ -43,8 +43,8 @@ public class RoleDef extends HttpServlet {
 
 		BSMenuService menuService = new BSMenuServiceImpl();
 
-		Menu fullMenu = menuService.getMenu(conn, null);
-		Menu rolMenu = menuService.getMenu(conn, rols);
+		Menu fullMenu = menuService.getMenu(conn, getCurrentUser(request).getAdmin(), null);
+		Menu rolMenu = menuService.getMenu(conn, getCurrentUser(request).getAdmin(), rols);
 		mysql.closeConnection(conn);
 
 		// System.out.println(rolMenu.list().toString());
