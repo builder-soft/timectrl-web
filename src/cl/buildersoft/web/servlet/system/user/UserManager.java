@@ -25,9 +25,11 @@ public class UserManager extends HttpServletCRUD {
 
 		Boolean isAdmin = null;
 		User user = null;
+		Domain domain = null;
 		BSTableConfig table = null;
 		synchronized (session) {
 			user = (User) session.getAttribute("User");
+			domain = (Domain) session.getAttribute("Domain");
 			isAdmin = user.getAdmin();
 		}
 
@@ -36,9 +38,10 @@ public class UserManager extends HttpServletCRUD {
 			table = new BSTableConfig("bsframework", "tUser", "vUserAdmin");
 			table.setSaveSP("bsframework.pSaveUserAdmin");
 		} else {
-			table = new BSTableConfig("bsframework", "tUser", "vUser");
+			table = new BSTableConfig(domain.getAlias(), "tUser", "vUser");
 			table.setSaveSP("bsframework.pSaveUser");
 		}
+		
 		table.setTitle("Usuarios del sistema");
 		table.setDeleteSP("pDeleteUser");
 
@@ -70,7 +73,7 @@ public class UserManager extends HttpServletCRUD {
 
 		BSAction rolRelation = new BSAction("ROL_RELATION", null);
 
-		Domain domain = (Domain) session.getAttribute("Domain");
+//		Domain domain = (Domain) session.getAttribute("Domain");
 
 		rolRelation.setNatTable(domain.getAlias(), "tR_UserRol", domain.getAlias(), "tRol");
 		rolRelation.setLabel("Roles de usuario");

@@ -9,11 +9,14 @@ update toption set cIsAdmin = true where cKey = 'DOMAIN_MGR';
 update toption set cIsAdmin = true where cKey = 'DOMAIN_ATTR_MGR';
 
 DROP VIEW IF EXISTS bsframework.vUser;
-CREATE VIEW bsframework.vUser
+
+DROP VIEW IF EXISTS vUser;
+CREATE VIEW vUser
 AS
-		SELECT		a.cId, a.cMail, a.cName 
+		SELECT	a.cId, a.cMail, a.cName 
 		FROM 		bsframework.tUser AS a
-	#	LEFT JOIN	tR_UserDomain AS b ON a.cId = b.cUser
-		WHERE		!a.cAdmin;
- 
+		LEFT JOIN	bsframework.tR_UserDomain AS b ON a.cId = b.cUser
+		LEFT JOIN	bsframework.tDomain AS c ON b.cDomain = c.cId 
+		WHERE		!a.cAdmin AND c.cAlias = DATABASE();
+
 		
