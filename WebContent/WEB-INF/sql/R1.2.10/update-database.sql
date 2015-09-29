@@ -20,3 +20,11 @@ AS
 		WHERE		!a.cAdmin AND c.cAlias = DATABASE();
 
 		
+CREATE TABLE IF NOT EXISTS tVersion (
+	cId				BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    cKey			VARCHAR(3) NOT NULL COMMENT 'Identificador del elemento versionado',
+    cVersion		VARCHAR(12) NOT NULL COMMENT 'Numero de version N.NN.NN-XXXX',
+    cUpdated		DATETIME NOT NULL COMMENT 'Fecha de actualizacion'
+) ENGINE=innoDB;
+
+INSERT INTO tVersion(cKey, cVersion, cUpdated) VALUES('DBT','1.2.10',now());
