@@ -3,4 +3,5 @@
 #call pAbsence2('2015-09-01', '2015-09-30', '1,2');
 
 
-select * from bsframework.tUser;
+call pListAttendance3(10, '2014-12-12', '2014-12-12');
+
