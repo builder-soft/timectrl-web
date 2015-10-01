@@ -56,7 +56,9 @@
 		<td class='cDataTD' style='<%=style%>' align="center"><%=turnDay.getEndTime()%></td>
 		<td class='cDataTD' style='<%=style%>'><%=turnDay.getEdgePostOut()%></td>
 
-		<td class='cDataTD'><button
+		<td class='cDataTD'>
+		<button onclick="javascript:editTurn(<%=turnDay.getId() %>, <%=current%>)">Editar</button>
+		<button
 				onclick="deleteTurnDay(<%=turnDay.getId()%>, <%=turnDay.getDay()%>, <%=turn.getId()%>)">Borrar</button>
 			<%
 				if (current == size) {
@@ -92,34 +94,7 @@
 
 </form>
 
-<!--  
-<form id='deleteForm' method="post"
-	action='${pageContext.request.contextPath}/servlet/timectrl/turns/DeleteTurn'>
-	<input type="hidden" > 
-</form>
--->
-
-<!-- 
-<div id="divShowDetail" style="display: none">
-	<h2 class="cTitle2">Detalle de valores</h2>
-
-	<div class="contentScroll">
-		<table class="cList" cellpadding="0" cellspacing="0" id="movesTable">
-			<tr>
-				<td class="cHeadTD">Detalle</td>
-				<td class="cHeadTD">Comentario</td>
-				<td class="cHeadTD">Tipo</td>
-				<td class="cHeadTD">Monto</td>
-			</tr>
-		</table>
-	</div>
-	<br /> 
-
-	<input type="button" value="Cancelar"
-		onclick="javascript:closeTooltip()" />
-
-</div>
- -->
+ 
 
 <%@ include file="/WEB-INF/jsp/common/footer.jsp"%>
 

@@ -63,29 +63,9 @@ function changeBusinessDay(businessDay) {
 		document.getElementById(names[index]).disabled = !businessDay.checked;
 		document.getElementById(names[index]).style.textDecoration = style;
 	}
-
-	/**
-	 * <code>
-	if (input.checked) {
-		document.getElementById("DStartTime").disabled = false;
-		document.getElementById("DStartTime").style = "";
-		document.getElementById("DEndTime").disabled = false;
-		document.getElementById("DEndTime").style = "";
-
-	} else {
-		document.getElementById("DStartTime").disabled = true;
-		document.getElementById("DStartTime").style = "text-decoration:line-through";
-		document.getElementById("DEndTime").disabled = true;
-		document.getElementById("DEndTime").style = "text-decoration:line-through";
-	}
-	</code>
-	 */
 }
 
 function cancelAdd(index) {
-	// ver row = document.getElementById("detailTable").rows(index);
-
-	// $(row).fadeOut(speed);
 	$("#addButton").fadeIn(speed);
 
 	document.getElementById("detailTable").deleteRow(index);
@@ -95,21 +75,9 @@ function acceptNew(parentId) {
 	document.getElementById("Parent").value = parentId;
 
 	var names = [ "Day", "StartTime", "EndTime", "EdgePrevIn", "EdgePostIn", "EdgePrevOut", "EdgePostOut"];
-	for ( var index in names) {
+	for (var index in names) {
 		document.getElementById(names[index]).value = document.getElementById("D" + names[index]).value;
 	}
-	/**
-	 * <code>	
-	 document.getElementById("Day").value = document.getElementById("DDay").value;
-	
-	 document.getElementById("EdgePrevIn").value = document.getElementById("DEdgePrevIn").value;
-	 document.getElementById("StartTime").value = document.getElementById("DStartTime").value;
-	 document.getElementById("EdgePostIn").value = document.getElementById("DEdgePostIn").value;
-	
-	 document.getElementById("EndTime").value = document.getElementById("DEndTime").value;
-	
-	 </code>
-	 */
 	document.getElementById("BusinessDay").value = document.getElementById("DBusinessDay").checked;
 
 	document.getElementById("form").action = contextPath + "/servlet/timectrl/turns/SaveNewHorary";
@@ -134,4 +102,29 @@ function copyDay(turnDay, parent) {
 
 	document.getElementById("form").action = contextPath + "/servlet/timectrl/turns/CopyTurn";
 	document.getElementById("form").submit();
+}
+
+function editTurn(id, current){
+	$.ajax({
+		type : "GET",
+		cache : false,
+		url : contextPath + '/servlet/timectrl/turns/GetTurnDayAjax',
+		data : {
+			Id : id,
+			currentRow : current
+		},
+		async : true,
+		success : retrieveData,
+		error : function(data, textStatus, xhr) {
+			alert('Error: ' + xhr);
+
+		}
+	});
+}
+
+function retrieveData(data){
+	var row = document.getElementById("detailTable").rows[data.currentRow];
+	alert(row.innerHTML);
+	
+	
 }
