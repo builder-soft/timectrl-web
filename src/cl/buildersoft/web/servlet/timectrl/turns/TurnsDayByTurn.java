@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Turn;
 import cl.buildersoft.timectrl.business.beans.TurnDay;
@@ -20,11 +19,12 @@ public class TurnsDayByTurn extends BSHttpServlet {
 	private static final long serialVersionUID = -8708209647234498026L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Long id = Long.parseLong(getId(request));
+		Long id = Long.parseLong (readParameterOrAttribute(request, "cId"));
+//		Long id = Long.parseLong(getId(request));
+		
 
 		BSBeanUtils bu = new BSBeanUtils();
 
-//		BSmySQL mysql = new BSmySQL();
 		Connection conn = getConnection(request);
 
 		TurnDay turnDay = new TurnDay();
@@ -34,15 +34,12 @@ public class TurnsDayByTurn extends BSHttpServlet {
 		turn.setId(id);
 		bu.search(conn, turn);
 
-		// List<TurnDay> turnDays = bu.search(conn, turnDay, "", id);
+		closeConnection(conn);
 
 		request.setAttribute("TurnDays", turnDays);
 		request.setAttribute("Turn", turn);
 
 		forward(request, response, "/WEB-INF/jsp/timectrl/employee/turns-detail.jsp");
-		// request.getRequestDispatcher("/WEB-INF/jsp/timectrl/read-turns.jsp").forward(request,
-		// response);
-
 	}
 
 	private String getId(HttpServletRequest request) {
