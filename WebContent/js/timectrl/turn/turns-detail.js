@@ -12,39 +12,41 @@ function addNew(parentId) {
 
 	var cell = row.insertCell(col++);
 	cell.className = 'cDataTD';
-	cell.innerHTML = "<input type='hidden' readonly='true' id='DDay' value='" + currentRow + "'>" + currentRow;
+	cell.innerHTML = "<input type='hidden' readonly='true' id='DDay' value='"
+			+ currentRow + "'>" + currentRow;
 
-	var cell = row.insertCell(col++);
+	cell = row.insertCell(col++);
 	cell.className = 'cDataTD';
 	cell.innerHTML = "<input type='checkbox' id='DBusinessDay' checked='true' onclick='javascript:changeBusinessDay(this)'>";
 
-	var cell = row.insertCell(col++);
+	cell = row.insertCell(col++);
 	cell.className = 'cDataTD';
 	cell.innerHTML = "<input type='text' maxlength='5' id='DEdgePrevIn' value='0' size='5'>";
 
-	var cell = row.insertCell(col++);
+	cell = row.insertCell(col++);
 	cell.className = 'cDataTD';
 	cell.innerHTML = "<input type='time' maxlength='5' id='DStartTime' value='00:00'>";
 
-	var cell = row.insertCell(col++);
+	cell = row.insertCell(col++);
 	cell.className = 'cDataTD';
 	cell.innerHTML = "<input type='text' maxlength='5' id='DEdgePostIn' value='0' size='5'>";
 
-	var cell = row.insertCell(col++);
+	cell = row.insertCell(col++);
 	cell.className = 'cDataTD';
 	cell.innerHTML = "<input type='text' maxlength='5' id='DEdgePrevOut' value='0' size='5'>";
 
-	var cell = row.insertCell(col++);
+	cell = row.insertCell(col++);
 	cell.className = 'cDataTD';
 	cell.innerHTML = "<input type='time' maxlength='5' id='DEndTime' value='00:00'>";
 
-	var cell = row.insertCell(col++);
+	cell = row.insertCell(col++);
 	cell.className = 'cDataTD';
 	cell.innerHTML = "<input type='text' maxlength='5' id='DEdgePostOut' value='0' size='5'>";
 
-	var cell = row.insertCell(col++);
+	cell = row.insertCell(col++);
 	cell.className = 'cDataTD';
-	cell.innerHTML = "<button onclick='acceptNew(" + parentId + ")'>Aceptar</button>" + "<button onclick='cancelAdd("
+	cell.innerHTML = "<button onclick='acceptNew(" + parentId
+			+ ")'>Aceptar</button>" + "<button onclick='cancelAdd("
 			+ currentRow + ")'>Cancelar</button>";
 
 	$("#addButton").fadeOut(speed);
@@ -53,13 +55,14 @@ function addNew(parentId) {
 
 function changeBusinessDay(businessDay) {
 	var style = "";
-	var names = [ "DStartTime", "DEndTime", "DEdgePrevIn", "DEdgePostIn", "DEdgePrevOut", "DEdgePostOut" ];
+	var names = [ "DStartTime", "DEndTime", "DEdgePrevIn", "DEdgePostIn",
+			"DEdgePrevOut", "DEdgePostOut" ];
 
 	if (!businessDay.checked) {
 		style = "line-through";
 	}
 
-	for (var index in names) {
+	for ( var index in names) {
 		document.getElementById(names[index]).disabled = !businessDay.checked;
 		document.getElementById(names[index]).style.textDecoration = style;
 	}
@@ -74,13 +77,17 @@ function cancelAdd(index) {
 function acceptNew(parentId) {
 	document.getElementById("Parent").value = parentId;
 
-	var names = [ "Day", "StartTime", "EndTime", "EdgePrevIn", "EdgePostIn", "EdgePrevOut", "EdgePostOut"];
-	for (var index in names) {
-		document.getElementById(names[index]).value = document.getElementById("D" + names[index]).value;
+	var names = [ "Day", "StartTime", "EndTime", "EdgePrevIn", "EdgePostIn",
+			"EdgePrevOut", "EdgePostOut" ];
+	for ( var index in names) {
+		document.getElementById(names[index]).value = document
+				.getElementById("D" + names[index]).value;
 	}
-	document.getElementById("BusinessDay").value = document.getElementById("DBusinessDay").checked;
+	document.getElementById("BusinessDay").value = document
+			.getElementById("DBusinessDay").checked;
 
-	document.getElementById("form").action = contextPath + "/servlet/timectrl/turns/SaveNewHorary";
+	document.getElementById("form").action = contextPath
+			+ "/servlet/timectrl/turns/SaveNewHorary";
 	document.getElementById("form").submit();
 }
 
@@ -91,7 +98,8 @@ function deleteTurnDay(id, rowId, parent) {
 		document.getElementById("Parent").value = parent;
 		document.getElementById("TurnDay").value = id;
 
-		document.getElementById("form").action = contextPath + "/servlet/timectrl/turns/DeleteTurn";
+		document.getElementById("form").action = contextPath
+				+ "/servlet/timectrl/turns/DeleteTurn";
 		document.getElementById("form").submit();
 	}
 }
@@ -100,11 +108,12 @@ function copyDay(turnDay, parent) {
 	document.getElementById("Parent").value = parent;
 	document.getElementById("TurnDay").value = turnDay;
 
-	document.getElementById("form").action = contextPath + "/servlet/timectrl/turns/CopyTurn";
+	document.getElementById("form").action = contextPath
+			+ "/servlet/timectrl/turns/CopyTurn";
 	document.getElementById("form").submit();
 }
 
-function editTurn(id, current){
+function editTurn(id, current) {
 	$.ajax({
 		type : "GET",
 		cache : false,
@@ -122,9 +131,33 @@ function editTurn(id, current){
 	});
 }
 
-function retrieveData(data){
+function retrieveData(data) {
 	var row = document.getElementById("detailTable").rows[data.currentRow];
-	alert(row.innerHTML);
-	
-	
+
+	removeCells(row);
+	createCells(row);
+
+	row.cells[0].innerHTML = "<input type='hidden' readonly='true' id='DDay' value='"
+			+ data.currentRow + "'>" + data.currentRow;
+	;
+	row.cells[1].innerHTML = "<input type='checkbox' id='DBusinessDay' "
+			+ (data.businessDay == "true" ? "checked" : "")
+			+ " onclick='javascript:changeBusinessDay(this)'>";
+	row.cells[2].innerHTML = "<input type='text' maxlength='5' id='DEdgePrevIn' value='0' size='5' value='"
+			+ data.edgePrevIn + "'>";
+	row.cells[3].innerHTML = "<input type='time' maxlength='5' id='DStartTime' value='"
+			+ data.startTime + "'>";
+	row.cells[4].innerHTML = "";
+}
+
+function createCells(row) {
+	for ( var i = 0; i < 9; i++) {
+		row.insertCell(i).className = 'cDataTD';
+	}
+}
+
+function removeCells(row) {
+	while (row.cells.length > 0) {
+		row.deleteCell(0);
+	}
 }

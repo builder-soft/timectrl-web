@@ -26,6 +26,7 @@
 "endTime":"<%=endTime%>",
 "startTime":"<%=startTime%>",
 "turn":"<%=turn%>",
-"currentRow":"<%=currentRow%>"
+"currentRow":"<%=currentRow%>",
+"businessDay":"<%=businessDay%>"
 }
 
