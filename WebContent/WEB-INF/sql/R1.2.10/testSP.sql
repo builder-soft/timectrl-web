@@ -7,6 +7,11 @@
 
 #select fExtraTimeAsMins6('2015-03-03 13:05:00', '2015-03-03 13:00:00', FALSE, 51);
 #select fExtraTimeAsMins6('2015-03-03 13:15:00', '2015-03-03 13:00:00', FALSE, 51);
-call pListAttendance3(77, '2015-03-03', '2015-03-03');
-call pListAttendance3(77, '2015-03-04', '2015-03-04');
+#call pListAttendance4(77, '2015-03-03', '2015-03-03');
+#call pListAttendance3(77, '2015-03-04', '2015-03-04');
+#call pListAttendance3(10, '2014-12-12', '2014-12-12');
+#call pListAttendance3(77, '2015-03-07', '2015-03-07');
+#call pListAttendance4(77, '2015-03-07', '2015-03-07');
+#call pListAttendance3(9, '2015-02-22', '2015-02-22');
+call pListAttendance3(50, '2015-03-23', '2015-03-23');
 

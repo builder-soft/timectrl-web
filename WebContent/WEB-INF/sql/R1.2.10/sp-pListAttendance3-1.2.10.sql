@@ -85,7 +85,13 @@ BEGIN
 		ELSE
 			IF(vFlexible) THEN
 				SET vStartMark = fStartMark(vEmployeeKey, vTolerance, vCurrent, NULL, TRUE, NULL);
+				
+#select vEmployeeKey, vTolerance, vCurrent, NULL, TRUE, NULL, vStartMark;				
+				
 				SET vTurnDayId = fMarkAndUserToTurnDayId4(vStartMark, vEmployeeId, vTolerance, TRUE);
+				
+#select vStartMark, vEmployeeId, vTolerance, TRUE, vTurnDayId;
+
 				SET vBusinessDay =  (SELECT cBusinessDay FROM tTurnDay WHERE cId = vTurnDayId);
 			ELSE
 				SET vTurnDayId = fMarkAndUserToTurnDayId4(vCurrent, vEmployeeId, vTolerance, FALSE);
@@ -111,6 +117,8 @@ BEGIN
 			SET vEndDiffM = fExtraTime3(vEndDiffI);
 			SET vMachine = (SELECT cMachine FROM tAttendanceLog WHERE cEmployeeKey = vEmployeeKey AND DATE(cDate) = DATE(vCurrent) AND cMarkType=1 LIMIT 1);
 			SET vComment = fGetComment3(vCurrent, vEmployeeId, vTurnDayId, vBusinessDay, vStartMark, vEndMark);
+			
+#select vFlexible, vCurrent, vEmployeeId, vTurnDayId, vBusinessDay, vStartMark, vEndMark, vComment;
 	
 			IF(NOT vBusinessDay) THEN
 				SET vStartTime = NULL;

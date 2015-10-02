@@ -382,9 +382,11 @@ BEGIN
 	IF(EXISTS(SELECT cId FROM tFiscalDate WHERE cDate = DATE(vMark))) THEN
 		SET vOut = fAppendComment(vOut, 'Día Feriado');
 	END IF;
-
+	
 	IF(vStartMark IS NULL AND vEndMark IS NULL) THEN
-		SET vOut = fAppendComment(vOut, 'Sin marcas');
+		IF(vBusinessDay = TRUE) THEN
+			SET vOut = fAppendComment(vOut, 'Sin marcas');
+		END IF;			
 	ELSEIF(vStartMark IS NULL) THEN
 		SET vOut = fAppendComment(vOut, 'Sin entrada');
 	ELSEIF(vEndMark IS NULL) THEN
