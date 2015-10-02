@@ -57,7 +57,7 @@
 		<td class='cDataTD' style='<%=style%>'><%=turnDay.getEdgePostOut()%></td>
 
 		<td class='cDataTD'>
-		<button onclick="javascript:editTurn(<%=turnDay.getId() %>, <%=current%>)">Editar</button>
+		<button onclick="javascript:editTurn(<%=turnDay.getId() %>, <%=current%>)" style='display:none'>Editar</button>
 		<button
 				onclick="deleteTurnDay(<%=turnDay.getId()%>, <%=turnDay.getDay()%>, <%=turn.getId()%>)">Borrar</button>
 			<%
