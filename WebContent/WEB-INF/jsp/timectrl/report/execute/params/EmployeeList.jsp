@@ -7,15 +7,13 @@
 	pageEncoding="UTF-8"%>
 
 <%
-String param = (String)request.getParameter("Key");
-Map<String, List<? extends BSBean>> employeeMap = (Map<String, List<? extends BSBean>>) request.getAttribute(param);
-	
-List<Employee> bossList=	(List<Employee>)employeeMap.get("BOSS_LIST");
-	
+	String param = (String) request.getParameter("Key");
+	Map<String, List<? extends BSBean>> employeeMap = (Map<String, List<? extends BSBean>>) request.getAttribute(param);
+	List<Employee> bossList = (List<Employee>) employeeMap.get("BOSS_LIST");
 %>
 <td class="cLabel">${param["Label"]}:</td>
-<td class="cData"><select name='${param["Name"]}'>
-		<option value="0">- Todas las personas -</option>
+<td class="cData"><select id='${param["Name"]}' name='${param["Name"]}' onchange="javascript:changeBoss(this)">
+		<option value="">- Seleccione una jefatura -</option>
 		<%
 			for (Employee boss : bossList ) {
 		%>
@@ -26,3 +24,15 @@ List<Employee> bossList=	(List<Employee>)employeeMap.get("BOSS_LIST");
 			}
 		%>
 </select></td>
+<script>
+function changeBoss(bossSelect){
+	var disable = bossSelect.value=='';
+	
+	document.getElementById("raiseQuery").disabled = disable;
+//	alert('-'+bossSelect.value+'-');
+}
+
+function onLoadPage(){
+	document.getElementById("raiseQuery").disabled = true;
+}
+</script>

@@ -28,3 +28,5 @@ CREATE TABLE IF NOT EXISTS tVersion (
 ) ENGINE=innoDB;
 
 INSERT INTO tVersion(cKey, cVersion, cUpdated) VALUES('DBT','1.2.10',now());
+
+update tReportPropertyType set cName='Destinatario del correo [MANPOWER, EACH_ONE, BOSS_ONLY]' where cKey='DESTINY';

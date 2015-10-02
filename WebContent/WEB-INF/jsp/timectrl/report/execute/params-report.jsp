@@ -53,7 +53,7 @@
 
 	</table>
 
-	<button type="submit">Consultar</button>
+	<button type="submit" id="raiseQuery">Consultar</button>
 	<a class="cCancel"
 		href="${pageContext.request.contextPath}/servlet/timectrl/report/execute/ExecutionReport">Volver</a>
 
