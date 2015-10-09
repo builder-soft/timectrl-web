@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS tCrewLog(
 	cId				BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	cAttendanceLog	BIGINT NOT NULL
+	cAttendanceLog	BIGINT NOT NULL,
+	cWhen			DATETIME NOT NULL
 ) ENGINE=innoDB;
 
 ALTER TABLE tCrewLog
@@ -20,7 +21,7 @@ ALTER TABLE tCrewProcess
 ADD INDEX CrewProcess_index_Employee (cEmployee ASC),
 ADD CONSTRAINT CrewProcess_To_Employee FOREIGN KEY (cEmployee) REFERENCES tEmployee(cId);
 
-/*DATOS PARA HACER PRUEBAS*/
+/*DATOS PARA HACER PRUEBAS
 delete from tCrewProcess;
 INSERT INTO tCrewProcess (cDate, cEmployee, cHoursWorked, cWorked, cHired) VALUES ('2015-05-01', 1, 3.1, TRUE, TRUE);
 INSERT INTO tCrewProcess (cDate, cEmployee, cHoursWorked, cWorked, cHired) VALUES ('2015-05-02', 1, 4.4, TRUE, TRUE);
@@ -39,10 +40,20 @@ INSERT INTO tCrewProcess (cDate, cEmployee, cHoursWorked, cWorked, cHired) VALUE
 INSERT INTO tCrewProcess (cDate, cEmployee, cHoursWorked, cWorked, cHired) VALUES ('2015-05-03', 4, 7.3, TRUE, TRUE);
 INSERT INTO tCrewProcess (cDate, cEmployee, cHoursWorked, cWorked, cHired) VALUES ('2015-05-04', 4, 8.2, TRUE, TRUE);
 
+----------------- query para el reporte final
 select cdate as 'fecha', count(cemployee) as 'Emploeados', sum(cHoursWorked) as 'horas trabajadas', sum(cworked) as 'presente', sum(cHired) as 'contratadas'
 from tCrewProcess 
 where cemployee in (2,3)
 group by cdate;
+
+----------------- query para tomar los registros de tAttendanceLog que no se han procesado.
+select * 
+from tattendancelog as a
+left join tCrewLog as b on a.cId = b.cAttendanceLog
+where b.cid is null;
+
+*/
+
 /* FIN DATOS PARA HACER PRUEBAS*/
 
 
