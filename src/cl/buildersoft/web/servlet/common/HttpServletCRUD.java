@@ -51,7 +51,7 @@ public abstract class HttpServletCRUD extends BSHttpServlet {
 	protected BSTableConfig initTable(HttpServletRequest request, String tableName, HttpServletCRUD servlet) {
 		Domain domain = (Domain) request.getSession().getAttribute("Domain");
 
-		BSTableConfig table = new BSTableConfig(domain.getAlias(), tableName);
+		BSTableConfig table = new BSTableConfig(domain.getDatabase(), tableName);
 		BSmySQL mysql = new BSmySQL();
 		Connection conn = getConnection(request);
 		table.configFields(conn, mysql);

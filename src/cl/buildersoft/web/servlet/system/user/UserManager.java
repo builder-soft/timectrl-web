@@ -38,7 +38,7 @@ public class UserManager extends HttpServletCRUD {
 			table = new BSTableConfig("bsframework", "tUser", "vUserAdmin");
 			table.setSaveSP("bsframework.pSaveUserAdmin");
 		} else {
-			table = new BSTableConfig(domain.getAlias(), "tUser", "vUser");
+			table = new BSTableConfig(domain.getDatabase(), "tUser", "vUser");
 			table.setSaveSP("bsframework.pSaveUser");
 		}
 		
@@ -75,7 +75,7 @@ public class UserManager extends HttpServletCRUD {
 
 //		Domain domain = (Domain) session.getAttribute("Domain");
 
-		rolRelation.setNatTable(domain.getAlias(), "tR_UserRol", domain.getAlias(), "tRol");
+		rolRelation.setNatTable(domain.getDatabase(), "tR_UserRol", domain.getDatabase(), "tRol");
 		rolRelation.setLabel("Roles de usuario");
 		table.addAction(rolRelation);
 

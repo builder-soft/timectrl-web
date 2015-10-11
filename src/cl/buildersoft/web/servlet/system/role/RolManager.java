@@ -27,7 +27,7 @@ public class RolManager extends HttpServletCRUD {
 	protected BSTableConfig getBSTableConfig(HttpServletRequest request) {
 		Domain domain = (Domain) request.getSession().getAttribute("Domain");
 
-		BSTableConfig table = new BSTableConfig(domain.getAlias(), "tRol");
+		BSTableConfig table = new BSTableConfig(domain.getDatabase(), "tRol");
 		table.setTitle("Mantenimiento de Roles");
 
 		BSField field = new BSField("cId", "Id");
