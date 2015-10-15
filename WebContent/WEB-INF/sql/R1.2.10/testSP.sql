@@ -16,4 +16,6 @@
 
 
 
-call pListSummaryReport(84, '82,86,87,88,81,85', 6, 2015, 9, 2015);
+#call pListSummaryReport(84, '82,86,87,88,81,85', 6, 2015, 9, 2015);
+
+call pListAttendanceAsExcel3('2015-07-01', '2015-07-02')

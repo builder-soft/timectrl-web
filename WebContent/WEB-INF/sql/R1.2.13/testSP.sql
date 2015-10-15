@@ -7,6 +7,7 @@
 #call pTopAbsence('2015-07-01', '2015-07-10', 200);
 
 
-select fMarkAndUserToTurnDayId4('2014-01-06', 64, 240, true);
+select fFindTurn(8, '2014-01-06 00:00:00.0');
+#select fMarkAndUserToTurnDayId4('2014-01-06 00:00:00.0', 64, 240, true), fFindTurn(8, '2014-01-06 00:00:00.0');
 
 
