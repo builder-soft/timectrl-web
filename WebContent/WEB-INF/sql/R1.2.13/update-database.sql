@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS tCrewProcess(
 	cId				BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	cDate			DATE NOT NULL,
 	cEmployee		BIGINT NOT NULL,
-	cHoursWorked	INTEGER DEFAULT '0' COMMENT 'Indica cuantas horas trabajo',
+	cHoursWorked	DOUBLE DEFAULT '0' COMMENT 'Indica cuantas horas trabajo',
 	cWorked			BIT	DEFAULT 0 COMMENT 'Indica que la persona fue o no a trabajar',
 	cHired			BIT DEFAULT 0 COMMENT 'Indica que la persona tiene turno de trabajo ese día.'
 ) ENGINE=innoDB;
