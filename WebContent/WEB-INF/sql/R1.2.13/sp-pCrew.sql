@@ -4,15 +4,19 @@ DELIMITER $$
 
 CREATE PROCEDURE pCrew(IN vStartDate DATE, IN vEndDate DATE, IN vEmployees VARCHAR(2000))
 BEGIN
-/*
-	SELECT a.* 
-	FROM tAttendanceLog AS a
-	LEFT JOIN tEmployee AS b ON a.cEmployeeKey = b.cKey
-	WHERE DATE(a.cDate) BETWEEN vStartDate AND vEndDate
-		AND b.cId = vEmployees;
-*/
-	SELECT cDate, SUM(cHoursWorked), COUNT(cWorked), COUNT(cHired), (COUNT(cWorked)*100)/COUNT(cHired)
-	FROM tCrewProcess AS a
-	GROUP BY cDate;
+	SET @vSQL = 'SELECT	cDate, SUM(cHoursWorked) AS cHoursWorked, sum(if(cWorked, 1, 0)) AS cWorked, sum(if(cHired,1,0)) AS cHired, (sum(if(cWorked, 1, 0))*100)/sum(if(cHired,1,0)) AS cPercent ';
+#	SET @vSQL = 'SELECT	cDate, SUM(cHoursWorked), COUNT(cWorked), COUNT(cHired), (COUNT(cWorked)*100)/COUNT(cHired) ';
+	SET @vSQL = CONCAT(@vSQL, 'FROM	tCrewProcess AS a ');
+	SET @vSQL = CONCAT(@vSQL, 'WHERE	DATE(cDate) BETWEEN ? AND ? ');
+	SET @vSQL = CONCAT(@vSQL, 'AND cEmployee IN (', vEmployees ,')');
+	SET @vSQL = CONCAT(@vSQL, 'GROUP BY cDate;');
+
+	SET @vStartDate = vStartDate;
+	SET @vEndDate = vEndDate;
 	
+	select @vSQL;
+	
+	PREPARE smpt FROM @vSQL;
+	EXECUTE smpt USING @vStartDate, @vEndDate;
+	DEALLOCATE PREPARE smpt;
 END$$
