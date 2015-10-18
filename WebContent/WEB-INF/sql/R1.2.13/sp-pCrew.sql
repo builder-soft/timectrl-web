@@ -2,9 +2,9 @@ DROP PROCEDURE IF EXISTS pCrew;
 
 DELIMITER $$
 
-CREATE PROCEDURE pCrew(IN vStartDate DATE, IN vEndDate DATE, IN vEmployees VARCHAR(2000))
+CREATE PROCEDURE pCrew(IN vStartDate DATE, IN vEndDate DATE, IN vEmployees VARCHAR(2500))
 BEGIN
-	SET @vSQL = 'SELECT	cDate, SUM(cHoursWorked) AS cHoursWorked, sum(if(cWorked, 1, 0)) AS cWorked, sum(if(cHired,1,0)) AS cHired, (sum(if(cWorked, 1, 0))*100)/sum(if(cHired,1,0)) AS cPercent ';
+	SET @vSQL = 'SELECT	cDate AS \'Fecha\', ROUND(SUM(cHoursWorked),2) AS \'Horas Trabajadas\', sum(if(cWorked, 1, 0)) AS \'Presente\', sum(if(cHired,1,0)) AS \'Contratados\', ROUND((sum(if(cWorked, 1, 0))*100)/sum(if(cHired,1,0)),2) AS \'% Asistencia\' ';
 #	SET @vSQL = 'SELECT	cDate, SUM(cHoursWorked), COUNT(cWorked), COUNT(cHired), (COUNT(cWorked)*100)/COUNT(cHired) ';
 	SET @vSQL = CONCAT(@vSQL, 'FROM	tCrewProcess AS a ');
 	SET @vSQL = CONCAT(@vSQL, 'WHERE	DATE(cDate) BETWEEN ? AND ? ');
@@ -13,8 +13,6 @@ BEGIN
 
 	SET @vStartDate = vStartDate;
 	SET @vEndDate = vEndDate;
-	
-	select @vSQL;
 	
 	PREPARE smpt FROM @vSQL;
 	EXECUTE smpt USING @vStartDate, @vEndDate;
