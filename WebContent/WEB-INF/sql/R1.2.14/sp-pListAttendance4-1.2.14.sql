@@ -36,6 +36,7 @@ BEGIN
 	DECLARE vBusinessDay	BOOLEAN DEFAULT FALSE;
 	DECLARE vHoursWorkday	INTEGER;
 	DECLARE vFlexible		BOOLEAN;
+	DECLARE vMaxRow			BIGINT;
 	
 	SET vTolerance = fGetTolerance();
 	SET vHoursWorkday = fGetHoursWorkday();
@@ -144,6 +145,8 @@ BEGIN
 #	UPDATE	tAttendance_temp SET cTotal = SUM(IFNULL(cStartDiffI, 0)) + SUM(IFNULL(cEndDiffI,0));
 #	UPDATE	tAttendance_temp SET cTotal = (vTotal / 60);
 
+	SELECT MAX(cId)+1 INTO vMaxRow FROM tAttendance_temp;
+
 	SELECT  cId							AS 'ITEM', 
 			vRUT 						AS 'RUT', 
 			UPPER(vName)				AS 'NOMBRE TRABAJADOR',
@@ -158,16 +161,16 @@ BEGIN
 #			, cTotal						AS 'TOTAL HORAS'
 	FROM tAttendance_temp
 	UNION
-	SELECT (9999) AS 'ITEM',
+	SELECT (vMaxRow) AS 'ITEM',
 			'TOTAL HORAS' 						AS 'RUT', 
-			ROUND((vTotal / 60),2)				AS 'NOMBRE TRABAJADOR',
+			''				AS 'NOMBRE TRABAJADOR',
 			''				 			AS 'DIA',
 			''						AS 'FECHA',
 			'' AS 'MARCA ENTRADA',
 			'' 	AS 'EXTRA/ATRASO', 
 			''	AS 'MARCA SALIDA', 
 			''		AS 'EXTRA', 
-			''					AS 'COMENTARIOS', 
+			ROUND((vTotal / 60),2)					AS 'COMENTARIOS', 
 			''		AS 'TURNO'
 	ORDER BY ITEM;
 	
