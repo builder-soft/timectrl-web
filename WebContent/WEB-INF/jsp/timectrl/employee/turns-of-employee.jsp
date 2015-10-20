@@ -29,25 +29,6 @@
 
 <%@ include file="/WEB-INF/jsp/timectrl/common/employee-info.jsp"%>
 
-<!-- 
-<table border="0" width="50%">
-	<tr>
-		<td class="cLabel">Código:</td>
-		<td class="cData">< %=employee.getKey()%></td>
-		<td class="cLabel">RUT:</td>
-		<td class="cData">< %=employee.getRut()%></td>
-		<td class="cLabel">Nombre:</td>
-		<td class="cData">< %=employee.getName()%></td>
-	</tr>
-	<tr>
-		<td class="cLabel">Cargo:</td>
-		<td class="cData">< %=post.getName()%></td>
-		<td class="cLabel">Área:</td>
-		<td class="cData">< %=area.getName()%></td>
-		<td class="cData" colspan="2"></td>
-	</tr>
-</table>
- -->
 <hr>
 
 <table class="cList" cellpadding="0" cellspacing="0" id="detailTable">
