@@ -6,7 +6,7 @@
   </welcome-file-list>
   <context-param>
     <param-name>CurrentVersion</param-name>
-    <param-value>R1.2.13</param-value>
+    <param-value>R1.2.14</param-value>
   </context-param>
   <context-param>
     <param-name>bsframework.database.driver</param-name>
