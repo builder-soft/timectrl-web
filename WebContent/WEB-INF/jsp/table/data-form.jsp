@@ -33,12 +33,12 @@ BSField[] fields = table.getFields();
 function onLoadPage(){
 	<%String fieldName=null;
 	String html = "";
-	BSDataType type=null;
+	BSDataTypeEnum type=null;
 	String typeHtml = null;
 	Boolean showThis = null;
 	
 	for (BSField field : fields) {
-		type = field.getType();
+		type = field.getType().getDataTypeEnum();
 		fieldName = field.getName();
 		typeHtml = field.getTypeHtml();
 		showThis = field.isReadonly();
@@ -55,7 +55,7 @@ function onLoadPage(){
 	function sendForm() {
 		var msg = null;
 <%for (BSField field : fields) {
-		type = field.getType();
+		type = field.getType().getDataTypeEnum();
 		fieldName = field.getName();
 		typeHtml = field.getTypeHtml();
 		showThis = field.isReadonly();
@@ -94,7 +94,7 @@ function onLoadPage(){
 		} else {
 <%html = "";
 			for (BSField field : fields) {
-					type = field.getType();
+					type = field.getType().getDataTypeEnum();
 					fieldName = field.getName();
 					showThis = field.isReadonly();
 					
