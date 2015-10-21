@@ -45,8 +45,10 @@
 		<td class='cDataTD'><%=employeeTurn.getTurnName()%></td>
 		<td class='cDataTD'><%=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%></td>
 		<td class='cDataTD'><%=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%></td>
-		<td class='cDataTD'><button
-				onclick="deleteEmployeeTurn(<%=employeeTurn.getId()%>, <%=employee.getId()%>, '<%=employee.getName()%>')">Borrar</button></td>
+		<td class='cDataTD'>
+		<button onclick="javascript:editEmployeeTurn(<%=employeeTurn.getId()%>)">Editar</button>
+		<button
+				onclick="javascript:deleteEmployeeTurn(<%=employeeTurn.getId()%>, <%=employee.getId()%>, '<%=employee.getName()%>')">Borrar</button></td>
 	</tr>
 	<%
 		}
@@ -73,6 +75,7 @@
 	href="${pageContext.request.contextPath}/servlet/config/employee/EmployeeManager">Volver</a>
 
 <form id='form' method="post">
+<input type="hidden" name="TurnId" id="TurnId"> 
 	<input type="hidden" name="EmployeeTurn" id="EmployeeTurn"> <input
 		type="hidden" name="Employee" id="Employee"> <input
 		type="hidden" name="Turn" id="Turn"> <input type="hidden"

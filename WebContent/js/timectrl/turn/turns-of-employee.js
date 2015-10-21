@@ -92,3 +92,8 @@ function deleteEmployeeTurn(id, employeeId, employeeName) {
 		document.getElementById("form").submit();
 	}
 }
+
+function editEmployeeTurn(turnId){
+	
+	
+}
