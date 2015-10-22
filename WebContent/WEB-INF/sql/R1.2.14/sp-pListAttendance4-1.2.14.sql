@@ -109,6 +109,9 @@ BEGIN
 			SET vStartDiffI = fExtraTimeAsMins6(vStartMark, vStartTime, TRUE, vTurnDayId);
 			SET vStartDiffM = fExtraTime3(vStartDiffI);
 			SET vEndMark = fEndMark(vEmployeeKey, vStartMark, vHoursWorkday, vCurrent, vTolerance, vBusinessDay, vTurnDayId);
+			
+#select vEmployeeKey, vStartMark, vHoursWorkday, vCurrent, vTolerance, vBusinessDay, vTurnDayId, vEndMark;
+			
 			SET vEndTime = fEndTime(vEndMark, vStartMark, vBusinessDay, vTurnDayId);
 
 			SET vLunchMark = fLunchMark(vEmployeeKey, vStartMark, vHoursWorkday);
