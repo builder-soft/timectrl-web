@@ -46,7 +46,7 @@
 		<td class='cDataTD'><%=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%></td>
 		<td class='cDataTD'><%=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%></td>
 		<td class='cDataTD'>
-		<button onclick="javascript:editEmployeeTurn(<%=employeeTurn.getId()%>)">Editar</button>
+		<button onclick="javascript:editEmployeeTurn(<%=employeeTurn.getTurn()%>, '<%=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%>', '<%=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%>')">Editar</button>
 		<button
 				onclick="javascript:deleteEmployeeTurn(<%=employeeTurn.getId()%>, <%=employee.getId()%>, '<%=employee.getName()%>')">Borrar</button></td>
 	</tr>

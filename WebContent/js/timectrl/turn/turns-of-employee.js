@@ -93,7 +93,7 @@ function deleteEmployeeTurn(id, employeeId, employeeName) {
 	}
 }
 
-function editEmployeeTurn(turnId){
-	
+function editEmployeeTurn(turnId, startDate, endDate){
+	alert(turnId + ' ' + startDate + ' ' + endDate);
 	
 }
