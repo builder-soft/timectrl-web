@@ -8,22 +8,19 @@
 <%@ include file="/WEB-INF/jsp/common/menu.jsp"%>
 <%
 	Employee employee = (Employee) request.getAttribute("Employee");
-/**
-	Post post = (Post) request.getAttribute("Post");
-	Area area = (Area) request.getAttribute("Area");
-	*/
+	/**
+	 Post post = (Post) request.getAttribute("Post");
+	 Area area = (Area) request.getAttribute("Area");
+	 */
 	List<EmployeeTurn> employeeTurns = (List<EmployeeTurn>) request.getAttribute("EmployeeTurn");
 	String dateFormat = (String) request.getAttribute("DateFormat");
-	List<Turn> turns =	(List<Turn>) request.getAttribute("Turns");
+	List<Turn> turns = (List<Turn>) request.getAttribute("Turns");
 %>
-<script type="text/javascript">
-<!--
-//	var dateFormat = "<%=dateFormat%>";
-//-->
+<script type="text/javascript">//	var dateFormat = "<%=dateFormat%>";
 </script>
 
 <script
-	src="${pageContext.request.contextPath}/js/timectrl/turn/turns-of-employee.js">
+	src="${pageContext.request.contextPath}/js/timectrl/turn/turns-of-employee.js?<%=BSWeb.randomString()%>">
 </script>
 <h1 class="cTitle">Configuración de turnos</h1>
 
@@ -46,9 +43,11 @@
 		<td class='cDataTD'><%=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%></td>
 		<td class='cDataTD'><%=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%></td>
 		<td class='cDataTD'>
-		<button onclick="javascript:editEmployeeTurn(<%=employeeTurn.getTurn()%>, '<%=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%>', '<%=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%>')">Editar</button>
-		<button
-				onclick="javascript:deleteEmployeeTurn(<%=employeeTurn.getId()%>, <%=employee.getId()%>, '<%=employee.getName()%>')">Borrar</button></td>
+			<button
+				onclick="javascript:editEmployeeTurn(this, <%=employeeTurn.getId()%>, <%=employeeTurn.getTurn()%>, '<%=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%>', '<%=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%>', <%=employeeTurn.getEmployee()%>)">Editar</button>
+			<button
+				onclick="javascript:deleteEmployeeTurn(<%=employeeTurn.getId()%>, <%=employee.getId()%>, '<%=employee.getName()%>')">Borrar</button>
+		</td>
 	</tr>
 	<%
 		}
@@ -75,12 +74,20 @@
 	href="${pageContext.request.contextPath}/servlet/config/employee/EmployeeManager">Volver</a>
 
 <form id='form' method="post">
-<input type="hidden" name="TurnId" id="TurnId"> 
-	<input type="hidden" name="EmployeeTurn" id="EmployeeTurn"> <input
-		type="hidden" name="Employee" id="Employee"> <input
-		type="hidden" name="Turn" id="Turn"> <input type="hidden"
-		name="StartDate" id="StartDate"> <input type="hidden"
-		name="EndDate" id="EndDate">
+	<!-- Id del registro de la tabla tr_employeeturn -->
+	<input type="hidden" name="TurnId" id="TurnId">
+	<!-- Este valor no se ocupa, evaluar si se requiere, en caso contrario eliminar -->
+	<input type="hidden" name="EmployeeTurn" id="EmployeeTurn">
+	<!-- Id del empleado -->
+	<input type="hidden" name="Employee" id="Employee">
+	<!-- Id del turno, corresponde a la tabla tTurn -->
+	<input type="hidden" name="Turn" id="Turn">
+	<!-- fecha de inicio -->
+	<input type="hidden" name="StartDate" id="StartDate">
+	<!-- fecha de termino -->
+	<input type="hidden" name="EndDate" id="EndDate">
+	<!-- id del registro de la tabla de relacion, se utiliza para el update -->
+	<input type="hidden" name="cId" id="cId">
 </form>
 
 

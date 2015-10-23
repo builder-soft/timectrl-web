@@ -34,7 +34,11 @@ function addNew(employeeId) {
 	/*
 	 * $("#DStartDate").datepicker(); $("#DEndDate").datepicker();
 	 */
+	convertToDatePicker();
 
+}
+
+function convertToDatePicker() {
 	$("#DStartDate").datepicker({
 		dateFormat : fixDateFormat(dateFormat),
 		appendText : " (" + dateFormat.toLowerCase() + ")",
@@ -57,7 +61,6 @@ function addNew(employeeId) {
 	});
 
 }
-
 
 function cancelAdd(index) {
 	$("#addButton").fadeIn(speed);
@@ -93,7 +96,36 @@ function deleteEmployeeTurn(id, employeeId, employeeName) {
 	}
 }
 
-function editEmployeeTurn(turnId, startDate, endDate){
-	alert(turnId + ' ' + startDate + ' ' + endDate);
+function editEmployeeTurn(button, turnId, turn, startDate, endDate, employeeId) {
+	// alert(turnId + ' ' + turn + ' ' + startDate + ' ' + endDate);
+	var row = $(button).parent().parent();
+
+	row.find("td:first").html(
+			document.getElementById("TurnsContainer").innerHTML);
+	row.find("td:eq(1)").html("<input type='text' id='DStartDate'>");
+	row.find("td:eq(2)").html(
+			"<input type='text' maxlength='10' id='DEndDate'>");
+	row.find("td:eq(3)").html(
+			"<button onclick='acceptEdit()'>Aceptar</button>"
+					+ "<button onclick='cancelEdit(" + employeeId
+					+ ")'>Cancelar</button>");
+
+	convertToDatePicker();
+
+	$("#DStartDate").datepicker('setDate', startDate);
+	$("#DEndDate").datepicker('setDate', endDate);
+
+	$('#DTurn').val(turn);
+}
+
+function acceptEdit() {
+	
+}
+
+function cancelEdit(employeeId) {
+	document.getElementById("cId").value = employeeId;
+	document.getElementById("form").action = contextPath
+			+ "/servlet/timectrl/employee/TurnsOfEmployee";
+	document.getElementById("form").submit();
 	
 }

@@ -34,7 +34,8 @@ public class SaveNewTurn extends BSHttpServlet {
 		String formatDate = BSDateTimeUtil.getFormatDate(conn);
 
 		Calendar startDate = BSDateTimeUtil.string2Calendar(start, formatDate);
-		//System.out.println(BSDateTimeUtil.calendar2String(startDate, "yyyy-mm-dd"));
+		// System.out.println(BSDateTimeUtil.calendar2String(startDate,
+		// "yyyy-mm-dd"));
 		Calendar endDate = BSDateTimeUtil.string2Calendar(end, formatDate);
 
 		EmployeeTurn employeeTurn = new EmployeeTurn();
@@ -50,7 +51,7 @@ public class SaveNewTurn extends BSHttpServlet {
 
 		request.setAttribute("cId", "" + employee);
 
-		request.getRequestDispatcher("/servlet/timectrl/employee/TurnsOfEmployee").forward(request, response);
+		forward(request, response, "/servlet/timectrl/employee/TurnsOfEmployee");
 
 	}
 
