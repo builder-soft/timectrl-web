@@ -173,7 +173,7 @@ BEGIN
 			'' 	AS 'EXTRA/ATRASO', 
 			''	AS 'MARCA SALIDA', 
 			''		AS 'EXTRA', 
-			ROUND((vTotal / 60),2)					AS 'COMENTARIOS', 
+			fExtraTime3(ROUND(vTotal,0))	AS 'COMENTARIOS', 
 			''		AS 'TURNO'
 	ORDER BY ITEM;
 	
