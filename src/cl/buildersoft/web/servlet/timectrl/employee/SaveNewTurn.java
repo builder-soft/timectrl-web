@@ -29,26 +29,32 @@ public class SaveNewTurn extends BSHttpServlet {
 		String start = request.getParameter("StartDate");
 		String end = request.getParameter("EndDate");
 
-		// System.out.println(start);
+		String turnId = request.getParameter("TurnId");
 		Connection conn = getConnection(request);
 		String formatDate = BSDateTimeUtil.getFormatDate(conn);
 
 		Calendar startDate = BSDateTimeUtil.string2Calendar(start, formatDate);
-		// System.out.println(BSDateTimeUtil.calendar2String(startDate,
-		// "yyyy-mm-dd"));
 		Calendar endDate = BSDateTimeUtil.string2Calendar(end, formatDate);
 
 		EmployeeTurn employeeTurn = new EmployeeTurn();
-		employeeTurn.setEmployee(employee);
-		employeeTurn.setTurn(turn);
-		employeeTurn.setStartDate(startDate);
-		employeeTurn.setEndDate(endDate);
+		if (turnId.length() > 0) {
+			Long turnIdAsLong = Long.parseLong(turnId);
+			employeeTurn.setId(turnIdAsLong);
+			employeeTurn.setTurn(turn);
+			employeeTurn.setStartDate(startDate);
+			employeeTurn.setEndDate(endDate);
 
-		// BSmySQL mysql = new BSmySQL();
+			EmployeeTurnService service = new EmployeeTurnServiceImpl();
+			service.update(conn, employeeTurn);
+		} else {
+			employeeTurn.setEmployee(employee);
+			employeeTurn.setTurn(turn);
+			employeeTurn.setStartDate(startDate);
+			employeeTurn.setEndDate(endDate);
 
-		EmployeeTurnService service = new EmployeeTurnServiceImpl();
-		service.appendNew(conn, employeeTurn);
-
+			EmployeeTurnService service = new EmployeeTurnServiceImpl();
+			service.appendNew(conn, employeeTurn);
+		}
 		request.setAttribute("cId", "" + employee);
 
 		forward(request, response, "/servlet/timectrl/employee/TurnsOfEmployee");

@@ -1,6 +1,3 @@
-/**
- * 
- */
 function addNew(employeeId) {
 	var table = document.getElementById("detailTable"); // $('#detail');
 	var row = table.insertRow(-1);
@@ -24,8 +21,7 @@ function addNew(employeeId) {
 
 	var cell = row.insertCell(3);
 	cell.className = 'cDataTD';
-	cell.innerHTML = "<button onclick='acceptNew(" + employeeId
-			+ ")'>Aceptar</button>" + "<button onclick='cancelAdd("
+	cell.innerHTML = "<button onclick='acceptNew(" + employeeId + ")'>Aceptar</button>" + "<button onclick='cancelAdd("
 			+ currentRow + ")'>Cancelar</button>";
 
 	$("#addButton").fadeOut(speed);
@@ -71,27 +67,21 @@ function cancelAdd(index) {
 function acceptNew(employee) {
 	document.getElementById("Employee").value = employee;
 	document.getElementById("Turn").value = document.getElementById("DTurn").value;
-	document.getElementById("StartDate").value = document
-			.getElementById("DStartDate").value;
-	document.getElementById("EndDate").value = document
-			.getElementById("DEndDate").value;
+	document.getElementById("StartDate").value = document.getElementById("DStartDate").value;
+	document.getElementById("EndDate").value = document.getElementById("DEndDate").value;
 
-	document.getElementById("form").action = contextPath
-	// + "/servlet/ShowParameters";
-	+ "/servlet/timectrl/employee/SaveNewTurn";
+	document.getElementById("form").action = contextPath + "/servlet/timectrl/employee/SaveNewTurn";
 	document.getElementById("form").submit();
 }
 
 function deleteEmployeeTurn(id, employeeId, employeeName) {
-	var doIt = confirm("¿Seguro de Borrar el horario para " + employeeName
-			+ "?");
+	var doIt = confirm("¿Seguro de Borrar el horario para " + employeeName + "?");
 
 	if (doIt) {
 		document.getElementById("EmployeeTurn").value = id;
 		document.getElementById("Employee").value = employeeId;
 
-		document.getElementById("form").action = contextPath
-				+ "/servlet/timectrl/employee/DeleteEmployeeTurn";
+		document.getElementById("form").action = contextPath + "/servlet/timectrl/employee/DeleteEmployeeTurn";
 		document.getElementById("form").submit();
 	}
 }
@@ -100,15 +90,12 @@ function editEmployeeTurn(button, turnId, turn, startDate, endDate, employeeId) 
 	// alert(turnId + ' ' + turn + ' ' + startDate + ' ' + endDate);
 	var row = $(button).parent().parent();
 
-	row.find("td:first").html(
-			document.getElementById("TurnsContainer").innerHTML);
+	row.find("td:first").html(document.getElementById("TurnsContainer").innerHTML);
 	row.find("td:eq(1)").html("<input type='text' id='DStartDate'>");
-	row.find("td:eq(2)").html(
-			"<input type='text' maxlength='10' id='DEndDate'>");
+	row.find("td:eq(2)").html("<input type='text' maxlength='10' id='DEndDate'>");
 	row.find("td:eq(3)").html(
-			"<button onclick='acceptEdit()'>Aceptar</button>"
-					+ "<button onclick='cancelEdit(" + employeeId
-					+ ")'>Cancelar</button>");
+			"<button onclick='acceptEdit(" + turnId + "," + employeeId + ")'>Aceptar</button>" + "<button onclick='cancelEdit("
+					+ employeeId + ")'>Cancelar</button>");
 
 	convertToDatePicker();
 
@@ -118,14 +105,22 @@ function editEmployeeTurn(button, turnId, turn, startDate, endDate, employeeId) 
 	$('#DTurn').val(turn);
 }
 
-function acceptEdit() {
-	
+function acceptEdit(id, employeeId) {
+	// alert(id);
+	document.getElementById("Employee").value = employeeId;
+	document.getElementById("TurnId").value = id;
+	document.getElementById("Turn").value = document.getElementById("DTurn").value;
+	document.getElementById("StartDate").value = document.getElementById("DStartDate").value;
+	document.getElementById("EndDate").value = document.getElementById("DEndDate").value;
+
+	document.getElementById("form").action = contextPath + "/servlet/timectrl/employee/SaveNewTurn";
+	document.getElementById("form").submit();
+
 }
 
 function cancelEdit(employeeId) {
 	document.getElementById("cId").value = employeeId;
-	document.getElementById("form").action = contextPath
-			+ "/servlet/timectrl/employee/TurnsOfEmployee";
+	document.getElementById("form").action = contextPath + "/servlet/timectrl/employee/TurnsOfEmployee";
 	document.getElementById("form").submit();
-	
+
 }

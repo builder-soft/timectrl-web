@@ -5,14 +5,14 @@ import java.sql.Connection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.util.BSHttpServlet;
 
 @WebServlet("/servlet/timectrl/employee/DeleteEmployeeTurn")
-public class DeleteEmployeeTurn extends HttpServlet {
+public class DeleteEmployeeTurn extends BSHttpServlet {
 	private static final long serialVersionUID = -5978358494434969344L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,14 +21,15 @@ public class DeleteEmployeeTurn extends HttpServlet {
 
 		String sql = "DELETE FROM tR_EmployeeTurn WHERE cId=?";
 		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(request);
+		Connection conn = getConnection(request);
 
 		mysql.update(conn, sql, employeeTurnId);
+		mysql.closeSQL();
 
 		mysql.closeConnection(conn);
 
 		request.setAttribute("cId", "" + employee);
-		request.getRequestDispatcher("/servlet/timectrl/employee/TurnsOfEmployee").forward(request, response);
+		forward(request, response, "/servlet/timectrl/employee/TurnsOfEmployee");
 
 	}
 
