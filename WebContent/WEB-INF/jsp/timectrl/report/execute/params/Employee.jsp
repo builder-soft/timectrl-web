@@ -59,6 +59,11 @@ ul.tabHolder li.active {
 }
 -->
 </style>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/plugin/checkboxtree/0.5.2/jquery-ui-1.8.12.custom.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/plugin/checkboxtree/0.5.2/jquery.checkboxtree.js"></script>
+
 <script type="text/javascript">
 	var rut = '_';
 	var name = '';
@@ -95,7 +100,7 @@ ul.tabHolder li.active {
 			bossTimerId = setInterval(verifyChanges, refreshTime, 'Boss');
 			break;
 		case "TabArea":
-			alert("area");
+			//alert("area");
 			break;
 		default:
 			break;
@@ -106,6 +111,8 @@ ul.tabHolder li.active {
 		changeTab(document.getElementById("TabEmployee"));
 		//		employeeTimerId = setInterval(verifyChanges, refreshTime, 'Employee');
 		selectAllEmployee(document.getElementById("AllEmployees"));
+		
+		$('#tree1').checkboxTree();
 	}
 	function verifyChanges(entity) {
 		var rutValue = document.getElementById(entity + 'Rut').value;
@@ -224,7 +231,7 @@ ul.tabHolder li.active {
 				<li id='TabBoss' onclick='changeTab(this)'>B&uacute;squeda por
 					Jefatura</li>
 
-				<li style='display: none' id='TabArea' onclick='changeTab(this)'>B&uacute;squeda
+				<li id='TabArea' onclick='changeTab(this)'>B&uacute;squeda
 					por &Aacute;rea</li>
 
 			</ul>
@@ -293,11 +300,68 @@ ul.tabHolder li.active {
 					</tr>
 				</table>
 			</div>
-			<div id='DivArea' style='display: none'>
+			<div id='DivArea' style='display:none'>
 				<table>
 					<tr>
 						<td>Area:</td>
-						<td><select></td>
+						<td>
+						
+						<ul id="tree1"> 
+<%=writeTree() %>
+
+</ul>
+
+				 <!-- 
+    <li><input type="checkbox"><label>Node 1</label>
+        <ul>
+            <li><input type="checkbox"><label>Node 1.1</label>
+                <ul>
+                    <li><input type="checkbox"><label>Node 1.1.1</label>
+                </ul>
+        </ul>
+        <ul>
+            <li><input type="checkbox"><label>Node 1.2</label>
+                <ul>
+                    <li><input type="checkbox"><label>Node 1.2.1</label>
+                    <li><input type="checkbox"><label>Node 1.2.2</label>
+                    <li><input type="checkbox"><label>Node 1.2.3</label>
+                        <ul>
+                            <li><input type="checkbox"><label>Node 1.2.3.1</label>
+                            <li><input type="checkbox"><label>Node 1.2.3.2</label>
+                        </ul>
+                    <li><input type="checkbox"><label>Node 1.2.4</label>
+                    <li><input type="checkbox"><label>Node 1.2.5</label>
+                    <li><input type="checkbox"><label>Node 1.2.6</label>
+                </ul>
+        </ul>
+    <li><input type="checkbox"><label>Node 2</label>
+        <ul>
+            <li><input type="checkbox"><label>Node 2.1</label>
+                <ul>
+                    <li><input type="checkbox"><label>Node 2.1.1</label>
+                </ul>
+            <li><input type="checkbox"><label>Node 2.2</label>
+                <ul>
+                    <li><input type="checkbox"><label>Node 2.2.1</label>
+                    <li><input type="checkbox"><label>Node 2.2.2</label>
+                    <li><input type="checkbox"><label>Node 2.2.3</label>
+                        <ul>
+                            <li><input type="checkbox"><label>Node 2.2.3.1</label>
+                            <li><input type="checkbox"><label>Node 2.2.3.2</label>
+                        </ul>
+                    <li><input type="checkbox"><label>Node 2.2.4</label>
+                    <li><input type="checkbox"><label>Node 2.2.5</label>
+                    <li><input type="checkbox"><label>Node 2.2.6</label>
+                </ul>
+        </ul>
+</ul>
+ -->
+						
+						
+						
+						
+						
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -305,4 +369,26 @@ ul.tabHolder li.active {
 	</div> <br> <input name='${param["Name"]}' id='Id' type='hidden'>
 
 </td>
+<%!
 
+private String writeTree(){
+	return "";
+}
+/**<code>
+private String writeSubOption(Submenu menu, List<Submenu> rolMenu) {
+		String out = "";
+		List<Submenu> main = menu.list();
+		if (main.size() > 0) {
+			out += "<ul>";
+			Option option = null;
+			for (Submenu sub : main) {
+				option = sub.getOption();
+				out += "<li class='cLabel' type='none'>" + drowCheckbox(option, rolMenu) + "<label for='" + idCheckbox + "'>"
+						+ option.getLabel() + "</label>" + writeSubOption(sub, rolMenu) + "</li>";
+			}
+			out += "</ul>";
+		}
+		return out;
+	}
+</code>*/
+ %>
