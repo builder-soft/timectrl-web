@@ -1,4 +1,3 @@
-
 <%@page import="java.util.List"%>
 <%@page import="cl.buildersoft.framework.beans.Domain"%>
 <%@page import="cl.buildersoft.framework.util.BSWeb"%>

@@ -10,3 +10,4 @@ call pListAttendance4(50, '2015-03-23', '2015-03-23');
 
 #select fMarkAndUserToTurnDayId4('2015-05-19 00:05:00', 27, 240, true);
 #select fMarkAndUserToTurnDayId4('2015-05-19 00:00:00', 27, 240, true);
+

@@ -13,10 +13,11 @@
 <style type="text/css">
 body {
 	background-image:
-		url('${pageContext.request.contextPath}/img/login/wallpapper2.jpg');
+		url('${pageContext.request.contextPath}/img/login/wallpapper3.jpg');
 	background-size: 1144px;
 	background-repeat: no-repeat;
 	background-position: center top;
+	background-color: white;
 }
 
 .form-signin {
@@ -71,7 +72,7 @@ body {
 .profile-img {
 	width: 96px;
 	height: 96px;
-	margin: 0 auto 10px;
+	margin: 0 auto 0px;
 	display: block;
 	-moz-border-radius: 50%;
 	-webkit-border-radius: 50%;
@@ -89,18 +90,15 @@ body {
 
 /**Aqui se configura la posicion del cuadro de login */
 .account-wall {
-	margin-top: 270px;
-	padding: 40px 0px 20px 0px;
+	margin-top: 310px;
+	padding: 10px 0px 10px 0px;
 	background-color: #f7f7f7;
 	-moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 	-webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-	margin-left: -190px;
-	width: 300px;
-	
+	margin-left: 50px;
+	width: 250px;
 }
-
-
 </style>
 </head>
 <body>

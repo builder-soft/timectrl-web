@@ -24,6 +24,7 @@ public class AreaManager extends HttpServletCRUD {
 		table.getField("cKey").setLabel("Llave");
 		table.getField("cName").setLabel("Nombre");
 		table.getField("cCostCenter").setLabel("Centro de Costo");
+		table.getField("cParent").setLabel("Dependencia");
 		
 		return table;
 	}
