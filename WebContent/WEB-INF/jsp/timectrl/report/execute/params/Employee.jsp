@@ -313,6 +313,8 @@ ul.tabHolder li.active {
 								<%=writeTree(bossTree)%>
 
 							</ul> 
+							
+							<%out.print(bossTree.toString()); %>
 
 				 <!-- 
     <li><input type="checkbox"><label>Node 1</label>
@@ -373,15 +375,17 @@ ul.tabHolder li.active {
 
 </td>
 <%!private String writeTree(BSTreeNode bossTree) {
-		String out = "<li><input type='checkbox'><label>Node 1</label>"; 
+		String out = "<li><input type='checkbox'><label>Node 1</label>";
 		out += "<ul><li><input type='checkbox'><label>Node 2.2.3.1</label><li><input type='checkbox'><label>Node 2.2.3.2</label></ul></li>";
 
-out="";
-		
+		out = "";
+
 		List<BSTreeNode> root = bossTree.getChildren();
+		 
 		for (BSTreeNode node : root) {
 			out += drawNode(node);
 		}
+		
 		/**<code>
 		// "<li><input type='checkbox'><label>Node 1</label></li>";
 		<ul>
@@ -396,16 +400,19 @@ out="";
 		String html = "";
 
 		List<BSTreeNode> children = node.getChildren();
-		
-		System.out.println(children.size());
+
+		//System.out.println(children.size());
+		Area area = (Area) node.getValue();
 		if (children.size() > 0) {
-			html +="<ul>";
-			for(BSTreeNode child: children){
+			 
+			html += "<li class='cLabel' type='none'><input type='checkbox'><label>" + area.getName() + "</label></li>";
+			html += "<ul>";
+			for (BSTreeNode child : children) {
 				html += drawNode(child);
 			}
-			html +="</ul>";
+			html += "</ul>";
 		} else {
-			Area area = (Area) node.getValue();
+			 
 			html = "<li class='cLabel' type='none'><input type='checkbox'><label>" + area.getName() + "</label></li>";
 		}
 
