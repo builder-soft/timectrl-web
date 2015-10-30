@@ -1,3 +1,4 @@
+<%@page import="cl.buildersoft.framework.util.BSTreeNode"%>
 <%@page
 	import="cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl"%>
 <%@page
@@ -13,13 +14,14 @@
 <%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%
-	//	String param = (String) request.getParameter("Key");
-	//Map<String, List<? extends BSBean>> dataList = (Map<String, List<? extends BSBean>>)request.getAttribute(param);
+	String param = (String) request.getParameter("Key");
+	Map<String, Object> dataList = (Map<String, Object>) request.getAttribute(param);
 	//List<ReportParameterBean> dataList = (List<ReportParameterBean>)request.getAttribute(param);
 
 	//List<Employee> employeeList = (List<Employee>)dataList.get("EMPLOYEE_LIST");
 	//List<Area> areaList = (List<Area>)dataList.get("AREA_LIST");
 	//List<Employee> bossList = (List<Employee>)dataList.get("BOSS_LIST");
+	BSTreeNode bossTree = (BSTreeNode) dataList.get("BOSS_TREE");
 
 	// EMPLOYEE_LIST
 	// AREA_LIST
@@ -306,10 +308,11 @@ ul.tabHolder li.active {
 						<td>Area:</td>
 						<td>
 						
-						<ul id="tree1"> 
-<%=writeTree() %>
+							<ul id="tree1">
+								 
+								<%=writeTree(bossTree)%>
 
-</ul>
+							</ul> 
 
 				 <!-- 
     <li><input type="checkbox"><label>Node 1</label>
@@ -369,26 +372,42 @@ ul.tabHolder li.active {
 	</div> <br> <input name='${param["Name"]}' id='Id' type='hidden'>
 
 </td>
-<%!
+<%!private String writeTree(BSTreeNode bossTree) {
+		String out = "<li><input type='checkbox'><label>Node 1</label>"; 
+		out += "<ul><li><input type='checkbox'><label>Node 2.2.3.1</label><li><input type='checkbox'><label>Node 2.2.3.2</label></ul></li>";
 
-private String writeTree(){
-	return "";
-}
-/**<code>
-private String writeSubOption(Submenu menu, List<Submenu> rolMenu) {
-		String out = "";
-		List<Submenu> main = menu.list();
-		if (main.size() > 0) {
-			out += "<ul>";
-			Option option = null;
-			for (Submenu sub : main) {
-				option = sub.getOption();
-				out += "<li class='cLabel' type='none'>" + drowCheckbox(option, rolMenu) + "<label for='" + idCheckbox + "'>"
-						+ option.getLabel() + "</label>" + writeSubOption(sub, rolMenu) + "</li>";
-			}
-			out += "</ul>";
+out="";
+		
+		List<BSTreeNode> root = bossTree.getChildren();
+		for (BSTreeNode node : root) {
+			out += drawNode(node);
 		}
-		return out;
+		/**<code>
+		// "<li><input type='checkbox'><label>Node 1</label></li>";
+		<ul>
+		    <li><input type="checkbox"><label>Node 1.1.1</label>
+		</ul>
+		</code>*/
+
+		return out; //bossTree.toString();
 	}
-</code>*/
- %>
+
+	private String drawNode(BSTreeNode node) {
+		String html = "";
+
+		List<BSTreeNode> children = node.getChildren();
+		
+		System.out.println(children.size());
+		if (children.size() > 0) {
+			html +="<ul>";
+			for(BSTreeNode child: children){
+				html += drawNode(child);
+			}
+			html +="</ul>";
+		} else {
+			Area area = (Area) node.getValue();
+			html = "<li class='cLabel' type='none'><input type='checkbox'><label>" + area.getName() + "</label></li>";
+		}
+
+		return html;
+	}%>

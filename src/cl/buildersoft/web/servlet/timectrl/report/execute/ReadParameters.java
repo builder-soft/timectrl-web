@@ -65,11 +65,11 @@ public class ReadParameters extends BSHttpServlet {
 
 	}
 
-	private Map<String, List<? extends BSBean>> getParameterData(Connection conn, ReportParameterBean reportParameter) {
+	private Map<String, Object> getParameterData(Connection conn, ReportParameterBean reportParameter) {
 		BuildReport3 br3 = new BuildReport3();
 		ParameterService parameterService = br3.getInstanceOfParameter(reportParameter);
 
-		Map<String, List<? extends BSBean>> out = parameterService.getParameterData(conn, reportParameter);
+		Map<String, Object> out = parameterService.getParameterData(conn, reportParameter);
 
 		return out;
 
