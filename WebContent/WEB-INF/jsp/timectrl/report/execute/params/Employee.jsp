@@ -21,7 +21,7 @@
 	//List<Employee> employeeList = (List<Employee>)dataList.get("EMPLOYEE_LIST");
 	//List<Area> areaList = (List<Area>)dataList.get("AREA_LIST");
 	//List<Employee> bossList = (List<Employee>)dataList.get("BOSS_LIST");
-	BSTreeNode bossTree = (BSTreeNode) dataList.get("BOSS_TREE");
+	List<BSTreeNode> bossTree = (List<BSTreeNode>) dataList.get("BOSS_TREE");
 
 	// EMPLOYEE_LIST
 	// AREA_LIST
@@ -231,7 +231,7 @@ ul.tabHolder li.active {
 				<li id='TabBoss' onclick='changeTab(this)'>B&uacute;squeda por
 					Jefatura</li>
 
-				<li style='display: none' id='TabArea' onclick='changeTab(this)'>B&uacute;squeda
+				<li style='display: xnone' id='TabArea' onclick='changeTab(this)'>B&uacute;squeda
 					por &Aacute;rea</li>
 
 			</ul>
@@ -312,7 +312,7 @@ ul.tabHolder li.active {
 
 							</ul> 
 							
-							<%out.print(bossTree.toString()); %>
+							<%--out.print(bossTree.toString()); --%>
 
 				 <!-- 
     <li><input type="checkbox"><label>Node 1</label>
@@ -372,15 +372,15 @@ ul.tabHolder li.active {
 	</div> <br> <input name='${param["Name"]}' id='Id' type='hidden'>
 
 </td>
-<%!private String writeTree(BSTreeNode bossTree) {
+<%!private String writeTree(List<BSTreeNode> bossTree) {
 		String out = "<li><input type='checkbox'><label>Node 1</label>";
 		out += "<ul><li><input type='checkbox'><label>Node 2.2.3.1</label><li><input type='checkbox'><label>Node 2.2.3.2</label></ul></li>";
 
 		out = "";
 
-		List<BSTreeNode> root = bossTree.getChildren();
+		//List<BSTreeNode> root = (List<BSTreeNode>)bossTree.getChildren();
 		 
-		for (BSTreeNode node : root) {
+		for (BSTreeNode node : bossTree) {
 			out += drawNode(node);
 		}
 		
@@ -410,7 +410,6 @@ ul.tabHolder li.active {
 			}
 			html += "</ul>";
 		} else {
-			 
 			html = "<li class='cLabel' type='none'><input type='checkbox'><label>" + area.getName() + "</label></li>";
 		}
 
