@@ -218,8 +218,6 @@ ul.tabHolder li.active {
 </script>
 
 <td class='cLabel' colspan=2><h3>Seleccion de empleado</h3> <br>
-
-
 	<input id="AllEmployees" type="checkbox"
 	onclick="javascript:selectAllEmployee(this)" checked="true"> <label
 	for="AllEmployees">Seleccionar todos los empleados de la
@@ -233,7 +231,7 @@ ul.tabHolder li.active {
 				<li id='TabBoss' onclick='changeTab(this)'>B&uacute;squeda por
 					Jefatura</li>
 
-				<li id='TabArea' onclick='changeTab(this)'>B&uacute;squeda
+				<li style='display: none' id='TabArea' onclick='changeTab(this)'>B&uacute;squeda
 					por &Aacute;rea</li>
 
 			</ul>
