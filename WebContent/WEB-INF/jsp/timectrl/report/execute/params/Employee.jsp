@@ -114,7 +114,7 @@ ul.tabHolder li.active {
 		//		employeeTimerId = setInterval(verifyChanges, refreshTime, 'Employee');
 		selectAllEmployee(document.getElementById("AllEmployees"));
 		
-		$('#tree1').checkboxTree();
+//		$('#tree1').checkboxTree();
 	}
 	function verifyChanges(entity) {
 		var rutValue = document.getElementById(entity + 'Rut').value;
@@ -215,6 +215,11 @@ ul.tabHolder li.active {
 			//			document.getElementById("Filtres").style.display = "";
 		}
 	}
+	
+	function clickArea(checkBox){
+		alert(checkBox.value);
+		
+	}
 </script>
 
 <td class='cLabel' colspan=2><h3>Seleccion de empleado</h3> <br>
@@ -303,67 +308,11 @@ ul.tabHolder li.active {
 			<div id='DivArea' style='display:none'>
 				<table>
 					<tr>
-						<td>Area:</td>
+						<td valign='top'>Area:</td>
 						<td>
-						
-							<ul id="tree1">
-								 
+							<ul id="tree1">								 
 								<%=writeTree(bossTree)%>
-
-							</ul> 
-							
-							<%--out.print(bossTree.toString()); --%>
-
-				 <!-- 
-    <li><input type="checkbox"><label>Node 1</label>
-        <ul>
-            <li><input type="checkbox"><label>Node 1.1</label>
-                <ul>
-                    <li><input type="checkbox"><label>Node 1.1.1</label>
-                </ul>
-        </ul>
-        <ul>
-            <li><input type="checkbox"><label>Node 1.2</label>
-                <ul>
-                    <li><input type="checkbox"><label>Node 1.2.1</label>
-                    <li><input type="checkbox"><label>Node 1.2.2</label>
-                    <li><input type="checkbox"><label>Node 1.2.3</label>
-                        <ul>
-                            <li><input type="checkbox"><label>Node 1.2.3.1</label>
-                            <li><input type="checkbox"><label>Node 1.2.3.2</label>
-                        </ul>
-                    <li><input type="checkbox"><label>Node 1.2.4</label>
-                    <li><input type="checkbox"><label>Node 1.2.5</label>
-                    <li><input type="checkbox"><label>Node 1.2.6</label>
-                </ul>
-        </ul>
-    <li><input type="checkbox"><label>Node 2</label>
-        <ul>
-            <li><input type="checkbox"><label>Node 2.1</label>
-                <ul>
-                    <li><input type="checkbox"><label>Node 2.1.1</label>
-                </ul>
-            <li><input type="checkbox"><label>Node 2.2</label>
-                <ul>
-                    <li><input type="checkbox"><label>Node 2.2.1</label>
-                    <li><input type="checkbox"><label>Node 2.2.2</label>
-                    <li><input type="checkbox"><label>Node 2.2.3</label>
-                        <ul>
-                            <li><input type="checkbox"><label>Node 2.2.3.1</label>
-                            <li><input type="checkbox"><label>Node 2.2.3.2</label>
-                        </ul>
-                    <li><input type="checkbox"><label>Node 2.2.4</label>
-                    <li><input type="checkbox"><label>Node 2.2.5</label>
-                    <li><input type="checkbox"><label>Node 2.2.6</label>
-                </ul>
-        </ul>
-</ul>
- -->
-						
-						
-						
-						
-						
+							</ul>							
 						</td>
 					</tr>
 				</table>
@@ -403,15 +352,21 @@ ul.tabHolder li.active {
 		Area area = (Area) node.getValue();
 		if (children.size() > 0) {
 			 
-			html += "<li class='cLabel' type='none'><input type='checkbox'><label>" + area.getName() + "</label></li>";
+			html += getLiElement(area);
 			html += "<ul>";
 			for (BSTreeNode child : children) {
 				html += drawNode(child);
 			}
 			html += "</ul>";
 		} else {
-			html = "<li class='cLabel' type='none'><input type='checkbox'><label>" + area.getName() + "</label></li>";
+			html = getLiElement(area);
 		}
 
 		return html;
-	}%>
+	}
+	
+	private String getLiElement(Area area){
+		String out = "<li class='cLabel' type='none'><input type='checkbox' value='"+area.getId()+"' onclick='javaScript:clickArea(this)'><label>" + area.getName() + "</label></li>";
+		return out;
+	}
+	%>
