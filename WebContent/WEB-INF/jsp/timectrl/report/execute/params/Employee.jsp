@@ -312,7 +312,7 @@ ul.tabHolder li.active {
 						<td>
 							<ul id="tree1">								 
 								<%=writeTree(bossTree)%>
-							</ul>							
+							</ul>
 						</td>
 					</tr>
 				</table>
@@ -365,8 +365,10 @@ ul.tabHolder li.active {
 		return html;
 	}
 	
-	private String getLiElement(Area area){
-		String out = "<li class='cLabel' type='none'><input type='checkbox' value='"+area.getId()+"' onclick='javaScript:clickArea(this)'><label>" + area.getName() + "</label></li>";
+	private String getLiElement(Area area) {
+		String out = "<li class='cLabel' type='none'><input type='checkbox' value='"
+				+ area.getId()
+				+ "' onclick='javaScript:clickArea(this)'><label>"
+				+ area.getName() + "</label></li>";
 		return out;
-	}
-	%>
+	}%>
