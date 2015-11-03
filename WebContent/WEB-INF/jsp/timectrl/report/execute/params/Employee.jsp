@@ -111,7 +111,6 @@ ul.tabHolder li.active {
 
 	function onLoadPage() {
 		changeTab(document.getElementById("TabEmployee"));
-		//		employeeTimerId = setInterval(verifyChanges, refreshTime, 'Employee');
 		selectAllEmployee(document.getElementById("AllEmployees"));
 		
 //		$('#tree1').checkboxTree();
@@ -207,18 +206,32 @@ ul.tabHolder li.active {
 		if (inputObject.checked) {
 			$(document.getElementById("Filtres")).fadeOut(speed);
 			document.getElementById("Id").value = "0";
-			//			document.getElementById("Filtres").style.display = "none";
 		} else {
 			$(document.getElementById("Filtres")).fadeIn(speed);
 			rut = '_';
 			document.getElementById("Id").value = "";
-			//			document.getElementById("Filtres").style.display = "";
 		}
 	}
 	
 	function clickArea(checkBox){
-		alert(checkBox.value);
+		//alert(checkBox.value);
+		var chks = $( "#tree1 input:checkbox:checked" );
+//		alert(chks.length);
 		
+//		alert(1);
+		for(var i=0;i<chks.length;i++){
+			alert(chks[i].value);
+		}
+//		alert(2);
+		
+//		$(chks).each(function( index ) {
+//			  alert( index ); //+ ": " + $( this ).text() );
+//		});
+		
+//		for(var i = 0, l = arr.length; i < l; i++){
+//			alert(chks[i]);
+//		}
+// 		alert(chks.length);
 	}
 </script>
 

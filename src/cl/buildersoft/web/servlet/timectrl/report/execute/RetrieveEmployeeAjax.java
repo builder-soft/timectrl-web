@@ -16,7 +16,7 @@ import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 
 @WebServlet("/servlet/timectrl/report/execute/RetrieveEmployeeAjax")
 public class RetrieveEmployeeAjax extends BSHttpServlet {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = "/servlet/timectrl/report/execute/RetrieveEmployeeAjax".hashCode();
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String bossId = request.getParameter("BossId");
