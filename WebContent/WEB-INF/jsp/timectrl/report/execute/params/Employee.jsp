@@ -249,7 +249,7 @@ ul.tabHolder li.active {
 				<li id='TabBoss' onclick='changeTab(this)'>B&uacute;squeda por
 					Jefatura</li>
 
-				<li style='display: xnone' id='TabArea' onclick='changeTab(this)'>B&uacute;squeda
+				<li style='display: none' id='TabArea' onclick='changeTab(this)'>B&uacute;squeda
 					por &Aacute;rea</li>
 
 			</ul>
