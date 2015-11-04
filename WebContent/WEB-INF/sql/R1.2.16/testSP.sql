@@ -1,6 +1,6 @@
 #select cid, crut from temployee where cid in (187,347,662,665,666);
 #call pListSummaryReport(462, '665', 9, 2015, 9, 2015);
-call pListSummaryReport(462, '665', 10, 2015, 10, 2015);
+call pListSummaryReport(307, '338', 10, 2015, 10, 2015);
 
 #call pListSummaryReport(462, '61', 6, 2015, 6, 2015);
 #call pListDetailReport (462, '61', 6, 2015, 6, 2015);

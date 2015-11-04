@@ -34,7 +34,8 @@ BEGIN
 	DECLARE vEndDiffI			INTEGER;
 	
 	DECLARE vBothMarks			BIT;
-	
+	DECLARE vLicense			BIT;
+
 	DROP TEMPORARY TABLE IF EXISTS tTemp;
 	CREATE TEMPORARY TABLE tTemp (
 		cId 				BIGINT(20) NOT NULL auto_increment,
@@ -91,6 +92,7 @@ BEGIN
 		WHILE vCurrent <= vLastMonth DO
 			SET vFlexible := fIsFlexible(vCurrent, vEmployeeId);
 			IF(vFlexible IS NULL OR vFlexible = TRUE) THEN
+#select vCurrent;
 			
 #select 'borrar', vCurrent, vEmployeeId;			
 				DELETE FROM tTemp WHERE cId = vI;
@@ -99,7 +101,8 @@ BEGIN
 				SET vTurnDayId := fMarkAndUserToTurnDayId4(vCurrent, vEmployeeId, vTolerance, FALSE);				
 				SET vBusinessDay := fIsBusinessDay(vTurnDayId);
 				SET vHoliday := fIsHoliday(vCurrent);
-
+				SET vLicense := fHaveLicense(vCurrent, vEmployeeId);
+#select vCurrent, vEmployeeId, vLicense;
 				SET vStartMark = fStartMark(vEmployeeKey, vTolerance, vCurrent, vBusinessDay, FALSE, vTurnDayId);
 				SET vStartTime = fStartTime(vStartMark, vBusinessDay, vTurnDayId);				
 				SET vStartDiffI = fExtraTimeAsMins6(vStartMark, vStartTime, TRUE, vTurnDayId);
@@ -113,7 +116,7 @@ BEGIN
 				SET vEndDiffI = fExtraTimeAsMins6(vEndMark, vEndTime, FALSE, vTurnDayId);
 				SET vEndDiffI = IFNULL(vEndDiffI, 0);
 				
-				IF(vBusinessDay AND NOT vHoliday) THEN
+				IF(vBusinessDay AND NOT vHoliday AND NOT vLicense) THEN
 					SET vBusinessDayCount = vBusinessDayCount + 1;
 				END IF;
 				

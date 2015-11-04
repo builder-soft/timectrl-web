@@ -479,7 +479,7 @@ END$$
 DROP FUNCTION IF EXISTS fMarkAndUserToTurnDayId2;
 DROP FUNCTION IF EXISTS fMarkAndUserToTurnDayId3;
 DROP FUNCTION IF EXISTS fMarkAndUserToTurnDayId4;
-CREATE FUNCTION fMarkAndUserToTurnDayId4(vMarkTime TIMESTAMP, vEmployeeId BIGINT(20), 
+CREATE FUNCTION fMarkAndUserToTurnDayId4(vMarkTime DATETIME, vEmployeeId BIGINT(20), 
 						vTolerance INTEGER, vFlexible BOOLEAN) RETURNS BIGINT(20)
 BEGIN 
 	DECLARE vOut BIGINT(20) DEFAULT NULL;
@@ -655,6 +655,19 @@ BEGIN
 	FROM	tParameter 
 	WHERE	cKey='BOTH_MARKS' AND cValue = 'true';
 	
+	RETURN vOut;
+END$$	
+
+/****************************************************************/
+DROP FUNCTION IF EXISTS fHaveLicense;
+CREATE FUNCTION fHaveLicense(vMarkTime DATE, vEmployeeId BIGINT(20)) RETURNS BIT
+BEGIN
+	DECLARE vOut BIT DEFAULT FALSE;
+	
+	SELECT	TRUE INTO vOut 
+	FROM	tLicense
+	WHERE	cEmployee = vEmployeeId AND 
+			DATE(vMarkTime) BETWEEN DATE(cStartDate) AND DATE(cEndDate);
 	RETURN vOut;
 END$$	
 
