@@ -376,13 +376,14 @@ CREATE FUNCTION fGetComment3(vMark DATETIME, vEmployeeId BIGINT(20), vTurnDayId 
 BEGIN
 	DECLARE vOut VARCHAR(120) DEFAULT '';
 	DECLARE vReason VARCHAR(50);
-	
+
 	SELECT tLicenseCause.cName INTO vOut 
 	FROM tLicense 
 	LEFT JOIN tLicenseCause ON tLicense.cLicenseCause = tLicenseCause.cId 
 	WHERE	cEmployee = vEmployeeId AND 
-			DATE(vMark) BETWEEN cStartDate AND cEndDate;
-	
+			DATE(vMark) BETWEEN cStartDate AND cEndDate
+	LIMIT 1;
+#return vEmployeeId;
 	IF(EXISTS(SELECT cId FROM tFiscalDate WHERE cDate = DATE(vMark))) THEN
 		SELECT cReason INTO vReason FROM tFiscalDate WHERE cDate = DATE(vMark) LIMIT 1;
 		SET vOut = fAppendComment(vOut, vReason);
