@@ -6,6 +6,11 @@
 <script
 	src="${pageContext.request.contextPath}/js/timectrl/report/execute/params-report.js?<%=Math.random()%>">	
 </script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/plugin/checkboxtree/0.5.2/jquery-ui-1.8.12.custom.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/plugin/checkboxtree/0.5.2/jquery.checkboxtree.js"></script>
+
 <%
 	List<ReportParameterBean> paramList = (List<ReportParameterBean>) request.getAttribute("ReportParameter");
 %>
@@ -30,21 +35,11 @@
 		%>
 
 		<tr>
-
 			<jsp:include page="<%=component%>">
 				<jsp:param name="Label" value="<%=param.getLabel()%>" />
 				<jsp:param name="Name" value="<%=param.getName()%>" />
 				<jsp:param name="Key" value="<%=param.getTypeKey()%>" />
 			</jsp:include>
-
-
-			<!--  
-		<td class="cLabel">< %=param.getLabel() %>:</td>
-		<td class="cLabel"><input name="< %=param.getName()%>"
-			id="< %=param.getName()%>"></td>
-			-->
-
-
 		</tr>
 		<%
 			}

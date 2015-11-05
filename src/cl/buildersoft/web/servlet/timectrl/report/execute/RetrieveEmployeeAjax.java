@@ -2,6 +2,7 @@ package cl.buildersoft.web.servlet.timectrl.report.execute;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,14 +21,22 @@ public class RetrieveEmployeeAjax extends BSHttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String bossId = request.getParameter("BossId");
-
+		String areasId = request.getParameter("AreasId");
+		List<Employee> list = new ArrayList<Employee>();
 		Connection conn = getConnection(request);
-
 		EmployeeService es = new EmployeeServiceImpl();
-		List<Employee> list = es.listEmployeeByBoss(conn, Long.parseLong(bossId));
 
+		if (areasId == null) {
+			list = es.listEmployeeByBoss(conn, Long.parseLong(bossId));
+		} else {
+			String[] areas = areasId.split(",");
+			for (String area : areas) {
+				if (area.length() > 0) {
+					list.addAll(es.listEmployeeByArea(conn, Long.parseLong(area)));
+				}
+			}
+		}
 		request.setAttribute("EmployeeList", list);
-
 		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params/list-employees-by-boss-json.jsp");
 
 	}

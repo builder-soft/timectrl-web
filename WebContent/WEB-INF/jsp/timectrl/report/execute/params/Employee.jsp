@@ -16,16 +16,7 @@
 <%
 	String param = (String) request.getParameter("Key");
 	Map<String, Object> dataList = (Map<String, Object>) request.getAttribute(param);
-	//List<ReportParameterBean> dataList = (List<ReportParameterBean>)request.getAttribute(param);
-
-	//List<Employee> employeeList = (List<Employee>)dataList.get("EMPLOYEE_LIST");
-	//List<Area> areaList = (List<Area>)dataList.get("AREA_LIST");
-	//List<Employee> bossList = (List<Employee>)dataList.get("BOSS_LIST");
 	List<BSTreeNode> bossTree = (List<BSTreeNode>) dataList.get("BOSS_TREE");
-
-	// EMPLOYEE_LIST
-	// AREA_LIST
-	// BOSS_LIST
 %>
 <style>
 <!--
@@ -61,10 +52,6 @@ ul.tabHolder li.active {
 }
 -->
 </style>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/plugin/checkboxtree/0.5.2/jquery-ui-1.8.12.custom.min.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/plugin/checkboxtree/0.5.2/jquery.checkboxtree.js"></script>
 
 <script type="text/javascript">
 	var rut = '_';
@@ -154,7 +141,7 @@ ul.tabHolder li.active {
 
 		var employees = data.employees;
 
-		for ( var i in employees) {
+		for (var i in employees) {
 			var row = table.insertRow(-1);
 			var cell = row.insertCell(0);
 			cell.className = 'cDataTD';
@@ -214,24 +201,42 @@ ul.tabHolder li.active {
 	}
 	
 	function clickArea(checkBox){
-		//alert(checkBox.value);
 		var chks = $( "#tree1 input:checkbox:checked" );
-//		alert(chks.length);
+		var employees = "";
+		var areas = "";
 		
-//		alert(1);
 		for(var i=0;i<chks.length;i++){
-			alert(chks[i].value);
+			areas += chks[i].value + ",";
 		}
-//		alert(2);
+		if(areas.length>0){
+			areas = areas.substring(0,areas.length-1);
+		}
+		employees = getEmployeesByBossId(areas);
+		document.getElementById("Id").value = employees;
 		
-//		$(chks).each(function( index ) {
-//			  alert( index ); //+ ": " + $( this ).text() );
-//		});
-		
-//		for(var i = 0, l = arr.length; i < l; i++){
-//			alert(chks[i]);
-//		}
-// 		alert(chks.length);
+	}
+	
+
+	function getEmployeesByBossId(areas) {
+		var url = contextPath + "/servlet/timectrl/report/execute/RetrieveEmployeeAjax";
+		var out = "";
+		$.ajax({
+			type : "GET",
+			cache : false,
+			url : url,
+			data : {
+				AreasId : areas
+			},
+			async : false,
+			success : function(data, status) {
+				out = data;
+			},
+			error : function(data, textStatus, xhr) {
+				alert(xhr);
+			}
+		});
+
+		return out;
 	}
 </script>
 
@@ -249,7 +254,7 @@ ul.tabHolder li.active {
 				<li id='TabBoss' onclick='changeTab(this)'>B&uacute;squeda por
 					Jefatura</li>
 
-				<li style='display: none' id='TabArea' onclick='changeTab(this)'>B&uacute;squeda
+				<li style='display: xnone' id='TabArea' onclick='changeTab(this)'>B&uacute;squeda
 					por &Aacute;rea</li>
 
 			</ul>
@@ -335,25 +340,13 @@ ul.tabHolder li.active {
 
 </td>
 <%!private String writeTree(List<BSTreeNode> bossTree) {
-		String out = "<li><input type='checkbox'><label>Node 1</label>";
-		out += "<ul><li><input type='checkbox'><label>Node 2.2.3.1</label><li><input type='checkbox'><label>Node 2.2.3.2</label></ul></li>";
+		String out = "";
 
-		out = "";
-
-		//List<BSTreeNode> root = (List<BSTreeNode>)bossTree.getChildren();
-		 
 		for (BSTreeNode node : bossTree) {
 			out += drawNode(node);
 		}
-		
-		/**<code>
-		// "<li><input type='checkbox'><label>Node 1</label></li>";
-		<ul>
-		    <li><input type="checkbox"><label>Node 1.1.1</label>
-		</ul>
-		</code>*/
 
-		return out; //bossTree.toString();
+		return out;
 	}
 
 	private String drawNode(BSTreeNode node) {
@@ -361,10 +354,9 @@ ul.tabHolder li.active {
 
 		List<BSTreeNode> children = node.getChildren();
 
-		//System.out.println(children.size());
 		Area area = (Area) node.getValue();
 		if (children.size() > 0) {
-			 
+
 			html += getLiElement(area);
 			html += "<ul>";
 			for (BSTreeNode child : children) {
@@ -377,11 +369,10 @@ ul.tabHolder li.active {
 
 		return html;
 	}
-	
+
 	private String getLiElement(Area area) {
-		String out = "<li class='cLabel' type='none'><input type='checkbox' value='"
-				+ area.getId()
-				+ "' onclick='javaScript:clickArea(this)'><label>"
-				+ area.getName() + "</label></li>";
+		String out = "<li class='cLabel' type='none'><input type='checkbox' id='node" + area.getId() + "' value='" + area.getId()
+				+ "' onclick='javaScript:clickArea(this)'><label for='node" + area.getId() + "'>" + area.getName()
+				+ "</label></li>";
 		return out;
 	}%>
