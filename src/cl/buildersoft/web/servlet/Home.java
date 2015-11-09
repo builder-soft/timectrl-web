@@ -15,7 +15,6 @@ import cl.buildersoft.framework.util.BSHttpServlet;
 
 @WebServlet("/servlet/Home")
 public class Home extends BSHttpServlet {
-
 	private static final String DATE_FORMAT = "DateFormat";
 	private static final long serialVersionUID = -3485155081742992753L;
 

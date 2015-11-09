@@ -27,7 +27,7 @@
 
 	<input type="hidden" name="ReportKey"
 		value="${requestScope.Report.key}">
-	<table width="50%">
+	<table width="100%" border="0">
 		<%
 			String component = null;
 			for (ReportParameterBean param : paramList) {
