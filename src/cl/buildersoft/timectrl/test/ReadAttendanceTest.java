@@ -1,11 +1,15 @@
 package cl.buildersoft.timectrl.test;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import cl.buildersoft.timectrl.api.ClassFactory;
 import cl.buildersoft.timectrl.api._zkemProxy;
 
 import com4j.Holder;
 
 public class ReadAttendanceTest {
+	private static final Logger LOG = Logger.getLogger(ReadAttendanceTest.class.getName());
 
 	public static void main(String[] args) {
 		_zkemProxy api = ClassFactory.createzkemProxy();
@@ -32,12 +36,12 @@ public class ReadAttendanceTest {
 				while (api.ssR_GetGeneralLogData(dwMachineNumber, dwEnrollNumber, dwVerifyMode, dwInOutMode, dwYear, dwMonth,
 						dwDay, dwHour, dwMinute, dwSecond, dwWorkCode)) {
 
-					System.out.println(dwYear.value + "-" + dwMonth.value + "-" + dwDay.value);
+					LOG.log(Level.FINE, "Date: " + dwYear.value + "-" + dwMonth.value + "-" + dwDay.value);
 				}
 			} else {
 				Holder<Integer> error = new Holder<Integer>(0);
 				api.getLastError(error);
-				System.out.println(error);
+				LOG.log(Level.SEVERE, "Error api.readGeneralLogData {0}", error.toString());
 			}
 			api.enableDevice(machime, true);
 			api.disconnect();

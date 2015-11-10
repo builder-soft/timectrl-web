@@ -109,7 +109,7 @@ Enumeration<String> names = session.getAttributeNames();%>
 		//String startTag = "";
 		String firstCharacter = "?";
 
-		//System.out.println("url: "+ url);
+		
 
 		url = url == null ? "" : url;
 

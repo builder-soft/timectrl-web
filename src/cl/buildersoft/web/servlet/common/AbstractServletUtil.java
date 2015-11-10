@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -16,6 +18,7 @@ import cl.buildersoft.framework.util.ReflectionUtils;
 import cl.buildersoft.framework.util.crud.BSField;
 
 public class AbstractServletUtil extends BSHttpServlet {
+	private static  final Logger LOG = Logger.getLogger(AbstractServletUtil.class.getName());
 	private static final long serialVersionUID = -34792656017725168L;
 
 	protected String getFieldsNamesWithCommas(BSField[] fields) {
@@ -31,13 +34,8 @@ public class AbstractServletUtil extends BSHttpServlet {
 		return out;
 	}
 
-	/**
-	 * <code>
-	protected Boolean isId(String s) {
-		return "id".equalsIgnoreCase(s) || "cid".equalsIgnoreCase(s);
-	}
-</code>
-	 */
+
+
 	protected String getCommas(BSField[] fields) {
 		String out = "";
 
@@ -74,13 +72,14 @@ public class AbstractServletUtil extends BSHttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Method doGet of class AbstractServletUtil is deprecated, will be delete.");
+		LOG.log(Level.INFO, "Method doGet of class AbstractServletUtil is deprecated, will be delete.");
+		
 		this.doPost(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Method doPost of class AbstractServletUtil is deprecated, will be delete.");
+		LOG.log(Level.INFO, "Method doPost of class AbstractServletUtil is deprecated, will be delete.");
 		Object[] parameters = { request, response };
 		String servletName = "cl.buildersoft.web." + request.getRequestURI().substring(12).replaceAll("/", ".");
 		String methodName = request.getParameter("Method");

@@ -13,7 +13,9 @@ import org.junit.Test;
 
 import cl.buildersoft.framework.beans.User;
 import cl.buildersoft.framework.services.impl.BSUserServiceImpl;
+import cl.buildersoft.framework.util.BSConsole;
 import cl.buildersoft.framework.util.BSDataUtils;
+//import cl.buildersoft.framework.util;
 
 import com.mysql.jdbc.DatabaseMetaData;
 
@@ -39,63 +41,63 @@ public class PKandFKTest {
 			DatabaseMetaData dbmd = (DatabaseMetaData) conn.getMetaData();
 			ResultSet rs = dbmd.getTables(DATABASE, null, null, null);
 
-			System.out.println("TABLES:");
-			System.out.println("--------------------");
+			BSConsole.println("TABLES:");
+			BSConsole.println("--------------------");
 			while (rs.next()) {
 				ResultSetMetaData md = rs.getMetaData();
 				for (int i = 1; i < md.getColumnCount(); i++) {
-					System.out.println(md.getColumnName(i) + "=" + rs.getString(md.getColumnName(i)));
+					BSConsole.println(md.getColumnName(i) + "=" + rs.getString(md.getColumnName(i)));
 				}
-				System.out.println("--------------------");
+				BSConsole.println("--------------------");
 			}
 			rs.close();
 
 			rs = dbmd.getImportedKeys(null, null, TABLE);
 
-			System.out.println("getImportedKeys:");
-			System.out.println("--------------------");
+			BSConsole.println("getImportedKeys:");
+			BSConsole.println("--------------------");
 			while (rs.next()) {
 				ResultSetMetaData md = rs.getMetaData();
 				for (int i = 1; i < md.getColumnCount(); i++) {
-					System.out.println(md.getColumnName(i) + "=" + rs.getString(md.getColumnName(i)));
+					BSConsole.println(md.getColumnName(i) + "=" + rs.getString(md.getColumnName(i)));
 				}
-				System.out.println("--------------------");
+				BSConsole.println("--------------------");
 			}
 			rs.close();
 
-			System.out.println("getExportedKeys():");
-			System.out.println("--------------------");
+			BSConsole.println("getExportedKeys():");
+			BSConsole.println("--------------------");
 			rs = dbmd.getExportedKeys(null, null, TABLE);
 			while (rs.next()) {
 				ResultSetMetaData md = rs.getMetaData();
 				for (int i = 1; i < md.getColumnCount(); i++) {
-					System.out.println(md.getColumnName(i) + "=" + rs.getString(md.getColumnName(i)));
+					BSConsole.println(md.getColumnName(i) + "=" + rs.getString(md.getColumnName(i)));
 				}
-				System.out.println("----------");
+				BSConsole.println("----------");
 			}
 			rs.close();
 
-			System.out.println("getIndexInfo():");
-			System.out.println("--------------------");
+			BSConsole.println("getIndexInfo():");
+			BSConsole.println("--------------------");
 			rs = dbmd.getIndexInfo(DATABASE, null, TABLE, true, false);
 			while (rs.next()) {
 				ResultSetMetaData md = rs.getMetaData();
 				for (int i = 1; i < md.getColumnCount(); i++) {
-					System.out.println(md.getColumnName(i) + "=" + rs.getString(md.getColumnName(i)));
+					BSConsole.println(md.getColumnName(i) + "=" + rs.getString(md.getColumnName(i)));
 				}
-				System.out.println("----------");
+				BSConsole.println("----------");
 			}
 			rs.close();
 
-			System.out.println("getPrimaryKeys():");
-			System.out.println("--------------------");
+			BSConsole.println("getPrimaryKeys():");
+			BSConsole.println("--------------------");
 			rs = dbmd.getPrimaryKeys(DATABASE, null, TABLE);
 			while (rs.next()) {
 				ResultSetMetaData md = rs.getMetaData();
 				for (int i = 1; i < md.getColumnCount(); i++) {
-					System.out.println(md.getColumnName(i) + "=" + rs.getString(md.getColumnName(i)));
+					BSConsole.println(md.getColumnName(i) + "=" + rs.getString(md.getColumnName(i)));
 				}
-				System.out.println("----------");
+				BSConsole.println("----------");
 			}
 			rs.close();
 

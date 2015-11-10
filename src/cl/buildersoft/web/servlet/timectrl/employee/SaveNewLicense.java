@@ -42,9 +42,9 @@ public class SaveNewLicense extends BSHttpServlet {
 
 		Connection conn = getConnection(request);
 		bu.save(conn, license);
-		
+
 		request.setAttribute("cId", employeeId);
 		forward(request, response, "/servlet/timectrl/employee/LicenseOfEmployee");
-		// System.out.println("save!");
+
 	}
 }

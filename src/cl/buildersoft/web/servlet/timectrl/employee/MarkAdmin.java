@@ -139,8 +139,6 @@ public class MarkAdmin extends BSHttpServlet {
 		parms.add(BSDateTimeUtil.calendar2Timestamp(startDate));
 		parms.add(BSDateTimeUtil.calendar2Timestamp(endDate));
 
-		// System.out.println(parms);
-
 		BSmySQL mysql = new BSmySQL();
 		ResultSet rs = mysql.callSingleSP(conn, "pListMarkOfEmployee", parms);
 		List<Object[]> matrix = mysql.resultSet2Matrix2(rs);

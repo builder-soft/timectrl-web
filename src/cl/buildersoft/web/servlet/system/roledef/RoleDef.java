@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +26,7 @@ import cl.buildersoft.framework.util.BSHttpServlet;
  */
 @WebServlet("/servlet/system/roleDef/RoleDef")
 public class RoleDef extends BSHttpServlet {
+	private static final Logger LOG = Logger.getLogger(RoleDef.class.getName());
 	private static final long serialVersionUID = 111140893680994718L;
 
 	public RoleDef() {
@@ -47,7 +50,8 @@ public class RoleDef extends BSHttpServlet {
 		Menu rolMenu = menuService.getMenu(conn, getCurrentUser(request).getAdmin(), rols);
 		mysql.closeConnection(conn);
 
-		// System.out.println(rolMenu.list().toString());
+		LOG.log(Level.FINE, "RolMenu: {0}", rolMenu.list().toString());
+		 
 
 		request.setAttribute("Rols", rolsArray);
 		request.setAttribute("FullMenu", fullMenu);

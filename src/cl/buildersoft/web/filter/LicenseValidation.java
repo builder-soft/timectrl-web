@@ -1,9 +1,13 @@
 package cl.buildersoft.web.filter;
 
+import static cl.buildersoft.framework.util.BSUtils.array2ObjectArray;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
@@ -23,6 +27,7 @@ import cl.buildersoft.timectrl.util.LicenseValidationUtil;
 
 @WebFilter(urlPatterns = { "/servlet/*" }, dispatcherTypes = { DispatcherType.REQUEST })
 public class LicenseValidation implements Filter {
+	private static final Logger LOG = Logger.getLogger(LicenseValidation.class.getName());
 	private Boolean activeFilter = null;
 
 	// private FilterConfig filterConfig = null;
@@ -36,7 +41,9 @@ public class LicenseValidation implements Filter {
 				this.activeFilter = Boolean.parseBoolean(activeFilterString);
 			} catch (Exception e) {
 				this.activeFilter = Boolean.TRUE;
-				System.out.println("Can't parsing '" + activeFilterString + "' as Boolean value");
+				LOG.log(Level.WARNING, "Can't parsing '{0}' as Boolean value, will be {1}",
+						array2ObjectArray(activeFilterString, this.activeFilter));
+
 			}
 		}
 	}
@@ -57,7 +64,6 @@ public class LicenseValidation implements Filter {
 				e.printStackTrace();
 				success = false;
 			}
-			// System.out.println(serials + "   " + dateExpired);
 
 			/**
 			 * <code>
@@ -128,83 +134,5 @@ public class LicenseValidation implements Filter {
 		Connection conn = mysql.getConnection(request);
 		return conn;
 	}
-
-	/**
-	 * <code>
-	private String getServerName(String url) {
-		// https://localhost:8080/remcon-web/...
-		Integer start = url.indexOf("//");
-		Integer twoPoints = url.indexOf(":", start + 2);
-		Integer slash = url.indexOf("/", start + 2);
-		String out = null;
-
-		if (twoPoints < 0) {
-			out = url.substring(start + 2, slash);
-		} else {
-			out = url.substring(start + 2, twoPoints);
-		}
-		return out;
-	}
-</code>
-	 */
-
-	/**
-	 * <code>
-	private boolean validateLicense(String license) {
-		Boolean validLicense = null;
-		Double rnd = Math.random();
-		rnd *= 100;
-		Integer random = rnd.intValue() + 1;
-		if (license == null || license.length() < 8) {
-			validLicense = false;
-		} else {
-			Calendar expireDate = license2Calendar(license.substring(0, 8));
-			Integer dateDiff = dateDiff(expireDate);
-
-			validLicense = (random >= dateDiff);
-			System.out.println("random: " + random + " >= dateDiff: " + dateDiff + " = " + validLicense);
-		}
-		return validLicense;
-	}
-
-	private Calendar license2Calendar(String license) {
-		Calendar out = null;
-		if (license.length() == 8) {
-			String year = license.substring(0, 4);
-			String month = license.substring(4, 6);
-			String day = license.substring(6, 8);
-			String date = year + "-" + month + "-" + day;
-
-			System.out.println(date);
-
-			if (BSDateTimeUtil.isValidDate(date, "yyyy-MM-dd")) {
-				out = Calendar.getInstance();
-				out.set(Calendar.YEAR, Integer.parseInt(year));
-				out.set(Calendar.MONTH, Integer.parseInt(month) - 1);
-				out.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
-			} else {
-				out = Calendar.getInstance();
-				out.set(Calendar.YEAR, 2000);
-				out.set(Calendar.MONTH, 0);
-				out.set(Calendar.DAY_OF_MONTH, 1);
-
-			}
-
-		}
-		return out;
-	}
-
-	private Integer dateDiff(Calendar expireDate) {
-		Integer out = 101;
-		if (expireDate != null) {
-			Calendar start = Calendar.getInstance();
-			long diff = start.getTimeInMillis() - expireDate.getTimeInMillis();
-			Long diffDays = diff / (24 * 60 * 60 * 1000);
-			out = diffDays.intValue();
-		}
-		return out;
-	}
-</code>
-	 */
 
 }

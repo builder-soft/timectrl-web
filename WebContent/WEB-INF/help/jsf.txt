@@ -1,1 +1,3 @@
 https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaServerFaces.html
+http://miageprojet2.unice.fr/Intranet_de_Michel_Buffa/Design_Patterns_Java_EE_6/Design_patterns_Java_EE_6_with_JSF_%2F%2F_EJB_%2F%2F_JPA
+http://www.andygibson.net/blog/tutorial/getting-started-with-jsf-2-0-and-cdi-in-jee-6-part-1/

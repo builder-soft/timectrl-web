@@ -77,16 +77,7 @@ public class SaveRoleDef extends HttpServlet {
 		}
 	}
 
-	/**
-	 * <code>
-	private void printSQL(String sql, List<Object> prms) {
-		String s = sql;
-		s = s.replaceFirst("[?]", "@rolId");
-		s = s.replaceFirst("[?]", prms.get(1).toString());
-		System.out.println(s);
-	}
-</code>
-	 */
+	 
 	private void deleteRolDef(Connection conn, BSmySQL mysql, Long rol) {
 		String sql = "DELETE FROM tR_RolOption WHERE cRol=?";
 		List<Object> prms = new ArrayList<Object>();

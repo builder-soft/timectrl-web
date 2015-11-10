@@ -2,6 +2,8 @@ package cl.buildersoft.web.servlet.ajax;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +14,7 @@ import cl.buildersoft.framework.util.BSDataUtils;
 
 @WebServlet("/servlet/ajax/GetIndicator")
 public class GetIndicator extends AbstractAjaxServlet {
+	private final static Logger LOG = Logger.getLogger(GetIndicator.class.getName());
 	private static final long serialVersionUID = -915879276301350536L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -20,11 +23,7 @@ public class GetIndicator extends AbstractAjaxServlet {
 
 		Long startTime = System.currentTimeMillis();
 
-		// OK - Versión
-		// OK - Ultima Lectura
-		// OK - Relojes OffLine
-		// Cuantos Empleados no tienen RUT
-		// Horas atrasadas al mes actual
+		 
 
 		Connection conn = getConnection(request);
 		if ("CurrentVersion".equalsIgnoreCase(key)) {
@@ -49,7 +48,7 @@ public class GetIndicator extends AbstractAjaxServlet {
 		}
 
 		try {
-			// System.out.println(time);
+			 LOG.log(Level.FINE, "Time: {0}", time);
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
 			e.printStackTrace();

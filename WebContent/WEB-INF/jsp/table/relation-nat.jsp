@@ -138,17 +138,11 @@ action="${pageContext.request.contextPath}/servlet/common/SaveRelation"
 				break;
 			}
 		}
-		/*
-		System.out.println(Arrays.toString(element) + "in" + showList(list)
-			+ "->" + out);
-		 */
+		 
 		return out;
 	}
 
-	private void showCompares(Object[] a, Object[] b) {
-		System.out.println(Arrays.toString(a) + " == " + Arrays.toString(b) + "->" + Arrays.equals(a, b));
-	}
-
+	 
 	private String showList(List<Object[]> l) {
 		String out = "";
 

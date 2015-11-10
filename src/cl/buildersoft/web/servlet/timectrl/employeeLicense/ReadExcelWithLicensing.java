@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -27,6 +29,7 @@ import cl.buildersoft.timectrl.business.beans.LicenseCause;
 import cl.buildersoft.web.servlet.timectrl.employee.DetailFile;
 
 public class ReadExcelWithLicensing {
+	private static final Logger LOG = Logger.getLogger(ReadExcelWithLicensing.class.getName());
 	private static final String[] MONTHS = { "ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic" };
 
 	public static void main(String[] args) {
@@ -37,6 +40,8 @@ public class ReadExcelWithLicensing {
 	}
 
 	public void doMain(String[] args) {
+		LOG.entering(this.getClass().getName(), "doMain", args);
+		LOG.log(Level.WARNING, "Method doMain of class {0} have hardcode", this.getClass().getName());
 		String file = "D:\\cmoscoso\\Dropbox\\timectrl\\Reporte_permisos Junio 2014.xls";
 		file = "E:\\Dropbox\\timectrl\\Reporte_permisos Junio 2014.xls";
 		file = "E:\\Dropbox\\timectrl\\Reporte_permisos2014.xls";
@@ -47,12 +52,12 @@ public class ReadExcelWithLicensing {
 			validateFile(getConnection(), list);
 
 			for (DetailFile detail : list) {
-				System.out.println(detail.toString());
+				LOG.fine(detail.toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		LOG.exiting(this.getClass().getName(), "doMain");
 	}
 
 	public void validateFile(Connection conn, List<DetailFile> list) {
@@ -126,7 +131,8 @@ public class ReadExcelWithLicensing {
 		date.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateParts[2]));
 		date.set(Calendar.MONTH, Integer.parseInt(dateParts[1]) - 1);
 		date.set(Calendar.YEAR, Integer.parseInt(dateParts[0]));
-//		System.out.println(BSDateTimeUtil.calendar2String(date, "yyyy-MM-dd"));
+		// System.out.println(BSDateTimeUtil.calendar2String(date,
+		// "yyyy-MM-dd"));
 		return date;
 	}
 

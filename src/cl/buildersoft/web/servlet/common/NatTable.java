@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +24,7 @@ import cl.buildersoft.framework.util.crud.BSTableConfig;
  */
 @WebServlet("/servlet/common/NatTable")
 public class NatTable extends BSHttpServlet {
+	private static final Logger LOG = Logger.getLogger(NatTable.class.getName());
 	private static final long serialVersionUID = 8135006580684560874L;
 
 	public NatTable() {
@@ -44,7 +47,7 @@ public class NatTable extends BSHttpServlet {
 		String sql = getSQL(action, table);
 
 		BSmySQL mysql = new BSmySQL();
-		Connection conn =  getConnection(request);
+		Connection conn = getConnection(request);
 
 		ResultSet relation = getRelation(id, sql, mysql, conn);
 		request.setAttribute("Relation", relation);
@@ -55,7 +58,8 @@ public class NatTable extends BSHttpServlet {
 		request.setAttribute("Conn", conn);
 
 		forward(request, response, "/WEB-INF/jsp/table/relation-nat.jsp");
-//		request.getRequestDispatcher("/WEB-INF/jsp/table/relation-nat.jsp").forward(request, response);
+		// request.getRequestDispatcher("/WEB-INF/jsp/table/relation-nat.jsp").forward(request,
+		// response);
 	}
 
 	private ResultSet getList(BSAction action, BSmySQL mysql, Connection conn) {
@@ -86,7 +90,8 @@ LEFT JOIN tRol AS c ON b.cRol = c.cId;
 		sql += "LEFT JOIN " + natInfo[0] + "." + natInfo[1] + " AS b ON a.cId = b." + table2Field(table.getTableName()) + " ";
 		sql += "LEFT JOIN " + natInfo[2] + "." + natInfo[3] + " AS c ON b." + table2Field(natInfo[3]) + " = c.cId ";
 		sql += "WHERE a.cId=? AND c.cId IS NOT NULL";
-		// System.out.println(sql);
+		LOG.logp(Level.FINE, this.getClass().getName(), "getSQL", "SQL: {0}", sql);
+
 		return sql;
 	}
 

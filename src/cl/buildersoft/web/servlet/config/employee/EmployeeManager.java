@@ -137,13 +137,7 @@ public class EmployeeManager extends HttpServletCRUD {
 				out = Semaphore.GREEN;
 			}
 
-			/**
-			 * <code>
-			for (Object value : values) {
-				System.out.print((value == null ? "NULL" : value.toString()) + ",");
-			}
-			System.out.println("");</code>
-			 */
+			 
 		}
 		return out;
 	}
