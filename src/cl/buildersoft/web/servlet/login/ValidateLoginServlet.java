@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +28,8 @@ import cl.buildersoft.framework.exception.BSDataBaseException;
 import cl.buildersoft.framework.exception.BSUserException;
 import cl.buildersoft.framework.services.impl.BSUserServiceImpl;
 import cl.buildersoft.framework.util.BSDataUtils;
+import cl.buildersoft.framework.util.BSUtils;
+import cl.buildersoft.timectrl.business.process.AbstractProcess;
 
 /**
  * Servlet implementation class ValidateServlet
@@ -34,6 +38,8 @@ import cl.buildersoft.framework.util.BSDataUtils;
 @WebServlet(urlPatterns = "/login/ValidateLoginServlet")
 public class ValidateLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = -4481703270849068766L;
+
+	private static final Logger LOG = Logger.getLogger(ValidateLoginServlet.class.getName());
 
 	public ValidateLoginServlet() {
 		super();
@@ -56,7 +62,11 @@ public class ValidateLoginServlet extends HttpServlet {
 			Connection connDomain = null;
 
 			connBSframework = dau.getConnection(getServletContext(), "bsframework");
+
+//			LOG.log(Level.FINE, "Validing user "+mail+", password "+password+"");
+			LOG.log(Level.FINE, "Validing user '{0}', password '{1}'", BSUtils.array2ObjectArray(mail, password));
 			user = userService.login(connBSframework, mail, password);
+			LOG.log(Level.INFO, "User: {0}", user);
 
 			List<Domain> domains = null;
 			Domain defaultDomain = null;
