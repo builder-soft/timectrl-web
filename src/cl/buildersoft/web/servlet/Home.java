@@ -3,6 +3,8 @@ package cl.buildersoft.web.servlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +17,7 @@ import cl.buildersoft.framework.util.BSHttpServlet;
 
 @WebServlet("/servlet/Home")
 public class Home extends BSHttpServlet {
+	private static final Logger LOG = Logger.getLogger(Home.class.getName());
 	private static final String DATE_FORMAT = "DateFormat";
 	private static final long serialVersionUID = -3485155081742992753L;
 
@@ -51,9 +54,9 @@ public class Home extends BSHttpServlet {
 
 		if (lastRead != null) {
 			date = BSDateTimeUtil.string2Calendar(lastRead, "yyyy-MM-dd hh:mm:ss");
-			// System.out.println(lastRead);
+			LOG.log(Level.FINE, "LastRead: {0}", date);
 			out = BSDateTimeUtil.calendar2String(date, "dd-MM-yyyy HH:mm:ss");
-			// System.out.println(out);
+			LOG.log(Level.FINE, "Out: {0}", out);
 		}
 		return out;
 	}

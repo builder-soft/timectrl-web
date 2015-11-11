@@ -5,3 +5,8 @@ UTF8 en tomcat
 http://www.adictosaltrabajo.com/tutoriales/tutoriales.php?pagina=tomcatUTF8
 http://www.programacionenjava.com/blog/2008/04/01/j2ee/configuracion-del-juego-de-caracteres-charset-en-una-aplicacion-web-en-tomcat/
  
+Datasource
+https://loquemeinteresadelared.wordpress.com/2015/02/23/configuracion-de-un-datasource-para-acceder-a-una-base-de-datos-en-tomcat-6-7-y-8/
+
+http://www.elclubdelprogramador.com/2011/10/07/tomcat-accesando-a-recursos-jdbc-mediante-jndi/
+

@@ -29,7 +29,6 @@ import cl.buildersoft.framework.exception.BSUserException;
 import cl.buildersoft.framework.services.impl.BSUserServiceImpl;
 import cl.buildersoft.framework.util.BSDataUtils;
 import cl.buildersoft.framework.util.BSUtils;
-import cl.buildersoft.timectrl.business.process.AbstractProcess;
 
 /**
  * Servlet implementation class ValidateServlet
@@ -37,9 +36,8 @@ import cl.buildersoft.timectrl.business.process.AbstractProcess;
 
 @WebServlet(urlPatterns = "/login/ValidateLoginServlet")
 public class ValidateLoginServlet extends HttpServlet {
-	private static final long serialVersionUID = -4481703270849068766L;
-
 	private static final Logger LOG = Logger.getLogger(ValidateLoginServlet.class.getName());
+	private static final long serialVersionUID = -4481703270849068766L;
 
 	public ValidateLoginServlet() {
 		super();
@@ -61,9 +59,8 @@ public class ValidateLoginServlet extends HttpServlet {
 			Connection connBSframework = null;
 			Connection connDomain = null;
 
-			connBSframework = dau.getConnection(getServletContext(), "bsframework");
+			connBSframework = dau.getConnection2("jdbc/bsframework");
 
-//			LOG.log(Level.FINE, "Validing user "+mail+", password "+password+"");
 			LOG.log(Level.FINE, "Validing user '{0}', password '{1}'", BSUtils.array2ObjectArray(mail, password));
 			user = userService.login(connBSframework, mail, password);
 			LOG.log(Level.INFO, "User: {0}", user);
@@ -78,7 +75,7 @@ public class ValidateLoginServlet extends HttpServlet {
 				}
 				defaultDomain = domains.get(0);
 				domainAttribute = getDomainAttribute(connBSframework, defaultDomain);
-				connDomain = dau.getConnection(domainAttribute);
+				connDomain = dau.getConnection2(domainAttribute);
 
 				rols = userService.getRols(connDomain, user);
 				if (rols.size() == 0) {

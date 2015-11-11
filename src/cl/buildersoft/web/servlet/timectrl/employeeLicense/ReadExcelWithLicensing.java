@@ -131,8 +131,7 @@ public class ReadExcelWithLicensing {
 		date.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateParts[2]));
 		date.set(Calendar.MONTH, Integer.parseInt(dateParts[1]) - 1);
 		date.set(Calendar.YEAR, Integer.parseInt(dateParts[0]));
-		// System.out.println(BSDateTimeUtil.calendar2String(date,
-		// "yyyy-MM-dd"));
+
 		return date;
 	}
 
@@ -241,13 +240,12 @@ public class ReadExcelWithLicensing {
 						}
 
 					}
-					// System.out.print("*" + "(" + i + "," + j + ")" + data +
-					// "*\t");
+
 				}
-				// System.out.println("");
+
 				out.add(rowData);
 			}
-			// if(i>20 )break;
+
 		}
 		return out;
 	}

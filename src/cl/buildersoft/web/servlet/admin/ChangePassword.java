@@ -40,7 +40,7 @@ public class ChangePassword extends HttpServlet {
 		Long id = Long.parseLong(request.getParameter("cId"));
 
 		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(getServletContext(), "bsframework");
+		Connection conn = mysql.getConnection2(  "jdbc/bsframework");
 
 		BSBeanUtils bu = new BSBeanUtils();
 		User user = new User();

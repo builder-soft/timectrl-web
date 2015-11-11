@@ -23,7 +23,7 @@ public class DomainAttributeManager extends HttpServletCRUD {
 
 		BSmySQL mysql = new BSmySQL();
 
-		Connection conn = mysql.getConnection(getServletContext(), "bsframework");
+		Connection conn = mysql.getConnection2("jdbc/bsframework");
 		table.configFields(conn, mysql);
 		mysql.closeConnection(conn);
 
@@ -35,5 +35,5 @@ public class DomainAttributeManager extends HttpServletCRUD {
 	@Override
 	public Semaphore setSemaphore(Connection conn, Object[] values) {
 		return null;
-	} 
+	}
 }

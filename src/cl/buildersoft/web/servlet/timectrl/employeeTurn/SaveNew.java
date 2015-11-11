@@ -29,8 +29,6 @@ public class SaveNew extends HttpServlet {
 		String start = request.getParameter("StartDate");
 		String end = request.getParameter("EndDate");
 
-		// System.out.println(start);
-
 		Calendar startDate = BSDateTimeUtil.string2Calendar(start, "yyyy-MM-dd");
 		Calendar endDate = BSDateTimeUtil.string2Calendar(end, "yyyy-MM-dd");
 

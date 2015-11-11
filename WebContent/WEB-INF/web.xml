@@ -40,4 +40,21 @@
     <exception-type>java.lang.RuntimeException</exception-type>
     <location>/jsp/error/error.jsp</location>
   </error-page>
+   <!-- 
+  <resource-ref>
+ 
+<description>
+Descripcion del recurso
+</description>
+<res-ref-name>
+jdbc/bsframework2
+</res-ref-name>
+<res-type>
+javax.sql.DataSource
+</res-type>
+<res-auth>
+Container
+</res-auth>
+</resource-ref>
+ -->
 </web-app>

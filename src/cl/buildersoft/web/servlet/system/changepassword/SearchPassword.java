@@ -34,7 +34,7 @@ public class SearchPassword extends HttpServlet {
 			id = Long.parseLong(idString);
 		}
 		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(request.getServletContext(), "bsframework");
+		Connection conn = mysql.getConnection2(  "jdbc/bsframework");
 
 		BSBeanUtils bu = new BSBeanUtils();
 		User user = new User();

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +30,7 @@ import cl.buildersoft.web.servlet.timectrl.employee.DetailFile;
  */
 @WebServlet("/servlet/timectrl/employeeLicense/UploadLicenseFile")
 public class UploadLicenseFile extends BSHttpServlet {
+	private static final Logger LOG = Logger.getLogger(UploadLicenseFile.class.getName());
 	private static final int SIZE_15_MB = 1024 * 1024 * 15;
 	private static final long serialVersionUID = -1220077678998963276L;
 
@@ -58,9 +61,8 @@ public class UploadLicenseFile extends BSHttpServlet {
 		String destinyFile = null;
 		String tempFolder = this.getServletConfig().getServletContext().getAttribute("javax.servlet.context.tempdir").toString();
 
-		System.out.println("File loaded in '" + tempFolder + "'");
+		LOG.log(Level.INFO, "File loaded in '{0}'", tempFolder);
 
-		// Set overall request size constraint
 		upload.setSizeMax(SIZE_15_MB);
 
 		List<FileItem> items = null;
@@ -83,23 +85,11 @@ public class UploadLicenseFile extends BSHttpServlet {
 			long sizeInBytes = item.getSize();
 </code>
 			 */
-			if (!item.isFormField()) {
-				/**
-				 * <code>
-				System.out.println(fieldName + "=" + item.getString());
-			} else {
-				System.out.println("FileName=" + fileName);
-				System.out.println("ContentType=" + contentType);
-				System.out.println("IsInMemory=" + isInMemory);
-				System.out.println("SizeInBytes=" + sizeInBytes);
-</code>
-				 */
+			if (!item.isFormField()) {				 
 				String fileName = item.getName();
-				// fileName =
-				// "D:\\cmoscoso\\Dropbox\\timectrl\\Reporte_permisos Junio 2014.xls";
-				fileName = fileName.substring(fileName.lastIndexOf(File.separator) + 1);
+				 	fileName = fileName.substring(fileName.lastIndexOf(File.separator) + 1);
 				destinyFile = tempFolder + File.separator + fileName;
-				// System.out.println(destinyFile);
+				 
 
 				File uploadedFile = new File(destinyFile);
 				try {

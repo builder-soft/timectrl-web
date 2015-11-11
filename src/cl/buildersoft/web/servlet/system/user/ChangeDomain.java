@@ -32,7 +32,7 @@ public class ChangeDomain extends BSHttpServlet {
 		HttpSession session = request.getSession();
 		// Connection conn = getConnection(request);
 		BSDataUtils dau = new BSDataUtils();
-		Connection conn = dau.getConnection(getServletContext(), "bsframework");
+		Connection conn = dau.getConnection2("jdbc/bsframework");
 
 		List<Domain> domains = (List<Domain>) request.getSession().getAttribute("Domains");
 
