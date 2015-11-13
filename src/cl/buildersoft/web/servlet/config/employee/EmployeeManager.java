@@ -43,15 +43,25 @@ public class EmployeeManager extends HttpServletCRUD {
 		table.getField("cEnabled").setLabel("Activado");
 		table.getField("cUsername").setLabel("Nombre Usuario");
 		table.getField("cMail").setLabel("Correo electrónico");
-
-		table.getField("cFingerprint").setReadonly(true);
-		table.getField("cFingerprint").setVisible(false);
-		table.getField("cFingerIndex").setReadonly(true);
-		table.getField("cFingerIndex").setVisible(false);
-		table.getField("cFlag").setReadonly(true);
-		table.getField("cFlag").setVisible(false);
-		table.getField("cCardNumber").setReadonly(true);
-		table.getField("cCardNumber").setVisible(false);
+		
+//		table.getField("cMail").setShowInTable(false);
+//		table.getField("cArea").setShowInTable(false);
+//		table.getField("cPrivilege").setShowInTable(false);
+		
+		this.hideFields(table, "cMail", "cArea", "cPrivilege", "cEnabled");
+		
+//		table.getField("cFingerprint").setReadonly(true);
+		table.getField("cFingerprint").setShowInTable(false);
+		table.getField("cFingerprint").setShowInForm(false);
+//		table.getField("cFingerIndex").setReadonly(true);
+		table.getField("cFingerIndex").setShowInTable(false);
+		table.getField("cFingerIndex").setShowInForm(false);
+//		table.getField("cFlag").setReadonly(true);
+		table.getField("cFlag").setShowInTable(false);
+		table.getField("cFlag").setShowInForm(false);
+//		table.getField("cCardNumber").setReadonly(true);
+		table.getField("cCardNumber").setShowInTable(false);
+		table.getField("cCardNumber").setShowInForm(false);
 
 		// table.getField("cBirthDate").setLabel("Nacimiento");
 		/*

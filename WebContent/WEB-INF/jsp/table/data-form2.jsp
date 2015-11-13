@@ -66,9 +66,8 @@ function onLoadPage(){
 						}
 
 						html += "if (" + fieldName + " == null) {\n";
-					
-	html += "   msg = 'El campo \"" + field.getLabel()
-+ "\" no es valido';\n";
+
+						html += "   msg = 'El campo \"" + field.getLabel() + "\" no es valido';\n";
 						html += "}\n";
 					}
 				}%>
@@ -117,27 +116,38 @@ function onLoadPage(){
 
 <form
 	action="${pageContext.request.contextPath}/servlet/common/<%=nextServlet%>"
-	method="post" id="editForm">
-	<div class="form-group col-lg-12">
+	method="post" id="editForm" class="form-horizontal" role="form">
+	
 		<%
-			Boolean readOnly = null;
-			for (BSField field : fields) {
-				readOnly = field.isReadonly();
-				if (!readOnly) {
-		%>
-		<label for="<%=field.getName()%>"><%=field.getLabel()%>:</label>
-		<%=writeHTMLField(field, request)%>
-		<%
-			}
-			}
-		%>
+				Boolean showInForm = null;
+				for (BSField field : fields) {
+					showInForm = field.getShowInForm();
+					if (showInForm) {
+			%>
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="<%=field.getName()%>"><%=field.getLabel()%>:</label>
+		<div class="col-sm-10">
+			<%=writeHTMLField(field, request)%>
+		</div>
+	</div>
+	<%
+		}
+		}
+	%>
 	</div>
 </form>
-<button type="button" onclick="javascript:sendForm()"
-	class="btn btn-primary">Aceptar</button>
-&nbsp;&nbsp;&nbsp;
-<button class="btn btn-link" onclick="javascript:cancelForm()">Cancelar</button>
-
+ 
+<div class="form-group">
+	<div class="col-sm-offset-2 col-sm-1">
+		<button type="button" onclick="javascript:sendForm()"
+			class="btn btn-primary">Aceptar</button>
+		&nbsp;&nbsp;&nbsp;
+	</div>
+	<div class="col-sm-offset-1 col-sm-7">
+		<button class="btn btn-link" onclick="javascript:cancelForm()">Cancelar</button>
+	</div>
+</div>
+ 
 
 <%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>
 
@@ -155,11 +165,10 @@ function onLoadPage(){
 		Boolean isPk = field.isPK();
 		//Boolean isNew = Boolean.FALSE;
 		Boolean isReadOnly = isPk ? Boolean.TRUE : field.isReadonly();
-		String validationOnBlur = field.getValidationOnBlur() != null ? field
-				.getValidationOnBlur() : "";
+		String validationOnBlur = field.getValidationOnBlur() != null ? field.getValidationOnBlur() : "";
 
 		BSDataTypeFactory dtf = new BSDataTypeFactory();
-				
+
 		if (isFK(field)) {
 			out += getFKSelect(field);
 		} else {
@@ -186,14 +195,14 @@ function onLoadPage(){
 					value = BSDateTimeUtil.date2String(value, format);
 					size = maxlength;
 					afterInput = "(formato: " + format + ")";
-					type =  dtf.create(BSDataTypeEnum.TEXT);
+					type = dtf.create(BSDataTypeEnum.TEXT);
 				} else if (type.getDataTypeEnum().equals(BSDataTypeEnum.TIMESTAMP)) {
 					maxlength = 16;
 					format = BSDateTimeUtil.getFormatDatetime(request);
 					value = BSDateTimeUtil.date2String(value, format);
 					size = maxlength;
 					afterInput = "(formato: " + format + ")";
-					type = dtf.create( BSDataTypeEnum.TEXT);
+					type = dtf.create(BSDataTypeEnum.TEXT);
 				} else if (type.getDataTypeEnum().equals(BSDataTypeEnum.DOUBLE)) {
 					maxlength = 15;
 					value = BSWeb.formatDouble(request, (Double) value);
@@ -207,14 +216,12 @@ function onLoadPage(){
 					if (isPk && value == null) {
 						value = NEW;
 					} else {
-						value = value == null ? "" : BSWeb.formatLong(request,
-								(Long) value);
+						value = value == null ? "" : BSWeb.formatLong(request, (Long) value);
 					}
 					size = maxlength;
 				}
 
-				out += drawInputText(field.getTypeHtml(), name, maxlength,
-						isReadOnly, value, size, afterInput, validationOnBlur,
+				out += drawInputText(field.getTypeHtml(), name, maxlength, isReadOnly, value, size, afterInput, validationOnBlur,
 						isPk, type, field.getLabel());
 			}
 		}
@@ -223,9 +230,7 @@ function onLoadPage(){
 
 	private String writeOptionHTML(String option, String display, Object value) {
 		String out = "<OPTION value='" + option + "'";
-		out += (value != null && value.toString().equals(option)
-				? " selected"
-				: "");
+		out += (value != null && value.toString().equals(option) ? " selected" : "");
 		out += ">" + display + "</OPTION>";
 		return out;
 	}
@@ -236,10 +241,9 @@ function onLoadPage(){
 		out = data != null;
 		return out;
 	}
-	private String drawInputText(String type, String name, Integer maxlength,
-			Boolean isReadonly, Object value, Integer size, String afterInput,
-			String validationOnBlur, Boolean isPk, BSDataType dataType,
-			String label) {
+
+	private String drawInputText(String type, String name, Integer maxlength, Boolean isReadonly, Object value, Integer size,
+			String afterInput, String validationOnBlur, Boolean isPk, BSDataType dataType, String label) {
 		String out = "";
 
 		if (isPk) {
@@ -248,13 +252,10 @@ function onLoadPage(){
 		}
 
 		if (dataType.isTime()) {
-			out += "$('#"
-					+ name
-					+ "').datepicker({	dateFormat : fixDateFormat(dateFormat)});\n";
+			out += "$('#" + name + "').datepicker({	dateFormat : fixDateFormat(dateFormat)});\n";
 			out += "$('#" + name + "').datepicker('setDate', value);\n";
 		} else {
-			out += "<input class='form-control' placeholder='" + label
-					+ "' type='" + type + "' name='";
+			out += "<input class='form-control' placeholder='" + label + "' type='" + type + "' name='";
 			out += name;
 			out += "' ";
 			out += "id='" + name + "' ";

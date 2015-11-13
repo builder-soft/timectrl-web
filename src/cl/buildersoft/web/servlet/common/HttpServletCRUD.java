@@ -65,7 +65,7 @@ public abstract class HttpServletCRUD extends BSHttpServlet {
 
 	protected void hideFields(BSTableConfig table, String... hideFields) {
 		for (String fieldName : hideFields) {
-			table.getField(fieldName).setVisible(false);
+			table.getField(fieldName).setShowInTable(false);
 		}
 	}
 

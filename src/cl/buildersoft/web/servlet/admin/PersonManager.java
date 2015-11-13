@@ -45,7 +45,8 @@ public class PersonManager extends HttpServletCRUD implements Servlet {
 		 */
 		String[] noVisibleFields = { "cNumero", "cDireccion", "cDepartamento", "cVilla", "cBlock", "cMail" };
 		for (String fieldName : noVisibleFields) {
-			table.getField(fieldName).setVisible(false);
+			table.getField(fieldName).setShowInTable(false);
+//			table.getField(fieldName).setShowInForm(false);
 		}
 
 		BSAction uploadFile = new BSAction("UPLOAD_PERSON", BSActionType.Table);

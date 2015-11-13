@@ -104,7 +104,7 @@
 					}
 
 					for (BSField field : fields) {
-						if (field.showField()) {
+						if (field.getShowInTable()) {
 							out.print("<th");
 
 							out.print(getAlign(field));
@@ -245,7 +245,7 @@
 			type = field.getType();
 
 			value = field.isPK() ? values[0] : values[i++];
-			if (field.showField()) {
+			if (field.getShowInTable()) {
 				out += "<td "; //class='" + color + "'";
 				out += getAlign(field);
 				out += ">";

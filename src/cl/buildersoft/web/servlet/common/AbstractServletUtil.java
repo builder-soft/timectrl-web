@@ -1,6 +1,7 @@
 package cl.buildersoft.web.servlet.common;
 
 import java.io.IOException;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.framework.util.ReflectionUtils;
 import cl.buildersoft.framework.util.crud.BSField;
 
+@Deprecated
 public class AbstractServletUtil extends BSHttpServlet {
-	private static  final Logger LOG = Logger.getLogger(AbstractServletUtil.class.getName());
+	private static final Logger LOG = Logger.getLogger(AbstractServletUtil.class.getName());
 	private static final long serialVersionUID = -34792656017725168L;
 
 	protected String getFieldsNamesWithCommas(BSField[] fields) {
@@ -34,8 +37,6 @@ public class AbstractServletUtil extends BSHttpServlet {
 		return out;
 	}
 
-
-
 	protected String getCommas(BSField[] fields) {
 		String out = "";
 
@@ -50,6 +51,7 @@ public class AbstractServletUtil extends BSHttpServlet {
 	}
 
 	protected String unSplit(BSField[] tableFields, String s) {
+		/**<code>
 		String out = "";
 		for (BSField f : tableFields) {
 			if (!f.isReadonly()) {
@@ -58,6 +60,8 @@ public class AbstractServletUtil extends BSHttpServlet {
 		}
 		out = out.substring(0, out.length() - 1);
 		return out;
+		</code>*/
+		return BSUtils.unSplitField(tableFields, s);
 	}
 
 	protected List<Object> array2List(Object... prms) {
@@ -73,7 +77,7 @@ public class AbstractServletUtil extends BSHttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		LOG.log(Level.INFO, "Method doGet of class AbstractServletUtil is deprecated, will be delete.");
-		
+
 		this.doPost(request, response);
 	}
 

@@ -12,23 +12,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.framework.util.BSWeb;
 import cl.buildersoft.framework.util.crud.BSField;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
 
 @WebServlet("/servlet/common/UpdateRecord")
-public class UpdateRecord extends AbstractServletUtil {
+public class UpdateRecord extends BSHttpServlet {
 	private static final long serialVersionUID = 729493572423196326L;
 
 	public UpdateRecord() {
 		super();
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/jsp/common/no-access.jsp").forward(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		BSTableConfig table = null;
 		synchronized (session) {
@@ -70,7 +68,7 @@ public class UpdateRecord extends AbstractServletUtil {
 
 	private String getSQL(BSTableConfig table, BSField[] fieldsWidthoutId, BSField idField) {
 		String sql = "UPDATE " + table.getDatabase() + "." + table.getTableName();
-		sql += " SET " + unSplit(fieldsWidthoutId, "=?,");
+		sql += " SET " + BSUtils.unSplitField(fieldsWidthoutId, "=?,");
 		sql += " WHERE " + idField.getName() + "=?";
 
 		return sql;

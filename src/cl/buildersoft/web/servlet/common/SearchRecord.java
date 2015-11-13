@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSDataBaseException;
+import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.framework.util.crud.BSField;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
 
@@ -20,7 +22,7 @@ import cl.buildersoft.framework.util.crud.BSTableConfig;
  * Servlet implementation class EditRecord
  */
 @WebServlet("/servlet/common/SearchRecord")
-public class SearchRecord extends AbstractServletUtil {
+public class SearchRecord extends BSHttpServlet {
 
 	private static final long serialVersionUID = -5785656616097922095L;
 
@@ -43,7 +45,7 @@ public class SearchRecord extends AbstractServletUtil {
 		BSmySQL mysql = new BSmySQL();
 
 		conn = mysql.getConnection(request);
-		ResultSet rs = mysql.queryResultSet(conn, sql, array2List(id));
+		ResultSet rs = mysql.queryResultSet(conn, sql, BSUtils.array2List(id));
 		resultset2Table(rs, table);
 
 		mysql.closeConnection(conn);
@@ -52,7 +54,8 @@ public class SearchRecord extends AbstractServletUtil {
 //		request.setAttribute("Conn", conn);
 
 		request.setAttribute("Action", "Update");
-		request.getRequestDispatcher("/WEB-INF/jsp/table/data-form.jsp").forward(request, response);
+		 forward(request, response, "/WEB-INF/jsp/table/data-form2.jsp");
+//		request.getRequestDispatcher("/WEB-INF/jsp/table/data-form.jsp").forward(request, response);
 	}
 
 	private void resultset2Table(ResultSet rs, BSTableConfig table) {
@@ -75,4 +78,18 @@ public class SearchRecord extends AbstractServletUtil {
 		sql += " WHERE " + idField + "=?";
 		return sql;
 	}
+	
+	private  String getFieldsNamesWithCommas(BSField[] fields) {
+		String out = "";
+		if (fields.length == 0) {
+			out = "*";
+		} else {
+			for (BSField field : fields) {
+				out += field.getName() + ",";
+			}
+			out = out.substring(0, out.length() - 1);
+		}
+		return out;
+	}
+
 }
