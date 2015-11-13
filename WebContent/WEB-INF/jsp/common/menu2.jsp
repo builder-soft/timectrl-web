@@ -36,7 +36,7 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 					<%
 					List<Domain> domains = (List<Domain> ) session.getAttribute("Domains");
 					if(domains.size()>1){ %>
-					<li><a href="#">Dominio: ${sessionScope.Domain.database} (<%=domains.size()-1 %>)</a>
+					<li><a href="#">Dominio: ${sessionScope.Domain.name} (<%=domains.size()-1 %>)</a>
 					
 						<ul class="dropdown-menu">
 						<%
