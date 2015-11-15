@@ -46,7 +46,7 @@ public class UpdateRecord extends BSHttpServlet {
 		Integer j = 0;
 		fields = new BSField[len];
 
-		for (index = 0; index < len; index++) {
+		for (index = 0; index < fieldsWidthoutId.length; index++) {
 			if (fieldsWidthoutId[index].getShowInForm()) {
 				System.arraycopy(fieldsWidthoutId, index, fields, j++, 1);
 			}
