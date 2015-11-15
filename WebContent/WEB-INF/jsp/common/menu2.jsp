@@ -53,7 +53,7 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 						<%} else{%>
 						
 
-					<li><a href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString()%>">${sessionScope.Domain.database}</a></li>
+					<li><a href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString()%>">${sessionScope.Domain.name}</a></li>
 <%} %>
 					<li class="divider"></li>
 					<li><a
