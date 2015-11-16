@@ -1,5 +1,5 @@
-<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
-<%@ include file="/WEB-INF/jsp/common/menu.jsp"%>
+<%@ include file="/WEB-INF/jsp/common/header2.jsp"%>
+<%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
 <script
 	src="${pageContext.request.contextPath}/js/...FILE.js?<%=Math.random()%>">	
 </script>
@@ -74,5 +74,5 @@ value="<%=BSWeb.formatDouble(request, 1234.567)%>">
 </div>
 
 
-<%@ include file="/WEB-INF/jsp/common/footer.jsp"%>
+<%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>
 

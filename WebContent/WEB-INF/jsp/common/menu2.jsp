@@ -36,7 +36,7 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 					<%
 					List<Domain> domains = (List<Domain> ) session.getAttribute("Domains");
 					if(domains.size()>1){ %>
-					<li><a href="#">Dominio: ${sessionScope.Domain.name} (<%=domains.size()-1 %>)</a>
+					<li><a href="#">Dominio actual: ${sessionScope.Domain.name} (<%=domains.size()-1 %>)</a>
 					
 						<ul class="dropdown-menu">
 						<%
@@ -53,7 +53,7 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 						<%} else{%>
 						
 
-					<li><a href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString()%>">${sessionScope.Domain.name}</a></li>
+					<li><a href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString()%>">Dominio: ${sessionScope.Domain.name}</a></li>
 <%} %>
 					<li class="divider"></li>
 					<li><a
