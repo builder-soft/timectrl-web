@@ -8,6 +8,8 @@
     <param-name>CurrentVersion</param-name>
     <param-value>R1.2.19</param-value>
   </context-param>
+  
+ 
   <context-param>
     <param-name>bsframework.database.driver</param-name>
     <param-value>org.gjt.mm.mysql.Driver</param-value>
@@ -28,6 +30,12 @@
     <param-name>bsframework.database.password</param-name>
     <param-value>admin</param-value>
   </context-param>
+    <context-param>
+    <param-name>bsframework.database.datasource_</param-name>
+    <param-value>jdbc/bsframework</param-value>
+  </context-param>
+  
+   
   <context-param>
     <param-name>bsframework.license.validate</param-name>
     <param-value>false</param-value>

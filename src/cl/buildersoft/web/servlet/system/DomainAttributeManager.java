@@ -23,7 +23,7 @@ public class DomainAttributeManager extends HttpServletCRUD {
 
 		BSmySQL mysql = new BSmySQL();
 
-		Connection conn = mysql.getConnection2("jdbc/bsframework");
+		Connection conn = mysql.getConnection2(getServletContext());
 		table.configFields(conn, mysql);
 		mysql.closeConnection(conn);
 

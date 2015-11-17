@@ -23,7 +23,7 @@ public class ParameterManager extends HttpServletCRUD implements Servlet {
 		BSTableConfig table = new BSTableConfig("bsframework", "tParameter");
 
 		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection2("jdbc/bsframework");
+		Connection conn = mysql.getConnection2(getServletContext());
 		table.configFields(conn, mysql);
 		// BSField field;
 

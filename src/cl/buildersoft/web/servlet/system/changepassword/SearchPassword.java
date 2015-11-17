@@ -37,7 +37,7 @@ public class SearchPassword extends BSHttpServlet {
 		
 		
 		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection2("jdbc/bsframework");
+		Connection conn = mysql.getConnection2(getServletContext());
 		Connection connDomain = getDomainConnection(request);
 
 		BSBeanUtils bu = new BSBeanUtils();
