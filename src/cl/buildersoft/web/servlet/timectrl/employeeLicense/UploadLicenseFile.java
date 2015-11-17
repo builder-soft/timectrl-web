@@ -61,7 +61,7 @@ public class UploadLicenseFile extends BSHttpServlet {
 		String destinyFile = null;
 		String tempFolder = this.getServletConfig().getServletContext().getAttribute("javax.servlet.context.tempdir").toString();
 
-		LOG.log(Level.INFO, "File loaded in '{0}'", tempFolder);
+		LOG.log(Level.INFO, "File loaded in {0}", tempFolder);
 
 		upload.setSizeMax(SIZE_15_MB);
 

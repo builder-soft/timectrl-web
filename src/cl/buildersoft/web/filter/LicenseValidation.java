@@ -41,7 +41,7 @@ public class LicenseValidation implements Filter {
 				this.activeFilter = Boolean.parseBoolean(activeFilterString);
 			} catch (Exception e) {
 				this.activeFilter = Boolean.TRUE;
-				LOG.log(Level.WARNING, "Can't parsing '{0}' as Boolean value, will be {1}",
+				LOG.log(Level.WARNING, "Can't parsing {0} as Boolean value, will be {1}",
 						array2ObjectArray(activeFilterString, this.activeFilter));
 
 			}

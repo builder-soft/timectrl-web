@@ -61,7 +61,7 @@ public class ValidateLoginServlet extends HttpServlet {
 
 			connBSframework = dau.getConnection2("jdbc/bsframework");
 
-			LOG.log(Level.FINE, "Validing user '{0}', password '{1}'", BSUtils.array2ObjectArray(mail, password));
+			LOG.log(Level.FINE, "Validing user {0}, password {1}", BSUtils.array2ObjectArray(mail, password));
 			user = userService.login(connBSframework, mail, password);
 			LOG.log(Level.INFO, "User: {0}", user);
 
