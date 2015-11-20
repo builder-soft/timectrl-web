@@ -6,13 +6,13 @@
   </welcome-file-list>
   <context-param>
     <param-name>CurrentVersion</param-name>
-    <param-value>R1.2.19</param-value>
+    <param-value>R1.2.20</param-value>
   </context-param>
   
  
   <context-param>
     <param-name>bsframework.database.driver</param-name>
-    <param-value>org.gjt.mm.mysql.Driver</param-value>
+    <param-value>com.mysql.jdbc.Driver</param-value>
   </context-param>
   <context-param>
     <param-name>bsframework.database.server</param-name>
