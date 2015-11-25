@@ -31,8 +31,8 @@ BEGIN
 	EXECUTE smpt USING @vStartDate, @vEndDate;
 	DEALLOCATE PREPARE smpt;
 	
-#	select @vSQL, ;
-#select * from tCrewProcess_temp;
+#select @vSQL;
+#select distinct(cEmployee) from tCrewProcess_temp;
 
 	SET vCurrent = vStartDate;
 	WHILE vCurrent <= vEndDate DO
@@ -52,7 +52,7 @@ BEGIN
 	SET @vSQL = CONCAT(@vSQL, 'GROUP BY DATE(cDate);');
 
 
-#select * from tCrewProcess_temp; # GROUP BY cDate;
+#select * from tCrewProcess_temp where cEmployee IN (2,31,69,78,174,176,211,269,279,362,372,450,513,516,664,688);
 #select * from tCrewProcess_temp where date(cdate) = '2015-10-03';
 #select @vSQL;
 	
