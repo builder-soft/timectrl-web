@@ -30,7 +30,7 @@
 			for (ReportPropertyBean value : values) {
 		%>
 		<tr>
-			<td class="cLabel"><%=value.getPropertyTypeName()%>:</td>
+			<td class="cLabel"><%=value.getPropertyTypeName()%>(<%=value.getPropertyTypeKey()%>):</td>
 			<td><input type="text" name="Param#<%=value.getPropertyId()%>"
 				value="<%=value.getPropertyValue() == null ? "" : value.getPropertyValue()%>"></td>
 		</tr>
