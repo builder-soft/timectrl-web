@@ -43,6 +43,7 @@ public class ReadAttendance extends BSHttpServlet {
 		} finally {
 			machineService.disconnect(api);
 		}
+		closeConnection(conn);
 
 		request.setAttribute("Attendances", list);
 		request.setAttribute("Machine", machine);
