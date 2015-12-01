@@ -6,13 +6,13 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
+import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Area;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.EmployeeTurn;
@@ -25,15 +25,15 @@ import cl.buildersoft.timectrl.business.services.impl.EmployeeTurnServiceImpl;
  * Servlet implementation class Turns
  */
 @WebServlet("/servlet/timectrl/employee/TurnsOfEmployee")
-public class TurnsOfEmployee extends HttpServlet {
+public class TurnsOfEmployee extends BSHttpServlet {
 	private static final long serialVersionUID = 2424628512723044632L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BSBeanUtils bu = new BSBeanUtils();
-		BSmySQL mysql = new BSmySQL();
+		// BSmySQL mysql = new BSmySQL();
 		// BSDateTimeUtil du = new BSDateTimeUtil();
 
-		Connection conn = mysql.getConnection(request);
+		Connection conn = getConnection(request);
 		Employee employee = getEmployee(request, bu, conn);
 		Post post = getPostEmployee(conn, bu, employee);
 		Area area = getAreaEmployee(conn, bu, employee);
@@ -41,7 +41,9 @@ public class TurnsOfEmployee extends HttpServlet {
 		String dateFormat = BSDateTimeUtil.getFormatDate(conn);
 		List<Turn> turns = getTurns(conn);
 
-		mysql.closeConnection(conn);
+		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/employee/turns-of-employee.jsp"
+				: "/WEB-INF/jsp/timectrl/employee/turns-of-employee.jsp";
+		closeConnection(conn);
 
 		request.setAttribute("Employee", employee);
 		request.setAttribute("Post", post);
@@ -50,8 +52,7 @@ public class TurnsOfEmployee extends HttpServlet {
 		request.setAttribute("DateFormat", dateFormat);
 		request.setAttribute("Turns", turns);
 
-		String next = "/WEB-INF/jsp/timectrl/employee/turns-of-employee.jsp";
-		request.getRequestDispatcher(next).forward(request, response);
+		request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -134,7 +135,7 @@ public class TurnsOfEmployee extends HttpServlet {
 			out = request.getParameter("cId");
 		}
 		return out;
-//		return request.getParameter("cId");
+		// return request.getParameter("cId");
 	}
 
 }
