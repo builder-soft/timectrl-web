@@ -38,17 +38,19 @@ onblur="javascript:doubleBlur(this);"
 value="<%=BSWeb.formatDouble(request, 1234.567)%>">
 
 <table class="table table-striped table-bordered table-hover table-condensed">
+	<thead>
 	<tr>
-		<td class='cHeadTD'>encabezado</td>
+		<td>encabezado</td>
 	</tr>
-	
+	</thead>
+	<tbody>
 	<tr>
-		<td class='cDataTD'>dato</td>
+		<td>dato</td>
 	</tr>
 	<tr>
-		<td class='cDataTD_odd'>dato</td>
+		<td>dato</td>
 	</tr>
-	
+	</tbody>
 </table>
 
 <a class="cCancel" href="${pageContext.request.contextPath}/servlet/...">Cancelar</a>
