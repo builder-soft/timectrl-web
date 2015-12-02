@@ -37,7 +37,7 @@ public class BuildReport extends BSHttpServlet {
 		Report report = getReport(conn, reportKey);
 		ReportType reportType = getReportType(conn, report);
 
-		ReportService reportService = getInstance(reportType);
+		ReportService reportService = getInstance(conn,report );
 
 		List<ReportParameterBean> reportParameterList = reportService.loadParameter(conn, report.getId());
 		List<String> parameters = readParametersFromPage(reportParameterList, request);
@@ -78,9 +78,9 @@ public class BuildReport extends BSHttpServlet {
 		return reportType;
 	}
 
-	public ReportService getInstance(ReportType reportType) {
+	public ReportService getInstance(Connection conn, Report report ) {
 		BuildReport3 br3 = new BuildReport3();
-		return br3.getInstance(reportType);
+		return br3.getInstance(conn, report);
 
 		/**
 		 * <code>
