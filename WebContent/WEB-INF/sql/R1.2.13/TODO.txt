@@ -1,4 +1,0 @@
-Para el reporte, obtener los datos de la tabla tCrewProcess
-Poblar la tabla tCrewProcess a partir de un programa Java, y agregar los registros a la tabla tCrewLog.
-
-

@@ -1,0 +1,8 @@
+Crear tabla para registrar fechas procesadas.
+Crear proceso (similar al crew) para que ejecute el SP pListAttendance* de una fecha a la vez, y que el resultado lo deje en otra tabla.
+Finalmente, ejecutar la query para recupere la data desde esta nueva tabla.
+
+
+fechas procesadas
+tProcessedDates
+
