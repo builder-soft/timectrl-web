@@ -259,19 +259,19 @@ set a = now();
 		cTurn				AS 'Turno',
 		TIME(cStartTime)	AS 'Entrada Turno',
 		TIME(cEndTime)		AS 'Salida Turno'
-	FROM tAttendance_temp
-
+	FROM tAttendance_temp;
+/**
 	INTO OUTFILE 'd:/temp/fichero_salida.csv'
 	CHARACTER SET utf8
         FIELDS TERMINATED BY ';'
         OPTIONALLY ENCLOSED BY '\"'
         LINES TERMINATED BY '\r\n';
-	
+*/
 	DROP TABLE IF EXISTS tAttendance_temp;
 	
 	set b = now();
 	
-	select a,b;
+#	select a,b;
 	
 END$$
 
