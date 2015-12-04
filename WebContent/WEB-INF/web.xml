@@ -40,6 +40,14 @@
     <param-name>bsframework.license.validate</param-name>
     <param-value>false</param-value>
   </context-param>
+  <!-- 
+  <context-param>
+    <param-name>bsframework.gui.bootstrap</param-name>
+    <param-value>false</param-value>
+  </context-param>
+   -->
+   
+  
   <error-page>
     <exception-type>java.lang.BSException</exception-type>
     <location>/jsp/error/error.jsp</location>
