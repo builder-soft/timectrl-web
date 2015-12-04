@@ -40,7 +40,7 @@ public class ReportManager extends HttpServletCRUD {
 
 		table.getField("cKey").setLabel("Llave");
 		table.getField("cName").setLabel("Nombre");
-		// table.getField("cJasperFile").setLabel("Archivo de reporte");
+//		table.getField("cJavaClass").setReadonly(true);
 		table.getField("cType").setLabel("Tipo");
 
 		return table;
