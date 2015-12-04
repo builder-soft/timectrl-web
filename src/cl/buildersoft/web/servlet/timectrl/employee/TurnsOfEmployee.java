@@ -41,7 +41,7 @@ public class TurnsOfEmployee extends BSHttpServlet {
 		String dateFormat = BSDateTimeUtil.getFormatDate(conn);
 		List<Turn> turns = getTurns(conn);
 
-		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/employee/turns-of-employee.jsp"
+		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/employee/turns-of-employee2.jsp"
 				: "/WEB-INF/jsp/timectrl/employee/turns-of-employee.jsp";
 		closeConnection(conn);
 
