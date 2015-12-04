@@ -8,10 +8,7 @@
 <%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
 <%
 	Employee employee = (Employee) request.getAttribute("Employee");
-	/**
-	 Post post = (Post) request.getAttribute("Post");
-	 Area area = (Area) request.getAttribute("Area");
-	 */
+
 	List<EmployeeTurn> employeeTurns = (List<EmployeeTurn>) request.getAttribute("EmployeeTurn");
 	String dateFormat = (String) request.getAttribute("DateFormat");
 	List<Turn> turns = (List<Turn>) request.getAttribute("Turns");
@@ -19,6 +16,9 @@
 <script type="text/javascript">
 /**	var dateFormat = "<%=dateFormat%>"; */
 </script>
+
+
+
 
 <script
 	src="${pageContext.request.contextPath}/js/timectrl/turn/turns-of-employee.js?<%=BSWeb.randomString()%>">
@@ -32,7 +32,7 @@
 
 <hr>
 
-<table class="table table-striped table-bordered table-hover table-condensed">
+<table class="table table-striped table-bordered table-hover table-condensed" id="detailTable">
 <thead>
 	<tr>
 		<td>Turno</td>
@@ -44,6 +44,7 @@
 	<%
 		for (EmployeeTurn employeeTurn : employeeTurns) {
 	%>
+	<tbody>
 	<tr>
 		<td class='cDataTD'><%=employeeTurn.getTurnName()%></td>
 		<td class='cDataTD'><%=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%></td>
@@ -58,6 +59,7 @@
 	<%
 		}
 	%>
+	</tbody>
 </table>
 <br>
 
