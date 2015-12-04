@@ -40,7 +40,7 @@ public class ReadParameters extends BSHttpServlet {
 		Report report = getReport(reportId, bu, conn);
 		ReportType reportType = getReportType(conn, bu, report);
 
-		ReportService reportService = getInstance(reportType);
+		ReportService reportService = getInstance(conn, report);
 
 		List<ReportParameterBean> reportParameterList = reportService.loadParameter(conn, reportId);
 		String source = null;
@@ -83,10 +83,10 @@ public class ReadParameters extends BSHttpServlet {
 		return out;
 	}
 
-	private ReportService getInstance(ReportType reportType) {
+	private ReportService getInstance(Connection conn, Report  report) {
 		BuildReport br = new BuildReport();
 
-		ReportService instance = br.getInstance(reportType);
+		ReportService instance = br.getInstance(conn, report );
 
 		return instance;
 	}
