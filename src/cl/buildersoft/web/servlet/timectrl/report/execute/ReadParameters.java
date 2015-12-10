@@ -2,6 +2,7 @@ package cl.buildersoft.web.servlet.timectrl.report.execute;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 
@@ -10,11 +11,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cl.buildersoft.framework.beans.BSBean;
 import cl.buildersoft.framework.database.BSBeanUtils;
+import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
+import cl.buildersoft.timectrl.business.beans.ReportType;
 import cl.buildersoft.timectrl.business.console.BuildReport3;
 import cl.buildersoft.timectrl.business.services.ParameterService;
 import cl.buildersoft.timectrl.business.services.ReportService;
@@ -26,6 +30,7 @@ import cl.buildersoft.timectrl.business.services.ReportService;
 public class ReadParameters extends BSHttpServlet {
 	private static final long serialVersionUID = -1242130448055981992L;
 
+	@SuppressWarnings("unchecked")
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Long reportId = Long.parseLong(readParameterOrAttribute(request, "reportId"));
 
@@ -33,9 +38,9 @@ public class ReadParameters extends BSHttpServlet {
 		Connection conn = getConnection(request);
 
 		Report report = getReport(reportId, bu, conn);
-//		ReportType reportType = getReportType(conn, bu, report);
+		ReportType reportType = getReportType(conn, bu, report);
 
-		ReportService reportService = getInstance(conn, report);
+		ReportService reportService = getInstance(reportType);
 
 		List<ReportParameterBean> reportParameterList = reportService.loadParameter(conn, reportId);
 		String source = null;
@@ -70,7 +75,6 @@ public class ReadParameters extends BSHttpServlet {
 
 	}
 
-	/**<code>
 	private ResultSet executeSP(Connection conn, String typeSource) {
 		BSmySQL mysql = new BSmySQL();
 
@@ -78,11 +82,11 @@ public class ReadParameters extends BSHttpServlet {
 
 		return out;
 	}
-</code>*/
-	private ReportService getInstance(Connection conn, Report  report) {
+
+	private ReportService getInstance(ReportType reportType) {
 		BuildReport br = new BuildReport();
 
-		ReportService instance = br.getInstance(conn, report );
+		ReportService instance = br.getInstance(reportType);
 
 		return instance;
 	}
@@ -95,7 +99,7 @@ public class ReadParameters extends BSHttpServlet {
 		}
 		return report;
 	}
-/**<code>
+
 	private ReportType getReportType(Connection conn, BSBeanUtils bu, Report report) {
 		ReportType reportType = new ReportType();
 		reportType.setId(report.getType());
@@ -104,5 +108,5 @@ public class ReadParameters extends BSHttpServlet {
 		}
 		return reportType;
 	}
-</code>*/
+
 }

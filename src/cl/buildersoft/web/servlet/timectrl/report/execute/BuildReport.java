@@ -11,11 +11,15 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import cl.buildersoft.framework.beans.DomainAttribute;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.util.BSUtils;
+import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
 import cl.buildersoft.timectrl.business.beans.ReportPropertyBean;
@@ -35,18 +39,39 @@ public class BuildReport extends BSHttpServlet {
 		Connection conn = getConnection(request);
 		String reportKey = readParameterOrAttribute(request, REPORT_KEY);
 		Report report = getReport(conn, reportKey);
+		Long reportId = report.getId();
 		ReportType reportType = getReportType(conn, report);
 
-		ReportService reportService = getInstance(conn, report);
+		ReportService reportService = getInstance(reportType);
 
-		List<ReportParameterBean> reportParameterList = reportService.loadParameter(conn, report.getId());
+		List<ReportParameterBean> reportParameterList = reportService.loadParameter(conn, reportId);
 		List<String> parameters = readParametersFromPage(reportParameterList, request);
 
-		List<ReportPropertyBean> reportPropertyList = reportService.loadReportProperties(conn, report.getId());
+		List<ReportPropertyBean> reportPropertyList = reportService.loadReportProperties(conn, reportId);
 		reportService.fillParameters(reportParameterList, parameters);
 
-		List<String> responseList = reportService.execute(conn, report.getId(), reportType, reportPropertyList,
-				reportParameterList);
+		List<String> responseList = null;
+		if (reportService.runAsDetachedThread()) {
+			HttpSession session = request.getSession(false);
+			Map<String, DomainAttribute> domainAttribute = (Map<String, DomainAttribute>) session.getAttribute("DomainAttribute");
+
+			reportService.setConnectionData(domainAttribute.get("database.driver").getValue(),
+					domainAttribute.get("database.server").getValue(), domainAttribute.get("database.database").getValue(),
+					domainAttribute.get("database.password").getValue(), domainAttribute.get("database.username").getValue());
+
+			reportService.setReportId(reportId);
+			reportService.setReportParameterList(reportParameterList);
+			reportService.setReportPropertyList(reportPropertyList);
+			reportService.setReportType(reportType);
+
+			Thread thread = new Thread(reportService, reportService.getClass().getName());
+			thread.start();
+			responseList = new ArrayList<String>();
+			responseList.add("La solicitud se esta procesando de manera desatendida.");
+		} else {
+			responseList = reportService.execute(conn, reportId, reportType, reportPropertyList, reportParameterList);
+		}
+
 		new BSmySQL().closeConnection(conn);
 
 		Map<Integer, String> responseMap = new HashMap<Integer, String>();
@@ -66,8 +91,6 @@ public class BuildReport extends BSHttpServlet {
 		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/show-resonse.jsp");
 	}
 
-	
-
 	private ReportType getReportType(Connection conn, Report report) {
 		ReportType reportType = new ReportType();
 		BSBeanUtils bu = new BSBeanUtils();
@@ -78,9 +101,9 @@ public class BuildReport extends BSHttpServlet {
 		return reportType;
 	}
 
-	public ReportService getInstance(Connection conn, Report report ) {
+	public ReportService getInstance(ReportType reportType) {
 		BuildReport3 br3 = new BuildReport3();
-		return br3.getInstance(conn, report);
+		return br3.getInstance(reportType);
 
 		/**
 		 * <code>
