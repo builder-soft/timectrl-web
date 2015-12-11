@@ -15,8 +15,8 @@
 %>
 <td class="cLabel">${param["Label"]}:</td>
 <td class="cData"><select id='${param["Name"]}'
-	name='${param["Name"]}' onchange="javascript:changeBoss(this)">
-		<option value="">- Seleccione una jefatura -</option>
+	name='${param["Name"]}' onchange="javascript:_changeBoss(this)">
+		<option value="0">- Seleccione una jefatura -</option>
 		<%
 			for (Employee boss : bossList) {
 		%>
@@ -39,7 +39,7 @@ function changeBoss(bossSelect){
 }
 
 function onLoadPage(){
-	document.getElementById("raiseQuery").disabled = true;
+//	document.getElementById("raiseQuery").disabled = true;
 }
 </script>
 <%!private String getPost(List<Post> postList, Long id) {

@@ -18,8 +18,6 @@ import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.util.BSHttpServlet;
-import cl.buildersoft.framework.util.BSUtils;
-import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
 import cl.buildersoft.timectrl.business.beans.ReportPropertyBean;
@@ -35,6 +33,7 @@ public class BuildReport extends BSHttpServlet {
 	private static final String REPORT_KEY = "ReportKey";
 	private static final long serialVersionUID = 9102806701827080369L;
 
+	@SuppressWarnings("unchecked")
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection conn = getConnection(request);
 		String reportKey = readParameterOrAttribute(request, REPORT_KEY);
@@ -42,7 +41,7 @@ public class BuildReport extends BSHttpServlet {
 		Long reportId = report.getId();
 		ReportType reportType = getReportType(conn, report);
 
-		ReportService reportService = getInstance(reportType);
+		ReportService reportService = getInstance(conn, report);
 
 		List<ReportParameterBean> reportParameterList = reportService.loadParameter(conn, reportId);
 		List<String> parameters = readParametersFromPage(reportParameterList, request);
@@ -101,9 +100,9 @@ public class BuildReport extends BSHttpServlet {
 		return reportType;
 	}
 
-	public ReportService getInstance(ReportType reportType) {
+	public ReportService getInstance(Connection conn, Report report ) {
 		BuildReport3 br3 = new BuildReport3();
-		return br3.getInstance(reportType);
+		return br3.getInstance(conn, report);
 
 		/**
 		 * <code>
