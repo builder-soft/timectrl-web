@@ -20,6 +20,8 @@ public class LicenseCauseManager extends HttpServletCRUD {
 	protected BSTableConfig getBSTableConfig(HttpServletRequest request) {
 		BSTableConfig table = initTable(request, "tLicenseCause");
 		table.setTitle("Tipos de licencias y permisos");
+
+		table.getField("cName").setLabel("Descripción");
 		return table;
 
 	}

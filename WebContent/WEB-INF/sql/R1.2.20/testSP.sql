@@ -12,6 +12,6 @@ delete from tcrewprocess where month(cdate)=10 and year(cdate)=2015;
 
 */
 
-call pListAttendanceAsExcel3('2015-11-01', '2015-11-30')
+#call pListAttendanceAsExcel3('2015-11-01', '2015-11-30')
 
 #http://www.mysqltutorial.org/mysql-export-table-to-csv/

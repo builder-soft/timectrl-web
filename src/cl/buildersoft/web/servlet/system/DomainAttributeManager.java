@@ -28,6 +28,11 @@ public class DomainAttributeManager extends HttpServletCRUD {
 		mysql.closeConnection(conn);
 
 		table.setTitle("Atributos de Dominios");
+		table.getField("cId").setLabel("Id");
+		table.getField("cDomain").setLabel("Dominio");
+		table.getField("cKey").setLabel("Llave");
+		table.getField("cName").setLabel("Nombre");
+		table.getField("cValue").setLabel("Valor");
 
 		return table;
 	}

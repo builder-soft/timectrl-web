@@ -15,11 +15,15 @@ public class DomainManager extends HttpServletCRUD {
 
 	@Override
 	protected BSTableConfig getBSTableConfig(HttpServletRequest request) {
-		
-		BSTableConfig table =  new BSTableConfig("bsframework", "tDomain" );
+		BSTableConfig table = initTable(request, "bsframework", "tDomain", this);
+		// BSTableConfig table = new BSTableConfig("bsframework", "tDomain" );
 		table.setTitle("Dominios");
-		
-//		BSTableConfig table = initTable(request, "bsframework.tDomain");
+
+		table.getField("cId").setLabel("Id");
+		table.getField("cName").setLabel("Nombre");
+		table.getField("cDatabase").setLabel("Base de datos");
+
+		// BSTableConfig table = initTable(request, "bsframework.tDomain");
 
 		return table;
 	}

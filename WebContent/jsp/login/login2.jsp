@@ -13,7 +13,7 @@
 <style type="text/css">
 body {
 	background-image:
-		url('${pageContext.request.contextPath}/img/login/wallpapper3.jpg');
+		url('${pageContext.request.contextPath}/img/login/wallpapper4.jpg');
 	background-size: 1144px;
 	background-repeat: no-repeat;
 	background-position: center top;
@@ -27,7 +27,7 @@ body {
 }
 
 .form-signin .form-signin-heading,.form-signin .checkbox {
-	margin-bottom: 10px;
+	margin-bottom: 0px;
 }
 
 .form-signin .checkbox {
@@ -90,7 +90,7 @@ body {
 
 /**Aqui se configura la posicion del cuadro de login */
 .account-wall {
-	margin-top: 310px;
+	margin-top: 330px;
 	padding: 10px 0px 10px 0px;
 	background-color: #f7f7f7;
 	-moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);

@@ -17,12 +17,16 @@ public class PostManager extends HttpServletCRUD {
 	protected BSTableConfig getBSTableConfig(HttpServletRequest request) {
 		BSTableConfig table = initTable(request, "tPost");
 		table.setTitle("Administración de cargos");
+
+		table.getField("cKey").setLabel("Llave");
+		table.getField("cName").setLabel("Descripción");
+
 		return table;
 	}
 
 	@Override
 	public Semaphore setSemaphore(Connection conn, Object[] values) {
-		return null;	
+		return null;
 	}
 
 }
