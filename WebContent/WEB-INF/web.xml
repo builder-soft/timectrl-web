@@ -1,60 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
-  <display-name>timectrl-web</display-name>
-  <welcome-file-list>
-    <welcome-file>jsp/login/login2.jsp</welcome-file>
-  </welcome-file-list>
-  <context-param>
-    <param-name>CurrentVersion</param-name>
-    <param-value>R1.2.19-B</param-value>
-  </context-param>
-  <context-param>
-    <param-name>bsframework.database.driver</param-name>
-    <param-value>org.gjt.mm.mysql.Driver</param-value>
-  </context-param>
-  <context-param>
-    <param-name>bsframework.database.server</param-name>
-    <param-value>localhost</param-value>
-  </context-param>
-  <context-param>
-    <param-name>bsframework.database.database</param-name>
-    <param-value>bsframework</param-value>
-  </context-param>
-  <context-param>
-    <param-name>bsframework.database.username</param-name>
-    <param-value>root</param-value>
-  </context-param>
-  <context-param>
-    <param-name>bsframework.database.password</param-name>
-    <param-value>admin</param-value>
-  </context-param>
-  <context-param>
-    <param-name>bsframework.license.validate</param-name>
-    <param-value>false</param-value>
-  </context-param>
-  <error-page>
-    <exception-type>java.lang.BSException</exception-type>
-    <location>/jsp/error/error.jsp</location>
-  </error-page>
-  <error-page>
-    <exception-type>java.lang.RuntimeException</exception-type>
-    <location>/jsp/error/error.jsp</location>
-  </error-page>
-   <!-- 
-  <resource-ref>
- 
-<description>
-Descripcion del recurso
-</description>
-<res-ref-name>
-jdbc/bsframework2
-</res-ref-name>
-<res-type>
-javax.sql.DataSource
-</res-type>
-<res-auth>
-Container
-</res-auth>
-</resource-ref>
- -->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>timectrl-web</display-name>
+	<welcome-file-list>
+		<welcome-file>jsp/login/login2.jsp</welcome-file>
+	</welcome-file-list>
+	<context-param>
+		<param-name>CurrentVersion</param-name>
+		<param-value>R1.2.19-B</param-value>
+	</context-param>
+	<context-param>
+		<param-name>bsframework.database.driver</param-name>
+		<param-value>org.gjt.mm.mysql.Driver</param-value>
+	</context-param>
+	<context-param>
+		<param-name>bsframework.database.server</param-name>
+		<param-value>localhost</param-value>
+	</context-param>
+	<context-param>
+		<param-name>bsframework.database.database</param-name>
+		<param-value>bsframework</param-value>
+	</context-param>
+	<context-param>
+		<param-name>bsframework.database.username</param-name>
+		<param-value>root</param-value>
+	</context-param>
+	<context-param>
+		<param-name>bsframework.database.password</param-name>
+		<param-value>admin</param-value>
+	</context-param>
+	<context-param>
+		<param-name>bsframework.license.validate</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<error-page>
+		<exception-type>java.lang.BSException</exception-type>
+		<location>/jsp/error/error.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.RuntimeException</exception-type>
+		<location>/jsp/error/error.jsp</location>
+	</error-page>
+	<!-- <Resource name="jdbc/bsframework" auth="Container" type="javax.sql.DataSource" 
+		username="root" password="admin" driverClassName="com.mysql.jdbc.Driver" 
+		url="jdbc:mysql://localhost:3306/bsframework" maxActive="15" maxIdle="7" 
+		defaultTransactionIsolation="READ_COMMITTED" validationQuery="Select 1" /> -->
 </web-app>
