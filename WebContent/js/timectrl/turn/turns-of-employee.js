@@ -1,3 +1,7 @@
+function toggleException(status){
+	document.getElementById("Exception").value = status;
+}
+
 function addNew(employeeId) {
 	var table = document.getElementById("detailTable"); // $('#detail');
 	var row = table.insertRow(-1);
@@ -31,10 +35,13 @@ function addNew(employeeId) {
 	 * $("#DStartDate").datepicker(); $("#DEndDate").datepicker();
 	 */
 	convertToDatePicker();
-
 }
 
 function convertToDatePicker() {
+//	alert(document.getElementById("DStartDate"));
+	
+//	$( "#DStartDate" ).datepicker();
+	
 	$("#DStartDate").datepicker({
 		dateFormat : fixDateFormat(dateFormat),
 		appendText : " (" + dateFormat.toLowerCase() + ")",

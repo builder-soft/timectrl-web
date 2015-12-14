@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.EmployeeTurn;
@@ -55,7 +54,9 @@ public class SaveNewTurn extends BSHttpServlet {
 			EmployeeTurnService service = new EmployeeTurnServiceImpl();
 			service.appendNew(conn, employeeTurn);
 		}
-		request.setAttribute("cId", "" + employee);
+		closeConnection(conn);
+
+		request.setAttribute("cId", employee.toString());
 
 		forward(request, response, "/servlet/timectrl/employee/TurnsOfEmployee");
 
