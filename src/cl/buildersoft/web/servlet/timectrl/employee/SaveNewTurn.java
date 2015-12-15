@@ -29,6 +29,8 @@ public class SaveNewTurn extends BSHttpServlet {
 		String end = request.getParameter("EndDate");
 
 		String turnId = request.getParameter("TurnId");
+		Boolean exception = Boolean.parseBoolean(request.getParameter("Exception"));
+
 		Connection conn = getConnection(request);
 		String formatDate = BSDateTimeUtil.getFormatDate(conn);
 
@@ -36,22 +38,20 @@ public class SaveNewTurn extends BSHttpServlet {
 		Calendar endDate = BSDateTimeUtil.string2Calendar(end, formatDate);
 
 		EmployeeTurn employeeTurn = new EmployeeTurn();
+		employeeTurn.setTurn(turn);
+		employeeTurn.setStartDate(startDate);
+		employeeTurn.setEndDate(endDate);
+		employeeTurn.setException(exception);
+		EmployeeTurnService service = new EmployeeTurnServiceImpl();
+
 		if (turnId.length() > 0) {
 			Long turnIdAsLong = Long.parseLong(turnId);
 			employeeTurn.setId(turnIdAsLong);
-			employeeTurn.setTurn(turn);
-			employeeTurn.setStartDate(startDate);
-			employeeTurn.setEndDate(endDate);
 
-			EmployeeTurnService service = new EmployeeTurnServiceImpl();
 			service.update(conn, employeeTurn);
 		} else {
 			employeeTurn.setEmployee(employee);
-			employeeTurn.setTurn(turn);
-			employeeTurn.setStartDate(startDate);
-			employeeTurn.setEndDate(endDate);
 
-			EmployeeTurnService service = new EmployeeTurnServiceImpl();
 			service.appendNew(conn, employeeTurn);
 		}
 		closeConnection(conn);

@@ -2,6 +2,7 @@ package cl.buildersoft.web.servlet.timectrl.employee;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Area;
@@ -37,7 +37,19 @@ public class TurnsOfEmployee extends BSHttpServlet {
 		Employee employee = getEmployee(request, bu, conn);
 		Post post = getPostEmployee(conn, bu, employee);
 		Area area = getAreaEmployee(conn, bu, employee);
-		List<EmployeeTurn> employeeTurns = getEmployeeTurns(conn, employee);
+		List<EmployeeTurn> tempTurns = getEmployeeTurns(conn, employee);
+
+		List<EmployeeTurn> employeeTurns = new ArrayList<EmployeeTurn>();
+		List<EmployeeTurn> exceptionTurns = new ArrayList<EmployeeTurn>();
+
+		for (EmployeeTurn current : tempTurns) {
+			if (current.getException()) {
+				exceptionTurns.add(current);
+			} else {
+				employeeTurns.add(current);
+			}
+		}
+
 		String dateFormat = BSDateTimeUtil.getFormatDate(conn);
 		List<Turn> turns = getTurns(conn);
 
@@ -49,10 +61,13 @@ public class TurnsOfEmployee extends BSHttpServlet {
 		request.setAttribute("Post", post);
 		request.setAttribute("Area", area);
 		request.setAttribute("EmployeeTurn", employeeTurns);
+		request.setAttribute("ExceptionTurn", exceptionTurns);
 		request.setAttribute("DateFormat", dateFormat);
 		request.setAttribute("Turns", turns);
 
-		request.getRequestDispatcher(page).forward(request, response);
+		
+		forward(request, response, page);
+//		request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	@SuppressWarnings("unchecked")
