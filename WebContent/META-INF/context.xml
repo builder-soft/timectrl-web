@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+	<Resource name="jdbc/bsframework" auth="Container" type="javax.sql.DataSource"
+		username="root" password="admin" driverClassName="com.mysql.jdbc.Driver"
+		url="jdbc:mysql://localhost:3306/bsframework" maxActive="100" maxIdle="10"
+		maxWait="10000" defaultTransactionIsolation="READ_COMMITTED"
+		validationQuery="Select 1" closeMethod="close" />
+</Context>
