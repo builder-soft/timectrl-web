@@ -79,8 +79,8 @@ value="<%=BSWeb.formatDouble(request, 1234.567)%>">
 	</div>
 	<br /> 
 
-	<input type="button" value="Cancelar"
-		onclick="javascript:closeTooltip()" />
+	<button type="button" class='btn btn-link'
+		onclick="javascript:closeTooltip()">Cancelar</button>
 
 </div>
 

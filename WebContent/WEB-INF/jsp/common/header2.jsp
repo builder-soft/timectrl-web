@@ -11,7 +11,7 @@
 <title>DALEA T&amp;A - Buildersoft</title>
 
 <link
-	href="${pageContext.request.contextPath}/bootstrap-334-dist/css/bootstrap.css?<%=BSWeb.randomString()%>"
+	href="${pageContext.request.contextPath}/bootstrap-334-dist/css/bootstrap.css"
 	rel="stylesheet">
 <link
 	href="${pageContext.request.contextPath}/plugin/smart-menu/jquery.smartmenus.bootstrap.css"
@@ -39,6 +39,10 @@
 		}
 		// alert(out);
 		return out.toLowerCase();
+	}
+	
+	function returnTo(url){
+		self.location.href = url;
 	}
 </script>
 </head>

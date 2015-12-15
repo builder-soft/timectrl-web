@@ -2,26 +2,28 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1_RSA_v1" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fce8c3f1-f7ec-43d1-b186-19d81c8e8a0e">
 	<property name="ireport.zoom" value="1.4641000000000028"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="73"/>
+	<property name="ireport.y" value="48"/>
 	<property name="ireport.background.image.properties" value="true,true,0.25,-8,-8,0,0,292,159"/>
-	<parameter name="UserId" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
+	<parameter name="UserId" class="java.lang.String"/>
 	<parameter name="StartDate" class="java.util.Date"/>
 	<parameter name="EndDate" class="java.util.Date"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\workspace\\timectrl-web\\WebContent\\WEB-INF\\report\\RSA\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[call pListAttendance3($P{UserId}, $P{StartDate}, $P{EndDate});]]>
+		<![CDATA[call pListAttendance3($P{UserId},$P{StartDate}, $P{EndDate});]]>
 	</queryString>
 	<field name="cId" class="java.lang.Long"/>
+	<field name="cRUT" class="java.lang.String">
+		<fieldDescription><![CDATA[Rut]]></fieldDescription>
+	</field>
 	<field name="cDate" class="java.sql.Date"/>
 	<field name="cStartTime" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="cStartMark" class="java.lang.String"/>
 	<field name="cStartDiffI" class="java.lang.String"/>
+	<field name="cStartDiffI2" class="java.lang.Long"/>
 	<field name="cStartDiffM" class="java.lang.String"/>
 	<field name="cLunchMark" class="java.lang.String"/>
 	<field name="cReturnMark" class="java.lang.String"/>
@@ -30,15 +32,13 @@
 	</field>
 	<field name="cEndMark" class="java.lang.String"/>
 	<field name="cEndDiffI" class="java.lang.String"/>
+	<field name="cEndDiffI2" class="java.lang.Long"/>
 	<field name="cEndDiffM" class="java.lang.String"/>
 	<field name="cComment" class="java.lang.String"/>
 	<field name="cMachine" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="cDayOfWeek" class="java.lang.String"/>
-	<field name="cRUT" class="java.lang.String">
-		<fieldDescription><![CDATA[Rut]]></fieldDescription>
-	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -303,5 +303,3 @@ www.aitex.cl]]></text>
 		</band>
 	</summary>
 </jasperReport>
-
-

@@ -108,11 +108,11 @@
 	</div>
 
 </div>
-<button onclick="addNew(<%=employee.getId()%>);" id="addButton">Agregar
+<button onclick="addNew(<%=employee.getId()%>);" id="addButton" class='btn btn-default'>Agregar
 	Turno</button>
 
-<a class="cCancel"
-	href="${pageContext.request.contextPath}/servlet/config/employee/EmployeeManager">Volver</a>
+<button class='btn btn-link'
+	onclick="returnTo('${pageContext.request.contextPath}/servlet/config/employee/EmployeeManager');">Volver</button>
 
 
 		<div id="TurnsContainer" style="display: none">

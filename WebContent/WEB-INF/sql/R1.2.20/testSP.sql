@@ -2,7 +2,6 @@
 
 #call pCrew('2015-10-03', '2015-10-03', '2,31,69,78,174,176,211,269,279,362,372,450,513,516,664,688');
 
-
 /**
 delete from tcrewlog where cAttendanceLog in (select cid from tAttendanceLog where cdate='2015-10-01');
 delete from tcrewprocess where cdate='2015-10-01';
@@ -15,3 +14,5 @@ delete from tcrewprocess where month(cdate)=10 and year(cdate)=2015;
 #call pListAttendanceAsExcel3('2015-11-01', '2015-11-30')
 
 #http://www.mysqltutorial.org/mysql-export-table-to-csv/
+
+call pListAttendance3(323,'2015-09-18', '2015-09-20');
