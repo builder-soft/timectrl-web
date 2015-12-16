@@ -130,7 +130,11 @@ public class EmployeeManager extends HttpServletCRUD {
 	private String getSortField(HttpServletRequest request) {
 		BSmySQL mysql = new BSmySQL();
 		BSConfig config = new BSConfig();
-		return config.getString(mysql.getConnection(request), "EMPLOYEE_ORDER");
+
+		Connection conn = mysql.getConnection(request);
+		String out = config.getString(conn, "EMPLOYEE_ORDER");
+		mysql.closeConnection(conn);
+		return out;
 	}
 
 	@Override
@@ -138,7 +142,7 @@ public class EmployeeManager extends HttpServletCRUD {
 		LOG.entering(EmployeeManager.class.getName(), "setSemaphore", values);
 		Semaphore out = null;
 		Long startTime = null;
-//		values=null;
+		// values=null;
 		if (values != null) {
 			// if (false) {
 			BSmySQL mysql = new BSmySQL();

@@ -83,6 +83,10 @@ public class ValidateLoginServlet extends HttpServlet {
 				}
 			}
 
+			BSmySQL mysql = new BSmySQL();
+			mysql.closeConnection(connDomain);
+			mysql.closeConnection(connBSframework);
+
 			if (user != null) {
 				HttpSession session = request.getSession(true);
 				synchronized (session) {
