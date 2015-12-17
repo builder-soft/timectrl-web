@@ -18,12 +18,15 @@ import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
 import cl.buildersoft.timectrl.business.beans.ReportPropertyBean;
 import cl.buildersoft.timectrl.business.beans.ReportType;
 import cl.buildersoft.timectrl.business.console.BuildReport3;
+import cl.buildersoft.timectrl.business.services.EmployeeService;
 import cl.buildersoft.timectrl.business.services.ReportService;
+import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 
 /**
  * Servlet implementation class BuildReport
@@ -50,6 +53,57 @@ public class BuildReport extends BSHttpServlet {
 		reportService.fillParameters(reportParameterList, parameters);
 
 		List<String> responseList = null;
+		// ********************************************************
+
+		// readProperties(conn, reportPropertyList);
+		ReportParameterBean bossId = reportService.getReportParameter(reportParameterList, "BOSS_LIST");
+		ReportPropertyBean destiny = reportService.getReportProperty(reportPropertyList, "DESTINY");
+
+		List<String> out = null;
+
+		if (bossId != null && destiny != null && "BOSS_ONLY".equalsIgnoreCase(destiny.getPropertyValue())
+				&& "0".equalsIgnoreCase(bossId.getValue())) {
+			out = new ArrayList<String>();
+
+			EmployeeService es = new EmployeeServiceImpl();
+			List<Employee> bossList = es.listBoss(conn);
+			// readProperties(conn, reportPropertyList);
+			for (Employee employee : bossList) {
+				bossId.setValue(employee.getId().toString());
+				out.addAll(executeReport(conn, request, reportId, reportType, reportService, reportParameterList,
+						reportPropertyList));
+			}
+		} else {
+			// out = super.execute(conn, idReport, reportType,
+			// reportPropertyList, reportParameterList);
+			out = executeReport(conn, request, reportId, reportType, reportService, reportParameterList, reportPropertyList);
+		}
+
+		// ********************************************************
+
+		closeConnection(conn);
+
+		Map<Integer, String> responseMap = new HashMap<Integer, String>();
+		Integer index = 0;
+
+		if (responseList == null) {
+			responseList = new ArrayList<String>();
+		}
+
+		for (String responseString : responseList) {
+			responseMap.put(index++, responseString);
+		}
+
+		request.setAttribute("ResponseMap", responseMap);
+		request.getSession().setAttribute("ResponseMap", responseMap);
+
+		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/show-resonse.jsp");
+	}
+
+	private List<String> executeReport(Connection conn, HttpServletRequest request, Long reportId, ReportType reportType,
+			ReportService reportService, List<ReportParameterBean> reportParameterList,
+			List<ReportPropertyBean> reportPropertyList) {
+		List<String> responseList;
 		if (reportService.runAsDetachedThread()) {
 			HttpSession session = request.getSession(false);
 			Map<String, DomainAttribute> domainAttribute = (Map<String, DomainAttribute>) session.getAttribute("DomainAttribute");
@@ -70,24 +124,7 @@ public class BuildReport extends BSHttpServlet {
 		} else {
 			responseList = reportService.execute(conn, reportId, reportType, reportPropertyList, reportParameterList);
 		}
-
-		new BSmySQL().closeConnection(conn);
-
-		Map<Integer, String> responseMap = new HashMap<Integer, String>();
-		Integer index = 0;
-
-		if (responseList == null) {
-			responseList = new ArrayList<String>();
-		}
-
-		for (String responseString : responseList) {
-			responseMap.put(index++, responseString);
-		}
-
-		request.setAttribute("ResponseMap", responseMap);
-		request.getSession().setAttribute("ResponseMap", responseMap);
-
-		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/show-resonse.jsp");
+		return responseList;
 	}
 
 	private ReportType getReportType(Connection conn, Report report) {
@@ -100,7 +137,7 @@ public class BuildReport extends BSHttpServlet {
 		return reportType;
 	}
 
-	public ReportService getInstance(Connection conn, Report report ) {
+	public ReportService getInstance(Connection conn, Report report) {
 		BuildReport3 br3 = new BuildReport3();
 		return br3.getInstance(conn, report);
 
