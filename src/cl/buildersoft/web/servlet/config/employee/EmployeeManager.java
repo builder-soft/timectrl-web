@@ -51,8 +51,8 @@ public class EmployeeManager extends HttpServletCRUD {
 		// table.getField("cArea").setShowInTable(false);
 		// table.getField("cPrivilege").setShowInTable(false);
 
-		this.hideFields(table,  "cArea", "cPrivilege", "cEnabled");
-//		this.hideFields(table, "cMail", "cArea", "cPrivilege", "cEnabled");
+		// this.hideFields(table, "cArea", "cPrivilege", "cEnabled");
+		this.hideFields(table, "cMail", "cArea", "cPrivilege", "cEnabled");
 
 		// table.getField("cFingerprint").setReadonly(true);
 		table.getField("cFingerprint").setShowInTable(false);

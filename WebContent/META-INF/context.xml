@@ -5,7 +5,7 @@
 		url="jdbc:mysql://localhost:3306/bsframework"
 		defaultTransactionIsolation="READ_COMMITTED" validationQuery="Select 1"
 		closeMethod="close" maxActive="100" maxIdle="10" maxWait="10000"
-		initialSize="10" />
+		initialSize="1" />
 
 	<Resource name="jdbc/rsa" auth="Container" type="javax.sql.DataSource"
 		username="root" password="admin" driverClassName="com.mysql.jdbc.Driver"

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +20,7 @@ import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
@@ -33,10 +36,10 @@ import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
  */
 @WebServlet("/servlet/timectrl/report/execute/BuildReport")
 public class BuildReport extends BSHttpServlet {
+	private static final Logger LOG = Logger.getLogger(BuildReport.class.getName());
 	private static final String REPORT_KEY = "ReportKey";
 	private static final long serialVersionUID = 9102806701827080369L;
 
-	@SuppressWarnings("unchecked")
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection conn = getConnection(request);
 		String reportKey = readParameterOrAttribute(request, REPORT_KEY);
@@ -52,31 +55,34 @@ public class BuildReport extends BSHttpServlet {
 		List<ReportPropertyBean> reportPropertyList = reportService.loadReportProperties(conn, reportId);
 		reportService.fillParameters(reportParameterList, parameters);
 
-		List<String> responseList = null;
+		List<String> responseList = new ArrayList<String>();
 		// ********************************************************
 
 		// readProperties(conn, reportPropertyList);
 		ReportParameterBean bossId = reportService.getReportParameter(reportParameterList, "BOSS_LIST");
-		ReportPropertyBean destiny = reportService.getReportProperty(reportPropertyList, "DESTINY");
+		// ReportPropertyBean destiny =
+		// reportService.getReportProperty(reportPropertyList, "DESTINY");
 
-		List<String> out = null;
+//		List<String> out = null;
 
-		if (bossId != null && destiny != null && "BOSS_ONLY".equalsIgnoreCase(destiny.getPropertyValue())
-				&& "0".equalsIgnoreCase(bossId.getValue())) {
-			out = new ArrayList<String>();
-
+		if (bossId != null && "0".equalsIgnoreCase(bossId.getValue())) {
 			EmployeeService es = new EmployeeServiceImpl();
 			List<Employee> bossList = es.listBoss(conn);
+
+			List<ReportParameterBean> parameterListBackup = cloneParameterList(reportParameterList);
+
 			// readProperties(conn, reportPropertyList);
-			for (Employee employee : bossList) {
-				bossId.setValue(employee.getId().toString());
-				out.addAll(executeReport(conn, request, reportId, reportType, reportService, reportParameterList,
+			for (Employee boss : bossList) {				
+				bossId.setValue(boss.getId().toString());
+				responseList.addAll(executeReport(conn, request, reportId, reportType, reportService, reportParameterList,
 						reportPropertyList));
+				reportParameterList = cloneParameterList(parameterListBackup);
+				bossId = reportService.getReportParameter(reportParameterList, "BOSS_LIST");
 			}
 		} else {
 			// out = super.execute(conn, idReport, reportType,
 			// reportPropertyList, reportParameterList);
-			out = executeReport(conn, request, reportId, reportType, reportService, reportParameterList, reportPropertyList);
+			responseList = executeReport(conn, request, reportId, reportType, reportService, reportParameterList, reportPropertyList);
 		}
 
 		// ********************************************************
@@ -86,9 +92,9 @@ public class BuildReport extends BSHttpServlet {
 		Map<Integer, String> responseMap = new HashMap<Integer, String>();
 		Integer index = 0;
 
-		if (responseList == null) {
-			responseList = new ArrayList<String>();
-		}
+//		if (responseList == null) {
+//			responseList = new ArrayList<String>();
+//		}
 
 		for (String responseString : responseList) {
 			responseMap.put(index++, responseString);
@@ -98,6 +104,20 @@ public class BuildReport extends BSHttpServlet {
 		request.getSession().setAttribute("ResponseMap", responseMap);
 
 		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/show-resonse.jsp");
+	}
+
+	private List<ReportParameterBean> cloneParameterList(List<ReportParameterBean> sourceList) {
+		List<ReportParameterBean> out = new ArrayList<ReportParameterBean>(sourceList.size());
+
+		for (ReportParameterBean item : sourceList) {
+			try {
+				out.add((ReportParameterBean) item.clone());
+			} catch (CloneNotSupportedException e) {
+				LOG.log(Level.SEVERE, e.getMessage(), e);
+			}
+		}
+
+		return out;
 	}
 
 	private List<String> executeReport(Connection conn, HttpServletRequest request, Long reportId, ReportType reportType,

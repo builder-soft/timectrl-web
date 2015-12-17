@@ -15,4 +15,7 @@ delete from tcrewprocess where month(cdate)=10 and year(cdate)=2015;
 
 #http://www.mysqltutorial.org/mysql-export-table-to-csv/
 
-call pListAttendance3(323,'2015-09-18', '2015-09-20');
+#call pListAttendance3(323,'2015-09-18', '2015-09-20');
+
+#call pListSummaryReport(325, '442', 10, 2015, 10, 2015);
+call pListSummaryReport(325, '36,166,313,442,470,638,682', 10, 2015, 10, 2015);
