@@ -39,6 +39,7 @@ public class BuildReport extends BSHttpServlet {
 	private static final Logger LOG = Logger.getLogger(BuildReport.class.getName());
 	private static final String REPORT_KEY = "ReportKey";
 	private static final long serialVersionUID = 9102806701827080369L;
+	private Integer counter = 0;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection conn = getConnection(request);
@@ -63,7 +64,7 @@ public class BuildReport extends BSHttpServlet {
 		// ReportPropertyBean destiny =
 		// reportService.getReportProperty(reportPropertyList, "DESTINY");
 
-//		List<String> out = null;
+		// List<String> out = null;
 
 		if (bossId != null && "0".equalsIgnoreCase(bossId.getValue())) {
 			EmployeeService es = new EmployeeServiceImpl();
@@ -72,7 +73,7 @@ public class BuildReport extends BSHttpServlet {
 			List<ReportParameterBean> parameterListBackup = cloneParameterList(reportParameterList);
 
 			// readProperties(conn, reportPropertyList);
-			for (Employee boss : bossList) {				
+			for (Employee boss : bossList) {
 				bossId.setValue(boss.getId().toString());
 				responseList.addAll(executeReport(conn, request, reportId, reportType, reportService, reportParameterList,
 						reportPropertyList));
@@ -82,7 +83,8 @@ public class BuildReport extends BSHttpServlet {
 		} else {
 			// out = super.execute(conn, idReport, reportType,
 			// reportPropertyList, reportParameterList);
-			responseList = executeReport(conn, request, reportId, reportType, reportService, reportParameterList, reportPropertyList);
+			responseList = executeReport(conn, request, reportId, reportType, reportService, reportParameterList,
+					reportPropertyList);
 		}
 
 		// ********************************************************
@@ -92,9 +94,9 @@ public class BuildReport extends BSHttpServlet {
 		Map<Integer, String> responseMap = new HashMap<Integer, String>();
 		Integer index = 0;
 
-//		if (responseList == null) {
-//			responseList = new ArrayList<String>();
-//		}
+		// if (responseList == null) {
+		// responseList = new ArrayList<String>();
+		// }
 
 		for (String responseString : responseList) {
 			responseMap.put(index++, responseString);
@@ -136,6 +138,7 @@ public class BuildReport extends BSHttpServlet {
 			reportService.setReportParameterList(reportParameterList);
 			reportService.setReportPropertyList(reportPropertyList);
 			reportService.setReportType(reportType);
+//			reportService.waitBeforeRun(10 * this.counter++);
 
 			Thread thread = new Thread(reportService, reportService.getClass().getName());
 			thread.start();
