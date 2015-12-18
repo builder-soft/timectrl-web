@@ -1,5 +1,4 @@
 <%@ include file="/WEB-INF/jsp/common/header2.jsp"%>
-
 <%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
 <%
 	String loadingIcon = "/img/loading/6.gif";

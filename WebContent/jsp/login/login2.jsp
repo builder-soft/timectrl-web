@@ -13,7 +13,7 @@
 <style type="text/css">
 body {
 	background-image:
-		url('${pageContext.request.contextPath}/img/login/wallpapper4.jpg');
+		url('${pageContext.request.contextPath}/img/login/wallpapper3.jpg');
 	background-size: 1144px;
 	background-repeat: no-repeat;
 	background-position: center top;

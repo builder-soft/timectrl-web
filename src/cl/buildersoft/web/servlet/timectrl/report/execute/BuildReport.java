@@ -17,10 +17,8 @@ import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.beans.DomainAttribute;
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.util.BSHttpServlet;
-import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
@@ -39,7 +37,7 @@ public class BuildReport extends BSHttpServlet {
 	private static final Logger LOG = Logger.getLogger(BuildReport.class.getName());
 	private static final String REPORT_KEY = "ReportKey";
 	private static final long serialVersionUID = 9102806701827080369L;
-	private Integer counter = 0;
+//	private Integer counter = 0;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection conn = getConnection(request);
@@ -91,6 +89,11 @@ public class BuildReport extends BSHttpServlet {
 
 		closeConnection(conn);
 
+		if (reportService.runAsDetachedThread()) {
+			responseList.clear();
+			responseList.add("La solicitud se esta procesando de manera desatendida.");
+		}
+
 		Map<Integer, String> responseMap = new HashMap<Integer, String>();
 		Integer index = 0;
 
@@ -138,7 +141,7 @@ public class BuildReport extends BSHttpServlet {
 			reportService.setReportParameterList(reportParameterList);
 			reportService.setReportPropertyList(reportPropertyList);
 			reportService.setReportType(reportType);
-//			reportService.waitBeforeRun(10 * this.counter++);
+			// reportService.waitBeforeRun(10 * this.counter++);
 
 			Thread thread = new Thread(reportService, reportService.getClass().getName());
 			thread.start();
