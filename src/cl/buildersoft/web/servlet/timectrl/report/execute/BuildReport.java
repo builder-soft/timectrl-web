@@ -37,9 +37,18 @@ public class BuildReport extends BSHttpServlet {
 	private static final Logger LOG = Logger.getLogger(BuildReport.class.getName());
 	private static final String REPORT_KEY = "ReportKey";
 	private static final long serialVersionUID = 9102806701827080369L;
-//	private Integer counter = 0;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		BuildReport3 br3 = new BuildReport3();
+		Connection conn = getConnection(request);
+		
+		br3.setConnection(conn);
+		
+		closeConnection(conn);
+		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/show-response.jsp");
+	}
+
+	protected void service_(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection conn = getConnection(request);
 		String reportKey = readParameterOrAttribute(request, REPORT_KEY);
 		Report report = getReport(conn, reportKey);
@@ -55,14 +64,9 @@ public class BuildReport extends BSHttpServlet {
 		reportService.fillParameters(reportParameterList, parameters);
 
 		List<String> responseList = new ArrayList<String>();
+
 		// ********************************************************
-
-		// readProperties(conn, reportPropertyList);
 		ReportParameterBean bossId = reportService.getReportParameter(reportParameterList, "BOSS_LIST");
-		// ReportPropertyBean destiny =
-		// reportService.getReportProperty(reportPropertyList, "DESTINY");
-
-		// List<String> out = null;
 
 		if (bossId != null && "0".equalsIgnoreCase(bossId.getValue())) {
 			EmployeeService es = new EmployeeServiceImpl();
@@ -70,7 +74,6 @@ public class BuildReport extends BSHttpServlet {
 
 			List<ReportParameterBean> parameterListBackup = cloneParameterList(reportParameterList);
 
-			// readProperties(conn, reportPropertyList);
 			for (Employee boss : bossList) {
 				bossId.setValue(boss.getId().toString());
 				responseList.addAll(executeReport(conn, request, reportId, reportType, reportService, reportParameterList,
@@ -79,8 +82,6 @@ public class BuildReport extends BSHttpServlet {
 				bossId = reportService.getReportParameter(reportParameterList, "BOSS_LIST");
 			}
 		} else {
-			// out = super.execute(conn, idReport, reportType,
-			// reportPropertyList, reportParameterList);
 			responseList = executeReport(conn, request, reportId, reportType, reportService, reportParameterList,
 					reportPropertyList);
 		}
@@ -96,10 +97,6 @@ public class BuildReport extends BSHttpServlet {
 
 		Map<Integer, String> responseMap = new HashMap<Integer, String>();
 		Integer index = 0;
-
-		// if (responseList == null) {
-		// responseList = new ArrayList<String>();
-		// }
 
 		for (String responseString : responseList) {
 			responseMap.put(index++, responseString);
@@ -141,7 +138,6 @@ public class BuildReport extends BSHttpServlet {
 			reportService.setReportParameterList(reportParameterList);
 			reportService.setReportPropertyList(reportPropertyList);
 			reportService.setReportType(reportType);
-			// reportService.waitBeforeRun(10 * this.counter++);
 
 			Thread thread = new Thread(reportService, reportService.getClass().getName());
 			thread.start();
@@ -166,20 +162,6 @@ public class BuildReport extends BSHttpServlet {
 	public ReportService getInstance(Connection conn, Report report) {
 		BuildReport3 br3 = new BuildReport3();
 		return br3.getInstance(conn, report);
-
-		/**
-		 * <code>
-		ReportService instance = null;
-		try {
-			Class<ReportService> javaClass = (Class<ReportService>) Class.forName(reportType.getJavaClass());
-			instance = (ReportService) javaClass.newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new BSProgrammerException(e);
-		}
-		return instance;
-</code>
-		 */
 	}
 
 	private List<String> readParametersFromPage(List<ReportParameterBean> reportInputParamList, HttpServletRequest request) {
