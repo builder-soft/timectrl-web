@@ -59,8 +59,11 @@ public class ReadParameters extends BSHttpServlet {
 		request.setAttribute("ReportParameter", reportParameterList);
 		request.setAttribute("Report", report);
 
+		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/report/execute/params-report.jsp"
+				: "/WEB-INF/jsp/timectrl/report/execute/params-report.jsp";
+
 		closeConnection(conn);
-		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params-report.jsp");
+		forward(request, response, page);
 
 	}
 

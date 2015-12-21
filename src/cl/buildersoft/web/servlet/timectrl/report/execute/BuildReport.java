@@ -51,6 +51,14 @@ public class BuildReport extends BSHttpServlet {
 
 		String[] parameters = getParametersAsArray(conn, request, reportKey);
 
+		HttpSession session = request.getSession(false);
+		Map<String, DomainAttribute> domainAttribute = (Map<String, DomainAttribute>) session.getAttribute("DomainAttribute");
+		br3.setDriver(domainAttribute.get("database.driver").getValue());
+		br3.setServerName(domainAttribute.get("database.server").getValue());
+		br3.setDatabase(domainAttribute.get("database.database").getValue());
+		br3.setPassword(domainAttribute.get("database.password").getValue());
+		br3.setUser(domainAttribute.get("database.username").getValue());
+
 		List<String> responseList = br3.doBuild(reportKey, parameters);
 
 		closeConnection(conn);
