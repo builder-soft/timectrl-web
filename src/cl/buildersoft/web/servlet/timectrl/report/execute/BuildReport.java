@@ -38,14 +38,45 @@ public class BuildReport extends BSHttpServlet {
 	private static final String REPORT_KEY = "ReportKey";
 	private static final long serialVersionUID = 9102806701827080369L;
 
+	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BuildReport3 br3 = new BuildReport3();
 		Connection conn = getConnection(request);
-		
+
+		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/report/execute/show-response2.jsp"
+				: "/WEB-INF/jsp/timectrl/report/execute/show-response.jsp";
+
+		String reportKey = readParameterOrAttribute(request, REPORT_KEY);
 		br3.setConnection(conn);
-		
+
+		String[] parameters = getParametersAsArray(conn, request, reportKey);
+
+		List<String> responseList = br3.doBuild(reportKey, parameters);
+
 		closeConnection(conn);
-		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/show-response.jsp");
+
+		/**************************/
+		Map<Integer, String> responseMap = new HashMap<Integer, String>();
+		Integer index = 0;
+
+		for (String responseString : responseList) {
+			responseMap.put(index++, responseString);
+		}
+
+		request.setAttribute("ResponseMap", responseMap);
+		request.getSession().setAttribute("ResponseMap", responseMap);
+
+		forward(request, response, page);
+		/**************************/
+
+	}
+
+	private String[] getParametersAsArray(Connection conn, HttpServletRequest request, String reportKey) {
+		Report report = getReport(conn, reportKey);
+		ReportService reportService = getInstance(conn, report);
+		List<ReportParameterBean> reportParameterList = reportService.loadParameter(conn, report.getId());
+		String[] parameters = readParametersFromPageAsArray(reportParameterList, request);
+		return parameters;
 	}
 
 	protected void service_(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -173,6 +204,17 @@ public class BuildReport extends BSHttpServlet {
 			out.add(request.getParameter(name));
 		}
 
+		return out;
+	}
+
+	private String[] readParametersFromPageAsArray(List<ReportParameterBean> reportInputParamList, HttpServletRequest request) {
+		String[] out = new String[reportInputParamList.size()];
+		String name = null;
+		Integer i = 0;
+		for (ReportParameterBean reportInputParam : reportInputParamList) {
+			name = reportInputParam.getName();
+			out[i++] = request.getParameter(name);
+		}
 		return out;
 	}
 
