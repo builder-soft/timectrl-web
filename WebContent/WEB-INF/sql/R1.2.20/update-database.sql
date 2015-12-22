@@ -6,10 +6,13 @@ ALTER TABLE tR_EmployeeTurn MODIFY COLUMN cException BIT NOT NULL DEFAULT FALSE;
 
 /*
 RENAME TABLE tEmployee TO tEmployeeData;
+
 CREATE OR REPLACE VIEW tEmployee AS 
-	SELECT cId, cKey, cRut, cName, cPost, cArea, cPrivilege, cEnabled, cGroup, cUsername, cMail, cBoss 
+	SELECT	cId, cKey, cRut, cName, cPost, cArea, cPrivilege, cEnabled, cGroup, cUsername, cMail, cBoss, 
+			cFingerprint, cFlag, cFingerIndex, cCardNumber 
 	FROM tEmployeeData
 	WHERE cEnabled=TRUE;
+	
 CREATE OR REPLACE VIEW tFingerPrint AS 
 	SELECT cId, cId AS cEmployee, cFingerprint, cFlag, cFingerIndex, cCardNumber 
 	FROM tEmployeeData

@@ -18,4 +18,6 @@ delete from tcrewprocess where month(cdate)=10 and year(cdate)=2015;
 #call pListAttendance3(323,'2015-09-18', '2015-09-20');
 
 #call pListSummaryReport(325, '442', 10, 2015, 10, 2015);
-call pListSummaryReport(325, '36,166,313,442,470,638,682', 10, 2015, 10, 2015);
+#call pListSummaryReport(325, '36,166,313,442,470,638,682', 10, 2015, 10, 2015);
+
+call pSaveAttendanceLog2('771', 3, 4, 2020, 7, 27, 23, 38, 21);
