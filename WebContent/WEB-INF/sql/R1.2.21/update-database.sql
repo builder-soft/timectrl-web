@@ -28,4 +28,4 @@ cId, cEmployee, cFingerprint, cFlag, cFingerIndex, cCardNumber
 	
 #backup-rsa-20151221.txt
 
-UPDATE tVersion SET cVersion='1.2.20', cUpdated=NOW() WHERE cKey = 'DBT';
+UPDATE tVersion SET cVersion='1.2.21', cUpdated=NOW() WHERE cKey = 'DBT';
