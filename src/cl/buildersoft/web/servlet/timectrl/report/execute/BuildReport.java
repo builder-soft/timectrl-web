@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import cl.buildersoft.framework.beans.Domain;
 import cl.buildersoft.framework.beans.DomainAttribute;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.exception.BSProgrammerException;
@@ -52,12 +53,8 @@ public class BuildReport extends BSHttpServlet {
 		String[] parameters = getParametersAsArray(conn, request, reportKey);
 
 		HttpSession session = request.getSession(false);
-		Map<String, DomainAttribute> domainAttribute = (Map<String, DomainAttribute>) session.getAttribute("DomainAttribute");
-		br3.setDriver(domainAttribute.get("database.driver").getValue());
-		br3.setServerName(domainAttribute.get("database.server").getValue());
-		br3.setDatabase(domainAttribute.get("database.database").getValue());
-		br3.setPassword(domainAttribute.get("database.password").getValue());
-		br3.setUser(domainAttribute.get("database.username").getValue());
+		Domain domain = (Domain) session.getAttribute("Domain");
+		br3.setDSName(domain.getDatabase());
 
 		List<String> responseList = br3.doBuild(reportKey, parameters);
 
@@ -167,11 +164,9 @@ public class BuildReport extends BSHttpServlet {
 		List<String> responseList;
 		if (reportService.runAsDetachedThread()) {
 			HttpSession session = request.getSession(false);
-			Map<String, DomainAttribute> domainAttribute = (Map<String, DomainAttribute>) session.getAttribute("DomainAttribute");
 
-			reportService.setConnectionData(domainAttribute.get("database.driver").getValue(),
-					domainAttribute.get("database.server").getValue(), domainAttribute.get("database.database").getValue(),
-					domainAttribute.get("database.password").getValue(), domainAttribute.get("database.username").getValue());
+			Domain domain = (Domain) session.getAttribute("Domain");
+			reportService.setConnectionData(domain.getDatabase());
 
 			reportService.setReportId(reportId);
 			reportService.setReportParameterList(reportParameterList);

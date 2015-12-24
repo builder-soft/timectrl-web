@@ -7,12 +7,10 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import cl.buildersoft.framework.beans.Domain;
 import cl.buildersoft.framework.beans.User;
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
 
 @WebServlet("/servlet/system/changepassword/SearchPassword")
@@ -34,10 +32,9 @@ public class SearchPassword extends BSHttpServlet {
 		} else {
 			id = Long.parseLong(idString);
 		}
-		
-		
-		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection2(getServletContext());
+
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection();
 		Connection connDomain = getDomainConnection(request);
 
 		BSBeanUtils bu = new BSBeanUtils();
@@ -53,14 +50,14 @@ public class SearchPassword extends BSHttpServlet {
 		} else {
 			page = "/WEB-INF/jsp/system/change-password/change-password.jsp";
 		}
-		mysql.closeConnection(conn);
-		mysql.closeConnection(connDomain);
+		cf.closeConnection(conn);
+		cf.closeConnection(connDomain);
 		forward(request, response, page);
 	}
 
 	private Connection getDomainConnection(HttpServletRequest request) {
-//		HttpSession session = request.getSession();
-//		domain = (Domain) session.getAttribute("Domain");
+		// HttpSession session = request.getSession();
+		// domain = (Domain) session.getAttribute("Domain");
 
 		return getConnection(request);
 	}

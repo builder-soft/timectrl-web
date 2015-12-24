@@ -14,6 +14,7 @@ import cl.buildersoft.framework.beans.Menu;
 import cl.buildersoft.framework.beans.Rol;
 import cl.buildersoft.framework.services.BSMenuService;
 import cl.buildersoft.framework.services.impl.BSMenuServiceImpl;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
 
 /**
@@ -26,7 +27,8 @@ public class GetMenuServlet extends BSHttpServlet {
 	@SuppressWarnings("unchecked")
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Connection conn = getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 
 		String nextServlet = (String) request.getAttribute("NextServlet");
 
@@ -42,6 +44,7 @@ public class GetMenuServlet extends BSHttpServlet {
 			session.setAttribute("Menu", menu);
 		}
 
+		cf.closeConnection(conn);
 		String page = nextServlet != null ? nextServlet : "/servlet/Home";
 		forward(request, response, page);
 		// request.getRequestDispatcher(page).forward(request, response);

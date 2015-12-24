@@ -2,7 +2,6 @@ package cl.buildersoft.web.servlet.admin;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +13,7 @@ import cl.buildersoft.framework.beans.User;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSUserException;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSSecurity;
 
 @WebServlet("/servlet/admin/ChangePassword")
@@ -39,8 +39,8 @@ public class ChangePassword extends HttpServlet {
 
 		Long id = Long.parseLong(request.getParameter("cId"));
 
-		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection2(getServletContext());
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection();
 
 		BSBeanUtils bu = new BSBeanUtils();
 		User user = new User();
@@ -62,7 +62,7 @@ public class ChangePassword extends HttpServlet {
 		user.setPassword(newPassword);
 		bu.update(conn, user);
 
-		new BSmySQL().closeConnection(conn);
+		cf.closeConnection(conn);
 
 		String next = "/servlet/table/LoadTable";
 		if (goHome != null) {

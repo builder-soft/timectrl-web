@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Date;
 
 import javax.servlet.http.HttpServlet;
@@ -12,32 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSmySQL;
-import cl.buildersoft.framework.exception.BSDataBaseException;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 
 public abstract class AbstractAjaxServlet extends HttpServlet {
 	private static final long serialVersionUID = 7962194037862243536L;
 
 	protected Connection getConnection(HttpServletRequest request) {
-		Object connObject = request.getAttribute("Connection");
-		Connection out = null;
-		if (connObject == null) {
-			BSmySQL mysql = new BSmySQL();
-			out = mysql.getConnection(request);
-			request.setAttribute("Connection", out);
-
-		} else {
-			out = (Connection) connObject;
-			try {
-				if (out.isClosed()) {
-					request.setAttribute("Connection", null);
-					out = getConnection(request);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new BSDataBaseException(e);
-			}
-		}
-		return out;
+		BSConnectionFactory cf = new BSConnectionFactory();
+		return cf.getConnection(request);
 	}
 
 	protected void closeConnection(Connection conn) {

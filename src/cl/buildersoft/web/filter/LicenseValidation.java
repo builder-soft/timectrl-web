@@ -20,9 +20,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSConfigurationException;
 import cl.buildersoft.framework.exception.BSDataBaseException;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.timectrl.util.LicenseValidationUtil;
 
 @WebFilter(urlPatterns = { "/servlet/*" }, dispatcherTypes = { DispatcherType.REQUEST })
@@ -130,9 +130,8 @@ public class LicenseValidation implements Filter {
 	}
 
 	private Connection getConnection(HttpServletRequest request) {
-		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(request);
-		return conn;
+		BSConnectionFactory cf = new BSConnectionFactory();
+		return cf.getConnection(request);
 	}
 
 }

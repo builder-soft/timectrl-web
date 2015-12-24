@@ -11,6 +11,7 @@
 		<param-name>CurrentVersion</param-name>
 		<param-value>R1.2.21</param-value>
 	</context-param>
+	<!-- 
 	<context-param>
 		<param-name>bsframework.database.driver</param-name>
 		<param-value>com.mysql.jdbc.Driver</param-value>
@@ -35,6 +36,7 @@
 		<param-name>bsframework.database.datasource</param-name>
 		<param-value>jdbc/bsframework</param-value>
 	</context-param>
+	 -->
 	<context-param>
 		<param-name>bsframework.license.validate</param-name>
 		<param-value>false</param-value>
