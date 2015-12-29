@@ -41,7 +41,7 @@ function go(){
 </script>
 
 <%!private String _return_path_context(HttpServletRequest request) {
-		BSTableConfig table = (BSTableConfig) request.getSession()
+		BSTableConfig table = (BSTableConfig) request.getSession(false)
 				.getAttribute("BSTable");
 		String uri = table.getUri();
 		String ctxPath = request.getContextPath();

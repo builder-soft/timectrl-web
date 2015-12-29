@@ -18,7 +18,7 @@ $("#Search").keypress(function(event){
 </script>
 
 <%!private String _return_path_context(HttpServletRequest request) {
-		BSTableConfig table = (BSTableConfig) request.getSession().getAttribute("BSTable");
+		BSTableConfig table = (BSTableConfig) request.getSession(false).getAttribute("BSTable");
 		String uri = table.getUri();
 		String ctxPath = request.getContextPath();
 		String out = ctxPath + uri;

@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.beans.Domain;
-import cl.buildersoft.framework.beans.DomainAttribute;
 import cl.buildersoft.framework.database.BSBeanUtils;
+import cl.buildersoft.framework.exception.BSConfigurationException;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Employee;
@@ -26,6 +26,7 @@ import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
 import cl.buildersoft.timectrl.business.beans.ReportPropertyBean;
 import cl.buildersoft.timectrl.business.beans.ReportType;
 import cl.buildersoft.timectrl.business.console.BuildReport3;
+import cl.buildersoft.timectrl.business.process.impl.BuildReport4;
 import cl.buildersoft.timectrl.business.services.EmployeeService;
 import cl.buildersoft.timectrl.business.services.ReportService;
 import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
@@ -41,22 +42,23 @@ public class BuildReport extends BSHttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		BuildReport3 br3 = new BuildReport3();
+		BuildReport4 br4 = new BuildReport4();
 		Connection conn = getConnection(request);
 
 		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/report/execute/show-response2.jsp"
 				: "/WEB-INF/jsp/timectrl/report/execute/show-response.jsp";
 
 		String reportKey = readParameterOrAttribute(request, REPORT_KEY);
-		br3.setConnection(conn);
+		br4.setConnection(conn);
 
 		String[] parameters = getParametersAsArray(conn, request, reportKey);
 
 		HttpSession session = request.getSession(false);
 		Domain domain = (Domain) session.getAttribute("Domain");
-		br3.setDSName(domain.getDatabase());
+		br4.setDSName(domain.getDatabase());
+		br4.setRunFromConsole(false);
 
-		List<String> responseList = br3.doBuild(reportKey, parameters);
+		List<String> responseList = br4.doExecute(parameters);
 
 		closeConnection(conn);
 
@@ -76,12 +78,28 @@ public class BuildReport extends BSHttpServlet {
 
 	}
 
+	private Long keyToReportId(Connection conn, String key) {
+		BSBeanUtils bu = new BSBeanUtils();
+		Report report = new Report();
+
+		if (!bu.search(conn, report, "cKey=?", key)) {
+			throw new BSConfigurationException("Report '" + key + "' not found");
+		}
+
+		return report.getId();
+	}
+
 	private String[] getParametersAsArray(Connection conn, HttpServletRequest request, String reportKey) {
 		Report report = getReport(conn, reportKey);
 		ReportService reportService = getInstance(conn, report);
 		List<ReportParameterBean> reportParameterList = reportService.loadParameter(conn, report.getId());
-		String[] parameters = readParametersFromPageAsArray(reportParameterList, request);
-		return parameters;
+
+		String[] paramsFromPage = readParametersFromPageAsArray(reportParameterList, request);
+		String[] out = new String[paramsFromPage.length + 1];
+		out[0] = reportKey;
+		System.arraycopy(paramsFromPage, 0, out, 1, out.length - 1);
+
+		return out;
 	}
 
 	protected void service_(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
