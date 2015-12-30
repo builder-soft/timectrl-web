@@ -34,9 +34,9 @@ import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 /**
  * Servlet implementation class BuildReport
  */
-@WebServlet("/servlet/timectrl/report/execute/BuildReport")
-public class BuildReport extends BSHttpServlet {
-	private static final Logger LOG = Logger.getLogger(BuildReport.class.getName());
+@WebServlet("/servlet/timectrl/report/execute/BuildReportServlet")
+public class BuildReportServlet extends BSHttpServlet {
+	private static final Logger LOG = Logger.getLogger(BuildReportServlet.class.getName());
 	private static final String REPORT_KEY = "ReportKey";
 	private static final long serialVersionUID = 9102806701827080369L;
 
@@ -49,14 +49,14 @@ public class BuildReport extends BSHttpServlet {
 				: "/WEB-INF/jsp/timectrl/report/execute/show-response.jsp";
 
 		String reportKey = readParameterOrAttribute(request, REPORT_KEY);
-		br4.setConnection(conn);
+		br4.setDSName(((Domain) request.getSession(false).getAttribute("Domain")).getDatabase());
 
 		String[] parameters = getParametersAsArray(conn, request, reportKey);
 
 		HttpSession session = request.getSession(false);
 		Domain domain = (Domain) session.getAttribute("Domain");
 		br4.setDSName(domain.getDatabase());
-		br4.setRunFromConsole(false);
+		// br4.setRunFromConsole(false);
 
 		List<String> responseList = br4.doExecute(parameters);
 
