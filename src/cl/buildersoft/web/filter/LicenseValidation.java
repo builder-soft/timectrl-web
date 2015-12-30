@@ -102,21 +102,26 @@ public class LicenseValidation implements Filter {
 	private Boolean licenseValidation(HttpServletRequest request) {
 		Connection conn = null;
 		Boolean out = null;
+		BSConnectionFactory cf = new BSConnectionFactory();
 		try {
-			conn = getConnection(request);
+			conn = cf.getConnection(request);
 		} catch (Exception e) {
 			conn = null;
 		}
 
-		if (conn == null || closedConnection(conn)) {
-			out = true;
-		} else {
-			String pathFile = request.getSession().getServletContext().getRealPath("/") + "WEB-INF" + File.separator
-					+ "LicenseFile.dat";
+		try {
+			if (conn == null || closedConnection(conn)) {
+				out = true;
+			} else {
+				String pathFile = request.getSession().getServletContext().getRealPath("/") + "WEB-INF" + File.separator
+						+ "LicenseFile.dat";
 
-			LicenseValidationUtil lv = new LicenseValidationUtil();
-			String fileContent = lv.readFile(pathFile);
-			out = lv.licenseValidation(conn, fileContent);
+				LicenseValidationUtil lv = new LicenseValidationUtil();
+				String fileContent = lv.readFile(pathFile);
+				out = lv.licenseValidation(conn, fileContent);
+			}
+		} finally {
+			cf.closeConnection(conn);
 		}
 		return out;
 	}

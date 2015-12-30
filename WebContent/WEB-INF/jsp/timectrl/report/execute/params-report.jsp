@@ -22,7 +22,7 @@
 <form action="${pageContext.request.contextPath}/servlet/ShowParameters" method="post">
  -->
 <form
-	action="${pageContext.request.contextPath}/servlet/timectrl/report/execute/BuildReport?<%=BSWeb.randomString() %>"
+	action="${pageContext.request.contextPath}/servlet/timectrl/report/execute/BuildReportServlet?<%=BSWeb.randomString() %>"
 	method="post">
 
 	<input type="hidden" name="ReportKey"
