@@ -22,10 +22,10 @@ public class ExecutionReport extends BSHttpServlet {
 	private static final long serialVersionUID = 5522309239924345512L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Report> reports = getReportList(getConnection(request));
-
-		request.setAttribute("ReportList", reports);
 		Connection conn = getConnection(request);
+		List<Report> reports = getReportList(conn);
+		request.setAttribute("ReportList", reports);
+
 		String page = null;
 		if (bootstrap(conn)) {
 			page = "/WEB-INF/jsp/timectrl/report/execute/report-list2.jsp";
