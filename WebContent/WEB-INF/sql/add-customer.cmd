@@ -78,6 +78,16 @@ IF "%1" == "" GOTO err_handler
 	call run-once.cmd %1
 	cd ..\R1.2.15
 	call run-once.cmd %1
+	cd ..\R1.2.16
+	call run-once.cmd %1
+	cd ..\R1.2.17
+	call run-once.cmd %1
+	cd ..\R1.2.19
+	call run-once.cmd %1
+	cd ..\R1.2.20
+	call run-once.cmd %1
+	cd ..\R1.2.21
+	call run-once.cmd %1
 
 	cd ..
 	goto end_handler
