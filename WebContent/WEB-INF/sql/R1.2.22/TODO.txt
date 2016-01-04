@@ -1,0 +1,7 @@
+Para poder dividir la tabla de empleados en 2 (tEmployee y tFingerprint)
+- Crear tabla Fingerprint (Campos: cId, cEmployee, cFingerprint, cFlag, cFingerIndex, cCardNumber).
+- Insertar los registros de la tabla Employee que tengan al menos uno de los datos de los campos que se separan.
+- Eliminar los campos que se movieron de la tabla templopyee.
+- 
+
+// Para determinar los registros que hay que hay que mover, se puede usar la siguiente sentencia SQL: select cid, cname, cFingerprint, cFlag, cFingerIndex, cCardNumber from temployee where not cFingerprint is null and not cCardNumber is null;
