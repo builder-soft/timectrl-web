@@ -44,6 +44,9 @@
 		self.location.href = url;
 	}
 </script>
+<script
+	src="${pageContext.request.contextPath}/js/common/framework.js"></script>
+
 </head>
 
 <body onload="javaScript:try{onLoadPage();}catch(e){}">
