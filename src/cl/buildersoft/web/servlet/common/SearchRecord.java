@@ -48,14 +48,17 @@ public class SearchRecord extends BSHttpServlet {
 		ResultSet rs = mysql.queryResultSet(conn, sql, BSUtils.array2List(id));
 		resultset2Table(rs, table);
 
-		
+		String page = bootstrap(conn) ? "/WEB-INF/jsp/table/data-form2.jsp" : "/WEB-INF/jsp/table/data-form.jsp";
+
+		mysql.closeConnection(conn);
+
+		// request.setAttribute("Data", rs);
+		// request.setAttribute("Conn", conn);
 
 		request.setAttribute("Action", "Update");
-
-		Boolean bootstrap = bootstrap(conn);
-		mysql.closeConnection(conn);
-		String page = bootstrap ? "/WEB-INF/jsp/table/data-form2.jsp" : "/WEB-INF/jsp/table/data-form.jsp";
 		forward(request, response, page);
+		// request.getRequestDispatcher("/WEB-INF/jsp/table/data-form.jsp").forward(request,
+		// response);
 	}
 
 	private void resultset2Table(ResultSet rs, BSTableConfig table) {
@@ -79,7 +82,7 @@ public class SearchRecord extends BSHttpServlet {
 		return sql;
 	}
 
-	protected String getFieldsNamesWithCommas(BSField[] fields) {
+	private String getFieldsNamesWithCommas(BSField[] fields) {
 		String out = "";
 		if (fields.length == 0) {
 			out = "*";

@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.beans.User;
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSUserException;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSSecurity;
 
 @WebServlet("/servlet/system/changepassword/ChangePassword")
@@ -38,8 +38,8 @@ public class ChangePassword extends HttpServlet {
 
 		Long id = Long.parseLong(request.getParameter("cId"));
 
-		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection2( "jdbc/bsframework");
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection( );
 
 		BSBeanUtils bu = new BSBeanUtils();
 		User user = new User();
@@ -60,7 +60,7 @@ public class ChangePassword extends HttpServlet {
 		newPassword = md5(newPassword);
 		user.setPassword(newPassword);
 		bu.update(conn, user);
-		mysql.closeConnection(conn);
+		cf.closeConnection(conn);
 
 		String next = "/servlet/common/LoadTable";
 		next = "/servlet/system/user/UserManager";

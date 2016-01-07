@@ -107,7 +107,7 @@
 
 	private String write_link_jsp(HttpServletRequest request, Integer page, BSPaging paging, String cssClass, String label) {
 		String ctxPath = request.getContextPath();
-		BSTableConfig table = (BSTableConfig) request.getSession().getAttribute("BSTable");
+		BSTableConfig table = (BSTableConfig) request.getSession(false).getAttribute("BSTable");
 		String uri = table.getUri();
 		String search = paging.getSearchValue(request);
 		uri = linkToPage2(ctxPath, page, uri, search);
@@ -127,7 +127,7 @@
 	 private String write_pagination_jsp(HttpServletRequest request) {
 	 String ctxPath = request.getContextPath();
 	 BSPaging paging = (BSPaging) request.getAttribute("Paging");
-	 BSTableConfig table = (BSTableConfig) request.getSession().getAttribute("BSTable");
+	 BSTableConfig table = (BSTableConfig) request.getSession(false).getAttribute("BSTable");
 
 	 String uri = table.getUri();
 	 String out = "";

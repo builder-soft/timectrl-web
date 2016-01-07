@@ -22,6 +22,10 @@ public class GroupManager extends HttpServletCRUD implements Servlet {
 	protected BSTableConfig getBSTableConfig(HttpServletRequest request) {
 		BSTableConfig table = initTable(request, "tGroup");
 		table.setTitle("Grupos de Relojes y Empleados");
+
+		table.getField("cKey").setLabel("Llave");
+		table.getField("cName").setLabel("Descripción");
+
 		return table;
 	}
 

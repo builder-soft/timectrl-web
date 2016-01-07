@@ -9,11 +9,12 @@
 	</welcome-file-list>
 	<context-param>
 		<param-name>CurrentVersion</param-name>
-		<param-value>R1.2.20</param-value>
+		<param-value>R1.2.21</param-value>
 	</context-param>
+	<!-- 
 	<context-param>
 		<param-name>bsframework.database.driver</param-name>
-		<param-value>org.gjt.mm.mysql.Driver</param-value>
+		<param-value>com.mysql.jdbc.Driver</param-value>
 	</context-param>
 	<context-param>
 		<param-name>bsframework.database.server</param-name>
@@ -32,19 +33,20 @@
 		<param-value>admin</param-value>
 	</context-param>
 	<context-param>
+		<param-name>bsframework.database.datasource</param-name>
+		<param-value>jdbc/bsframework</param-value>
+	</context-param>
+	 -->
+	<context-param>
 		<param-name>bsframework.license.validate</param-name>
 		<param-value>false</param-value>
 	</context-param>
+
 	<error-page>
-		<exception-type>java.lang.BSException</exception-type>
-		<location>/jsp/error/error.jsp</location>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/servlet/ErrorHandler</location>
 	</error-page>
-	<error-page>
-		<exception-type>java.lang.RuntimeException</exception-type>
-		<location>/jsp/error/error.jsp</location>
-	</error-page>
-	<!-- <Resource name="jdbc/bsframework" auth="Container" type="javax.sql.DataSource" 
-		username="root" password="admin" driverClassName="com.mysql.jdbc.Driver" 
-		url="jdbc:mysql://localhost:3306/bsframework" maxActive="15" maxIdle="7" 
-		defaultTransactionIsolation="READ_COMMITTED" validationQuery="Select 1" /> -->
+	<!-- <error-page> <exception-type>java.lang.BSException</exception-type> 
+		<location>/jsp/error/error.jsp</location> </error-page> <error-page> <exception-type>java.lang.RuntimeException</exception-type> 
+		<location>/jsp/error/error.jsp</location> </error-page> -->
 </web-app>

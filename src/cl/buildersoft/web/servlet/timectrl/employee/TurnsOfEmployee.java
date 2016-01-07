@@ -2,17 +2,17 @@ package cl.buildersoft.web.servlet.timectrl.employee;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
+import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Area;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.EmployeeTurn;
@@ -25,33 +25,49 @@ import cl.buildersoft.timectrl.business.services.impl.EmployeeTurnServiceImpl;
  * Servlet implementation class Turns
  */
 @WebServlet("/servlet/timectrl/employee/TurnsOfEmployee")
-public class TurnsOfEmployee extends HttpServlet {
+public class TurnsOfEmployee extends BSHttpServlet {
 	private static final long serialVersionUID = 2424628512723044632L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BSBeanUtils bu = new BSBeanUtils();
-		BSmySQL mysql = new BSmySQL();
+		// BSmySQL mysql = new BSmySQL();
 		// BSDateTimeUtil du = new BSDateTimeUtil();
 
-		Connection conn = mysql.getConnection(request);
+		Connection conn = getConnection(request);
 		Employee employee = getEmployee(request, bu, conn);
 		Post post = getPostEmployee(conn, bu, employee);
 		Area area = getAreaEmployee(conn, bu, employee);
-		List<EmployeeTurn> employeeTurns = getEmployeeTurns(conn, employee);
+		List<EmployeeTurn> tempTurns = getEmployeeTurns(conn, employee);
+
+		List<EmployeeTurn> employeeTurns = new ArrayList<EmployeeTurn>();
+		List<EmployeeTurn> exceptionTurns = new ArrayList<EmployeeTurn>();
+
+		for (EmployeeTurn current : tempTurns) {
+			if (current.getException()) {
+				exceptionTurns.add(current);
+			} else {
+				employeeTurns.add(current);
+			}
+		}
+
 		String dateFormat = BSDateTimeUtil.getFormatDate(conn);
 		List<Turn> turns = getTurns(conn);
 
-		mysql.closeConnection(conn);
+		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/employee/turns-of-employee2.jsp"
+				: "/WEB-INF/jsp/timectrl/employee/turns-of-employee.jsp";
+		closeConnection(conn);
 
 		request.setAttribute("Employee", employee);
 		request.setAttribute("Post", post);
 		request.setAttribute("Area", area);
 		request.setAttribute("EmployeeTurn", employeeTurns);
+		request.setAttribute("ExceptionTurn", exceptionTurns);
 		request.setAttribute("DateFormat", dateFormat);
 		request.setAttribute("Turns", turns);
 
-		String next = "/WEB-INF/jsp/timectrl/employee/turns-of-employee.jsp";
-		request.getRequestDispatcher(next).forward(request, response);
+		
+		forward(request, response, page);
+//		request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -134,7 +150,7 @@ public class TurnsOfEmployee extends HttpServlet {
 			out = request.getParameter("cId");
 		}
 		return out;
-//		return request.getParameter("cId");
+		// return request.getParameter("cId");
 	}
 
 }

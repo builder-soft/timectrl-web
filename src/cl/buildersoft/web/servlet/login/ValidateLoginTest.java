@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import cl.buildersoft.framework.beans.User;
 import cl.buildersoft.framework.services.impl.BSUserServiceImpl;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDataUtils;
 
 public class ValidateLoginTest {
@@ -31,9 +32,9 @@ public class ValidateLoginTest {
 		BSUserServiceImpl userService = new BSUserServiceImpl();
 
 		User user = null;
-		BSDataUtils dau = new BSDataUtils();
+		BSConnectionFactory cf = new BSConnectionFactory();
 		Connection conn = null;
-		conn = dau.getConnection("org.gjt.mm.mysql.Driver", "localhost", "bsframework", "admin", "root");
+		conn = cf.getConnection();
 
 		user = userService.login(conn, mail, password);
 
@@ -49,9 +50,9 @@ public class ValidateLoginTest {
 		BSUserServiceImpl userService = new BSUserServiceImpl();
 
 		User user = null;
-		BSDataUtils dau = new BSDataUtils();
+		BSConnectionFactory cf = new BSConnectionFactory();
 		Connection conn = null;
-		conn = dau.getConnection("org.gjt.mm.mysql.Driver", "localhost", "bsframework", "admin", "root");
+		conn = cf.getConnection();
 
 		user = userService.login(conn, mail, password);
 
@@ -67,9 +68,9 @@ public class ValidateLoginTest {
 		BSUserServiceImpl userService = new BSUserServiceImpl();
 
 		User user = null;
-		BSDataUtils dau = new BSDataUtils();
+		BSConnectionFactory cf = new BSConnectionFactory();
 		Connection conn = null;
-		conn = dau.getConnection("org.gjt.mm.mysql.Driver", "localhost", "bsframework", "admin", "root");
+		conn = cf.getConnection();
 
 		user = userService.login(conn, mail, password);
 

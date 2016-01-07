@@ -11,7 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cl.buildersoft.framework.beans.BSBean;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSProgrammerException;
@@ -40,7 +39,7 @@ public class ReadParameters extends BSHttpServlet {
 		Report report = getReport(reportId, bu, conn);
 		ReportType reportType = getReportType(conn, bu, report);
 
-		ReportService reportService = getInstance(reportType);
+		ReportService reportService = getInstance(conn, report);
 
 		List<ReportParameterBean> reportParameterList = reportService.loadParameter(conn, reportId);
 		String source = null;
@@ -60,8 +59,11 @@ public class ReadParameters extends BSHttpServlet {
 		request.setAttribute("ReportParameter", reportParameterList);
 		request.setAttribute("Report", report);
 
+		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/report/execute/params-report.jsp"
+				: "/WEB-INF/jsp/timectrl/report/execute/params-report.jsp";
+
 		closeConnection(conn);
-		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params-report.jsp");
+		forward(request, response, page);
 
 	}
 
@@ -77,17 +79,13 @@ public class ReadParameters extends BSHttpServlet {
 
 	private ResultSet executeSP(Connection conn, String typeSource) {
 		BSmySQL mysql = new BSmySQL();
-
 		ResultSet out = mysql.callSingleSP(conn, typeSource, null);
-
 		return out;
 	}
 
-	private ReportService getInstance(ReportType reportType) {
-		BuildReport br = new BuildReport();
-
-		ReportService instance = br.getInstance(reportType);
-
+	private ReportService getInstance(Connection conn, Report report) {
+		BuildReport3 br = new BuildReport3();
+		ReportService instance = br.getInstance(conn, report);
 		return instance;
 	}
 

@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.EmployeeTurn;
@@ -30,6 +29,8 @@ public class SaveNewTurn extends BSHttpServlet {
 		String end = request.getParameter("EndDate");
 
 		String turnId = request.getParameter("TurnId");
+		Boolean exception = Boolean.parseBoolean(request.getParameter("Exception"));
+
 		Connection conn = getConnection(request);
 		String formatDate = BSDateTimeUtil.getFormatDate(conn);
 
@@ -37,25 +38,25 @@ public class SaveNewTurn extends BSHttpServlet {
 		Calendar endDate = BSDateTimeUtil.string2Calendar(end, formatDate);
 
 		EmployeeTurn employeeTurn = new EmployeeTurn();
+		employeeTurn.setTurn(turn);
+		employeeTurn.setStartDate(startDate);
+		employeeTurn.setEndDate(endDate);
+		employeeTurn.setException(exception);
+		EmployeeTurnService service = new EmployeeTurnServiceImpl();
+
 		if (turnId.length() > 0) {
 			Long turnIdAsLong = Long.parseLong(turnId);
 			employeeTurn.setId(turnIdAsLong);
-			employeeTurn.setTurn(turn);
-			employeeTurn.setStartDate(startDate);
-			employeeTurn.setEndDate(endDate);
 
-			EmployeeTurnService service = new EmployeeTurnServiceImpl();
 			service.update(conn, employeeTurn);
 		} else {
 			employeeTurn.setEmployee(employee);
-			employeeTurn.setTurn(turn);
-			employeeTurn.setStartDate(startDate);
-			employeeTurn.setEndDate(endDate);
 
-			EmployeeTurnService service = new EmployeeTurnServiceImpl();
 			service.appendNew(conn, employeeTurn);
 		}
-		request.setAttribute("cId", "" + employee);
+		closeConnection(conn);
+
+		request.setAttribute("cId", employee.toString());
 
 		forward(request, response, "/servlet/timectrl/employee/TurnsOfEmployee");
 

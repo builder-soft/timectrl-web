@@ -10,10 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Employee;
-import cl.buildersoft.timectrl.business.services.EmployeeService;
-import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 
 @WebServlet("/servlet/timectrl/report/execute/ListEmployeeAjax")
 public class ListEmployeeAjax extends BSHttpServlet {
@@ -47,9 +46,9 @@ public class ListEmployeeAjax extends BSHttpServlet {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	private void listEmployeeOrBoss(HttpServletRequest request, String rut, String name, String type) {
 		BSBeanUtils bu = new BSBeanUtils();
-		Connection conn = getConnection(request);
 		List<Employee> list = null;
 
 		String where = null;
@@ -78,7 +77,10 @@ public class ListEmployeeAjax extends BSHttpServlet {
 			where += "cId IN (SELECT DISTINCT(cBoss) FROM tEmployee WHERE NOT cBoss IS NULL)";
 
 		}
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 		list = (List<Employee>) bu.list(conn, new Employee(), where, params);
+		cf.closeConnection(conn);		
 
 		request.setAttribute("EmployeeList", list);
 		request.setAttribute("Type", type);

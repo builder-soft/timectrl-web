@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.type.Semaphore;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
 import cl.buildersoft.web.servlet.common.HttpServletCRUD;
 
@@ -21,13 +22,18 @@ public class DomainAttributeManager extends HttpServletCRUD {
 	protected BSTableConfig getBSTableConfig(HttpServletRequest request) {
 		BSTableConfig table = new BSTableConfig("bsframework", "tDomainAttribute");
 
-		BSmySQL mysql = new BSmySQL();
+		BSConnectionFactory cf = new BSConnectionFactory();
 
-		Connection conn = mysql.getConnection2("jdbc/bsframework");
-		table.configFields(conn, mysql);
-		mysql.closeConnection(conn);
+		Connection conn = cf.getConnection();
+		table.configFields(conn, new BSmySQL());
+		cf.closeConnection(conn);
 
 		table.setTitle("Atributos de Dominios");
+		table.getField("cId").setLabel("Id");
+		table.getField("cDomain").setLabel("Dominio");
+		table.getField("cKey").setLabel("Llave");
+		table.getField("cName").setLabel("Nombre");
+		table.getField("cValue").setLabel("Valor");
 
 		return table;
 	}

@@ -1,0 +1,3 @@
+Configuracion en WAS de DataSource
+http://www.themiddlewareshop.com/2015/04/06/mysql-jdbc-provider-and-websphere-example/
+

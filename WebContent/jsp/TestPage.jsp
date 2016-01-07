@@ -5,7 +5,7 @@
 
 <%
 	try {
-		HttpSession s = request.getSession();
+		HttpSession s = request.getSession(false);
 		HttpSessionContext sc = s.getSessionContext();
 		Enumeration ids = sc.getIds();
 		while (ids.hasMoreElements()) {

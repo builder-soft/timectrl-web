@@ -23,7 +23,7 @@
 <%!private String write_pagination_jsp(HttpServletRequest request) {
 		String ctxPath = request.getContextPath();
 		BSPaging paging = (BSPaging) request.getAttribute("Paging");
-		BSTableConfig table = (BSTableConfig) request.getSession()
+		BSTableConfig table = (BSTableConfig) request.getSession(false)
 				.getAttribute("BSTable");
 
 		String uri = table.getUri();

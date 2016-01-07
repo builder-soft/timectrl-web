@@ -1,5 +1,5 @@
-<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
-<%@ include file="/WEB-INF/jsp/common/menu.jsp"%>
+<%@ include file="/WEB-INF/jsp/common/header2.jsp"%>
+<%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
 <script
 	src="${pageContext.request.contextPath}/js/...FILE.js?<%=Math.random()%>">	
 </script>
@@ -29,6 +29,15 @@ $("#DStartDate").datepicker({
 //-->
 </script>
 
+
+
+
+<div class="row">
+	<div class="col-sm-4 col-sm-offset-1">
+	dato
+	</div>
+</div>
+		
 Fecha:
 <input type="text" id="datepicker">
 <br>
@@ -38,17 +47,19 @@ onblur="javascript:doubleBlur(this);"
 value="<%=BSWeb.formatDouble(request, 1234.567)%>">
 
 <table class="table table-striped table-bordered table-hover table-condensed">
+	<thead>
 	<tr>
-		<td class='cHeadTD'>encabezado</td>
+		<td>encabezado</td>
 	</tr>
-	
+	</thead>
+	<tbody>
 	<tr>
-		<td class='cDataTD'>dato</td>
+		<td>dato</td>
 	</tr>
 	<tr>
-		<td class='cDataTD_odd'>dato</td>
+		<td>dato</td>
 	</tr>
-	
+	</tbody>
 </table>
 
 <a class="cCancel" href="${pageContext.request.contextPath}/servlet/...">Cancelar</a>
@@ -68,11 +79,11 @@ value="<%=BSWeb.formatDouble(request, 1234.567)%>">
 	</div>
 	<br /> 
 
-	<input type="button" value="Cancelar"
-		onclick="javascript:closeTooltip()" />
+	<button type="button" class='btn btn-link'
+		onclick="javascript:closeTooltip()">Cancelar</button>
 
 </div>
 
 
-<%@ include file="/WEB-INF/jsp/common/footer.jsp"%>
+<%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>
 

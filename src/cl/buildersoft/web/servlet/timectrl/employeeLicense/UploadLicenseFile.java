@@ -49,9 +49,13 @@ public class UploadLicenseFile extends BSHttpServlet {
 		rewl.validateFile(conn, list);
 		rewl.saveList(conn, list);
 
+		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/employee/result-license-file2.jsp"
+				: "/WEB-INF/jsp/timectrl/employee/result-license-file.jsp";
+		closeConnection(conn);
+
 		request.setAttribute("ListFile", list);
 
-		forward(request, response, "/WEB-INF/jsp/timectrl/employee/result-license-file.jsp");
+		forward(request, response, page);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -61,7 +65,7 @@ public class UploadLicenseFile extends BSHttpServlet {
 		String destinyFile = null;
 		String tempFolder = this.getServletConfig().getServletContext().getAttribute("javax.servlet.context.tempdir").toString();
 
-		LOG.log(Level.INFO, "File loaded in '{0}'", tempFolder);
+		LOG.log(Level.INFO, "File loaded in {0}", tempFolder);
 
 		upload.setSizeMax(SIZE_15_MB);
 
@@ -85,11 +89,10 @@ public class UploadLicenseFile extends BSHttpServlet {
 			long sizeInBytes = item.getSize();
 </code>
 			 */
-			if (!item.isFormField()) {				 
+			if (!item.isFormField()) {
 				String fileName = item.getName();
-				 	fileName = fileName.substring(fileName.lastIndexOf(File.separator) + 1);
+				fileName = fileName.substring(fileName.lastIndexOf(File.separator) + 1);
 				destinyFile = tempFolder + File.separator + fileName;
-				 
 
 				File uploadedFile = new File(destinyFile);
 				try {

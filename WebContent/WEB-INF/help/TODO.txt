@@ -1,0 +1,17 @@
+Crear tabla para registrar fechas procesadas (tProcessedDates). 
+	Considerar que se guarde el dato vBusinessDay tambien en la tabla.
+	
+Crear proceso (similar al crew) para que ejecute el SP pListAttendance* de una fecha a la vez, y que el resultado lo deje en tabla tProcessedDates.
+Crear nuevo SP que haga lo mismo que el "pListAttendanceAsExcel3" pero que llame a la nueva tabla y considere los JOIN respectivos.
+Ejecutar la query para recupere la data desde esta nueva tabla (tProcessedDates).
+
+
+Cambios en reportes actuales:
+	Reporte principal: el reporte Jasper llama al SP "pListAttendance3" internamente.
+	PLAIN_EXCEL: Se ejecuta el SP "pListAttendanceAsExcel3"
+
+
+fechas procesadas
+tProcessedDates
+
+

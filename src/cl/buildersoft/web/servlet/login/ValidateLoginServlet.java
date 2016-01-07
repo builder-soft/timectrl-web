@@ -27,7 +27,7 @@ import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSDataBaseException;
 import cl.buildersoft.framework.exception.BSUserException;
 import cl.buildersoft.framework.services.impl.BSUserServiceImpl;
-import cl.buildersoft.framework.util.BSDataUtils;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSUtils;
 
 /**
@@ -52,16 +52,16 @@ public class ValidateLoginServlet extends HttpServlet {
 		password = "".equals(password) ? null : password;
 		if (mail != null && password != null) {
 			BSUserServiceImpl userService = new BSUserServiceImpl();
-			BSDataUtils dau = new BSDataUtils();
+			BSConnectionFactory cf = new BSConnectionFactory();
 
 			User user = null;
 			List<Rol> rols = null;
 			Connection connBSframework = null;
 			Connection connDomain = null;
 
-			connBSframework = dau.getConnection2("jdbc/bsframework");
+			connBSframework = cf.getConnection();
 
-			LOG.log(Level.FINE, "Validing user '{0}', password '{1}'", BSUtils.array2ObjectArray(mail, password));
+			LOG.log(Level.FINE, "Validing user {0}, password {1}", BSUtils.array2ObjectArray(mail, password));
 			user = userService.login(connBSframework, mail, password);
 			LOG.log(Level.INFO, "User: {0}", user);
 
@@ -74,14 +74,18 @@ public class ValidateLoginServlet extends HttpServlet {
 					throw new BSUserException("El usuario '" + user.getMail() + "' no esta completamente configurado");
 				}
 				defaultDomain = domains.get(0);
-				domainAttribute = getDomainAttribute(connBSframework, defaultDomain);
-				connDomain = dau.getConnection2(domainAttribute);
+//				domainAttribute = getDomainAttribute(connBSframework, defaultDomain);
+				connDomain = cf.getConnection(defaultDomain.getDatabase());
 
 				rols = userService.getRols(connDomain, user);
 				if (rols.size() == 0) {
 					throw new BSUserException("Usuario no tiene roles configurados");
 				}
 			}
+
+//			BSmySQL mysql = new BSmySQL();
+			cf.closeConnection(connDomain);
+			cf.closeConnection(connBSframework);
 
 			if (user != null) {
 				HttpSession session = request.getSession(true);
@@ -118,9 +122,10 @@ public class ValidateLoginServlet extends HttpServlet {
 
 				out.put(domainAttribute.getKey(), domainAttribute);
 			}
-			mysql.closeSQL(rs);
 		} catch (SQLException e) {
 			throw new BSDataBaseException(e);
+		} finally {
+			mysql.closeSQL(rs);
 		}
 
 		return out;

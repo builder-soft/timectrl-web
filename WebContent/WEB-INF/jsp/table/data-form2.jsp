@@ -119,10 +119,10 @@ function onLoadPage(){
 	method="post" id="editForm" class="form-horizontal" role="form">
 	
 		<%
-				Boolean readOnly = null;
+				Boolean showInForm = null;
 				for (BSField field : fields) {
-					readOnly = field.isReadonly();
-					if (!readOnly) {
+					showInForm = field.getShowInForm();
+					if (showInForm) {
 			%>
 	<div class="form-group">
 		<label class="control-label col-sm-2" for="<%=field.getName()%>"><%=field.getLabel()%>:</label>
@@ -134,6 +134,7 @@ function onLoadPage(){
 		}
 		}
 	%>
+
 	</div>
 </form>
  

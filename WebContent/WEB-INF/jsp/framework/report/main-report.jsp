@@ -4,7 +4,7 @@
 <%@page import="cl.buildersoft.framework.report.BSReport"%>
 
 <%
-	BSReport report = (BSReport) request.getSession().getAttribute("BSReport");
+	BSReport report = (BSReport) request.getSession(false).getAttribute("BSReport");
 	List<BSParamReport> params = report.listParamReport();
 	String[] heads = (String[]) request.getAttribute("Heads");
 	List<String[]> data = (List<String[]>) request.getAttribute("Data");

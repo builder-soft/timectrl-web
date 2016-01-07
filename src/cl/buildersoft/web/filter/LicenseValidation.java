@@ -20,9 +20,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSConfigurationException;
 import cl.buildersoft.framework.exception.BSDataBaseException;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.timectrl.util.LicenseValidationUtil;
 
 @WebFilter(urlPatterns = { "/servlet/*" }, dispatcherTypes = { DispatcherType.REQUEST })
@@ -41,7 +41,7 @@ public class LicenseValidation implements Filter {
 				this.activeFilter = Boolean.parseBoolean(activeFilterString);
 			} catch (Exception e) {
 				this.activeFilter = Boolean.TRUE;
-				LOG.log(Level.WARNING, "Can't parsing '{0}' as Boolean value, will be {1}",
+				LOG.log(Level.WARNING, "Can't parsing {0} as Boolean value, will be {1}",
 						array2ObjectArray(activeFilterString, this.activeFilter));
 
 			}
@@ -102,21 +102,26 @@ public class LicenseValidation implements Filter {
 	private Boolean licenseValidation(HttpServletRequest request) {
 		Connection conn = null;
 		Boolean out = null;
+		BSConnectionFactory cf = new BSConnectionFactory();
 		try {
-			conn = getConnection(request);
+			conn = cf.getConnection(request);
 		} catch (Exception e) {
 			conn = null;
 		}
 
-		if (conn == null || closedConnection(conn)) {
-			out = true;
-		} else {
-			String pathFile = request.getSession().getServletContext().getRealPath("/") + "WEB-INF" + File.separator
-					+ "LicenseFile.dat";
+		try {
+			if (conn == null || closedConnection(conn)) {
+				out = true;
+			} else {
+				String pathFile = request.getSession().getServletContext().getRealPath("/") + "WEB-INF" + File.separator
+						+ "LicenseFile.dat";
 
-			LicenseValidationUtil lv = new LicenseValidationUtil();
-			String fileContent = lv.readFile(pathFile);
-			out = lv.licenseValidation(conn, fileContent);
+				LicenseValidationUtil lv = new LicenseValidationUtil();
+				String fileContent = lv.readFile(pathFile);
+				out = lv.licenseValidation(conn, fileContent);
+			}
+		} finally {
+			cf.closeConnection(conn);
 		}
 		return out;
 	}
@@ -130,9 +135,8 @@ public class LicenseValidation implements Filter {
 	}
 
 	private Connection getConnection(HttpServletRequest request) {
-		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(request);
-		return conn;
+		BSConnectionFactory cf = new BSConnectionFactory();
+		return cf.getConnection(request);
 	}
 
 }

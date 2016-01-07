@@ -24,6 +24,11 @@ public class ParameterManager extends HttpServletCRUD implements Servlet {
 
 		table.setTitle("Parámetros del sistema");
 
+		table.getField("cKey").setLabel("Llave");
+		table.getField("cLabel").setLabel("Descripción");
+		table.getField("cValue").setLabel("Valor");
+		table.getField("cDataType").setLabel("Tipo de dato");
+
 		table.renameAction("INSERT", "ADD_PARAMS");
 		table.renameAction("EDIT", "MOD_PARAMS");
 		table.renameAction("DELETE", "DEL_PARAMS");
@@ -33,7 +38,7 @@ public class ParameterManager extends HttpServletCRUD implements Servlet {
 
 	@Override
 	public Semaphore setSemaphore(Connection conn, Object[] values) {
-		return null;	
+		return null;
 	}
 
 }

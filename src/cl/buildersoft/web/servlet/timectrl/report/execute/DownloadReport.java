@@ -20,6 +20,7 @@ public class DownloadReport extends BSHttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Integer idFile = Integer.parseInt(request.getParameter("idFile"));
 
+		@SuppressWarnings("unchecked")
 		Map<Integer, String> responseMap = (Map<Integer, String>) request.getSession().getAttribute("ResponseMap");
 		String fileName = responseMap.get(idFile);
 

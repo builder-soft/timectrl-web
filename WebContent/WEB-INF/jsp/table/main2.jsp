@@ -19,41 +19,6 @@
 
 	Integer selectorType = getSelectorType(tableActions, recordActions, multirecordActions, request, conn);
 %>
-<%!private Integer getSelectorType(BSAction[] tableActions, BSAction[] recordActions, BSAction[] multirecordActions,
-			HttpServletRequest request, Connection conn) {
-
-		Integer selectorType = 0;
-
-		Boolean haveTableActions = Boolean.FALSE;
-		Boolean haveRecordActions = Boolean.FALSE;
-		Boolean haveMultirecordActions = Boolean.FALSE;
-
-		for (BSAction action : tableActions) {
-			if (BSWeb.canUse(action.getCode(), request, conn)) {
-				haveTableActions = Boolean.TRUE;
-				break;
-			}
-		}
-
-		for (BSAction action : multirecordActions) {
-			if (BSWeb.canUse(action.getCode(), request, conn)) {
-				haveMultirecordActions = Boolean.TRUE;
-				break;
-			}
-		}
-
-		for (BSAction action : recordActions) {
-			if (BSWeb.canUse(action.getCode(), request, conn)) {
-				haveRecordActions = Boolean.TRUE;
-				break;
-			}
-		}
-
-		selectorType += haveRecordActions ? 1 : 0;
-		selectorType += haveMultirecordActions ? 2 : 0;
-
-		return selectorType;
-	}%>
 
 <%@ include file="/WEB-INF/jsp/common/header2.jsp"%>
 <%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
@@ -104,7 +69,7 @@
 					}
 
 					for (BSField field : fields) {
-						if (field.showField()) {
+						if (field.getShowInTable()) {
 							out.print("<th");
 
 							out.print(getAlign(field));
@@ -192,6 +157,7 @@
 <%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>
 <%
 	new BSmySQL().closeConnection(conn);
+conn=null;
 %>
 
 <%!private String writeValues(Object[] values, BSField[] fields, Integer rowCount, String ctxPath, HttpServletRequest request,
@@ -245,7 +211,7 @@
 			type = field.getType();
 
 			value = field.isPK() ? values[0] : values[i++];
-			if (field.showField()) {
+			if (field.getShowInTable()) {
 				out += "<td "; //class='" + color + "'";
 				out += getAlign(field);
 				out += ">";
@@ -321,4 +287,41 @@
 
 		}
 		return out;
-	}%>
+	}
+	
+	private Integer getSelectorType(BSAction[] tableActions, BSAction[] recordActions, BSAction[] multirecordActions,
+			HttpServletRequest request, Connection conn) {
+
+		Integer selectorType = 0;
+
+		Boolean haveTableActions = Boolean.FALSE;
+		Boolean haveRecordActions = Boolean.FALSE;
+		Boolean haveMultirecordActions = Boolean.FALSE;
+
+		for (BSAction action : tableActions) {
+			if (BSWeb.canUse(action.getCode(), request, conn)) {
+				haveTableActions = Boolean.TRUE;
+				break;
+			}
+		}
+
+		for (BSAction action : multirecordActions) {
+			if (BSWeb.canUse(action.getCode(), request, conn)) {
+				haveMultirecordActions = Boolean.TRUE;
+				break;
+			}
+		}
+
+		for (BSAction action : recordActions) {
+			if (BSWeb.canUse(action.getCode(), request, conn)) {
+				haveRecordActions = Boolean.TRUE;
+				break;
+			}
+		}
+
+		selectorType += haveRecordActions ? 1 : 0;
+		selectorType += haveMultirecordActions ? 2 : 0;
+
+		return selectorType;
+	}	
+	%>

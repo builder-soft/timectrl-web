@@ -18,6 +18,8 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import sun.misc.BASE64Encoder;
+
 import cl.buildersoft.business.beans.DatabaseFile;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
@@ -62,7 +64,11 @@ public class Upload extends HttpServlet {
 				w.println("name:" + item.getName());
 				w.println("IsInMemory:" + item.isInMemory());
 
-				file.setContent(Base64.encode(item.get()));
+				
+				BASE64Encoder base64encoder = new BASE64Encoder();
+				String encoded = base64encoder.encode(item.get());
+				file.setContent(encoded);
+				
 				file.setFileName(item.getName());
 
 				file.setSize(item.getSize());

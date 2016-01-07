@@ -57,9 +57,15 @@ public class NatTable extends BSHttpServlet {
 		request.setAttribute("List", list);
 		request.setAttribute("Conn", conn);
 
-		forward(request, response, "/WEB-INF/jsp/table/relation-nat.jsp");
-		// request.getRequestDispatcher("/WEB-INF/jsp/table/relation-nat.jsp").forward(request,
-		// response);
+		String page = null;
+		if (bootstrap(conn)) {
+			page = "/WEB-INF/jsp/table/relation-nat2.jsp";
+		} else {
+			page = "/WEB-INF/jsp/table/relation-nat.jsp";
+		}
+
+		forward(request, response, page);
+		 
 	}
 
 	private ResultSet getList(BSAction action, BSmySQL mysql, Connection conn) {

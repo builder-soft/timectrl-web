@@ -21,6 +21,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.exception.BSConfigurationException;
 import cl.buildersoft.framework.util.BSDataUtils;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.timectrl.business.beans.Employee;
@@ -155,9 +156,7 @@ public class ReadExcelWithLicensing {
 	}
 
 	protected Connection getConnection() {
-		BSDataUtils du = new BSDataUtils();
-		Connection conn = du.getConnection("com.mysql.jdbc.Driver", "localhost:3306", "timectrl", "admin", "root");
-		return conn;
+		throw new BSConfigurationException("Method not implemented");
 
 	}
 

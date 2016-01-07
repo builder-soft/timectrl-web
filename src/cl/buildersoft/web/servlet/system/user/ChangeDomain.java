@@ -2,9 +2,6 @@ package cl.buildersoft.web.servlet.system.user;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,10 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.beans.Domain;
 import cl.buildersoft.framework.beans.DomainAttribute;
-import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.database.BSmySQL;
-import cl.buildersoft.framework.exception.BSDataBaseException;
-import cl.buildersoft.framework.util.BSDataUtils;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.web.servlet.login.ValidateLoginServlet;
 
@@ -31,8 +25,8 @@ public class ChangeDomain extends BSHttpServlet {
 		Long id = Long.parseLong(request.getParameter("cId"));
 		HttpSession session = request.getSession();
 		// Connection conn = getConnection(request);
-		BSDataUtils dau = new BSDataUtils();
-		Connection conn = dau.getConnection2("jdbc/bsframework");
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection();
 
 		List<Domain> domains = (List<Domain>) request.getSession().getAttribute("Domains");
 
@@ -43,6 +37,7 @@ public class ChangeDomain extends BSHttpServlet {
 				break;
 			}
 		}
+		cf.closeConnection(conn);
 
 		forward(request, response, "/servlet/login/GetMenuServlet");
 		// forward(request, response, "/servlet/Home");
