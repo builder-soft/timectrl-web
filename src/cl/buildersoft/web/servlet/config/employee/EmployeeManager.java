@@ -7,8 +7,6 @@ import java.util.logging.Logger;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import cl.buildersoft.framework.dataType.BSDataTypeEnum;
-import cl.buildersoft.framework.dataType.BSDataTypeFactory;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.BSConfig;
@@ -30,10 +28,15 @@ public class EmployeeManager extends HttpServletCRUD {
 		BSTableConfig table = initTable(request, "tEmployee", this);
 		table.setSortField(getSortField(request));
 
-		BSDataTypeFactory dtf = new BSDataTypeFactory();
+		// BSDataTypeFactory dtf = new BSDataTypeFactory();
 
-		table.getField("cFingerprint").setType(dtf.create(BSDataTypeEnum.TEXT));
-		// table.getField("cFingerprint").setType(cl.buildersoft.framework.type.bst);
+		table.removeField("cFingerprint");
+		table.removeField("cFingerIndex");
+		table.removeField("cFlag");
+		table.removeField("cCardNumber");
+
+		// table.getField("cFingerprint").setType(dtf.create(BSDataTypeEnum.TEXT));
+
 		table.setTitle("Mantención de empleados");
 		// table.setDeleteSP("pDelEmployee");
 
@@ -55,17 +58,23 @@ public class EmployeeManager extends HttpServletCRUD {
 		this.hideFields(table, "cMail", "cArea", "cPrivilege", "cEnabled");
 
 		// table.getField("cFingerprint").setReadonly(true);
-		table.getField("cFingerprint").setShowInTable(false);
-		table.getField("cFingerprint").setShowInForm(false);
+		// table.getField("cFingerprint").setShowInTable(false);
+		// table.getField("cFingerprint").setShowInForm(false);
+
 		// table.getField("cFingerIndex").setReadonly(true);
-		table.getField("cFingerIndex").setShowInTable(false);
-		table.getField("cFingerIndex").setShowInForm(false);
+
+		// table.getField("cFingerIndex").setShowInTable(false);
+		// table.getField("cFingerIndex").setShowInForm(false);
+
 		// table.getField("cFlag").setReadonly(true);
-		table.getField("cFlag").setShowInTable(false);
-		table.getField("cFlag").setShowInForm(false);
+
+		// table.getField("cFlag").setShowInTable(false);
+		// table.getField("cFlag").setShowInForm(false);
+
 		// table.getField("cCardNumber").setReadonly(true);
-		table.getField("cCardNumber").setShowInTable(false);
-		table.getField("cCardNumber").setShowInForm(false);
+
+		// table.getField("cCardNumber").setShowInTable(false);
+		// table.getField("cCardNumber").setShowInForm(false);
 
 		// table.getField("cBirthDate").setLabel("Nacimiento");
 		/*
