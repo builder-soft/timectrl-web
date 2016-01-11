@@ -14,7 +14,7 @@
 <%@ include file="/WEB-INF/jsp/common/menu.jsp"%>
 <%
 	List<EmployeeAndFingerprint> employees = (List<EmployeeAndFingerprint>) request.getAttribute("EAFList");
-	List<Employee> employeesDB = (List<Employee>) request.getAttribute("EmployeeListDB");
+	List<EmployeeAndFingerprint> employeesDB = (List<EmployeeAndFingerprint>) request.getAttribute("EmployeeListDB");
 	List<Area> areaList = (List<Area>) request.getAttribute("AreaList");
 	List<Privilege> privilegeList = (List<Privilege>) request.getAttribute("PrivilegeList");
 Machine machine =(Machine) request.getAttribute("Machine");
@@ -64,16 +64,16 @@ Machine machine =(Machine) request.getAttribute("Machine");
 						</tr>
 						<%
 							PrivilegeService ps = new PrivilegeServiceImpl();
-							for (Employee employee : employeesDB) {
+							for (EmployeeAndFingerprint eaf : employeesDB) {
 						%>
 						<tr>
 							<td class='cDataTD' style="text-align: center"><input
-								name="cKey" type="checkbox" value="<%=employee.getKey()%>"></td>
-							<td class='cDataTD'><%=employee.getKey()%></td>
-							<td class='cDataTD'><%=employee.getName()%></td>
-							<td class='cDataTD' style="text-align: center"><%=employee.getEnabled() ? "Si" : "No"%></td>
-							<td class='cDataTD' style="text-align: center"><%=getPrivililege(privilegeList, employee.getPrivilege())%></td>
-							<td class='cDataTD' style="text-align: center"><%=employee.  getFingerPrint() == null ? "No" : "Si"%></td>
+								name="cKey" type="checkbox" value="<%=eaf.getEmployee().getKey()%>"></td>
+							<td class='cDataTD'><%=eaf.getEmployee().getKey()%></td>
+							<td class='cDataTD'><%=eaf.getEmployee().getName()%></td>
+							<td class='cDataTD' style="text-align: center"><%=eaf.getEmployee().getEnabled() ? "Si" : "No"%></td>
+							<td class='cDataTD' style="text-align: center"><%=getPrivililege(privilegeList, eaf.getEmployee().getPrivilege())%></td>
+							<td class='cDataTD' style="text-align: center"><%=eaf.getFingerprint().getFingerprint() == null ? "No" : "Si"%></td>
 						</tr>
 						<%
 							}

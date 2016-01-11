@@ -13,10 +13,10 @@ Integer i = 0;
 %>
 
 [
-<%for(Employee employee : employees){
+<%for(EmployeeAndFingerprint eaf : employees){
 	i++;
 %>
-    {"id": "<%=employee.getId()%>", "key":"<%=employee.getKey()%>", "name":"<%=employee.getName()%>", "enabled":"<%=employee.getEnabled()%>", "privilege":"<%=getPrivililege(privilegeList, employee.getPrivilege())%>", "fingerprint":"<%=employee.getFingerPrint()!=null%>"}<%=i<size?",":""%> 
+    {"id": "<%=eaf.getEmployee().getId()%>", "key":"<%=eaf.getEmployee().getKey()%>", "name":"<%=eaf.getEmployee().getName()%>", "enabled":"<%=eaf.getEmployee().getEnabled()%>", "privilege":"<%=getPrivililege(privilegeList, eaf.getEmployee().getPrivilege())%>", "fingerprint":"<%=eaf.getFingerprint().getFingerprint()!=null%>"}<%=i<size?",":""%> 
 <%}%>
 ]
 
