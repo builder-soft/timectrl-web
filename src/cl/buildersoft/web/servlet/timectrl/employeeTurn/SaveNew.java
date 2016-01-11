@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.timectrl.business.beans.EmployeeTurn;
 import cl.buildersoft.timectrl.business.services.EmployeeTurnService;
@@ -38,13 +39,14 @@ public class SaveNew extends HttpServlet {
 		employeeTurn.setStartDate(startDate);
 		employeeTurn.setEndDate(endDate);
 
-		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 
 		EmployeeTurnService service = new EmployeeTurnServiceImpl();
 		service.appendNew(conn, employeeTurn);
+		cf.closeConnection(conn);
 
-		request.setAttribute("cId", "" + employee);
+		request.setAttribute("cId", employee.toString());
 
 		request.getRequestDispatcher("/servlet/timectrl/employeeTurn/TurnsOfEmployee").forward(request, response);
 

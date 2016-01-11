@@ -1,5 +1,7 @@
-<%@page import="cl.buildersoft.timectrl.business.beans.Area"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.Employee"%>
+<%@page import="cl.buildersoft.timectrl.business.services.impl.EmployeeAndFingerprint" %>
+<%@page import="cl.buildersoft.timectrl.business.beans.Area"%>
+ 
 <%@page import="cl.buildersoft.timectrl.business.beans.Privilege"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="cl.buildersoft.framework.database.BSmySQL"%>
@@ -11,7 +13,7 @@
 <%@ include file="/WEB-INF/jsp/common/header.jsp"%>
 <%@ include file="/WEB-INF/jsp/common/menu.jsp"%>
 <%
-	List<Employee> employees = (List<Employee>) request.getAttribute("EmployeeList");
+	List<EmployeeAndFingerprint> employees = (List<EmployeeAndFingerprint>) request.getAttribute("EAFList");
 	List<Employee> employeesDB = (List<Employee>) request.getAttribute("EmployeeListDB");
 	List<Area> areaList = (List<Area>) request.getAttribute("AreaList");
 	List<Privilege> privilegeList = (List<Privilege>) request.getAttribute("PrivilegeList");
@@ -71,7 +73,7 @@ Machine machine =(Machine) request.getAttribute("Machine");
 							<td class='cDataTD'><%=employee.getName()%></td>
 							<td class='cDataTD' style="text-align: center"><%=employee.getEnabled() ? "Si" : "No"%></td>
 							<td class='cDataTD' style="text-align: center"><%=getPrivililege(privilegeList, employee.getPrivilege())%></td>
-							<td class='cDataTD' style="text-align: center"><%=employee.getFingerPrint() == null ? "No" : "Si"%></td>
+							<td class='cDataTD' style="text-align: center"><%=employee.  getFingerPrint() == null ? "No" : "Si"%></td>
 						</tr>
 						<%
 							}
@@ -103,15 +105,15 @@ Machine machine =(Machine) request.getAttribute("Machine");
 							<td class='cHeadTD' style="text-align: center">Privilegio</td>
 						</tr>
 						<%
-							for (Employee employee : employees) {
+							for (EmployeeAndFingerprint employee : employees) {
 						%>
 						<tr>
 							<td class='cDataTD' style="text-align: center"><input
-								name="cKey" type="checkbox" value="<%=employee.getKey()%>"></td>
-							<td class='cDataTD'><%=employee.getKey()%></td>
-							<td class='cDataTD'><%=employee.getName()%></td>
-							<td class='cDataTD' style="text-align: center"><%=employee.getEnabled() ? "Si" : "No"%></td>
-							<td class='cDataTD' style="text-align: center"><%=getPrivililege(privilegeList, employee.getPrivilege())%></td>
+								name="cKey" type="checkbox" value="<%=employee.getEmployee().  getKey()%>"></td>
+							<td class='cDataTD'><%=employee.getEmployee().getKey()%></td>
+							<td class='cDataTD'><%=employee.getEmployee().getName()%></td>
+							<td class='cDataTD' style="text-align: center"><%=employee.getEmployee().getEnabled() ? "Si" : "No"%></td>
+							<td class='cDataTD' style="text-align: center"><%=getPrivililege(privilegeList, employee.getEmployee().getPrivilege())%></td>
 						</tr>
 						<%
 							}

@@ -1,10 +1,11 @@
+<%@page import="cl.buildersoft.timectrl.business.services.impl.EmployeeAndFingerprint"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.Privilege"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.Employee"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="application/json; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-List<Employee> employees = (List<Employee>)request.getAttribute("Employee");
+List<EmployeeAndFingerprint> employees = (List<EmployeeAndFingerprint>)request.getAttribute("Employee");
 List<Privilege> privilegeList = (List<Privilege>)request.getAttribute("PrivilegeList");
 
 Integer size = employees.size();

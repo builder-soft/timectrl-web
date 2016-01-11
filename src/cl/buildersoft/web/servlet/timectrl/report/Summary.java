@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.report.BSAbstractReport;
 import cl.buildersoft.framework.report.BSReport;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.timectrl.business.beans.BSParamReport;
 import cl.buildersoft.timectrl.type.BSParamReportType;
@@ -26,8 +27,8 @@ public class Summary extends BSAbstractReport implements Servlet {
 	 */
 
 	public BSReport getReportSpec(HttpServletRequest request) {
-		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 
 		BSReport report = new BSReport();
 
@@ -54,15 +55,14 @@ public class Summary extends BSAbstractReport implements Servlet {
 		report.addParamReport(param);
 
 		param = new BSParamReport(BSParamReportType.SELECT, "cTurn");
-//		param.addOption("", "Todos");
+		// param.addOption("", "Todos");
 		param.addOption("Noche", "Noche");
 		param.addOption("AM", "AM");
 		param.addOption("PM", "PM");
 		param.setLabel("Turno");
 		report.addParamReport(param);
-		
-		
-		mysql.closeConnection(conn);
+
+		cf.closeConnection(conn);
 
 		return report;
 

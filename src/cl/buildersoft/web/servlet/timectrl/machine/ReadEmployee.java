@@ -19,6 +19,7 @@ import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Machine;
 import cl.buildersoft.timectrl.business.beans.Privilege;
 import cl.buildersoft.timectrl.business.services.MachineService2;
+import cl.buildersoft.timectrl.business.services.impl.EmployeeAndFingerprint;
 import cl.buildersoft.timectrl.business.services.impl.MachineServiceImpl2;
 
 /**
@@ -41,7 +42,7 @@ public class ReadEmployee extends BSHttpServlet {
 		bu.search(conn, machine);
 
 		_zkemProxy api = machineService.connect(conn, machine);
-		List<Employee> employees = machineService.listEmployees(conn, api);
+		List<EmployeeAndFingerprint> eaf = machineService.listEmployees(conn, api);
 
 		machineService.disconnect(api);
 
@@ -54,7 +55,7 @@ public class ReadEmployee extends BSHttpServlet {
 		List<Privilege> privilegeList = (List<Privilege>) bu.listAll(conn, new Privilege());
 //		updatePrivilege(employeeDB, privilegeList);
 
-		request.setAttribute("EmployeeList", employees);
+		request.setAttribute("EAFList", eaf);
 		request.setAttribute("EmployeeListDB", employeeDB);
 		request.setAttribute("AreaList", areaList);
 		request.setAttribute("Machine", machine);

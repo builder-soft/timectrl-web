@@ -18,10 +18,11 @@ import javax.servlet.http.HttpSession;
 import cl.buildersoft.framework.beans.Domain;
 import cl.buildersoft.framework.beans.User;
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
 
 @WebFilter(urlPatterns = { "/servlet/common/InsertRecord" })
-public class SaveNewUserFilter implements Filter  {
+public class SaveNewUserFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
 
@@ -45,11 +46,12 @@ public class SaveNewUserFilter implements Filter  {
 
 			if (newUserId != null && domainId != null) {
 				BSmySQL mysql = new BSmySQL();
-				Connection conn = mysql.getConnection(servletRequest);
+				BSConnectionFactory cf = new BSConnectionFactory();
+				Connection conn = cf.getConnection(servletRequest);
 
 				mysql.callSingleSP(conn, "bsframework.pSaveRUserDomain", array2List(newUserId, domainId));
-				
-				mysql.closeConnection(conn);
+
+				cf.closeConnection(conn);
 			}
 		}
 	}

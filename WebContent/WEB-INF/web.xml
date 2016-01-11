@@ -9,34 +9,9 @@
 	</welcome-file-list>
 	<context-param>
 		<param-name>CurrentVersion</param-name>
-		<param-value>R1.2.21</param-value>
+		<param-value>R1.2.22</param-value>
 	</context-param>
-	<!-- 
-	<context-param>
-		<param-name>bsframework.database.driver</param-name>
-		<param-value>com.mysql.jdbc.Driver</param-value>
-	</context-param>
-	<context-param>
-		<param-name>bsframework.database.server</param-name>
-		<param-value>localhost</param-value>
-	</context-param>
-	<context-param>
-		<param-name>bsframework.database.database</param-name>
-		<param-value>bsframework</param-value>
-	</context-param>
-	<context-param>
-		<param-name>bsframework.database.username</param-name>
-		<param-value>root</param-value>
-	</context-param>
-	<context-param>
-		<param-name>bsframework.database.password</param-name>
-		<param-value>admin</param-value>
-	</context-param>
-	<context-param>
-		<param-name>bsframework.database.datasource</param-name>
-		<param-value>jdbc/bsframework</param-value>
-	</context-param>
-	 -->
+	 
 	<context-param>
 		<param-name>bsframework.license.validate</param-name>
 		<param-value>false</param-value>

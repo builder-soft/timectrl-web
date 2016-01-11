@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.timectrl.business.beans.TurnDay;
 
 @WebServlet("/servlet/timectrl/turns/DeleteTurn")
@@ -26,10 +27,10 @@ public class DeleteTurn extends HttpServlet {
 		turnDay.setId(turnDayId);
 
 		BSBeanUtils bu = new BSBeanUtils();
-		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 		bu.delete(conn, turnDay);
-		mysql.closeConnection(conn);
+		cf.closeConnection(conn);
 
 		request.setAttribute("cId", "" + parent);
 		request.getRequestDispatcher("/servlet/timectrl/turns/TurnsDayByTurn").forward(request, response);

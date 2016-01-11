@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.timectrl.api.IZKEM;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.timectrl.api._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.Machine;
 import cl.buildersoft.timectrl.business.services.MachineService2;
@@ -30,7 +30,8 @@ public class TestConnection extends HttpServlet {
 		MachineService2 machineService = new MachineServiceImpl2();
 		Machine machine = null;
 		BSBeanUtils bu = new BSBeanUtils();
-		Connection conn = bu.getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 
 		Map<Machine, Boolean> status = new HashMap<Machine, Boolean>();
 		for (String id : ids) {
@@ -44,7 +45,7 @@ public class TestConnection extends HttpServlet {
 			machineService.disconnect(api);
 
 		}
-
+		cf.closeConnection(conn);
 		request.setAttribute("Status", status);
 
 		request.getRequestDispatcher("/WEB-INF/jsp/timectrl/machine/test-connection.jsp").forward(request, response);
