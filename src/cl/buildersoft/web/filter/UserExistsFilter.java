@@ -35,7 +35,7 @@ public class UserExistsFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 		Boolean goHome = Boolean.FALSE;
 
-		LOG.log(Level.FINE, "URI: {}", request.getRequestURI());
+		LOG.log(Level.FINE, "URI: {0}", request.getRequestURI());
 
 		HttpSession session = request.getSession(false);
 
