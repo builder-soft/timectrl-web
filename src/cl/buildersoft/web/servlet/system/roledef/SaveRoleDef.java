@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.beans.Rol;
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 
 @WebServlet("/servlet/system/roledef/SaveRoleDef")
 public class SaveRoleDef extends HttpServlet {
@@ -29,7 +30,8 @@ public class SaveRoleDef extends HttpServlet {
 		Long rol = Long.parseLong(request.getParameter("Rol"));
 
 		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 		try {
 			mysql.setAutoCommit(conn, false);
 
@@ -44,7 +46,7 @@ public class SaveRoleDef extends HttpServlet {
 			throw new ServletException(e);
 		} finally {
 			mysql.closeSQL();
-			mysql.closeConnection(conn);
+			cf.closeConnection(conn);
 		}
 
 		String nextServlet = "/servlet/system/roleDef/RoleDef";
@@ -77,7 +79,6 @@ public class SaveRoleDef extends HttpServlet {
 		}
 	}
 
-	 
 	private void deleteRolDef(Connection conn, BSmySQL mysql, Long rol) {
 		String sql = "DELETE FROM tR_RolOption WHERE cRol=?";
 		List<Object> prms = new ArrayList<Object>();

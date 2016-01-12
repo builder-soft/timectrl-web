@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSDataBaseException;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
 
@@ -44,7 +45,9 @@ public class SaveRelation extends HttpServlet {
 		}
 
 		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+
+		Connection conn = cf.getConnection(request);
 
 		BSAction action = table.getAction(request.getParameter("CodeAction"));
 
@@ -60,7 +63,7 @@ public class SaveRelation extends HttpServlet {
 			throw new BSDataBaseException(e);
 		} finally {
 			mysql.closeSQL();
-			mysql.closeConnection(conn);
+			cf.closeConnection(conn);
 		}
 		String uri = table.getUri();
 		request.getRequestDispatcher(uri).forward(request, response);

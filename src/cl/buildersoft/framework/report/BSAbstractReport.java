@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSDataBaseException;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.timectrl.business.beans.BSParamReport;
 import cl.buildersoft.timectrl.type.BSParamReportType;
@@ -50,7 +51,8 @@ public abstract class BSAbstractReport extends HttpServlet {
 			String spName = report.getSpName();
 
 			BSmySQL mysql = new BSmySQL();
-			Connection conn = mysql.getConnection(request);
+			BSConnectionFactory cf = new BSConnectionFactory();
+			Connection conn = cf.getConnection(request);
 
 			List<Object> params = getParameters(request, report);
 			ResultSet rs = mysql.callSingleSP(conn, spName, params);
@@ -64,7 +66,7 @@ public abstract class BSAbstractReport extends HttpServlet {
 			if ("download".equals(action)) {
 				url = "/servlet/framework/report/DownloadReport";
 			}
-			mysql.closeConnection(conn);
+			cf.closeConnection(conn);
 		}
 
 		String dateFormat = BSDateTimeUtil.getFormatDate(request);

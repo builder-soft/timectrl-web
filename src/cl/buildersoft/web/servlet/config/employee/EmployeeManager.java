@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.BSConfig;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSActionType;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
@@ -138,12 +139,13 @@ public class EmployeeManager extends HttpServletCRUD {
 	}
 
 	private String getSortField(HttpServletRequest request) {
-		BSmySQL mysql = new BSmySQL();
+		BSConnectionFactory cf = new BSConnectionFactory();
+
 		BSConfig config = new BSConfig();
 
-		Connection conn = mysql.getConnection(request);
+		Connection conn = cf.getConnection(request);
 		String out = config.getString(conn, "EMPLOYEE_ORDER");
-		mysql.closeConnection(conn);
+		cf.closeConnection(conn);
 		return out;
 	}
 

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.framework.util.BSWeb;
@@ -68,12 +69,13 @@ public class UpdateRecord extends BSHttpServlet {
 
 		Connection conn = null;
 		BSmySQL mysql = new BSmySQL();
+		BSConnectionFactory cf = new BSConnectionFactory();
 
-		conn = mysql.getConnection(request);
+		conn = cf.getConnection(request);
 		params = getParams(conn, request, fields, idField);
 
 		mysql.update(conn, sql, params);
-		mysql.closeConnection(conn);
+		cf.closeConnection(conn);
 
 		request.getRequestDispatcher("/servlet/common/LoadTable").forward(request, response);
 	}

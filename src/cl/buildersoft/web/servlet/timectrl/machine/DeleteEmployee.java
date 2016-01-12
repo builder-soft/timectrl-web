@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.timectrl.api.IZKEM;
 import cl.buildersoft.timectrl.api._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.Machine;
@@ -28,14 +29,17 @@ public class DeleteEmployee extends HttpServlet {
 		Long machineId = Long.parseLong(request.getParameter("Machine"));
 
 		BSBeanUtils bu = new BSBeanUtils();
-		Connection conn = bu.getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 
 		Machine machine = new Machine();
 		machine.setId(machineId);
 		bu.search(conn, machine);
+		 
 
 		MachineService2 machineService = new MachineServiceImpl2();
 		_zkemProxy api = machineService.connect(conn, machine);
+		cf.closeConnection(conn);
 		machineService.deleteEmployees(api, keys);
 		machineService.disconnect(api);
 		request.getRequestDispatcher("/servlet/timectrl/machine/MachineManager").forward(request, response);

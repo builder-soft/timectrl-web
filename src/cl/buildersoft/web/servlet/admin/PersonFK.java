@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 
 @WebServlet("/servlet/admin/PersonFK")
 public class PersonFK extends HttpServlet {
@@ -26,8 +27,9 @@ public class PersonFK extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BSmySQL mysql = new BSmySQL();
+		BSConnectionFactory cf = new BSConnectionFactory();
 
-		Connection conn = mysql.getConnection(request);
+		Connection conn = cf.getConnection(request);
 
 		List<Object> prms = new ArrayList<Object>();
 		prms.add("hola po");
@@ -35,7 +37,7 @@ public class PersonFK extends HttpServlet {
 		ResultSet rss = mysql.callSingleSP(conn, "getAllFK", prms);
 		Map<Long, Map<String, Object>> data = mysql.resultSet2Map(rss);
 
-		mysql.closeConnection(conn);
+		cf.closeConnection(conn);
 		request.setAttribute("Data", data);
 
 		request.getRequestDispatcher("/WEB-INF/jsp/admin/person-fk.jsp").forward(request, response);

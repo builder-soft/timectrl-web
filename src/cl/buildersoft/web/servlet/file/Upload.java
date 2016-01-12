@@ -19,11 +19,11 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import sun.misc.BASE64Encoder;
-
 import cl.buildersoft.business.beans.DatabaseFile;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSSystemException;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 
 @WebServlet("/servlet/file/Upload")
 public class Upload extends HttpServlet {
@@ -64,11 +64,10 @@ public class Upload extends HttpServlet {
 				w.println("name:" + item.getName());
 				w.println("IsInMemory:" + item.isInMemory());
 
-				
 				BASE64Encoder base64encoder = new BASE64Encoder();
 				String encoded = base64encoder.encode(item.get());
 				file.setContent(encoded);
-				
+
 				file.setFileName(item.getName());
 
 				file.setSize(item.getSize());
@@ -80,11 +79,11 @@ public class Upload extends HttpServlet {
 		}
 		w.flush();
 
-		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 
 		BSBeanUtils bu = new BSBeanUtils();
 		bu.insert(conn, file);
-		mysql.closeConnection(conn);
+		cf.closeConnection(conn);
 	}
 }

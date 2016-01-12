@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.type.Semaphore;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSActionType;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
 import cl.buildersoft.web.servlet.common.HttpServletCRUD;
+
 /**
- @ WebServlet("/servlet/admin/PersonManager")
+ * @ WebServlet("/servlet/admin/PersonManager")
  */
 public class PersonManager extends HttpServletCRUD implements Servlet {
 	private static final long serialVersionUID = 1504393587020193780L;
@@ -26,10 +28,12 @@ public class PersonManager extends HttpServletCRUD implements Servlet {
 		BSTableConfig table = initTable(request, "tPerson");
 
 		BSmySQL mysql = new BSmySQL();
-		Connection conn = mysql.getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+
+		Connection conn = cf.getConnection(request);
 		table.configFields(conn, mysql);
-		mysql.closeConnection(conn);
-		
+		cf.closeConnection(conn);
+
 		table.setSortField("cNombre");
 		table.setTitle("Mantenedor de Pesonas");
 
@@ -46,7 +50,7 @@ public class PersonManager extends HttpServletCRUD implements Servlet {
 		String[] noVisibleFields = { "cNumero", "cDireccion", "cDepartamento", "cVilla", "cBlock", "cMail" };
 		for (String fieldName : noVisibleFields) {
 			table.getField(fieldName).setShowInTable(false);
-//			table.getField(fieldName).setShowInForm(false);
+			// table.getField(fieldName).setShowInForm(false);
 		}
 
 		BSAction uploadFile = new BSAction("UPLOAD_PERSON", BSActionType.Table);

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSDataBaseException;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.framework.util.crud.BSField;
@@ -43,14 +44,15 @@ public class SearchRecord extends BSHttpServlet {
 
 		Connection conn = null;
 		BSmySQL mysql = new BSmySQL();
+		BSConnectionFactory cf = new BSConnectionFactory();
 
-		conn = mysql.getConnection(request);
+		conn = cf.getConnection(request);
 		ResultSet rs = mysql.queryResultSet(conn, sql, BSUtils.array2List(id));
 		resultset2Table(rs, table);
 
 		String page = bootstrap(conn) ? "/WEB-INF/jsp/table/data-form2.jsp" : "/WEB-INF/jsp/table/data-form.jsp";
 
-		mysql.closeConnection(conn);
+		cf.closeConnection(conn);
 
 		// request.setAttribute("Data", rs);
 		// request.setAttribute("Conn", conn);
