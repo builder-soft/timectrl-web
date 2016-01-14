@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Machines>
+	<Machine IP="10.140.139.207" Port="4370" Serie="">
+		<Employees>
+			<Employee />
+		</Employees>
+		<Attendances>
+			<Attendance EnrollNumber="130" VerifyMode="1" InOutMode="1" Year="2016" Month="1" Day="27" Hour="08" Minute="38"
+				Second="19" WorkCode="1" />
+			<Attendance EnrollNumber="130" VerifyMode="1" InOutMode="4" Year="2016" Month="1" Day="27" Hour="18" Minute="18"
+				Second="20" WorkCode="1" />
+		</Attendances>
+	</Machine>
+
+</Machines>
