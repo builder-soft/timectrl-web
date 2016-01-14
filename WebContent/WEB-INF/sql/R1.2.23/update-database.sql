@@ -25,4 +25,4 @@ ALTER TABLE tEmployee
   DROP COLUMN cFingerIndex,
   DROP COLUMN cCardNumber;	
 	
-UPDATE tVersion SET cVersion='1.2.22', cUpdated=NOW() WHERE cKey = 'DBT';
+UPDATE tVersion SET cVersion='1.2.23', cUpdated=NOW() WHERE cKey = 'DBT';
