@@ -13,11 +13,11 @@
 <%@ include file="/WEB-INF/jsp/common/header.jsp"%>
 <%@ include file="/WEB-INF/jsp/common/menu.jsp"%>
 <%
-	List<EmployeeAndFingerprint> employees = (List<EmployeeAndFingerprint>) request.getAttribute("EAFList");
-	List<EmployeeAndFingerprint> employeesDB = (List<EmployeeAndFingerprint>) request.getAttribute("EmployeeListDB");
+	List<EmployeeAndFingerprint> employees = (List<EmployeeAndFingerprint>) request.getAttribute("EAFListMch");
+	List<EmployeeAndFingerprint> employeesDB = (List<EmployeeAndFingerprint>) request.getAttribute("EAFListDB");
 	List<Area> areaList = (List<Area>) request.getAttribute("AreaList");
 	List<Privilege> privilegeList = (List<Privilege>) request.getAttribute("PrivilegeList");
-Machine machine =(Machine) request.getAttribute("Machine");
+	Machine machine =(Machine) request.getAttribute("Machine");
 %>
 <script
 	src="${pageContext.request.contextPath}/js/timectrl/machine/read-employee.js?<%=BSWeb.randomString()%>">
@@ -95,6 +95,7 @@ Machine machine =(Machine) request.getAttribute("Machine");
 					<table class="cList" cellpadding="0" cellspacing="0">
 						<caption>
 							Usuarios en dispositivo (<%=machine.getName()%>)
+							<%=employees.size() %>
 						</caption>
 						<tr>
 							<td class='cHeadTD' style="text-align: center"><input
