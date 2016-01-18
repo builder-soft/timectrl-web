@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Machines>
-	<Machine IP="10.140.139.207" Port="4370" Serie="">
+	<Machine IP="10.140.139.207" Port="4370">
 		<Employees>
-			<Employee />
+			<Employee EnrollNumber="" Name="Juan Perez" Password="" Privilege="1" Enabled="1" />
 		</Employees>
 		<Attendances>
 			<Attendance EnrollNumber="130" VerifyMode="1" InOutMode="1" Year="2016" Month="1" Day="27" Hour="08" Minute="38"
@@ -12,4 +12,9 @@
 		</Attendances>
 	</Machine>
 
+	<Machine IP="10.140.135.146" Port="4370" Serie="be540phb5i3e7tf0me4f">
+	</Machine>
+
+	<Machine IP="192.168.0.1" Port="3214" Serie="7qe37pv9mks3r783alj7">
+	</Machine>
 </Machines>
