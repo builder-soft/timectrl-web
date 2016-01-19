@@ -1,3 +1,4 @@
+<%@page import="cl.buildersoft.framework.util.BSConnectionFactory"%>
 <%@page import="cl.buildersoft.framework.database.BSmySQL"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.LicenseCause"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.License"%>
@@ -117,9 +118,11 @@
 
 <%@ include file="/WEB-INF/jsp/common/footer.jsp"%>
 <%!private String getCause(HttpServletRequest request, License license) {
-		Connection conn = (Connection) request.getAttribute("Connection");
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 		BSmySQL mysql = new BSmySQL();
 		String name = mysql.queryField(conn, "SELECT cName FROM tLicenseCause WHERE cId=?", license.getLicenseCause());
+		cf.closeConnection(conn);
 
 		return name;
 	}%>
