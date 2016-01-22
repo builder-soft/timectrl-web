@@ -46,10 +46,10 @@ onfocus="javascript:doubleFocus(this);"
 onblur="javascript:doubleBlur(this);"
 value="<%=BSWeb.formatDouble(request, 1234.567)%>">
 
-<table class="table table-striped table-bordered table-hover table-condensed">
+<table class="table table-striped table-bordered table-hover table-condensed table-responsive">
 	<thead>
 	<tr>
-		<td>encabezado</td>
+		<th>encabezado</th>
 	</tr>
 	</thead>
 	<tbody>

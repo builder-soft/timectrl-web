@@ -59,7 +59,7 @@ function formatIfValid(obj, value) {
 	if (value == null) {
 		obj.setAttribute("class", "cError");
 	} else {
-		obj.setAttribute("class", "");
+//		obj.setAttribute("class", "");
 		obj.value = value;
 	}
 }

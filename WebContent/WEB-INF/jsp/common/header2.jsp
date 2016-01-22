@@ -1,3 +1,4 @@
+<%@page import="cl.buildersoft.framework.util.BSWeb"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -45,7 +46,7 @@
 	}
 </script>
 <script
-	src="${pageContext.request.contextPath}/js/common/framework.js"></script>
+	src="${pageContext.request.contextPath}/js/common/framework.js?<%=BSWeb.randomString()%>"></script>
 
 </head>
 

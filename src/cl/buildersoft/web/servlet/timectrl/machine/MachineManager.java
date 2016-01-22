@@ -24,12 +24,17 @@ public class MachineManager extends HttpServletCRUD {
 		table.setTitle("Listado de Relojes Control");
 		table.setScript("/js/timectrl/machine/machine-manager.js");
 
-		table.getField("cLastAccess").setReadonly(true);
 		table.getField("cLastAccess").setLabel("Último Acceso");
 		table.getField("cName").setLabel("Nombre");
 		table.getField("cGroup").setLabel("Grupo");
+
+		
+		table.getField("cLastAccess").setReadonly(true);
 		table.getField("cSerial").setReadonly(true);
 
+		
+		
+		
 		BSAction ping = new BSAction("PING", BSActionType.MultiRecord);
 		ping.setLabel("Probar conección");
 		ping.setUrl("/servlet/timectrl/machine/TestConnection");
