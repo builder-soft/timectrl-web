@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSPaging;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
  
@@ -29,7 +30,7 @@ public class LoadTable extends AbstractServletUtil {
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		BSTableConfig table = null;
 		synchronized (session) {
 			table = (BSTableConfig) session.getAttribute("BSTable");
@@ -38,7 +39,8 @@ public class LoadTable extends AbstractServletUtil {
 		// Connection conn = null;
 		BSmySQL mysql = new BSmySQL();
 
-		Connection conn =  getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn =  cf.getConnection(request);
 
 		table.configFields(conn, mysql);
 
@@ -56,6 +58,8 @@ public class LoadTable extends AbstractServletUtil {
 		}
 
 		forward(request, response, bootstrap(conn) ? "/WEB-INF/jsp/table/main2.jsp" : "/WEB-INF/jsp/table/main.jsp");
+		
+		cf.closeConnection(conn);
 		/*
 		 * request.getRequestDispatcher("/WEB-INF/jsp/table/main.jsp").forward(
 		 * request, response);

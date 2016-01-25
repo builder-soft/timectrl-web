@@ -91,7 +91,7 @@ public class LicenseValidation implements Filter {
 		if (success) {
 			chain.doFilter(rq, rs);
 		} else {
-			request.getSession().invalidate();
+			request.getSession(false).invalidate();
 			throw new BSConfigurationException("Some configuration files are wrong!");
 			// request.getRequestDispatcher(failUrl).forward(request,
 			// response);
@@ -113,7 +113,7 @@ public class LicenseValidation implements Filter {
 			if (conn == null || closedConnection(conn)) {
 				out = true;
 			} else {
-				String pathFile = request.getSession().getServletContext().getRealPath("/") + "WEB-INF" + File.separator
+				String pathFile = request.getSession(false).getServletContext().getRealPath("/") + "WEB-INF" + File.separator
 						+ "LicenseFile.dat";
 
 				LicenseValidationUtil lv = new LicenseValidationUtil();

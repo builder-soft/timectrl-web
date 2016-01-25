@@ -49,7 +49,7 @@ public class ReadAttendance extends BSHttpServlet {
 		request.setAttribute("Machine", machine);
 		request.setAttribute("DateTimeFormat", dateFormat);
 		setSessionValue(request, "Attendances", list);
-		// request.getSession().setAttribute("Attendances", list);
+		// request.getSession(false).setAttribute("Attendances", list);
 
 		forward(request, response, "/WEB-INF/jsp/timectrl/machine/read-attendance.jsp");
 	}

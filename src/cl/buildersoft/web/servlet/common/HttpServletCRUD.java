@@ -33,7 +33,7 @@ public abstract class HttpServletCRUD extends BSHttpServlet {
 
 		table.setUri(uri);
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		synchronized (session) {
 			session.setAttribute("BSTable", table);
 			// session.setAttribute("BSHead", head);
@@ -55,7 +55,7 @@ public abstract class HttpServletCRUD extends BSHttpServlet {
 	protected BSTableConfig initTable(HttpServletRequest request, String database, String tableName, HttpServletCRUD servlet) {
 		String databaseName = null;
 		if (database == null) {
-			Domain domain = (Domain) request.getSession().getAttribute("Domain");
+			Domain domain = (Domain) request.getSession(false).getAttribute("Domain");
 			databaseName = domain.getDatabase();
 		} else {
 			databaseName = database;

@@ -26,7 +26,7 @@ public class SearchPassword extends BSHttpServlet {
 
 		String idString = request.getParameter("cId");
 		if (idString == null) {
-			User user = (User) request.getSession().getAttribute("User");
+			User user = (User) request.getSession(false).getAttribute("User");
 			id = user.getId();
 			request.setAttribute("cId", id);
 		} else {

@@ -23,12 +23,12 @@ public class ChangeDomain extends BSHttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Long id = Long.parseLong(request.getParameter("cId"));
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		// Connection conn = getConnection(request);
 		BSConnectionFactory cf = new BSConnectionFactory();
 		Connection conn = cf.getConnection();
 
-		List<Domain> domains = (List<Domain>) request.getSession().getAttribute("Domains");
+		List<Domain> domains = (List<Domain>) request.getSession(false).getAttribute("Domains");
 
 		for (Domain domain : domains) {
 			if (domain.getId().equals(id)) {

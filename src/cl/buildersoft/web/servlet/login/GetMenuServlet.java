@@ -26,7 +26,7 @@ public class GetMenuServlet extends BSHttpServlet {
 
 	@SuppressWarnings("unchecked")
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		BSConnectionFactory cf = new BSConnectionFactory();
 		Connection conn = cf.getConnection(request);
 

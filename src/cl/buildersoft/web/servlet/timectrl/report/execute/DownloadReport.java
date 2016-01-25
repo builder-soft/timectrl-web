@@ -21,7 +21,7 @@ public class DownloadReport extends BSHttpServlet {
 		Integer idFile = Integer.parseInt(request.getParameter("idFile"));
 
 		@SuppressWarnings("unchecked")
-		Map<Integer, String> responseMap = (Map<Integer, String>) request.getSession().getAttribute("ResponseMap");
+		Map<Integer, String> responseMap = (Map<Integer, String>) request.getSession(false).getAttribute("ResponseMap");
 		String fileName = responseMap.get(idFile);
 
 		File downloadFile = new File(fileName);

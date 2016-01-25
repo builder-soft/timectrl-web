@@ -53,7 +53,7 @@ public class SaveRoleDef extends HttpServlet {
 		request.setAttribute("cId", "" + rol);
 		request.setAttribute("NextServlet", "/servlet/system/roleDef/RoleDef");
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		List<Rol> rols = (List<Rol>) session.getAttribute("Rol");
 		for (Rol rolUser : rols) {
 			if (rolUser.getId().equals(rol)) {

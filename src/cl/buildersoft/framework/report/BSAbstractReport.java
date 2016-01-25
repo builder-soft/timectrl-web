@@ -37,13 +37,13 @@ public abstract class BSAbstractReport extends HttpServlet {
 			String uri = request.getRequestURI().substring(request.getContextPath().length());
 			report.setUri(uri);
 
-			HttpSession session = request.getSession();
+			HttpSession session = request.getSession(false);
 			synchronized (session) {
 				session.setAttribute("BSReport", report);
 			}
 
 		} else {
-			HttpSession session = request.getSession();
+			HttpSession session = request.getSession(false);
 			BSReport report = null;
 			synchronized (session) {
 				report = (BSReport) session.getAttribute("BSReport");

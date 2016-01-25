@@ -17,7 +17,7 @@ AS
 		FROM 		bsframework.tUser AS a
 		LEFT JOIN	bsframework.tR_UserDomain AS b ON a.cId = b.cUser
 		LEFT JOIN	bsframework.tDomain AS c ON b.cDomain = c.cId 
-		WHERE		!a.cAdmin AND c.cAlias = DATABASE();
+		WHERE		!a.cAdmin AND c.cDatabase = DATABASE();
 
 		
 CREATE TABLE IF NOT EXISTS tVersion (

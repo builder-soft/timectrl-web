@@ -38,7 +38,7 @@ public class SaveRelation extends HttpServlet {
 		Long id = Long.parseLong(request.getParameter("cId"));
 		String[] relations = request.getParameterValues("Relation");
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		BSTableConfig table = null;
 		synchronized (session) {
 			table = (BSTableConfig) session.getAttribute("BSTable");

@@ -7,8 +7,6 @@ import java.util.logging.Logger;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import cl.buildersoft.framework.dataType.BSDataTypeEnum;
-import cl.buildersoft.framework.dataType.BSDataTypeFactory;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.BSConfig;
@@ -31,13 +29,14 @@ public class EmployeeManager extends HttpServletCRUD {
 		BSTableConfig table = initTable(request, "tEmployee", this);
 		table.setSortField(getSortField(request));
 
-		BSDataTypeFactory dtf = new BSDataTypeFactory();
+//		BSDataTypeFactory dtf = new BSDataTypeFactory();
 
 		// table.getField("cFingerprint").setType(dtf.create(BSDataTypeEnum.TEXT));
-		table.removeField("cFingerprint");
-		table.removeField("cFingerIndex");
-		table.removeField("cFlag");
-		table.removeField("cCardNumber");
+		
+//		table.removeField("cFingerprint");
+//		table.removeField("cFingerIndex");
+//		table.removeField("cFlag");
+//		table.removeField("cCardNumber");
 
 		// table.getField("cFingerprint").setType(cl.buildersoft.framework.type.bst);
 		table.setTitle("Mantención de empleados");

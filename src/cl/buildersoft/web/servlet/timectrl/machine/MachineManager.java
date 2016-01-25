@@ -30,9 +30,10 @@ public class MachineManager extends HttpServletCRUD {
 
 		
 		table.getField("cLastAccess").setReadonly(true);
-		table.getField("cSerial").setReadonly(true);
+//		table.getField("cSerial").setReadonly(true);
 
-		
+//		table.removeField("cLastAccess");
+		table.removeField("cSerial");
 		
 		
 		BSAction ping = new BSAction("PING", BSActionType.MultiRecord);

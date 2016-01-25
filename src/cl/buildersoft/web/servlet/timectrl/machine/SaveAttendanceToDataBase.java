@@ -28,7 +28,7 @@ public class SaveAttendanceToDataBase extends BSHttpServlet {
 	private static final long serialVersionUID = 4061684288079220007L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		@SuppressWarnings("unchecked")
 		List<AttendanceLog> attendanceList = (List<AttendanceLog>) session.getAttribute(ATTENDANCES);
 
