@@ -62,7 +62,8 @@ value="<%=BSWeb.formatDouble(request, 1234.567)%>">
 	</tbody>
 </table>
 
-<a class="cCancel" href="${pageContext.request.contextPath}/servlet/...">Cancelar</a>
+<button class='btn btn-link'
+	onclick="returnTo('${pageContext.request.contextPath}/servlet/config/employee/EmployeeManager');">Volver</button>
 
 <div id="divShowDetail" style="display: none">
 	<h2 class="cTitle2">Detalle de valores</h2>

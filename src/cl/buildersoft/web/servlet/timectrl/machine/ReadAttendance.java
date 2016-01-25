@@ -43,6 +43,10 @@ public class ReadAttendance extends BSHttpServlet {
 		} finally {
 			machineService.disconnect(api);
 		}
+
+		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/machine/read-attendance2.jsp"
+				: "/WEB-INF/jsp/timectrl/machine/read-attendance.jsp";
+
 		closeConnection(conn);
 
 		request.setAttribute("Attendances", list);
@@ -51,7 +55,7 @@ public class ReadAttendance extends BSHttpServlet {
 		setSessionValue(request, "Attendances", list);
 		// request.getSession(false).setAttribute("Attendances", list);
 
-		forward(request, response, "/WEB-INF/jsp/timectrl/machine/read-attendance.jsp");
+		forward(request, response, page);
 	}
 
 	private String getDateTimeFormat(Connection conn) {

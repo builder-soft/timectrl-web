@@ -5,7 +5,7 @@
 <%@ page language="java" contentType="application/json; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-List<EmployeeAndFingerprint> employees = (List<EmployeeAndFingerprint>)request.getAttribute("Employee");
+List<EmployeeAndFingerprint> employees = (List<EmployeeAndFingerprint>)request.getAttribute("EmployeeAndFingerprint");
 List<Privilege> privilegeList = (List<Privilege>)request.getAttribute("PrivilegeList");
 
 Integer size = employees.size();
@@ -16,7 +16,7 @@ Integer i = 0;
 <%for(EmployeeAndFingerprint eaf : employees){
 	i++;
 %>
-    {"id": "<%=eaf.getEmployee().getId()%>", "key":"<%=eaf.getEmployee().getKey()%>", "name":"<%=eaf.getEmployee().getName()%>", "enabled":"<%=eaf.getEmployee().getEnabled()%>", "privilege":"<%=getPrivililege(privilegeList, eaf.getEmployee().getPrivilege())%>", "fingerprint":"<%=eaf.getFingerprint().getFingerprint()!=null%>"}<%=i<size?",":""%> 
+    {"id": "<%=eaf.getEmployee().getId()%>", "key":"<%=eaf.getEmployee().getKey()%>", "name":"<%=eaf.getEmployee().getName()%>", "enabled":"<%=eaf.getEmployee().getEnabled()%>", "privilege":"<%=getPrivililege(privilegeList, eaf.getEmployee().getPrivilege())%>", "fingerprint":"<%=eaf.getFingerprint().getFingerprint()!=null%>"}<%=i<size?",":""%>
 <%}%>
 ]
 

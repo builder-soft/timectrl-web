@@ -10,9 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Privilege;
+import cl.buildersoft.timectrl.business.services.EmployeeService;
+import cl.buildersoft.timectrl.business.services.impl.EmployeeAndFingerprint;
+import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 
 /**
  * Servlet implementation class ListEmployeeByArea
@@ -25,15 +29,23 @@ public class ListEmployeeByArea extends BSHttpServlet {
 		Long area = Long.parseLong(request.getParameter("Area"));
 
 		BSBeanUtils bu = new BSBeanUtils();
-		Connection conn = getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 
-		List<Employee> listEmployee = (List<Employee>) bu.list(conn, new Employee(), "cArea=?", area);
+		EmployeeService es = new EmployeeServiceImpl();
+		
+		List<Employee > employeeList = (List<Employee>) bu.list(conn, new Employee(), "cArea=?", area);
+		
+		List<EmployeeAndFingerprint> listEmployee = es.fillFingerprint(conn, employeeList);
+		
+		
 		List<Privilege> privilegeList = (List<Privilege>) bu.listAll(conn, new Privilege());
+		cf.closeConnection(conn);
 
-//		updatePrivilege(listEmployee, privilegeList);
+		// updatePrivilege(listEmployee, privilegeList);
 
 		request.setAttribute("PrivilegeList", privilegeList);
-		request.setAttribute("Employee", listEmployee);
+		request.setAttribute("EmployeeAndFingerprint", listEmployee);
 
 		forward(request, response, "/WEB-INF/jsp/timectrl/machine/list-employee-by-area.jsp");
 	}
