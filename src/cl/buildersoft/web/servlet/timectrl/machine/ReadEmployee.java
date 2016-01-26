@@ -64,8 +64,9 @@ public class ReadEmployee extends BSHttpServlet {
 		request.setAttribute("Machine", machine);
 		request.setAttribute("PrivilegeList", privilegeList);
 
-		String page = bootstrap(conn)?"/WEB-INF/jsp/timectrl/machine/read-employee2.jsp":  "/WEB-INF/jsp/timectrl/machine/read-employee.jsp";
-		
+		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/machine/read-employee2.jsp"
+				: "/WEB-INF/jsp/timectrl/machine/read-employee.jsp";
+
 		cf.closeConnection(conn);
 
 		forward(request, response, page);
