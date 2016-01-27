@@ -34,33 +34,34 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 					${sessionScope.User.mail}</a>
 				<ul class="dropdown-menu">
 					<%
+					Object domainsAsObject = session.getAttribute("Domains");
+					if(domainsAsObject!=null){					
 						List<Domain> domains = (List<Domain> ) session.getAttribute("Domains");
-								if(domains.size()>1){
+						if(domains.size()>1){
 					%>
 					<li><a href="#">Dominio actual: ${sessionScope.Domain.name} (<%=domains.size()-1%>)</a>
 					
 						<ul class="dropdown-menu">
 						<%
 							Long currentDomainId = ((Domain)session.getAttribute("Domain")).getId();
-										for(Domain domain : domains){
-											if(!domain.getId().equals(currentDomainId)){
+							for(Domain domain : domains){
+								if(!domain.getId().equals(currentDomainId)){
 						%>
 							<li><a href="${pageContext.request.contextPath}/servlet/system/user/ChangeDomain?cId=<%=domain.getId()%>&<%=BSWeb.randomString()%>"><%=domain.getName()%></a></li>
 							<%
 								} 
-												}
+							}
 							%>
 							
 						</ul>
 						</li>
 						<%
-							} else{
+						} else {
 						%>
-						
-
 					<li><a href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString()%>">Dominio: ${sessionScope.Domain.name}</a></li>
 <%
 	}
+}
 %>
 					<li class="divider"></li>
 					<li><a

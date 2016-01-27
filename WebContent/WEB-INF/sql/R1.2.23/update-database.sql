@@ -25,10 +25,9 @@ ALTER TABLE tEmployee
   DROP COLUMN cFingerIndex,
   DROP COLUMN cCardNumber;	
 	
-
 create table tEventType (
 	cId 	BIGINT(20) NOT NULL auto_increment,
-	cKey	VARCHAR(20) NOT NULL,
+	cKey	VARCHAR(20) NOT NULL UNIQUE,
 	cName	VARCHAR(100) NOT NULL,
 	PRIMARY KEY (cId)
 ) ENGINE=InnoDB;
@@ -37,7 +36,7 @@ create table tEvent (
 	cId 		BIGINT(20) NOT NULL auto_increment,
 	cEventType	BIGINT(20) NOT NULL,
 	cWhen		TIMESTAMP NOT NULL,
-	cWho		BIGINT(20) NOT NULL,
+	cUser		BIGINT(20) NOT NULL,
 	cWhat		TEXT	NOT NULL,
 	PRIMARY KEY (cId)
 ) ENGINE=InnoDB;
@@ -46,6 +45,37 @@ ALTER TABLE tEvent
 ADD INDEX event_index_eventType (cEventType ASC),
 ADD CONSTRAINT event_to_eventType FOREIGN KEY (cEventType) REFERENCES tEventType(cId);
 
-insert into tEventType()
+insert into tEventType(cKey, cName) VALUES('SECURITY_LOGIN_OK', 'Acceso exitoso');
+insert into tEventType(cKey, cName) VALUES('SECURITY_LOGIN_FAIL', 'Acceso fallido');
+insert into tEventType(cKey, cName) VALUES('SECURITY_LOGOUT', 'Salida del sistema');
+
+insert into tEventType(cKey, cName) VALUES('CONFIG_FAIL', 'Configuracion fallida en el sistema');
+
+
+DELIMITER $$
+create procedure pUpdateData_Temp()
+begin
+	IF NOT EXISTS(	SELECT * 
+				FROM bsframework.tUser 
+				WHERE cMail = 'SYSTEM') THEN
+				
+		INSERT INTO bsframework.tUser(cMail, cName, cPassword, cAdmin) VALUES('SYSTEM', 'System Processor', '', 1);
+		
+	END IF;
+
+	IF NOT EXISTS(	SELECT * 
+				FROM bsframework.tUser 
+				WHERE cMail = 'ANONYMOUS') THEN
+				
+		INSERT INTO bsframework.tUser(cMail, cName, cPassword, cAdmin) VALUES('ANONYMOUS', 'Unknown user', '', 0);
+		
+	END IF;
+	
+END$$
+DELIMITER ;
+
+call pUpdateData_Temp;
+
+drop procedure if exists pUpdateData_Temp;
 
 UPDATE tVersion SET cVersion='1.2.23', cUpdated=NOW() WHERE cKey = 'DBT';

@@ -26,9 +26,12 @@ import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSDataBaseException;
 import cl.buildersoft.framework.exception.BSUserException;
+import cl.buildersoft.framework.services.BSUserService;
 import cl.buildersoft.framework.services.impl.BSUserServiceImpl;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSUtils;
+import cl.buildersoft.timectrl.business.services.EventLogService;
+import cl.buildersoft.timectrl.business.services.ServiceFactory;
 
 /**
  * Servlet implementation class ValidateServlet
@@ -48,11 +51,12 @@ public class ValidateLoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String page = "/";
 
-		mail = "".equals(mail) ? null : mail;
-		password = "".equals(password) ? null : password;
-		if (mail != null && password != null) {
-			BSUserServiceImpl userService = new BSUserServiceImpl();
+		Boolean validData = validInputData(mail, password);
+
+		if (validData) {
+			BSUserService userService = new BSUserServiceImpl();
 			BSConnectionFactory cf = new BSConnectionFactory();
+			Connection connTemp = null;
 
 			User user = null;
 			List<Rol> rols = null;
@@ -61,48 +65,103 @@ public class ValidateLoginServlet extends HttpServlet {
 
 			connBSframework = cf.getConnection();
 
-			LOG.log(Level.FINE, "Validing user {0}, password {1}", BSUtils.array2ObjectArray(mail, password));
-			user = userService.login(connBSframework, mail, password);
-			LOG.log(Level.INFO, "User: {0}", user);
+			EventLogService eventLog = ServiceFactory.creteEventLogService();
 
-			List<Domain> domains = null;
-			Domain defaultDomain = null;
-			Map<String, DomainAttribute> domainAttribute = null;
-			if (user != null) {
-				domains = getDomains(connBSframework, user);
-				if (domains.size() == 0) {
-					throw new BSUserException("El usuario '" + user.getMail() + "' no esta completamente configurado");
+			User mayBeUser = userExists(connBSframework, userService, mail);
+
+			if (mayBeUser == null) {
+				page = "/WEB-INF/jsp/login/not-found.jsp";
+
+				List<Domain> domains = getAllDomains(connBSframework);
+
+				for (Domain domain : domains) {
+					connTemp = cf.getConnection(domain.getDatabase());
+					eventLog.writeEntry(connTemp, userService.getAnonymousUser().getId(), "SECURITY_LOGIN_FAIL",
+							"Alguien intentó acceder con el usuario \"%s\", inexistente.", mail);
+					cf.closeConnection(connTemp);
 				}
-				defaultDomain = domains.get(0);
-//				domainAttribute = getDomainAttribute(connBSframework, defaultDomain);
-				connDomain = cf.getConnection(defaultDomain.getDatabase());
+			} else {
+				LOG.log(Level.FINE, "Validing user {0}, password {1}", BSUtils.array2ObjectArray(mail, password));
+				user = userService.login(connBSframework, mail, password);
+				LOG.log(Level.INFO, "User: {0}", user);
 
-				rols = userService.getRols(connDomain, user);
-				if (rols.size() == 0) {
-					throw new BSUserException("Usuario no tiene roles configurados");
+				if (user == null && mayBeUser != null) {
+					List<Domain> mayBeTheirDomains = getDomains(connBSframework, mayBeUser);
+					connTemp = null;
+					for (Domain domain : mayBeTheirDomains) {
+						connTemp = cf.getConnection(domain.getDatabase());
+						eventLog.writeEntry(connTemp, mayBeUser.getId(), "SECURITY_LOGIN_FAIL",
+								"El usuario intentó acceder con una clave invalida", null);
+						cf.closeConnection(connTemp);
+					}
+					page = "/WEB-INF/jsp/login/not-found.jsp";
+				} else {
+					List<Domain> domains = null;
+					Domain defaultDomain = null;
+					Map<String, DomainAttribute> domainAttribute = null;
+					if (user != null) {
+						domains = getDomains(connBSframework, user);
+						if (domains.size() == 0) {
+							throw new BSUserException("El usuario '" + user.getMail() + "' no tiene dominios configurados");
+						}
+						defaultDomain = domains.get(0);
+
+						connDomain = cf.getConnection(defaultDomain.getDatabase());
+
+						rols = userService.getRols(connDomain, user);
+						if (rols.size() == 0) {
+							String msg = "Usuario no tiene roles configurados";
+							eventLog.writeEntry(connDomain, user.getId(), "CONFIG_FAIL", msg, null);
+							throw new BSUserException(msg);
+						}
+					}
+
+					if (user != null) {
+						HttpSession session = request.getSession(true);
+						synchronized (session) {
+							session.setAttribute("User", user);
+							session.setAttribute("Rol", rols);
+							session.setAttribute("Menu", true);
+							session.setAttribute("Domains", domains);
+							session.setAttribute("Domain", defaultDomain);
+							session.setAttribute("DomainAttribute", domainAttribute);
+						}
+						page = "/servlet/login/GetMenuServlet";
+
+						eventLog.writeEntry(connDomain, user.getId(), "SECURITY_LOGIN_OK",
+								"Acceso correcto al sistema, Rol/es: %s.", enumerateRols(rols));
+					}
 				}
 			}
-
-//			BSmySQL mysql = new BSmySQL();
 			cf.closeConnection(connDomain);
 			cf.closeConnection(connBSframework);
-
-			if (user != null) {
-				HttpSession session = request.getSession(true);
-				synchronized (session) {
-					session.setAttribute("User", user);
-					session.setAttribute("Rol", rols);
-					session.setAttribute("Menu", true);
-					session.setAttribute("Domains", domains);
-					session.setAttribute("Domain", defaultDomain);
-					session.setAttribute("DomainAttribute", domainAttribute);
-				}
-				page = "/servlet/login/GetMenuServlet";
-			} else {
-				page = "/WEB-INF/jsp/login/not-found.jsp";
-			}
 		}
 		request.getRequestDispatcher(page).forward(request, response);
+	}
+
+	private User userExists(Connection connBSframework, BSUserService us, String mail) {
+		return us.search(connBSframework, mail);
+	}
+
+	private Boolean validInputData(String mail, String password) {
+		mail = "".equals(mail) ? null : mail;
+		password = "".equals(password) ? null : password;
+		Boolean out = true;
+		if (mail == null || password == null) {
+			out = false;
+		}
+		return out;
+	}
+
+	private Object enumerateRols(List<Rol> rols) {
+		String out = "";
+
+		for (Rol rol : rols) {
+			out += rol.getName() + ",";
+		}
+		out = out.substring(0, out.length() - 1);
+
+		return out;
 	}
 
 	public Map<String, DomainAttribute> getDomainAttribute(Connection conn, Domain defaultDomain) {
@@ -153,4 +212,15 @@ public class ValidateLoginServlet extends HttpServlet {
 
 		return out;
 	}
+
+	private List<Domain> getAllDomains(Connection conn) {
+		BSBeanUtils bu = new BSBeanUtils();
+		List<Domain> out = new ArrayList<Domain>();
+		Domain domain = new Domain();
+
+		out = (List<Domain>) bu.listAll(conn, domain);
+
+		return out;
+	}
+
 }
