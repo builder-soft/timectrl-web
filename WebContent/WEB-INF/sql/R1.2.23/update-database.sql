@@ -78,4 +78,8 @@ call pUpdateData_Temp;
 
 drop procedure if exists pUpdateData_Temp;
 
+INSERT INTO tOption(cKey, cLabel, cURL, cParent, cType, cOrder, cEnable, cIsAdmin) VALUES('EVENT_VIEWER', 'Visor de eventos', '/servlet/admin/eventViewer/EventViewerMain', 7, 1, 3, true, false);
+
+
+
 UPDATE tVersion SET cVersion='1.2.23', cUpdated=NOW() WHERE cKey = 'DBT';

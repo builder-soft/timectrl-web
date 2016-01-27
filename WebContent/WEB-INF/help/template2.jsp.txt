@@ -33,10 +33,37 @@ $("#DStartDate").datepicker({
 
 
 <div class="row">
-	<div class="col-sm-4 col-sm-offset-1">
+	<div class="col-sm-4 col-sm-offset-1 well">
 	dato
 	</div>
 </div>
+		
+		
+
+<div class="well">
+	<div class="row ">
+		<div class="col-sm-2 ">Fecha inicio:</div>
+		<div class="col-sm-4 ">
+			<input type="text" id="DStartDate">
+		</div>
+		<div class="col-sm-2 ">Fecha termino:</div>
+		<div class="col-sm-4 ">
+			<input type="text" id="DEndDate">
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-sm-2 ">Tipo de evento:</div>
+		<div class="col-sm-4 ">
+			<select></select>
+		</div>
+		<div class="col-sm-2 ">Usuario:</div>
+		<div class="col-sm-4 ">
+			<select></select>
+		</div>
+	</div>
+</div>		
 		
 Fecha:
 <input type="text" id="datepicker">
