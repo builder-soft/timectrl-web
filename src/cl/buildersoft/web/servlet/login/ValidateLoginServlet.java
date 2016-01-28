@@ -65,7 +65,7 @@ public class ValidateLoginServlet extends HttpServlet {
 
 			connBSframework = cf.getConnection();
 
-			EventLogService eventLog = ServiceFactory.creteEventLogService();
+			EventLogService eventLog = ServiceFactory.createEventLogService();
 
 			User mayBeUser = userExists(connBSframework, userService, mail);
 
