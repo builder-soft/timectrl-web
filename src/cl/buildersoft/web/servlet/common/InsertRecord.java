@@ -16,12 +16,17 @@ import javax.servlet.http.HttpSession;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSDataBaseException;
 import cl.buildersoft.framework.util.BSConnectionFactory;
+import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.framework.util.BSWeb;
 import cl.buildersoft.framework.util.crud.BSField;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
+import cl.buildersoft.timectrl.business.services.EventLogService;
+import cl.buildersoft.timectrl.business.services.ServiceFactory;
 
 @WebServlet("/servlet/common/InsertRecord")
-public class InsertRecord extends AbstractServletUtil {
+public class InsertRecord extends /** AbstractServletUtil */
+BSHttpServlet {
 	private static final long serialVersionUID = 947236230190327847L;
 
 	/**
@@ -35,6 +40,9 @@ public class InsertRecord extends AbstractServletUtil {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		BSTableConfig table = null;
+		String eventKey = null;
+		String eventWhat = null;
+		String[] eventParams = null;
 
 		synchronized (session) {
 			table = (BSTableConfig) session.getAttribute("BSTable");
@@ -70,6 +78,16 @@ public class InsertRecord extends AbstractServletUtil {
 					}
 				}
 			}
+
+			eventKey = table.getEventKey();
+			eventWhat = table.getEventWhat();
+			eventParams = table.getEventParams();
+
+			if (eventKey != null && eventWhat != null && eventParams != null) {
+				EventLogService event = ServiceFactory.createEventLogService();
+				event.writeEntry(conn, getCurrentUser(request).getId(), eventKey, eventWhat, eventParams);
+			}
+
 		} finally {
 			cf.closeConnection(conn);
 		}
@@ -77,14 +95,10 @@ public class InsertRecord extends AbstractServletUtil {
 		forward(request, response, "/servlet/common/LoadTable");
 	}
 
-	
-
-	
-
 	private String getSQL(BSTableConfig table, BSField[] fields, HttpServletRequest request) {
 		String sql = "INSERT INTO " + table.getDatabase() + "." + table.getTableName();
-		sql += "(" + unSplit(fields, ",") + ") ";
-		sql += " VALUES (" + getCommas(fields) + ")";
+		sql += "(" + table.unSplitFieldNames(fields, ",") + ") ";
+		sql += " VALUES (" + BSUtils.getCommas(fields) + ")";
 
 		return sql;
 	}

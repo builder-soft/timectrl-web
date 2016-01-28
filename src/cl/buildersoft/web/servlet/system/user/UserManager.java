@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import cl.buildersoft.framework.beans.Domain;
 import cl.buildersoft.framework.beans.User;
 import cl.buildersoft.framework.type.Semaphore;
+import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSActionType;
 import cl.buildersoft.framework.util.crud.BSField;
@@ -78,6 +79,8 @@ public class UserManager extends HttpServletCRUD {
 		rolRelation.setNatTable(domain.getDatabase(), "tR_UserRol", domain.getDatabase(), "tRol");
 		rolRelation.setLabel("Roles de usuario");
 		table.addAction(rolRelation);
+		
+		table.serEventInfo("INSERT_USER", "Se agrega el usuario %s", null);
 
 		return table;
 	}

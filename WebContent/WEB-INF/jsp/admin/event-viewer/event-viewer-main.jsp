@@ -1,3 +1,4 @@
+<%@page import="java.util.Calendar"%>
 <%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.EventBean"%>
 <%@page import="cl.buildersoft.framework.beans.User"%>
@@ -7,9 +8,15 @@
 <%
 	List<EventType> eventTypeList = (List<EventType>) request.getAttribute("EventTypeList");
 	List<User> userList = (List<User>) request.getAttribute("UserList");
-	List<EventBean> eventList = (List<EventBean>)request.getAttribute("EventList");
-	
-	String dateFormat = BSDateTimeUtil.getFormatDatetime(request);
+	List<EventBean> eventList = (List<EventBean>) request.getAttribute("EventList");
+
+	Calendar startDate = (Calendar) request.getAttribute("StartDate");
+	Calendar endDate = (Calendar) request.getAttribute("EndDate");
+
+	Long eventTypeId = (Long) request.getAttribute("EventType");
+	Long userId = (Long) request.getAttribute("UserId");
+
+	String dateFormat = (String) request.getAttribute("DateFormat");
 %>
 
 
@@ -19,103 +26,108 @@
 
 <script type="text/javascript">
 <!--
+	function selectDateAtStart(selectedDate){
+		$("#DEndDate").datepicker("option", "minDate", selectedDate);
+	}
+	
+	function selectDateAtEnd(selectedDate){
+		$("#DStartDate").datepicker("option", "maxDate", selectedDate);
+	}
+	
 	function onLoadPage() {
 		$("#DStartDate").datepicker({
 			dateFormat : fixDateFormat(dateFormat),
 			appendText : " (" + dateFormat.toLowerCase() + ")",
-			defaultDate : "-1d",
 			changeMonth : true,
 			numberOfMonths : 1,
-			onSelect : function(selectedDate) {
-				$("#DEndDate").datepicker("option", "minDate", selectedDate);
-			}
+			onSelect : selectDateAtStart
 		});
+		
 		$("#DEndDate").datepicker({
 			dateFormat : fixDateFormat(dateFormat),
 			appendText : " (" + dateFormat.toLowerCase() + ")",
 			defaultDate : "1d",
 			changeMonth : true,
 			numberOfMonths : 1,
-			onSelect : function(selectedDate) {
-				$("#DStartDate").datepicker("option", "maxDate", selectedDate);
-			}
+			onSelect : selectDateAtEnd
 		});
 
+		$("#DStartDate").datepicker("setDate", "<%=BSDateTimeUtil.calendar2String(startDate, dateFormat)%>");
+		$("#DEndDate").datepicker("setDate", "<%=BSDateTimeUtil.calendar2String(endDate, dateFormat)%>");
+		selectDateAtStart("<%=BSDateTimeUtil.calendar2String(startDate, dateFormat)%>");
+		selectDateAtEnd("<%=BSDateTimeUtil.calendar2String(endDate, dateFormat)%>");
 	}
 //-->
 </script>
 
-<form method="post"
-	xaction="${pageContext.request.contextPath}/servlet/ShowParameters"
+<form method="post" class="form-horizontal well"
 	action="${pageContext.request.contextPath}/servlet/admin/eventViewer/EventViewerMain?<%=BSWeb.randomString() %>"
 	id="QueryForm">
 
-	<div class="well">
-		<div class="row ">
-			<div class="col-sm-2 ">Fecha inicio:</div>
-			<div class="col-sm-4 ">
-				<input type="text" id="DStartDate" Name="StartDate">
-			</div>
-			<div class="col-sm-2 ">Fecha termino:</div>
-			<div class="col-sm-4 ">
-				<input type="text" id="DEndDate" Name="EndDate">
-			</div>
+
+	<div class="form-group">
+		<label class="control-label col-sm-2" for="DStartDate">Fecha
+			inicio:</label>
+		<div class="col-sm-4">
+			<input type="text" id="DStartDate" Name="StartDate"
+				placeholder="Fecha desde">
 		</div>
+		<label class="control-label col-sm-2" for="DEndDate">Fecha
+			termino:</label>
+		<div class="col-sm-4 ">
+			<input type="text" id="DEndDate" Name="EndDate"
+				placeholder="Fecha hasta">
+		</div>
+	</div>
 
 
-		<div class="row">
-			<div class="col-sm-2 ">Tipo de evento:</div>
+	<div class="form-group">
+			<label class="control-label col-sm-2" for="DEventType">Tipo de evento:</label>
 			<div class="col-sm-4 ">
-				<select Name="EventType">
+				<select Name="EventType" id="DEventType">
 					<option value="">- Todos -</option>
 					<%
 						for (EventType eventType : eventTypeList) {
 					%>
-					<option value="<%=eventType.getId()%>"><%=eventType.getName()%></option>
+					<option value="<%=eventType.getId()%>" <%=eventType.getId().equals(eventTypeId)?"selected":""%>><%=eventType.getName()%></option>
 					<%
 						}
 					%>
 				</select>
 			</div>
-			<div class="col-sm-2 ">Usuario:</div>
+			<label class="control-label col-sm-2" for="DUser">Usuario:</label>
 			<div class="col-sm-4 ">
-				<select Name="User">
+				<select Name="User" id="DUser">
 					<option value="">- Todos -</option>
 					<%
 						for (User user : userList) {
 					%>
-					<option value="<%=user.getId()%>"><%=user.getName()%></option>
+					<option value="<%=user.getId()%>" <%= user.getId().equals(userId)?"selected":""%>><%=user.getName()%></option>
 					<%
 						}
 					%>
 				</select>
 			</div>
 		</div>
-		<div class="row">
+		<div class="form-group">
 			<div class="col-sm-2 col-sm-offset-10">
 				<button class='btn btn-default' onclick="$('#QueryForm').submit()">Buscar</button>
 			</div>
 		</div>
-	</div>
+	
 </form>
 
 
-<!-- 		
-Fecha:
-<input type="text" id="datepicker">
-<br>
-<input type="text" name="SomeObject" id="SomeObject"
-onfocus="javascript:doubleFocus(this);"
-onblur="javascript:doubleBlur(this);"
-value="<%=BSWeb.formatDouble(request, 1234.567)%>">
- -->
-
+<%
+	if (eventList != null) {
+%>
+<div class="_col-sm-10 _col-sm-offset-1">
 <table
 	class="table table-striped table-bordered table-hover table-condensed table-responsive">
-	<caption><%=eventList != null ? eventList.size() : "Nothing to show"%></caption>
 	<thead>
 		<tr>
 			<th>Fecha</th>
+			<th>Hora</th>
 			<th>Usuario</th>
 			<th>Evento</th>
 			<th>Detalle</th>
@@ -124,22 +136,26 @@ value="<%=BSWeb.formatDouble(request, 1234.567)%>">
 	<tbody>
 		<%
 			if (eventList != null) {
-				for (EventBean event : eventList) {
+					for (EventBean event : eventList) {
 		%>
 		<tr>
-			<td><%=BSDateTimeUtil.calendar2String(event.getWhen(), dateFormat)%></td>
+			<td><%=BSDateTimeUtil.calendar2String(event.getWhen(), "dd-MM-yyyy")%></td>
+			<td><%=BSDateTimeUtil.calendar2String(event.getWhen(), "HH:mm:ss")%></td>
 			<td><%=event.getUserName()%> (<%=event.getUserMail()%>)</td>
 			<td><%=event.getEventTypeName()%></td>
 			<td><%=event.getWhat()%></td>
 		</tr>
 		<%
 			}
-			}
+				}
 		%>
 		
 	</tbody>
 </table>
-
+</div>
+<%
+	}
+%>
 
 <%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>
 

@@ -1,3 +1,4 @@
+<%@page import="cl.buildersoft.framework.beans.User"%>
 <%@page import="cl.buildersoft.framework.beans.Option"%>
 <%@page import="cl.buildersoft.framework.beans.Submenu"%>
 <%@page import="cl.buildersoft.framework.beans.Menu"%>
@@ -5,7 +6,9 @@
 <%@page import="cl.buildersoft.framework.beans.Domain"%>
 <%@page import="cl.buildersoft.framework.util.BSWeb"%>
 <%@page import="java.util.List"%>
-
+<%
+String grabatar = BSWeb.getGrabatar((User)session.getAttribute("User"));
+%>
 <!-- 
 http://getbootstrap.com/components/#navbar
 
@@ -22,7 +25,6 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 		<a class="navbar-brand" href="#">Dalea T&amp;A</a>
 	</div>
 	<div class="navbar-collapse collapse">
-
 		<ul class="nav navbar-nav">
 			<li><a
 				href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString()%>">Inicio</a></li>
@@ -30,16 +32,25 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 			<%=write_menu_in_menu_jsp(session, request)%>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
-			<li><a href="#">${sessionScope.User.name} -
-					${sessionScope.User.mail}</a>
+			<li> 
+			
+			  <a href="#">
+			  <img src="<%=grabatar%>">&nbsp;
+			  <!-- 
+			  <img src="http://www.gravatar.com/avatar/06557b0ffbce34613baba8ba2513fe18?s=25">&nbsp;
+			   -->
+			  ${sessionScope.User.name} -
+					${sessionScope.User.mail}
+					
+					</a>
 				<ul class="dropdown-menu">
 					<%
 					Object domainsAsObject = session.getAttribute("Domains");
-					if(domainsAsObject!=null){					
-						List<Domain> domains = (List<Domain> ) session.getAttribute("Domains");
+					if(domainsAsObject!=null){
+						List<Domain> domains = (List<Domain>) session.getAttribute("Domains");
 						if(domains.size()>1){
 					%>
-					<li><a href="#">Dominio actual: ${sessionScope.Domain.name} (<%=domains.size()-1%>)</a>
+					<li><a href="#">Dominio actual: ${sessionScope.Domain.name} (<%=domains.size()-1%>+)</a>
 					
 						<ul class="dropdown-menu">
 						<%
@@ -64,7 +75,9 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 }
 %>
 					<li class="divider"></li>
-					<li><a
+					<li> <!-- <span class="glyphicon glyphicon-off"/>
+					 -->
+					<a   
 						href="${pageContext.request.contextPath}/jsp/login/logout.jsp?<%=BSWeb.randomString()%>">Salir</a></li>
 				</ul></li>
 		</ul>

@@ -12,10 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.beans.User;
 import cl.buildersoft.framework.database.BSBeanUtils;
+import cl.buildersoft.framework.services.BSUserService;
+import cl.buildersoft.framework.services.impl.BSUserServiceImpl;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.framework.util.BSHttpServlet;
-import cl.buildersoft.timectrl.business.beans.Event;
 import cl.buildersoft.timectrl.business.beans.EventBean;
 import cl.buildersoft.timectrl.business.beans.EventType;
 import cl.buildersoft.timectrl.business.services.EventLogService;
@@ -32,26 +33,40 @@ public class EventViewerMain extends BSHttpServlet {
 		BSConnectionFactory cf = new BSConnectionFactory();
 		Connection conn = cf.getConnection(request);
 		Connection connBS = cf.getConnection();
+		BSBeanUtils bu = new BSBeanUtils();
+		List<EventBean> eventList = null;
+		BSUserService us = new BSUserServiceImpl();
 
 		Calendar startDate = getCalendarField(request, "StartDate");
 		Calendar endDate = getCalendarField(request, "EndDate");
 		Long eventType = getLongField(request, "EventType");
-		Long user = getLongField(request, "User");
+		Long userId = getLongField(request, "User");
+		String dateFormat = BSDateTimeUtil.getFormatDate(request);
 
-		Boolean allIsNull = (startDate == null && endDate == null && eventType == null && user == null);
-		List<EventBean> eventList = null;
+		Boolean allIsNull = (startDate == null && endDate == null && eventType == null && userId == null);
 		if (!allIsNull) {
-			eventList = executeQuery(conn, startDate, endDate, eventType, user);
+			eventList = executeQuery(conn, startDate, endDate, eventType, userId);
 		}
 
-		BSBeanUtils bu = new BSBeanUtils();
-
 		List<EventType> eventTypeList = (List<EventType>) bu.listAll(conn, new EventType());
-		List<User> userList = (List<User>) bu.listAll(connBS, new User());
+		List<User> userList = us.listUsersByDomain(getCurrentDomain(request));
+
+		if (startDate == null) {
+			startDate = Calendar.getInstance();
+		}
+		if (endDate == null) {
+			endDate = Calendar.getInstance();
+		}
+		 
 
 		request.setAttribute("EventTypeList", eventTypeList);
 		request.setAttribute("UserList", userList);
 		request.setAttribute("EventList", eventList);
+		request.setAttribute("StartDate", startDate);
+		request.setAttribute("EndDate", endDate);
+		request.setAttribute("EventType", eventType);
+		request.setAttribute("UserId", userId);
+		request.setAttribute("DateFormat", dateFormat);
 
 		cf.closeConnection(conn);
 		cf.closeConnection(connBS);
