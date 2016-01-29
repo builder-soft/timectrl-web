@@ -7,7 +7,7 @@
 <%@page import="cl.buildersoft.framework.util.BSWeb"%>
 <%@page import="java.util.List"%>
 <%
-String grabatar = BSWeb.getGrabatar((User)session.getAttribute("User"));
+	String grabatar = BSWeb.getGravatar((User)session.getAttribute("User"));
 %>
 <!-- 
 http://getbootstrap.com/components/#navbar
