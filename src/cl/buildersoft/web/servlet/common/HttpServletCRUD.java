@@ -21,6 +21,10 @@ public abstract class HttpServletCRUD extends BSHttpServlet {
 
 	public abstract Semaphore setSemaphore(Connection conn, Object[] values);
 
+	public abstract String getBusinessClass();
+
+	public abstract void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table);
+
 	public HttpServletCRUD() {
 		super();
 	}
@@ -35,10 +39,11 @@ public abstract class HttpServletCRUD extends BSHttpServlet {
 		HttpSession session = request.getSession(false);
 		synchronized (session) {
 			session.setAttribute("BSTable", table);
+			session.setAttribute("BusinessClass", getBusinessClass());
 		}
 
 		forward(request, response, "/servlet/common/LoadTable");
-		
+
 	}
 
 	protected BSTableConfig initTable(HttpServletRequest request, String tableName) {

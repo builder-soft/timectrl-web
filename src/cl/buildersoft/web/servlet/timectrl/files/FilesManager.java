@@ -23,19 +23,29 @@ public class FilesManager extends HttpServletCRUD implements Servlet {
 		out.removeAction("EDIT");
 		out.removeAction("DELETE");
 		out.setTitle("Lista de archivos");
-		
+
 		BSAction download = new BSAction("DOWNLOAD", BSActionType.Record);
 		download.setLabel("Descargar");
 		download.setUrl("/servlet/timectrl/files/DownloadFile");
-//		download.setUrl("/servlet/ShowParameters");
+		// download.setUrl("/servlet/ShowParameters");
 		out.addAction(download);
-		
+
 		return out;
 	}
 
 	@Override
 	public Semaphore setSemaphore(Connection conn, Object[] values) {
-		return null;	
+		return null;
 	}
 
+	@Override
+	public String getBusinessClass() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+		// TODO Auto-generated method stub
+
+	}
 }

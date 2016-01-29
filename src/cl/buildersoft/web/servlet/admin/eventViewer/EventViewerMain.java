@@ -48,7 +48,7 @@ public class EventViewerMain extends BSHttpServlet {
 			eventList = executeQuery(conn, startDate, endDate, eventType, userId);
 		}
 
-		List<EventType> eventTypeList = (List<EventType>) bu.listAll(conn, new EventType());
+		List<EventType> eventTypeList = (List<EventType>) bu.listAll(conn, new EventType() ,"cName" );
 		List<User> userList = us.listUsersByDomain(getCurrentDomain(request));
 
 		if (startDate == null) {

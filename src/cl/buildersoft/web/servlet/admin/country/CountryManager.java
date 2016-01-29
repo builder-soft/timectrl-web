@@ -25,7 +25,16 @@ public class CountryManager extends HttpServletCRUD {
 	@Override
 	public Semaphore setSemaphore(Connection conn, Object[] values) {
 		return null;
-		
 	}
 
+	@Override
+	public String getBusinessClass() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+		// TODO Auto-generated method stub
+
+	}
 }

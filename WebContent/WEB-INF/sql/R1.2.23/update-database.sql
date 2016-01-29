@@ -48,8 +48,9 @@ ADD CONSTRAINT event_to_eventType FOREIGN KEY (cEventType) REFERENCES tEventType
 insert into tEventType(cKey, cName) VALUES('SECURITY_LOGIN_OK', 'Acceso exitoso');
 insert into tEventType(cKey, cName) VALUES('SECURITY_LOGIN_FAIL', 'Acceso fallido');
 insert into tEventType(cKey, cName) VALUES('SECURITY_LOGOUT', 'Salida del sistema');
-
 insert into tEventType(cKey, cName) VALUES('CONFIG_FAIL', 'Configuracion fallida en el sistema');
+insert into tEventType(cKey, cName) VALUES('NEW_USER', 'Nuevo usuario');
+insert into tEventType(cKey, cName) VALUES('DELETE_USER', 'Borrado de usuario');
 
 
 DELIMITER $$

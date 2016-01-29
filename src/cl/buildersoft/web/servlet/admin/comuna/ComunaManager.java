@@ -15,7 +15,7 @@ public class ComunaManager extends HttpServletCRUD {
 
 	@Override
 	protected BSTableConfig getBSTableConfig(HttpServletRequest request) {
-		BSTableConfig table =  initTable(request, "tComuna");
+		BSTableConfig table = initTable(request, "tComuna");
 		table.setTitle("Comunas del país");
 
 		table.setSortField("cName");
@@ -24,9 +24,18 @@ public class ComunaManager extends HttpServletCRUD {
 
 	@Override
 	public Semaphore setSemaphore(Connection conn, Object[] values) {
-		return null;		
+		return null;
 	}
 
-	 
+	@Override
+	public String getBusinessClass() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

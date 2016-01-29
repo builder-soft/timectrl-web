@@ -25,7 +25,7 @@ public class ReportManager extends HttpServletCRUD {
 		table.getField("cJavaClass").setShowInTable(false);
 		table.getField("cJavaClass").setShowInForm(false);
 		table.getField("cJavaClass").setReadonly(true);
-		
+
 		table.setSaveSP("pSaveReport");
 		table.setDeleteSP("pDeleteReport");
 
@@ -54,4 +54,14 @@ public class ReportManager extends HttpServletCRUD {
 		return null;
 	}
 
+	@Override
+	public String getBusinessClass() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+		// TODO Auto-generated method stub
+
+	}
 }

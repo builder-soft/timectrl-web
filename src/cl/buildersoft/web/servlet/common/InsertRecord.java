@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSDataBaseException;
 import cl.buildersoft.framework.util.BSConnectionFactory;
+import cl.buildersoft.framework.util.BSFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.framework.util.BSWeb;
@@ -29,23 +30,15 @@ public class InsertRecord extends /** AbstractServletUtil */
 BSHttpServlet {
 	private static final long serialVersionUID = 947236230190327847L;
 
-	/**
-	 * @Override protected void doGet(HttpServletRequest request,
-	 *           HttpServletResponse response) throws ServletException,
-	 *           IOException {
-	 *           request.getRequestDispatcher("/WEB-INF/jsp/common/no-access.jsp"
-	 *           ).forward(request, response); }
-	 */
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		BSTableConfig table = null;
-		String eventKey = null;
-		String eventWhat = null;
-		String[] eventParams = null;
+		String businessClass = null;
 
 		synchronized (session) {
 			table = (BSTableConfig) session.getAttribute("BSTable");
+			businessClass = (String) session.getAttribute("BusinessClass");
 		}
 
 		String saveSP = table.getSaveSP();
@@ -79,20 +72,21 @@ BSHttpServlet {
 				}
 			}
 
-			eventKey = table.getEventKey();
-			eventWhat = table.getEventWhat();
-			eventParams = table.getEventParams();
-
-			if (eventKey != null && eventWhat != null && eventParams != null) {
-				EventLogService event = ServiceFactory.createEventLogService();
-				event.writeEntry(conn, getCurrentUser(request).getId(), eventKey, eventWhat, eventParams);
-			}
+			writeEventLog(conn, businessClass, request, table);
 
 		} finally {
 			cf.closeConnection(conn);
 		}
 
 		forward(request, response, "/servlet/common/LoadTable");
+	}
+
+	private void writeEventLog(Connection conn, String businessClass, HttpServletRequest request, BSTableConfig table) {
+		BSFactory factory = new BSFactory();
+		HttpServletCRUD crudManager = (HttpServletCRUD) factory.getInstance(businessClass);
+
+		crudManager.writeEventLog(conn, "INSERT", request, table);
+
 	}
 
 	private String getSQL(BSTableConfig table, BSField[] fields, HttpServletRequest request) {
@@ -103,20 +97,6 @@ BSHttpServlet {
 		return sql;
 	}
 
-	/**
-	 * <code>
-	private String getSQLsp(String spName, BSTableConfig table) {
-		return getSQLsp(spName, table, table.getFields());
-	}
-
-	private String getSQLsp(String spName, BSTableConfig table, BSField[] fields) {
-		String sql = "call " + table.getDatabase() + "." + spName;
-		sql += "(" + getCommas(fields) + ") ";
-		return sql;
-
-	}
-</code>
-	 */
 	private List<Object> getValues4Insert(Connection conn, HttpServletRequest request, BSField[] fields) {
 		List<Object> out = new ArrayList<Object>();
 		Object value = null;
@@ -124,26 +104,11 @@ BSHttpServlet {
 		for (BSField field : fields) {
 			if (!field.isReadonly()) {
 				value = BSWeb.value2Object(conn, request, field, true);
+				field.setValue(value);
 				out.add(value);
 			}
 		}
 		return out;
 	}
 
-	/**
-	 * <code>
-	private List<Object> getValues4sp(Connection conn,
-			HttpServletRequest request, BSField[] fields) {
-
-		List<Object> out = new ArrayList<Object>();
-		Object value = null;
-
-		for (BSField field : fields) {
-			value = BSWeb.value2Object(conn, request, field, true);
-			out.add(value);
-		}
-		return out;
-	}
-	</code>
-	 */
 }

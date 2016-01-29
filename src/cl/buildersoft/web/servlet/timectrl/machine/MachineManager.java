@@ -28,14 +28,12 @@ public class MachineManager extends HttpServletCRUD {
 		table.getField("cName").setLabel("Nombre");
 		table.getField("cGroup").setLabel("Grupo");
 
-		
 		table.getField("cLastAccess").setReadonly(true);
-//		table.getField("cSerial").setReadonly(true);
+		// table.getField("cSerial").setReadonly(true);
 
-//		table.removeField("cLastAccess");
+		// table.removeField("cLastAccess");
 		table.removeField("cSerial");
-		
-		
+
 		BSAction ping = new BSAction("PING", BSActionType.MultiRecord);
 		ping.setLabel("Probar conección");
 		ping.setUrl("/servlet/timectrl/machine/TestConnection");
@@ -56,7 +54,17 @@ public class MachineManager extends HttpServletCRUD {
 
 	@Override
 	public Semaphore setSemaphore(Connection conn, Object[] values) {
-		return null;		
+		return null;
 	}
 
+	@Override
+	public String getBusinessClass() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+		// TODO Auto-generated method stub
+
+	}
 }

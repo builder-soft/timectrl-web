@@ -43,7 +43,6 @@ public class EmployeeManager extends HttpServletCRUD {
 
 		this.hideFields(table, "cMail", "cArea", "cPrivilege", "cEnabled");
 
-
 		BSAction action = new BSAction("TURNS", BSActionType.Record);
 		action.setLabel("Asignación de Turnos");
 		action.setUrl("/servlet/timectrl/employee/TurnsOfEmployee");
@@ -98,5 +97,16 @@ public class EmployeeManager extends HttpServletCRUD {
 		}
 		LOG.exiting(EmployeeManager.class.getName(), "setSemaphore", out);
 		return out;
+	}
+
+	@Override
+	public String getBusinessClass() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+		// TODO Auto-generated method stub
+
 	}
 }
