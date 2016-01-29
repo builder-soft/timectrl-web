@@ -84,9 +84,6 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 	</div>
 	<!--/.nav-collapse -->
 </div>
-
-    
-
 <%
 String s = "";
 Enumeration<String> names = session.getAttributeNames();%>
@@ -125,12 +122,8 @@ Enumeration<String> names = session.getAttributeNames();%>
 		String out = "";
 		String url = opt.getUrl();
 		String label = opt.getLabel();
-		//String urlPath = "";
 		String endTag = "</a>";
-		//String startTag = "";
 		String firstCharacter = "?";
-
-		
 
 		url = url == null ? "" : url;
 
@@ -139,13 +132,11 @@ Enumeration<String> names = session.getAttributeNames();%>
 			if (url.startsWith("/")) {
 				url = contextPath + url;
 			}
-			//out += startTag;
 
 			if (url.indexOf("?") > -1) {
 				firstCharacter = "&";
 			}
 			out += "href='" + url + firstCharacter + BSWeb.randomString() + "'";
-			//out += "href='" + url + "?" + BSWeb.randomString() + "'";
 			endTag = "</a>";
 
 		} else {
