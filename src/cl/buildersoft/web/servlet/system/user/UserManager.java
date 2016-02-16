@@ -104,11 +104,16 @@ public class UserManager extends HttpServletCRUD {
 		}
 		if ("DELETE".equals(action)) {
 			event.writeEntry(conn, getCurrentUser(request).getId(), "DELETE_USER",
-					"Borra usuario, sus datos fueron:\n- Id: %s.\n- Nombre: %s.\n- Mail: %s.\n- Perfil administrador: %s.", table
+					"Borra usuario %s, su Id fué %s\n mail %s\n y perfil %s", table.getField("cName").getValue(),
+					table.getField("cId").getValue(), table.getField("cMail").getValue(),
+					Boolean.parseBoolean(table.getField("cAdmin").getValue().toString()) ? "Administrador" : "Usuario");
+		}
+		if ("UPDATE".equals(action)) {
+			event.writeEntry(conn, getCurrentUser(request).getId(), "UPDATE_USER",
+					"Actualiza usuario, sus datos eran:\n- Id: %s.\n- Nombre: %s\n- Mail: %s\n- Perfil administrador: %s", table
 							.getField("cId").getValue(), table.getField("cName").getValue(), table.getField("cMail").getValue(),
 					Boolean.parseBoolean(table.getField("cAdmin").getValue().toString()) ? "Si" : "No");
 		}
-
 	}
 
 }

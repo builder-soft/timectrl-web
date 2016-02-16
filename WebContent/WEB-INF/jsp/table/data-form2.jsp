@@ -8,7 +8,7 @@
 <%
 	BSTableConfig table = (BSTableConfig) session.getAttribute("BSTable");
 	//Connection conn = (Connection) request.getAttribute("Conn");
-
+	String nextServlet = (String) request.getAttribute("Action");
 	BSField[] fields = table.getFields();
 %>
 <%@ include file="/WEB-INF/jsp/common/header2.jsp"%>
@@ -106,9 +106,11 @@ function onLoadPage(){
 <div class="page-header">
 	<h1 class="">Detalle de información</h1>
 </div>
+<%=("insert".equalsIgnoreCase(nextServlet)  )  + " " + nextServlet%>
 <%
-	String nextServlet = (String) request.getAttribute("Action");
-	if ("insert".equalsIgnoreCase(nextServlet) || table.usingView()) {
+	
+	if ("insert".equalsIgnoreCase(nextServlet)) {
+	//if ("insert".equalsIgnoreCase(nextServlet) || table.usingView()) {
 		nextServlet = "InsertRecord";
 	} else {
 		nextServlet = "UpdateRecord";

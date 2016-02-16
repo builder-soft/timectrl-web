@@ -80,5 +80,4 @@ public abstract class HttpServletCRUD extends BSHttpServlet {
 			table.getField(fieldName).setShowInTable(false);
 		}
 	}
-
 }

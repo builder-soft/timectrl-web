@@ -22,8 +22,6 @@ import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.framework.util.BSWeb;
 import cl.buildersoft.framework.util.crud.BSField;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.timectrl.business.services.EventLogService;
-import cl.buildersoft.timectrl.business.services.ServiceFactory;
 
 @WebServlet("/servlet/common/InsertRecord")
 public class InsertRecord extends /** AbstractServletUtil */

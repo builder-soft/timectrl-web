@@ -7,7 +7,7 @@
 <%@page import="cl.buildersoft.framework.util.BSWeb"%>
 <%@page import="java.util.List"%>
 <%
-	String grabatar = BSWeb.getGravatar((User)session.getAttribute("User"));
+	String gravatar = BSWeb.getGravatar((User)session.getAttribute("User"));
 %>
 <!-- 
 http://getbootstrap.com/components/#navbar
@@ -35,7 +35,7 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 			<li> 
 			
 			  <a href="#">
-			  <img src="<%=grabatar%>">&nbsp;
+			  <img src="<%=gravatar%>">&nbsp;
 			  <!-- 
 			  <img src="http://www.gravatar.com/avatar/06557b0ffbce34613baba8ba2513fe18?s=25">&nbsp;
 			   -->
@@ -50,7 +50,7 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 						List<Domain> domains = (List<Domain>) session.getAttribute("Domains");
 						if(domains.size()>1){
 					%>
-					<li><a href="#">Dominio actual: ${sessionScope.Domain.name} (<%=domains.size()-1%>+)</a>
+					<li><a href="#">Dominio actual: ${sessionScope.Domain.name} (<%=domains.size()-1 %>+)</a>
 					
 						<ul class="dropdown-menu">
 						<%

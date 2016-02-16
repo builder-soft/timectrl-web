@@ -6,7 +6,7 @@
   </welcome-file-list>
   <context-param>
     <param-name>CurrentVersion</param-name>
-    <param-value>R1.2.23</param-value>
+    <param-value>R1.2.24</param-value>
   </context-param>
   <context-param>
     <param-name>bsframework.license.validate</param-name>
