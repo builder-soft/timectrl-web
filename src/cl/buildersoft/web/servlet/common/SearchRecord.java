@@ -49,10 +49,9 @@ public class SearchRecord extends BSHttpServlet {
 		conn = cf.getConnection(request);
 		ResultSet rs = mysql.queryResultSet(conn, sql, BSUtils.array2List(id));
 		resultset2Table(rs, table);
-mysql.closeSQL();
-mysql.closeSQL(rs);
-		
-		
+		mysql.closeSQL();
+		mysql.closeSQL(rs);
+
 		String page = bootstrap(conn) ? "/WEB-INF/jsp/table/data-form2.jsp" : "/WEB-INF/jsp/table/data-form.jsp";
 
 		cf.closeConnection(conn);

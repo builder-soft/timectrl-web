@@ -37,12 +37,16 @@ public class EmployeeManager extends HttpServletCRUD {
 		table.getField("cGroup").setLabel("Grupo");
 		table.getField("cBoss").setLabel("Superior");
 		table.getField("cPrivilege").setLabel("Tipo de usuario");
-		table.getField("cEnabled").setLabel("Activado");
+//		table.getField("cEnabled").setLabel("Activado");
 		table.getField("cUsername").setLabel("Nombre Usuario");
 		table.getField("cMail").setLabel("Correo electrónico");
 
-		this.hideFields(table, "cMail", "cArea", "cPrivilege", "cEnabled");
-
+		this.hideFields(table, "cMail", "cArea", "cPrivilege");
+		table.removeField("cEnabled");
+		
+		table.setDeleteSP("pDeleteEmployee");
+		table.setWhere("cEnabled=TRUE");
+		
 		BSAction action = new BSAction("TURNS", BSActionType.Record);
 		action.setLabel("Asignación de Turnos");
 		action.setUrl("/servlet/timectrl/employee/TurnsOfEmployee");
