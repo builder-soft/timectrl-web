@@ -31,7 +31,7 @@ public class UpdateRecord extends BSHttpServlet {
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		BSTableConfig table = null;
 		synchronized (session) {
 			table = (BSTableConfig) session.getAttribute("BSTable");
@@ -41,6 +41,9 @@ public class UpdateRecord extends BSHttpServlet {
 		BSField idField = table.getIdField();
 		BSField[] fields = new BSField[0];
 		BSField[] fieldsWidthoutId = table.deleteId();
+		fieldsWidthoutId = table.getNotReadonly(fieldsWidthoutId);
+		
+		
 		Integer index = 0;
 
 		Integer len = showInFormCount(fieldsWidthoutId);
@@ -70,7 +73,6 @@ public class UpdateRecord extends BSHttpServlet {
 		Connection conn = null;
 		BSmySQL mysql = new BSmySQL();
 		BSConnectionFactory cf = new BSConnectionFactory();
-
 		conn = cf.getConnection(request);
 		params = getParams(conn, request, fields, idField);
 

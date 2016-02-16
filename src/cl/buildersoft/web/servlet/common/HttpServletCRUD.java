@@ -21,27 +21,29 @@ public abstract class HttpServletCRUD extends BSHttpServlet {
 
 	public abstract Semaphore setSemaphore(Connection conn, Object[] values);
 
+	public abstract String getBusinessClass();
+
+	public abstract void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table);
+
 	public HttpServletCRUD() {
 		super();
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// BSHeadConfig head = getBSHeadConfig();
 		BSTableConfig table = getBSTableConfig(request);
 
 		String uri = request.getRequestURI().substring(request.getContextPath().length());
 
 		table.setUri(uri);
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		synchronized (session) {
 			session.setAttribute("BSTable", table);
-			// session.setAttribute("BSHead", head);
+			session.setAttribute("BusinessClass", getBusinessClass());
 		}
 
 		forward(request, response, "/servlet/common/LoadTable");
-		// request.getRequestDispatcher("/servlet/common/LoadTable").forward(request,
-		// response);
+
 	}
 
 	protected BSTableConfig initTable(HttpServletRequest request, String tableName) {
@@ -55,7 +57,7 @@ public abstract class HttpServletCRUD extends BSHttpServlet {
 	protected BSTableConfig initTable(HttpServletRequest request, String database, String tableName, HttpServletCRUD servlet) {
 		String databaseName = null;
 		if (database == null) {
-			Domain domain = (Domain) request.getSession().getAttribute("Domain");
+			Domain domain = (Domain) request.getSession(false).getAttribute("Domain");
 			databaseName = domain.getDatabase();
 		} else {
 			databaseName = database;

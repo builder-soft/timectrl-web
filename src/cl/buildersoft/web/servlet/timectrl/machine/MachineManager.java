@@ -24,11 +24,15 @@ public class MachineManager extends HttpServletCRUD {
 		table.setTitle("Listado de Relojes Control");
 		table.setScript("/js/timectrl/machine/machine-manager.js");
 
-		table.getField("cLastAccess").setReadonly(true);
 		table.getField("cLastAccess").setLabel("Último Acceso");
 		table.getField("cName").setLabel("Nombre");
 		table.getField("cGroup").setLabel("Grupo");
-		table.getField("cSerial").setReadonly(true);
+
+		table.getField("cLastAccess").setReadonly(true);
+		// table.getField("cSerial").setReadonly(true);
+
+		// table.removeField("cLastAccess");
+		table.removeField("cSerial");
 
 		BSAction ping = new BSAction("PING", BSActionType.MultiRecord);
 		ping.setLabel("Probar conección");
@@ -50,7 +54,17 @@ public class MachineManager extends HttpServletCRUD {
 
 	@Override
 	public Semaphore setSemaphore(Connection conn, Object[] values) {
-		return null;		
+		return null;
 	}
 
+	@Override
+	public String getBusinessClass() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+		// TODO Auto-generated method stub
+
+	}
 }

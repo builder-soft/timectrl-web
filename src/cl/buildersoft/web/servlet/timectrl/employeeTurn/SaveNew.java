@@ -44,10 +44,9 @@ public class SaveNew extends HttpServlet {
 
 		EmployeeTurnService service = new EmployeeTurnServiceImpl();
 		service.appendNew(conn, employeeTurn);
-
 		cf.closeConnection(conn);
-		
-		request.setAttribute("cId", "" + employee);
+
+		request.setAttribute("cId", employee.toString());
 
 		request.getRequestDispatcher("/servlet/timectrl/employeeTurn/TurnsOfEmployee").forward(request, response);
 

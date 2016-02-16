@@ -1,52 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	version="3.0">
-	<display-name>timectrl-web</display-name>
-	<welcome-file-list>
-		<welcome-file>jsp/login/login2.jsp</welcome-file>
-	</welcome-file-list>
-	<context-param>
-		<param-name>CurrentVersion</param-name>
-		<param-value>R1.2.22</param-value>
-	</context-param>
-	<!-- 
-	<context-param>
-		<param-name>bsframework.database.driver</param-name>
-		<param-value>com.mysql.jdbc.Driver</param-value>
-	</context-param>
-	<context-param>
-		<param-name>bsframework.database.server</param-name>
-		<param-value>localhost</param-value>
-	</context-param>
-	<context-param>
-		<param-name>bsframework.database.database</param-name>
-		<param-value>bsframework</param-value>
-	</context-param>
-	<context-param>
-		<param-name>bsframework.database.username</param-name>
-		<param-value>root</param-value>
-	</context-param>
-	<context-param>
-		<param-name>bsframework.database.password</param-name>
-		<param-value>admin</param-value>
-	</context-param>
-	<context-param>
-		<param-name>bsframework.database.datasource</param-name>
-		<param-value>jdbc/bsframework</param-value>
-	</context-param>
-	 -->
-	<context-param>
-		<param-name>bsframework.license.validate</param-name>
-		<param-value>false</param-value>
-	</context-param>
-
-	<error-page>
-		<exception-type>java.lang.Exception</exception-type>
-		<location>/servlet/ErrorHandler</location>
-	</error-page>
-	<!-- <error-page> <exception-type>java.lang.BSException</exception-type> 
-		<location>/jsp/error/error.jsp</location> </error-page> <error-page> <exception-type>java.lang.RuntimeException</exception-type> 
-		<location>/jsp/error/error.jsp</location> </error-page> -->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>timectrl-web</display-name>
+  <welcome-file-list>
+    <welcome-file>jsp/login/login2.jsp</welcome-file>
+  </welcome-file-list>
+  <context-param>
+    <param-name>CurrentVersion</param-name>
+    <param-value>R1.2.23</param-value>
+  </context-param>
+  <context-param>
+    <param-name>bsframework.license.validate</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <error-page>
+    <exception-type>java.lang.Exception</exception-type>
+    <location>/servlet/ErrorHandler</location>
+  </error-page>
 </web-app>

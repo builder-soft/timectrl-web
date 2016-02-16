@@ -1,10 +1,11 @@
+<%@page import="cl.buildersoft.timectrl.business.services.impl.EmployeeAndFingerprint"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.Privilege"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.Employee"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="application/json; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-List<Employee> employees = (List<Employee>)request.getAttribute("Employee");
+List<EmployeeAndFingerprint> employees = (List<EmployeeAndFingerprint>)request.getAttribute("EmployeeAndFingerprint");
 List<Privilege> privilegeList = (List<Privilege>)request.getAttribute("PrivilegeList");
 
 Integer size = employees.size();
@@ -12,10 +13,10 @@ Integer i = 0;
 %>
 
 [
-<%for(Employee employee : employees){
+<%for(EmployeeAndFingerprint eaf : employees){
 	i++;
 %>
-    {"id": "<%=employee.getId()%>", "key":"<%=employee.getKey()%>", "name":"<%=employee.getName()%>", "enabled":"<%=employee.getEnabled()%>", "privilege":"<%=getPrivililege(privilegeList, employee.getPrivilege())%>", "fingerprint":"<%=employee.getFingerPrint()!=null%>"}<%=i<size?",":""%> 
+    {"id": "<%=eaf.getEmployee().getId()%>", "key":"<%=eaf.getEmployee().getKey()%>", "name":"<%=eaf.getEmployee().getName()%>", "enabled":"<%=eaf.getEmployee().getEnabled()%>", "privilege":"<%=getPrivililege(privilegeList, eaf.getEmployee().getPrivilege())%>", "fingerprint":"<%=eaf.getFingerprint().getFingerprint()!=null%>"}<%=i<size?",":""%>
 <%}%>
 ]
 

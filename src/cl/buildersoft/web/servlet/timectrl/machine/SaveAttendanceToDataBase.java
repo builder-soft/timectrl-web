@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.exception.BSException;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.api._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.AttendanceLog;
@@ -28,12 +29,13 @@ public class SaveAttendanceToDataBase extends BSHttpServlet {
 	private static final long serialVersionUID = 4061684288079220007L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		@SuppressWarnings("unchecked")
 		List<AttendanceLog> attendanceList = (List<AttendanceLog>) session.getAttribute(ATTENDANCES);
 
 		// BSBeanUtils bu = new BSBeanUtils();
-		Connection conn = getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 		Machine machine = getMachine(conn, request);
 		// BSmySQL mysql = new BSmySQL();
 		MachineService2 service = new MachineServiceImpl2();
@@ -56,6 +58,9 @@ public class SaveAttendanceToDataBase extends BSHttpServlet {
 		if (deleteFromDevice(request)) {
 			deleteInfo(machine, conn);
 		}
+				
+		cf.closeConnection(conn);
+		
 		session.setAttribute(ATTENDANCES, null);
 
 		forward(request, response, "/servlet/timectrl/machine/MachineManager");

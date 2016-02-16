@@ -24,19 +24,30 @@ public class ReportTypeManager extends HttpServletCRUD {
 		table.setTitle("Tipos de reportes");
 		table.removeAction("INSERT");
 		table.removeAction("DELETE");
-		
+
 		BSAction action = new BSAction("PARAMS_DEF", BSActionType.Record);
 		action.setLabel("Definicion de parámetros de Salida");
 		action.setUrl("/servlet/timectrl/report/config/ReadOutputParamDef");
-//		action.setUrl("/servlet/timectrl/report/config/InConfigByReport");
+		// action.setUrl("/servlet/timectrl/report/config/InConfigByReport");
 		table.addAction(action);
-		
+
 		return table;
 	}
 
 	@Override
 	public Semaphore setSemaphore(Connection conn, Object[] values) {
-		return null;		
+		return null;
+	}
+
+	@Override
+	public String getBusinessClass() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

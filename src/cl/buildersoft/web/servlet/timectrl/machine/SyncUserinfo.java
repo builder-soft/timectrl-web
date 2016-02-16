@@ -41,7 +41,7 @@ public class SyncUserinfo extends BSHttpServlet {
 		// bu.closeConnection(conn);
 		machineService.disconnect(api);
 
-		request.setAttribute("cId", "" + machineId);
+		request.setAttribute("cId", machineId.toString());
 		forward(request, response, "/servlet/timectrl/machine/ReadEmployee");
 
 	}

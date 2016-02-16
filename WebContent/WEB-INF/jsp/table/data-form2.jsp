@@ -44,8 +44,9 @@ function onLoadPage(){
 				html = "";
 
 				if (!showThis) {
-					if (type.equals(BSDataTypeEnum.DOUBLE) || type.equals(BSDataTypeEnum.INTEGER)
-							|| type.equals(BSDataTypeEnum.DATE) || "email".equalsIgnoreCase(typeHtml)) {
+					if (type.getDataTypeEnum().equals(BSDataTypeEnum.DOUBLE) || type.getDataTypeEnum().equals(BSDataTypeEnum.INTEGER)
+							|| type.getDataTypeEnum().equals(BSDataTypeEnum.DATE) || "email".equalsIgnoreCase(typeHtml)) {
+						
 						if (type.equals(BSDataTypeEnum.DOUBLE)) {
 							html = "var " + fieldName + " = formated2double(document.getElementById('" + fieldName
 									+ "').value);\n";
@@ -134,7 +135,6 @@ function onLoadPage(){
 		}
 		}
 	%>
-
 	</div>
 </form>
  

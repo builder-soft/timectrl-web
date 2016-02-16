@@ -1,4 +1,3 @@
-
 package cl.buildersoft.web.servlet.timectrl.report.config;
 
 import java.sql.Connection;
@@ -26,7 +25,7 @@ public class ReportManager extends HttpServletCRUD {
 		table.getField("cJavaClass").setShowInTable(false);
 		table.getField("cJavaClass").setShowInForm(false);
 		table.getField("cJavaClass").setReadonly(true);
-		
+
 		table.setSaveSP("pSaveReport");
 		table.setDeleteSP("pDeleteReport");
 
@@ -44,7 +43,7 @@ public class ReportManager extends HttpServletCRUD {
 
 		table.getField("cKey").setLabel("Llave");
 		table.getField("cName").setLabel("Nombre");
-//		table.getField("cJavaClass").setReadonly(true);
+		// table.getField("cJasperFile").setLabel("Archivo de reporte");
 		table.getField("cType").setLabel("Tipo");
 
 		return table;
@@ -55,4 +54,14 @@ public class ReportManager extends HttpServletCRUD {
 		return null;
 	}
 
+	@Override
+	public String getBusinessClass() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+		// TODO Auto-generated method stub
+
+	}
 }

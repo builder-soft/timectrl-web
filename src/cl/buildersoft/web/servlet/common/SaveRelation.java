@@ -38,7 +38,7 @@ public class SaveRelation extends HttpServlet {
 		Long id = Long.parseLong(request.getParameter("cId"));
 		String[] relations = request.getParameterValues("Relation");
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		BSTableConfig table = null;
 		synchronized (session) {
 			table = (BSTableConfig) session.getAttribute("BSTable");
@@ -46,7 +46,6 @@ public class SaveRelation extends HttpServlet {
 
 		BSmySQL mysql = new BSmySQL();
 		BSConnectionFactory cf = new BSConnectionFactory();
-
 		Connection conn = cf.getConnection(request);
 
 		BSAction action = table.getAction(request.getParameter("CodeAction"));

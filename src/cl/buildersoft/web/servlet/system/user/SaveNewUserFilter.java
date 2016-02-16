@@ -30,7 +30,7 @@ public class SaveNewUserFilter implements Filter {
 
 		HttpServletRequest servletRequest = (HttpServletRequest) request;
 
-		HttpSession session = servletRequest.getSession();
+		HttpSession session = servletRequest.getSession(false);
 		BSTableConfig table = null;
 		User user = null;
 		Domain domain = null;

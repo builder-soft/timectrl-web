@@ -11,17 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSPaging;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
- 
- 
 
 /**
  * Servlet implementation class LoadTable
  */
 @WebServlet("/servlet/common/LoadTable")
 public class LoadTable extends AbstractServletUtil {
-	// private static final String BSFRAMEWORK = "bsframework";
 	private static final long serialVersionUID = -2257837165074641521L;
 
 	public LoadTable() {
@@ -29,16 +27,16 @@ public class LoadTable extends AbstractServletUtil {
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		BSTableConfig table = null;
 		synchronized (session) {
 			table = (BSTableConfig) session.getAttribute("BSTable");
 		}
 
-		// Connection conn = null;
 		BSmySQL mysql = new BSmySQL();
 
-		Connection conn =  getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 
 		table.configFields(conn, mysql);
 
@@ -49,16 +47,13 @@ public class LoadTable extends AbstractServletUtil {
 		request.setAttribute("Conn", conn);
 		request.setAttribute("Paging", paging);
 		request.setAttribute("Search", paging.getSearchValue(request));
-		// mysql.closeConnection(conn);
 
 		synchronized (session) {
 			session.setAttribute("BSTable", table);
 		}
 
 		forward(request, response, bootstrap(conn) ? "/WEB-INF/jsp/table/main2.jsp" : "/WEB-INF/jsp/table/main.jsp");
-		/*
-		 * request.getRequestDispatcher("/WEB-INF/jsp/table/main.jsp").forward(
-		 * request, response);
-		 */}
 
+		cf.closeConnection(conn);
+	}
 }

@@ -2,6 +2,7 @@ package cl.buildersoft.web.servlet.timectrl.machine;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,15 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSConfig;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.api._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.Area;
 import cl.buildersoft.timectrl.business.beans.Employee;
+import cl.buildersoft.timectrl.business.beans.Fingerprint;
 import cl.buildersoft.timectrl.business.beans.Machine;
 import cl.buildersoft.timectrl.business.beans.Privilege;
 import cl.buildersoft.timectrl.business.services.MachineService2;
+import cl.buildersoft.timectrl.business.services.impl.EmployeeAndFingerprint;
 import cl.buildersoft.timectrl.business.services.impl.MachineServiceImpl2;
 
 /**
@@ -35,13 +38,14 @@ public class ReadEmployee extends BSHttpServlet {
 		MachineService2 machineService = new MachineServiceImpl2();
 
 		BSBeanUtils bu = new BSBeanUtils();
-		Connection conn = getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 
 		machine.setId(id);
 		bu.search(conn, machine);
 
 		_zkemProxy api = machineService.connect(conn, machine);
-		List<Employee> employees = machineService.listEmployees(conn, api);
+		List<EmployeeAndFingerprint> eaf = machineService.listEmployees(conn, api);
 
 		machineService.disconnect(api);
 
@@ -50,21 +54,26 @@ public class ReadEmployee extends BSHttpServlet {
 			areaList = (List<Area>) bu.listAll(conn, new Area());
 		}
 
-		List<Employee> employeeDB = listEmployeeListDB(conn, areaList);
+		List<EmployeeAndFingerprint> employeeDB = listEmployeeListDB(conn, areaList);
 		List<Privilege> privilegeList = (List<Privilege>) bu.listAll(conn, new Privilege());
-//		updatePrivilege(employeeDB, privilegeList);
+		// updatePrivilege(employeeDB, privilegeList);
 
-		request.setAttribute("EmployeeList", employees);
-		request.setAttribute("EmployeeListDB", employeeDB);
+		request.setAttribute("EAFListMch", eaf);
+		request.setAttribute("EAFListDB", employeeDB);
 		request.setAttribute("AreaList", areaList);
 		request.setAttribute("Machine", machine);
 		request.setAttribute("PrivilegeList", privilegeList);
 
-		new BSmySQL().closeConnection(conn);
+		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/machine/read-employee2.jsp"
+				: "/WEB-INF/jsp/timectrl/machine/read-employee.jsp";
 
-		request.getRequestDispatcher("/WEB-INF/jsp/timectrl/machine/read-employee.jsp").forward(request, response);
+		cf.closeConnection(conn);
+
+		forward(request, response, page);
 	}
 
+	/**
+	 * <code>
 	private void updatePrivilege(List<Employee> employeeList, List<Privilege> privilegeList) {
 		// Debe actualizar el privilegio del empleado,
 		// buscando el Id en la lista para dejar el Key
@@ -74,7 +83,6 @@ public class ReadEmployee extends BSHttpServlet {
 			employee.setPrivilege(privilegeKey.longValue());
 		}
 	}
-
 	private Integer getPrivilegeKey(Employee employee, List<Privilege> privilegeList) {
 		Long privilegeId = employee.getPrivilege();
 		Integer privilegeKey = null;
@@ -86,6 +94,8 @@ public class ReadEmployee extends BSHttpServlet {
 
 		return privilegeKey;
 	}
+</code>
+	 */
 
 	private Boolean getReadArea(Connection conn) {
 		BSConfig config = new BSConfig();
@@ -93,14 +103,29 @@ public class ReadEmployee extends BSHttpServlet {
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<Employee> listEmployeeListDB(Connection conn, List<Area> areas) {
+	private List<EmployeeAndFingerprint> listEmployeeListDB(Connection conn, List<Area> areas) {
 		BSBeanUtils bu = new BSBeanUtils();
-		List<Employee> out = null;
+		List<EmployeeAndFingerprint> out = new ArrayList<EmployeeAndFingerprint>();
+		List<Employee> employeeList = null;
 		if (areas == null || areas.size() == 0) {
-			out = (List<Employee>) bu.listAll(conn, new Employee());
+			employeeList = (List<Employee>) bu.listAll(conn, new Employee());
 		} else {
-			out = (List<Employee>) bu.list(conn, new Employee(), "cArea=?", areas.get(0).getId());
+			employeeList = (List<Employee>) bu.list(conn, new Employee(), "cArea=?", areas.get(0).getId());
 		}
+
+		Fingerprint fingerprint = null;
+		for (Employee employee : employeeList) {
+			fingerprint = new Fingerprint();
+			EmployeeAndFingerprint eaf = new EmployeeAndFingerprint();
+			bu.search(conn, fingerprint, "cEmployee=?", employee.getId());
+
+			eaf.setEmployee(employee);
+			eaf.setFingerprint(fingerprint);
+
+			out.add(eaf);
+
+		}
+
 		return out;
 	}
 }

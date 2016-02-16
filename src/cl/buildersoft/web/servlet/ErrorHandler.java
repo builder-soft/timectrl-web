@@ -18,8 +18,8 @@ public class ErrorHandler extends BSHttpServlet {
 	private static final long serialVersionUID = 684616842L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
-		Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+//		Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+//		Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
 		String servletName = (String) request.getAttribute("javax.servlet.error.servlet_name");
 		if (servletName == null) {
 			servletName = "Unknown";
@@ -29,9 +29,10 @@ public class ErrorHandler extends BSHttpServlet {
 			requestUri = "Unknown";
 		}
 
-		Connection conn = getConnection(request);
-		String page = bootstrap(conn) ? "/jsp/error/error2.jsp" : "/jsp/error/error.jsp";
-		closeConnection(conn);
+//		Connection conn = getConnection(request);
+		String page =   "/jsp/error/error2.jsp" ;
+//		String page = bootstrap(conn) ? "/jsp/error/error2.jsp" : "/jsp/error/error.jsp";
+//		closeConnection(conn);
 		
 		forward(request, response, page);
 	}

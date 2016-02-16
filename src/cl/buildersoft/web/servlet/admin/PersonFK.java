@@ -28,7 +28,6 @@ public class PersonFK extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BSmySQL mysql = new BSmySQL();
 		BSConnectionFactory cf = new BSConnectionFactory();
-
 		Connection conn = cf.getConnection(request);
 
 		List<Object> prms = new ArrayList<Object>();

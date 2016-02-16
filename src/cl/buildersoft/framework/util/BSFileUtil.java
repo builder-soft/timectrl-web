@@ -12,13 +12,13 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSSystemException;
 
 public class BSFileUtil {
 
 	public Map<String, String> uploadFile(HttpServletRequest request) {
 		BSConnectionFactory cf = new BSConnectionFactory();
-
 		Connection conn = cf.getConnection(request);
 
 		BSConfig config = new BSConfig();

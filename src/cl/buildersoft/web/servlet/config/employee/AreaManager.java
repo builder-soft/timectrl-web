@@ -20,12 +20,12 @@ public class AreaManager extends HttpServletCRUD {
 	protected BSTableConfig getBSTableConfig(HttpServletRequest request) {
 		BSTableConfig table = initTable(request, "tArea");
 		table.setTitle("Administración de Áreas");
-		
+
 		table.getField("cKey").setLabel("Llave");
 		table.getField("cName").setLabel("Nombre");
 		table.getField("cCostCenter").setLabel("Centro de Costo");
 		table.getField("cParent").setLabel("Dependencia");
-		
+
 		return table;
 	}
 
@@ -34,4 +34,14 @@ public class AreaManager extends HttpServletCRUD {
 		return null;
 	}
 
+	@Override
+	public String getBusinessClass() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+		// TODO Auto-generated method stub
+
+	}
 }

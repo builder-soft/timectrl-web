@@ -56,12 +56,17 @@ function ajaxForValidate(url, value) {
 }
 
 function formatIfValid(obj, value) {
-	if (value == null) {
-		obj.setAttribute("class", "cError");
-	} else {
-		obj.setAttribute("class", "");
+	if (value != null) {
 		obj.value = value;
 	}
+	/**
+	if (value == null) {
+//		obj.setAttribute("class", "cError");
+	} else {
+//		obj.setAttribute("class", "");
+		obj.value = value;
+	}
+	*/
 }
 
 function dateBlur(obj) {

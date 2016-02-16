@@ -13,6 +13,8 @@ import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSActionType;
 import cl.buildersoft.framework.util.crud.BSField;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
+import cl.buildersoft.timectrl.business.services.EventLogService;
+import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.web.servlet.common.HttpServletCRUD;
 
 @WebServlet("/servlet/system/user/UserManager")
@@ -21,7 +23,7 @@ public class UserManager extends HttpServletCRUD {
 
 	@Override
 	protected BSTableConfig getBSTableConfig(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 
 		Boolean isAdmin = null;
 		User user = null;
@@ -41,7 +43,7 @@ public class UserManager extends HttpServletCRUD {
 			table = new BSTableConfig(domain.getDatabase(), "tUser", "vUser");
 			table.setSaveSP("bsframework.pSaveUser");
 		}
-		
+
 		table.setTitle("Usuarios del sistema");
 		table.setDeleteSP("pDeleteUser");
 
@@ -73,7 +75,7 @@ public class UserManager extends HttpServletCRUD {
 
 		BSAction rolRelation = new BSAction("ROL_RELATION", null);
 
-//		Domain domain = (Domain) session.getAttribute("Domain");
+		// Domain domain = (Domain) session.getAttribute("Domain");
 
 		rolRelation.setNatTable(domain.getDatabase(), "tR_UserRol", domain.getDatabase(), "tRol");
 		rolRelation.setLabel("Roles de usuario");
@@ -84,6 +86,29 @@ public class UserManager extends HttpServletCRUD {
 
 	@Override
 	public Semaphore setSemaphore(Connection conn, Object[] values) {
-		return null;	
+		return null;
 	}
+
+	@Override
+	public String getBusinessClass() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+		EventLogService event = ServiceFactory.createEventLogService();
+
+		if ("INSERT".equals(action)) {
+			event.writeEntry(conn, getCurrentUser(request).getId(), "NEW_USER", "Crea un nuevo usuario %s, mail %s", table
+					.getField("cName").getValue(), table.getField("cMail").getValue());
+		}
+		if ("DELETE".equals(action)) {
+			event.writeEntry(conn, getCurrentUser(request).getId(), "DELETE_USER",
+					"Borra usuario, sus datos fueron:\n- Id: %s.\n- Nombre: %s.\n- Mail: %s.\n- Perfil administrador: %s.", table
+							.getField("cId").getValue(), table.getField("cName").getValue(), table.getField("cMail").getValue(),
+					Boolean.parseBoolean(table.getField("cAdmin").getValue().toString()) ? "Si" : "No");
+		}
+
+	}
+
 }

@@ -1,4 +1,4 @@
-echo -- 1.2.18 --
+echo -- 1.2.20 --
 IF "%1" == "" GOTO error
 call ..\msg.cmd "Creando funciones de sistema..."
 	for %%i in (fn-*.sql) do mysql -D%1 -t -u root -padmin --default-character-set=utf8 < %%i

@@ -32,7 +32,7 @@ public class SearchRecord extends BSHttpServlet {
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		BSTableConfig table = null;
 		synchronized (session) {
 			table = (BSTableConfig) session.getAttribute("BSTable");
@@ -49,18 +49,16 @@ public class SearchRecord extends BSHttpServlet {
 		conn = cf.getConnection(request);
 		ResultSet rs = mysql.queryResultSet(conn, sql, BSUtils.array2List(id));
 		resultset2Table(rs, table);
-
+mysql.closeSQL();
+mysql.closeSQL(rs);
+		
+		
 		String page = bootstrap(conn) ? "/WEB-INF/jsp/table/data-form2.jsp" : "/WEB-INF/jsp/table/data-form.jsp";
 
 		cf.closeConnection(conn);
 
-		// request.setAttribute("Data", rs);
-		// request.setAttribute("Conn", conn);
-
 		request.setAttribute("Action", "Update");
 		forward(request, response, page);
-		// request.getRequestDispatcher("/WEB-INF/jsp/table/data-form.jsp").forward(request,
-		// response);
 	}
 
 	private void resultset2Table(ResultSet rs, BSTableConfig table) {

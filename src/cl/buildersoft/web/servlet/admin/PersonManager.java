@@ -29,7 +29,6 @@ public class PersonManager extends HttpServletCRUD implements Servlet {
 
 		BSmySQL mysql = new BSmySQL();
 		BSConnectionFactory cf = new BSConnectionFactory();
-
 		Connection conn = cf.getConnection(request);
 		table.configFields(conn, mysql);
 		cf.closeConnection(conn);
@@ -74,6 +73,17 @@ public class PersonManager extends HttpServletCRUD implements Servlet {
 	@Override
 	public Semaphore setSemaphore(Connection conn, Object[] values) {
 		return null;
+	}
+
+	@Override
+	public String getBusinessClass() {
+		return this.getClass().getName();
+	}
+
+	@Override
+	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

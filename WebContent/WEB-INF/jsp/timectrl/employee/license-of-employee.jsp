@@ -118,11 +118,10 @@
 
 <%@ include file="/WEB-INF/jsp/common/footer.jsp"%>
 <%!private String getCause(HttpServletRequest request, License license) {
-		BSConnectionFactory cf = new BSConnectionFactory();
-		Connection conn = cf.getConnection(request);
-		BSmySQL mysql = new BSmySQL();
-		String name = mysql.queryField(conn, "SELECT cName FROM tLicenseCause WHERE cId=?", license.getLicenseCause());
-		cf.closeConnection(conn);
-
-		return name;
+	BSConnectionFactory cf = new BSConnectionFactory();
+	Connection conn = cf.getConnection(request);
+	BSmySQL mysql = new BSmySQL();
+	String name = mysql.queryField(conn, "SELECT cName FROM tLicenseCause WHERE cId=?", license.getLicenseCause());
+	cf.closeConnection(conn);
+	return name;
 	}%>

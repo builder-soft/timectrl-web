@@ -14,9 +14,11 @@ import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.api._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.Employee;
+import cl.buildersoft.timectrl.business.beans.Fingerprint;
 import cl.buildersoft.timectrl.business.beans.Machine;
 import cl.buildersoft.timectrl.business.services.MachineService2;
 import cl.buildersoft.timectrl.business.services.PrivilegeService;
+import cl.buildersoft.timectrl.business.services.impl.EmployeeAndFingerprint;
 import cl.buildersoft.timectrl.business.services.impl.MachineServiceImpl2;
 import cl.buildersoft.timectrl.business.services.impl.PrivilegeServiceImpl;
 
@@ -41,7 +43,7 @@ public class AddEmployee extends BSHttpServlet {
 
 			MachineService2 machineService = new MachineServiceImpl2();
 			_zkemProxy api = machineService.connect(conn, machine);
-			List<Employee> employees = getEmployeeList(conn, keys);
+			List<EmployeeAndFingerprint> employees = getEmployeeList(conn, keys);
 			PrivilegeService ps = new PrivilegeServiceImpl();
 			machineService.addEmployees(conn, ps, api, employees);
 			machineService.disconnect(api);
@@ -50,16 +52,25 @@ public class AddEmployee extends BSHttpServlet {
 		forward(request, response, "/servlet/timectrl/machine/MachineManager");
 	}
 
-	private List<Employee> getEmployeeList(Connection conn, String[] keys) {
-		List<Employee> out = new ArrayList<Employee>();
+	private List<EmployeeAndFingerprint> getEmployeeList(Connection conn, String[] keys) {
+		List<EmployeeAndFingerprint> out = new ArrayList<EmployeeAndFingerprint>();
 		BSBeanUtils bu = new BSBeanUtils();
 		Employee employee = null;
+		Fingerprint fingerprint = null;
+		EmployeeAndFingerprint eaf = null;
 
 		for (String key : keys) {
 			employee = new Employee();
-			bu.search(conn, employee, "cKey=?", key);
+			fingerprint = new Fingerprint();
 
-			out.add(employee);
+			bu.search(conn, employee, "cKey=?", key);
+			bu.search(conn, fingerprint, "cEmployee=?", employee.getId());
+
+			eaf = new EmployeeAndFingerprint();
+			eaf.setEmployee(employee);
+			eaf.setFingerprint(fingerprint);
+
+			out.add(eaf);
 		}
 
 		return out;
