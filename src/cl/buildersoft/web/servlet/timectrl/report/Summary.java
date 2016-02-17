@@ -50,7 +50,7 @@ public class Summary extends BSAbstractReport implements Servlet {
 
 		param = new BSParamReport(BSParamReportType.SELECT, "cEmployee");
 		param.addOption("", "Todos");
-		param.addOption(conn, "SELECT cKey, cName AS cFullName FROM tEmployee", null);
+		param.addOption(conn, "SELECT cKey, cName AS cFullName FROM tEmployee WHERE cEnabled=TRUE", null);
 		param.setLabel("Empleado");
 		report.addParamReport(param);
 

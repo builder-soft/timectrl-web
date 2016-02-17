@@ -1,0 +1,21 @@
+Lista de SP's que usan la tabla tEmployee
+
+pAbsence
+pAbsence2
+pGetEmployeeInfo
+pHoursWorked
+pListAttendance3
+pListAttendance4
+pListAttendanceAsExcel3
+pListBoss
+pListEmployee
+pListLater
+pListMarkOfEmployee
+pListSummaryReport
+pOvertime
+pTest
+pTopAbsence
+
+
+El empleado borrado para probar es 13681760-4
+

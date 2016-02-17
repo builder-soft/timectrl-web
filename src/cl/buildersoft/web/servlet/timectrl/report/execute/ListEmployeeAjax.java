@@ -74,7 +74,7 @@ public class ListEmployeeAjax extends BSHttpServlet {
 
 		if ("boss".equalsIgnoreCase(type)) {
 			where = (where == null ? "" : where + " AND ");
-			where += "cId IN (SELECT DISTINCT(cBoss) FROM tEmployee WHERE NOT cBoss IS NULL)";
+			where += "cId IN (SELECT DISTINCT(cBoss) FROM tEmployee WHERE NOT cBoss IS NULL AND cEnabled=TRUE)";
 
 		}
 		BSConnectionFactory cf = new BSConnectionFactory();

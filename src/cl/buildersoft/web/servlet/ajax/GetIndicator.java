@@ -59,7 +59,7 @@ public class GetIndicator extends AbstractAjaxServlet {
 	}
 
 	private String getEmployeeWORut(Connection conn) {
-		return getOneData(conn, "select count(*) from temployee where crut is null;", "Todos los empleados con Rut");
+		return getOneData(conn, "select count(*) from temployee where crut is null AND cEnabled=TRUE;", "Todos los empleados con Rut");
 	}
 
 	private String getOfflineMch(Connection conn) {
