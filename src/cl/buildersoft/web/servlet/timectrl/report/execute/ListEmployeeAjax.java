@@ -38,8 +38,6 @@ public class ListEmployeeAjax extends BSHttpServlet {
 
 		if ("employee".equalsIgnoreCase(type) || "boss".equalsIgnoreCase(type)) {
 			listEmployeeOrBoss(request, rut, name, type);
-		} else {
-
 		}
 
 		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params/list-employees-json.jsp");

@@ -1,14 +1,14 @@
 Lista de SP's que usan la tabla tEmployee
 
-pAbsence
-pAbsence2
-pGetEmployeeInfo
-pHoursWorked
-pListAttendance3
-pListAttendance4
-pListAttendanceAsExcel3
-pListBoss
-pListEmployee
+OK - pAbsence OK
+OK - pAbsence2 OK
+N/A - pGetEmployeeInfo: es usado desde el reporte.
+OK - pHoursWorked: Cambio aplicado, al parecer este SP no se utiliza.
+OK - pListAttendance3: Cambio aplicado, no se ejecuta por que desde la aplicacion no se puede seleccionar un empleado eliminado. Si se ejecuta directo el SP, solo trae una lista de fechas pero sin marcas. 
+OK - pListAttendance4: idem al caso anterior, la diferencia es que este SP es llamado para completar un Excel.
+OK - pListAttendanceAsExcel3: se prueba con el listado en Excel grande, no contempla los empleados que fueron borrados.
+OK - pListBoss: Se prueba con el llamado directo, no retorna a jefatura eliminada.
+N/A - pListEmployee: No aplicado, alguna vez se ingreso como configuracion en la tabla tReportParamType, pero ya no existe. Este SP se remplazó por la clase ListEmployeeAjax
 pListLater
 pListMarkOfEmployee
 pListSummaryReport
@@ -18,4 +18,5 @@ pTopAbsence
 
 
 El empleado borrado para probar es 13681760-4
+Un jefe de prueba sería 10239081-4
 
