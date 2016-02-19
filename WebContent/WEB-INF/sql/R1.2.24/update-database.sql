@@ -67,8 +67,6 @@ begin
 	update tOption SET cParent = vTemp, cOrder=3, cLabel='Reportes' WHERE cKey = 'REP_CONFIG';
 	
 	
-	
-	
 	update tOption SET cenable=false WHERE cKey = 'SYSTEM';
 END$$
 DELIMITER ;
