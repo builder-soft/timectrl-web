@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSConfig;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Employee;
@@ -32,7 +33,8 @@ public class MarkAdmin extends BSHttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Long id = Long.parseLong(readParameterOrAttribute(request, "cId"));
 
-		Connection conn = getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 		EmployeeService service = new EmployeeServiceImpl();
 		Employee employee = service.getEmployee(conn, id);
 
@@ -70,6 +72,8 @@ public class MarkAdmin extends BSHttpServlet {
 		request.setAttribute("cId", id);
 		request.setAttribute("Range", this.range);
 
+		cf.closeConnection(conn);
+		
 		forward(request, response, "/WEB-INF/jsp/timectrl/employee/mark-admin.jsp");
 	}
 
@@ -142,6 +146,9 @@ public class MarkAdmin extends BSHttpServlet {
 		BSmySQL mysql = new BSmySQL();
 		ResultSet rs = mysql.callSingleSP(conn, "pListMarkOfEmployee", parms);
 		List<Object[]> matrix = mysql.resultSet2Matrix2(rs);
+		mysql.closeSQL(rs);
+		mysql.closeSQL();
+		
 		return matrix;
 	}
 }

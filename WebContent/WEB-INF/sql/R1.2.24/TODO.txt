@@ -9,14 +9,14 @@ OK - pListAttendance4: idem al caso anterior, la diferencia es que este SP es ll
 OK - pListAttendanceAsExcel3: se prueba con el listado en Excel grande, no contempla los empleados que fueron borrados.
 OK - pListBoss: Se prueba con el llamado directo, no retorna a jefatura eliminada.
 N/A - pListEmployee: No aplicado, alguna vez se ingreso como configuracion en la tabla tReportParamType, pero ya no existe. Este SP se remplazó por la clase ListEmployeeAjax
-pListLater
-pListMarkOfEmployee
-pListSummaryReport
-pOvertime
-pTest
+OK - pListLater: Probado con la ejecución de reporte de atrasos.
+OK - pListMarkOfEmployee: Aplicado, se ejecuta el SP directo por que desde la aplicacion no se puede. El resultado es igual a entregar un ID que no existe.
+OK - pListSummaryReport: Se ejecuta el SP directo, se toma en cuenta el parametro de los empleados del jefe.
+N/A pOvertime: Este SP, no se esta llamando desde la aplicacion.
+N/A pTest: Esta llamada es para probar lo del Split.
 pTopAbsence
 
 
 El empleado borrado para probar es 13681760-4
-Un jefe de prueba sería 10239081-4
+Un jefe de prueba sería 10239081-4, el ID es 5
 
