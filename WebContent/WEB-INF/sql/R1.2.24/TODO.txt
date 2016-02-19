@@ -20,3 +20,36 @@ pTopAbsence
 El empleado borrado para probar es 13681760-4
 Un jefe de prueba sería 10239081-4, el ID es 5
 
+El menú quedará organizado así:
+- Archivos
+   - Empleados
+      - Datos Básicos
+      - Licencias
+      - Turnos
+      - Marcas
+      - Desvinculado
+   - Cargos
+   - Areas
+   - Feriados
+   - Permisos y licencias
+   - Grupos
+- Configuracion
+   - Seguridad
+      - Usuarios
+      - Roles
+      - Permiso Roles
+   - Dominio
+      - Parmaétros
+      - Dominios
+      - Atributos
+   - Asistencia
+      - Turnos
+      - Relojes
+      - Reportes
+- Reportes
+   - Visor de eventos
+   - Reporte de Asistencia
+   - Reporte Completo (xls)
+   - Reporte Atrasos
+   - Reporte Inasistencias
+   - Otros

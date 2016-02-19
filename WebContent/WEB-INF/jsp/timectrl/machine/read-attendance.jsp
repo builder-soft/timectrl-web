@@ -12,7 +12,7 @@
 <%@ include file="/WEB-INF/jsp/common/menu.jsp"%>
 <%
 	Object attendanceObject =  request.getAttribute("Attendances");
-String dateTimeFormat=(String)request.getAttribute("DateTimeFormat");
+	String dateTimeFormat=(String)request.getAttribute("DateTimeFormat");
 	List<AttendanceLog> attendanceList = null;
 	if(attendanceObject!=null){
 		attendanceList = (List<AttendanceLog>) attendanceObject;
@@ -54,7 +54,7 @@ String dateTimeFormat=(String)request.getAttribute("DateTimeFormat");
 		<td class='cDataTD'><%=machine.getName()%></td>
 	</tr>
 	<%
-		}
+			}
 		} else {
 	%>
 	<tr>

@@ -1,3 +1,7 @@
+<%@page import="java.sql.Connection"%>
+<%@page import="cl.buildersoft.framework.util.BSConnectionFactory"%>
+<%@page import="cl.buildersoft.framework.services.impl.BSMenuServiceImpl"%>
+<%@page import="cl.buildersoft.framework.services.BSMenuService"%>
 <%@page import="cl.buildersoft.framework.beans.User"%>
 <%@page import="cl.buildersoft.framework.beans.Option"%>
 <%@page import="cl.buildersoft.framework.beans.Submenu"%>
@@ -7,7 +11,7 @@
 <%@page import="cl.buildersoft.framework.util.BSWeb"%>
 <%@page import="java.util.List"%>
 <%
-	String gravatar = BSWeb.getGravatar((User)session.getAttribute("User"));
+	String gravatar = BSWeb.getGravatar((User) session.getAttribute("User"));
 %>
 <!-- 
 http://getbootstrap.com/components/#navbar
@@ -45,35 +49,36 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 					</a>
 				<ul class="dropdown-menu">
 					<%
-					Object domainsAsObject = session.getAttribute("Domains");
-					if(domainsAsObject!=null){
-						List<Domain> domains = (List<Domain>) session.getAttribute("Domains");
-						if(domains.size()>1){
+						Object domainsAsObject = session.getAttribute("Domains");
+						if (domainsAsObject != null) {
+							List<Domain> domains = (List<Domain>) session.getAttribute("Domains");
+							if (domains.size() > 1) {
 					%>
-					<li><a href="#">Dominio actual: ${sessionScope.Domain.name} (<%=domains.size()-1 %>+)</a>
-					
+					<li><a href="#">Dominio actual: ${sessionScope.Domain.name} (<%=domains.size() - 1%>+)</a>
 						<ul class="dropdown-menu">
 						<%
-							Long currentDomainId = ((Domain)session.getAttribute("Domain")).getId();
-							for(Domain domain : domains){
-								if(!domain.getId().equals(currentDomainId)){
+							Long currentDomainId = ((Domain) session.getAttribute("Domain")).getId();
+									for (Domain domain : domains) {
+										if (!domain.getId().equals(currentDomainId)) {
 						%>
 							<li><a href="${pageContext.request.contextPath}/servlet/system/user/ChangeDomain?cId=<%=domain.getId()%>&<%=BSWeb.randomString()%>"><%=domain.getName()%></a></li>
 							<%
-								} 
-							}
+								}
+										}
 							%>
 							
 						</ul>
 						</li>
 						<%
-						} else {
+							} else {
 						%>
 					<li><a href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString()%>">Dominio: ${sessionScope.Domain.name}</a></li>
 <%
 	}
-}
+	}
 %>
+					<li class="divider"></li>
+					<li><%=getChPasswordOption(request)%></li>
 					<li class="divider"></li>
 					<li> <!-- <span class="glyphicon glyphicon-off"/>
 					 -->
@@ -85,13 +90,15 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 	<!--/.nav-collapse -->
 </div>
 <%
-String s = "";
-Enumeration<String> names = session.getAttributeNames();%>
- <% 	while (names.hasMoreElements()) {
-		String name = (String) names.nextElement();
-		s=name + ": "+ session.getAttribute(name);	
-}
+	String s = "";
+	Enumeration<String> names = session.getAttributeNames();
 %>
+ <%
+ 	while (names.hasMoreElements()) {
+ 		String name = (String) names.nextElement();
+ 		s = name + ": " + session.getAttribute(name);
+ 	}
+ %>
 <!-- 
 < % = s % >
  -->
@@ -168,6 +175,22 @@ Enumeration<String> names = session.getAttributeNames();%>
 			out += "</li>\n";
 		}
 		out += count > 0 ? "</ul>\n" : "\n";
+		return out;
+	}
+
+	private String getChPasswordOption(HttpServletRequest request) {
+		String out = "";
+		//		String out = "<a href=\"#\">Cambiar mi Clave</a>";
+		BSMenuService ms = new BSMenuServiceImpl();
+
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
+		Option option = ms.searchOptionByKey(conn, "CH_PASS");
+		cf.closeConnection(conn);
+
+		if (option != null) {
+			out = "<a href='" +  request.getContextPath() + option.getUrl() + "'>" + option.getLabel() + "</a>";
+		}
 		return out;
 	}%>
 
