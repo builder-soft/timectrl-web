@@ -50,23 +50,25 @@ public class EmployeeManager extends HttpServletCRUD {
 		BSAction action = new BSAction("TURNS", BSActionType.Record);
 		action.setLabel("Asignación de Turnos");
 		action.setUrl("/servlet/timectrl/employee/TurnsOfEmployee");
-		table.addAction(action);
+//		table.addAction(action);
 
 		action = new BSAction("LICENSE", BSActionType.Record);
 		action.setLabel("Licencias médicas o permisos");
 		action.setUrl("/servlet/timectrl/employee/LicenseOfEmployee");
-		table.addAction(action);
+//		table.addAction(action);
 
 		action = new BSAction("MARK_MODIFY", BSActionType.Record);
 		action.setLabel("Administración de Marcas");
 		action.setUrl("/servlet/timectrl/employee/MarkAdmin");
-		table.addAction(action);
+//		table.addAction(action);
 
 		action = new BSAction("LOAD_LICENSE", BSActionType.Table);
 		action.setLabel("Archivo Licencias");
 		action.setUrl("/servlet/timectrl/employeeLicensing/LoadLicensing");
-		table.addAction(action);
+//		table.addAction(action);
 
+		table.getAction("DELETE").setLabel("Desvincular");;
+		
 		return table;
 	}
 

@@ -72,7 +72,7 @@
 <hr>
 <button onclick="javascript:showDialog()">Agregar</button>
 <a class="cCancel"
-	href="${pageContext.request.contextPath}/servlet/config/employee/EmployeeManager">Volver</a>
+	href="${pageContext.request.contextPath}/servlet/config/employee/EmployeeLicenseManager">Volver</a>
 
 <div id="divShowDetail" style="display: none">
 	<h2 class="cTitle2">Detalle de licencia</h2>

@@ -1,10 +1,9 @@
 insert into tEventType(cKey, cName) VALUES('BUILD_REPORT', 'Ejecución de reporte');
 insert into tEventType(cKey, cName) VALUES('UPDATE_USER', 'Actualizacion de usuario');
 
-drop table tFileContent;
-drop table tFile;
-drop table ttimectrl;
-
+drop table if exists tFileContent;
+drop table if exists tFile;
+drop table if exists ttimectrl;
 
 DELIMITER $$
 create procedure pUpdateData_Temp()
@@ -16,7 +15,8 @@ begin
 	delete from toption where ckey = 'FILES';
 	insert into tOption(cKey, cLabel, cURL, cParent, cType, cOrder, cEnable, cIsAdmin) VALUES('FILES', 'Archivos', NULL, NULL, 1, 1, true, 0);
 	
-	update tOption SET cURL = null, cParent=35 WHERE cKey = 'EMPLOYEE';
+	SELECT cID INTO vTemp FROM tOption WHERE cKey = 'FILES';
+	update tOption SET cURL = null, cParent=vTemp WHERE cKey = 'EMPLOYEE';
 	
 	SELECT cID INTO vTemp FROM tOption WHERE cKey = 'EMPLOYEE';
 	
@@ -66,8 +66,40 @@ begin
 	update tOption SET cParent = vTemp, cOrder=2 WHERE cKey = 'MACHINE';
 	update tOption SET cParent = vTemp, cOrder=3, cLabel='Reportes' WHERE cKey = 'REP_CONFIG';
 	
+	SELECT cID INTO vTemp FROM tOption WHERE cKey = 'REPORT';
+	update tOption SET cParent = vTemp, cOrder=1 WHERE cKey = 'EVENT_VIEWER';
+
 	
+	SELECT cID INTO vTemp FROM tOption WHERE cKey = 'ATTENDANCE';
+	update tOption SET cParent = vTemp, cOrder=3 WHERE cKey = 'REP_LIST';
+
 	update tOption SET cenable=false WHERE cKey = 'SYSTEM';
+	update tOption SET cenable=false WHERE cKey = 'TABLES';
+	update tOption SET cenable=false WHERE cKey = 'REP_CONFIG';
+	
+	update tOption SET cOrder=2 WHERE cKey ='POST';
+	update tOption SET cOrder=3 WHERE cKey ='AREA';
+	update tOption SET cOrder=4 WHERE cKey ='FISCAL_DATE';
+	update tOption SET cOrder=5 WHERE cKey ='LICENSE_CAUSE';
+	update tOption SET cOrder=6 WHERE cKey ='GROUP_MGR';
+	
+	update tOption SET cOrder=2 WHERE cKey ='REP_ASIST';
+	update tOption SET cOrder=3 WHERE cKey ='REP_WEEKLY';
+	update tOption SET cOrder=4 WHERE cKey ='REP_PLAIN';
+	update tOption SET cOrder=5 WHERE cKey ='REP_LATE';
+	update tOption SET cOrder=6 WHERE cKey ='REP_ABSENCE';
+	update tOption SET cOrder=7 WHERE cKey ='EXECUTE_REPORT';
+
+	update tOption SET cLabel='Dominios' WHERE cKey ='DOMAIN';
+	update tOption SET cLabel='Definición' WHERE cKey ='DOMAIN_MGR';
+	update tOption SET cLabel='Atributos' WHERE cKey ='DOMAIN_ATTR_MGR';
+	update tOption SET cLabel='Otros Reportes' WHERE cKey ='EXECUTE_REPORT';
+	update tOption SET cLabel='Reporte Completo (Excel)' WHERE cKey ='REP_PLAIN';
+	update tOption SET cLabel='Reportes' WHERE cKey ='REP_LIST';
+	update tOption SET cLabel='Turnos' WHERE cKey ='TURN';
+
+	
+	
 END$$
 DELIMITER ;
 
@@ -75,7 +107,10 @@ call pUpdateData_Temp;
 
 drop procedure if exists pUpdateData_Temp;
 
+truncate table tr_roloption;
 
+insert into tr_roloption
+select 1, cId from tOption;
 
 
 UPDATE tVersion SET cVersion='1.2.24', cUpdated=NOW() WHERE cKey = 'DBT';
