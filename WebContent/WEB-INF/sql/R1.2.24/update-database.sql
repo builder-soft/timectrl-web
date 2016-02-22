@@ -1,5 +1,6 @@
 insert into tEventType(cKey, cName) VALUES('BUILD_REPORT', 'Ejecución de reporte');
 insert into tEventType(cKey, cName) VALUES('UPDATE_USER', 'Actualizacion de usuario');
+insert into tEventType(cKey, cName) VALUES('SECURITY_CH_PASS', 'Cambio de password');
 
 drop table if exists tFileContent;
 drop table if exists tFile;
@@ -111,6 +112,16 @@ truncate table tr_roloption;
 
 insert into tr_roloption
 select 1, cId from tOption;
+
+
+INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('PASS_MIN_LEN', 'Largo mínimo de password', '6', (select cid from tdatatype where ckey='Integer'));
+INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('PASS_SPEC_CHR', 'Cantidad mínima de caracteres especiales (.,$#)', '1', (select cid from tdatatype where ckey='Integer'));
+INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('PASS_UPPER_CHR', 'Cantidad mínima de letras en mayusculas', '1', (select cid from tdatatype where ckey='Integer'));
+INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('PASS_NUM_CHR', 'Cantidad mínima de números en la password', '1', (select cid from tdatatype where ckey='Integer'));
+
+
+
+
 
 
 UPDATE tVersion SET cVersion='1.2.24', cUpdated=NOW() WHERE cKey = 'DBT';

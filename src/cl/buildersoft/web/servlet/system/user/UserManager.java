@@ -68,10 +68,10 @@ public class UserManager extends HttpServletCRUD {
 			table.addAction(domainRelation);
 		}
 
-		BSAction changePassword = new BSAction("CH_PASS", BSActionType.Record);
-		changePassword.setLabel("Cambio de clave");
-		changePassword.setUrl("/servlet/system/changepassword/SearchPassword");
-		table.addAction(changePassword);
+		BSAction action = new BSAction("CH_PASS&Reset=", BSActionType.Record);
+		action.setLabel("Cambio de clave");
+		action.setUrl("/servlet/system/changepassword/SearchPassword");
+		table.addAction(action);
 
 		BSAction rolRelation = new BSAction("ROL_RELATION", null);
 

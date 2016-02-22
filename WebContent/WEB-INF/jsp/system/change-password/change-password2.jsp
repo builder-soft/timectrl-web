@@ -19,6 +19,7 @@
 <form action="${pageContext.request.contextPath}<%=nextAction%>"
 	method="post" class="form-horizontal" role="form">
 	<input type="hidden" name="cId" value="<%=id%>">
+	<input type="hidden" name="Reset" value="<%=passwordIsNull%>">
 
 	<%
 		if (!passwordIsNull) {
