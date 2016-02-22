@@ -24,7 +24,7 @@
 <%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
 <%@ include file="/WEB-INF/jsp/table/functions.jsp"%>
 
-<script src="${pageContext.request.contextPath}/js/table/table.js"></script>
+<script src="${pageContext.request.contextPath}/js/table/table.js?<%=Math.random()%>"></script>
 <%
 	if (script.length() > 0) {
 %>
@@ -121,11 +121,17 @@
 					for (BSAction action : multirecordActions) {
 						if (BSWeb.canUse(action.getCode(), request, conn)) {
 							String id = capitalize(action.getDefaultCode());
+							String msg = action.getWarningMessage();
 							out.print("<button class='btn btn-default' type='button' ");
 							out.print("id='o" + id + "' ");
 							out.print(action.getDisabled() ? "disabled" : "");
 
-							out.print(" onclick='javascript:f" + id + "();'");
+							msg =  action.getWarningMessage();
+							if(msg==null){
+								msg="";
+							}
+							
+							out.print(" onclick='javascript:f" + id + "(\""+msg+"\");'");
 							out.print(">" + action.getLabel() + "</button>");
 						}
 					}

@@ -44,31 +44,21 @@ public class EmployeeDetachedManager extends HttpServletCRUD {
 		this.hideFields(table, "cMail", "cArea", "cPrivilege");
 		table.removeField("cEnabled");
 		
+		table.setDeleteSP("pIncorporateEmployee");
+		
 		table.removeAction("INSERT");
 		table.removeAction("EDIT");
-		table.removeAction("DELETE");
+		BSAction delete = table.getAction("DELETE");
+		delete.setLabel("Re-incorporar");
+		delete.setWarningMessage("Esta seguro de reincorporar estos empleados?");
 		
-//		table.setDeleteSP("pDeleteEmployee");
+//		table.removeAction("DELETE");
+		
 		table.setWhere("cEnabled=FALSE");
 		
-		BSAction action = new BSAction("INCORPORATE", BSActionType.MultiRecord);
-		action.setLabel("Reincorporar");
-//		action.setUrl("/servlet/timectrl/employee/TurnsOfEmployee");
-		table.addAction(action);
-
-		action = new BSAction("LICENSE", BSActionType.Record);
-		action.setLabel("Licencias médicas o permisos");
-		action.setUrl("/servlet/timectrl/employee/LicenseOfEmployee");
-//		table.addAction(action);
-
-		action = new BSAction("MARK_MODIFY", BSActionType.Record);
-		action.setLabel("Administración de Marcas");
-		action.setUrl("/servlet/timectrl/employee/MarkAdmin");
-//		table.addAction(action);
-
-		action = new BSAction("LOAD_LICENSE", BSActionType.Table);
-		action.setLabel("Archivo Licencias");
-		action.setUrl("/servlet/timectrl/employeeLicensing/LoadLicensing");
+//		BSAction action = new BSAction("INCORPORATE", BSActionType.Record);
+//		action.setLabel("Re-incorporar");
+//		action.setUrl("/servlet/config/employee/Incorporate");
 //		table.addAction(action);
 
 		return table;

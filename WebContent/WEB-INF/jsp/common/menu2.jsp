@@ -11,7 +11,8 @@
 <%@page import="cl.buildersoft.framework.util.BSWeb"%>
 <%@page import="java.util.List"%>
 <%
-	String gravatar = BSWeb.getGravatar((User) session.getAttribute("User")); 
+String gravatar = BSWeb.getGravatar((User) session.getAttribute("User"));
+
 %>
 <!-- 
 http://getbootstrap.com/components/#navbar
@@ -57,7 +58,7 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 					<li><a href="#">Dominio actual: ${sessionScope.Domain.name} (<%=domains.size() - 1%>+)</a>
 						<ul class="dropdown-menu">
 						<%
-							Long currentDomainId = ((Domain) session.getAttribute("Domain")).getId();
+							Long currentDomainId = ((Domain) session.getAttribute("Domain")). getId();
 									for (Domain domain : domains) {
 										if (!domain.getId().equals(currentDomainId)) {
 						%>

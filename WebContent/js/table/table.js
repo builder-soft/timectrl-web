@@ -38,14 +38,18 @@ function swap(i, o) {
 	}
 }
 
-function fDelete() {
+function fDelete(msg) {
 	var elements = $("input:checked");
 	var mainChecked = $('#mainCheck').prop("checked");
 	var count = elements.size();
 
 	var elementoString = elements.size() == 1 ? ' elemento' : ' elementos';
-	if (confirm('¿Esta seguro de querer borrar ' + elements.size()
-			+ elementoString + '?')) {
+	if(msg== ''){
+		msg = '¿Esta seguro de querer borrar ' + elements.size()
+		+ elementoString + '?';
+	}
+	
+	if (confirm(msg)) {
 		$('#frm').submit();
 	}
 }
