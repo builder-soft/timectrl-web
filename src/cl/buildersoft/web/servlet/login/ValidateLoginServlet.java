@@ -116,7 +116,18 @@ public class ValidateLoginServlet extends HttpServlet {
 						}
 					}
 
-					if (user != null) {
+					if (passwordExpired(connBSframework, user)) {
+						/**
+						 * <code>
+						 - Redirigir a pagina nueva con estilo sin menu, pide nueva clave solamente, tiene el boton cancelar.
+						 - Servlet que graba la nueva clave, se debe utilizar el mismo servlet que cambia la clave para que valide las politicas de complejidad.
+						 - Envia flujo a página de login.
+						 
+						 </code>
+						 */
+						request.setAttribute("cId", user.getId());
+						page = "/WEB-INF/jsp/login/password-expired.jsp";
+					} else if (user != null) {
 						HttpSession session = request.getSession(true);
 						synchronized (session) {
 							session.setAttribute("User", user);
@@ -137,6 +148,11 @@ public class ValidateLoginServlet extends HttpServlet {
 			cf.closeConnection(connBSframework);
 		}
 		request.getRequestDispatcher(page).forward(request, response);
+	}
+
+	private boolean passwordExpired(Connection connBSframework, User user) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	private User userExists(Connection connBSframework, BSUserService us, String mail) {

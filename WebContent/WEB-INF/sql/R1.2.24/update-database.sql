@@ -119,8 +119,29 @@ INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('PASS_SPEC_CHR', 
 INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('PASS_UPPER_CHR', 'Cantidad mínima de letras en mayusculas', '1', (select cid from tdatatype where ckey='Integer'));
 INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('PASS_NUM_CHR', 'Cantidad mínima de números en la password', '1', (select cid from tdatatype where ckey='Integer'));
 
+INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('PASS_CHANGE_DAYS', 'Días para la expiración de password', '90', (select cid from tdatatype where ckey='Integer'));
 
 
+DELIMITER $$
+create procedure pUpdateData_Temp()
+begin
+
+	IF EXISTS(	SELECT * 
+				FROM information_schema.COLUMNS 
+				WHERE TABLE_SCHEMA = 'bsframework' 
+					AND TABLE_NAME = 'tUser' 
+					AND COLUMN_NAME = 'cLastChangePass') THEN
+		ALTER TABLE bsframework.tUser
+		ADD COLUMN cLastChangePass DATE NULL AFTER cAdmin;
+		
+		UPDATE bsframework.tUser SET cLastChangePass = NOW();
+		
+	END IF;
+END$$
+DELIMITER ;
+
+call pUpdateData_Temp;
+drop procedure if exists pUpdateData_Temp;
 
 
 
