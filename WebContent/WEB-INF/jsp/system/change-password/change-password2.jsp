@@ -8,12 +8,19 @@
 	Object id = request.getParameter("cId");
 	if (id == null) {
 		id = (Long) request.getAttribute("cId");
-		nextAction += "?GoHome";
+	//	nextAction += "?Next=/servlet/Home";
 		cancelAction = "/servlet/Home";
 	}
+	
+	if(passwordIsNull){ /**Es cuando la password la cambia el administrador*/
+		nextAction += "?Next="+request.getContextPath()+"/servlet/system/user/UserManager";
+	}else{
+		nextAction += "?Next="+request.getContextPath()+"/servlet/Home";
+	}
+	
 %>
 <div class="page-header">
-	<h1>Cambio de clave</h1>
+	<h1>Cambio de clave <%=passwordIsNull %></h1>
 </div>
 
 <form action="${pageContext.request.contextPath}<%=nextAction%>"

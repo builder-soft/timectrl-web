@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,9 @@ import cl.buildersoft.framework.exception.BSDataBaseException;
 import cl.buildersoft.framework.exception.BSUserException;
 import cl.buildersoft.framework.services.BSUserService;
 import cl.buildersoft.framework.services.impl.BSUserServiceImpl;
+import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
+import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.timectrl.business.services.EventLogService;
 import cl.buildersoft.timectrl.business.services.ServiceFactory;
@@ -49,7 +52,7 @@ public class ValidateLoginServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String mail = request.getParameter("mail");
 		String password = request.getParameter("password");
-		String page = "/";
+		String page = null;
 
 		Boolean validData = validInputData(mail, password);
 
@@ -116,7 +119,7 @@ public class ValidateLoginServlet extends HttpServlet {
 						}
 					}
 
-					if (passwordExpired(connBSframework, user)) {
+					if (passwordExpired(connDomain, user)) {
 						/**
 						 * <code>
 						 - Redirigir a pagina nueva con estilo sin menu, pide nueva clave solamente, tiene el boton cancelar.
@@ -126,18 +129,21 @@ public class ValidateLoginServlet extends HttpServlet {
 						 </code>
 						 */
 						request.setAttribute("cId", user.getId());
-						page = "/WEB-INF/jsp/login/password-expired.jsp";
-					} else if (user != null) {
+						page = "/WEB-INF/jsp/login/password-expired2.jsp";
+					}
+					if (user != null) {
 						HttpSession session = request.getSession(true);
 						synchronized (session) {
 							session.setAttribute("User", user);
 							session.setAttribute("Rol", rols);
-							session.setAttribute("Menu", true);
+							session.setAttribute("Menu", null);
 							session.setAttribute("Domains", domains);
 							session.setAttribute("Domain", defaultDomain);
 							session.setAttribute("DomainAttribute", domainAttribute);
 						}
-						page = "/servlet/login/GetMenuServlet";
+						if (page == null) {
+							page = "/servlet/login/GetMenuServlet";
+						}
 
 						eventLog.writeEntry(connDomain, user.getId(), "SECURITY_LOGIN_OK",
 								"Acceso correcto al sistema, Rol/es: %s.", enumerateRols(rols));
@@ -147,12 +153,22 @@ public class ValidateLoginServlet extends HttpServlet {
 			cf.closeConnection(connDomain);
 			cf.closeConnection(connBSframework);
 		}
+
+		if (page == null) {
+			page = "/";
+		}
 		request.getRequestDispatcher(page).forward(request, response);
 	}
 
-	private boolean passwordExpired(Connection connBSframework, User user) {
-		// TODO Auto-generated method stub
-		return false;
+	private boolean passwordExpired(Connection conn, User user) {
+		BSConfig config = new BSConfig();
+
+		Calendar d1 = BSDateTimeUtil.date2Calendar(user.getLastChangePass());
+
+		Integer passChangeDays = config.getInteger(conn, "PASS_CHANGE_DAYS", 90);
+		Long daysDiff = BSDateTimeUtil.dateDiff(d1, Calendar.getInstance());
+
+		return daysDiff > passChangeDays;
 	}
 
 	private User userExists(Connection connBSframework, BSUserService us, String mail) {

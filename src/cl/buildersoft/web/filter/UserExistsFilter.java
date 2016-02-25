@@ -44,8 +44,8 @@ public class UserExistsFilter implements Filter {
 		} else {
 			Object user = session.getAttribute("User");
 			Object rol = session.getAttribute("Rol");
-			Object menu = session.getAttribute("Menu");
-			if (user == null || rol == null || menu == null) {
+//			Object menu = session.getAttribute("Menu");
+			if (user == null || rol == null) {
 				goHome = Boolean.TRUE;
 			}
 		}

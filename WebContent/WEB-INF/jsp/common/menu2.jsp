@@ -31,8 +31,12 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 	</div>
 	<div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav">
-			<li><a
-				href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString()%>">Inicio</a></li>
+			<li>
+			<%if(showMenu(session)){ %>
+			<a	href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString()%>">Inicio</a>
+				<%} %>
+				
+				</li>
 
 			<%=write_menu_in_menu_jsp(session, request)%>
 		</ul>
@@ -48,7 +52,9 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 					${sessionScope.User.mail}
 					
 					</a>
+					
 				<ul class="dropdown-menu">
+					<%if(showMenu(session)){ %>
 					<%
 						Object domainsAsObject = session.getAttribute("Domains");
 						if (domainsAsObject != null) {
@@ -81,11 +87,14 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 					<li class="divider"></li>
 					<li><%=getChPasswordOption(request)%></li>
 					<li class="divider"></li>
-					<li> <!-- <span class="glyphicon glyphicon-off"/>
-					 -->
+					<%} %>
+					<li> 
 					<a   
 						href="${pageContext.request.contextPath}/jsp/login/logout.jsp?<%=BSWeb.randomString()%>">Salir</a></li>
-				</ul></li>
+				</ul>
+				
+				
+				</li>
 		</ul>
 	</div>
 	<!--/.nav-collapse -->
@@ -106,21 +115,24 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 
 <div class="container">
 <%!private String write_menu_in_menu_jsp(HttpSession session, HttpServletRequest request) {
-		Menu menuUser = (Menu) session.getAttribute("Menu");
+		//Object mayBeMenu = session.getAttribute("Menu");
 		String out = "";
-		//Boolean haveMore = null;
-		if (menuUser != null) {
-			String ctxPath = request.getContextPath();
-			List<Submenu> main = menuUser.list();
-			Option opt = null;
-			String url = null;
-			String label = null;
-			for (Submenu submenu : main) {
-				opt = submenu.getOption();
-				out += "<li" + (submenu.list().size() > 0 ? " " : "") + ">";
-				out += option2String(opt, ctxPath, true);
-				out += writeSubMenu(submenu, ctxPath);
-				out += "</li>\n";
+		if(showMenu(session)){
+			Menu menuUser = (Menu) session.getAttribute("Menu");
+			//Boolean haveMore = null;
+			if (menuUser != null) {
+				String ctxPath = request.getContextPath();
+				List<Submenu> main = menuUser.list();
+				Option opt = null;
+				String url = null;
+				String label = null;
+				for (Submenu submenu : main) {
+					opt = submenu.getOption();
+					out += "<li" + (submenu.list().size() > 0 ? " " : "") + ">";
+					out += option2String(opt, ctxPath, true);
+					out += writeSubMenu(submenu, ctxPath);
+					out += "</li>\n";
+				}
 			}
 		}
 		return out;
@@ -193,5 +205,16 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 			out = "<a href='" +  request.getContextPath() + option.getUrl() + "'>" + option.getLabel() + "</a>";
 		}
 		return out;
-	}%>
+	}
+	
+	private Boolean showMenu(HttpSession session){
+		Boolean out = false;
+		Object mayBeMenu = session.getAttribute("Menu");
+		
+		if(mayBeMenu != null){
+			out = mayBeMenu instanceof Menu;
+		}
+		return out;
+	}
+	%>
 

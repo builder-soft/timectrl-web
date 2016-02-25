@@ -2,6 +2,7 @@ package cl.buildersoft.web.servlet.system.changepassword;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Calendar;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.exception.BSUserException;
 import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
+import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.framework.util.BSSecurity;
 import cl.buildersoft.timectrl.business.services.EventLogService;
@@ -40,9 +42,11 @@ public class ChangePassword extends BSHttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String newPassword = request.getParameter("NewPassword");
 		String commitPassword = request.getParameter("CommitPassword");
-		String goHome = request.getParameter("GoHome");
-		Boolean reset = request.getParameter("Reset").equalsIgnoreCase("True");
-		String oldPassword = null;
+		// String goHome = request.getParameter("GoHome");
+		Boolean reset = getReset(request);
+		String oldPassword = request.getParameter("OldPassword");
+		String next = request.getParameter("Next");
+
 		// String currentPassword = null;
 		EventLogService eventLog = ServiceFactory.createEventLogService();
 		BSConnectionFactory cf = new BSConnectionFactory();
@@ -64,18 +68,22 @@ public class ChangePassword extends BSHttpServlet {
 		bu.search(conn, user);
 		String currentPasswordMD5 = user.getPassword();
 
+		newPassword = md5(newPassword);
 		if (currentPasswordMD5 != null && !reset) {
-			oldPassword = request.getParameter("OldPassword");
+			// oldPassword =
 
 			String oldPasswordMD5 = md5(oldPassword);
 
 			if (!currentPasswordMD5.equals(oldPasswordMD5)) {
 				throw new BSUserException("La clave actual no corresponde");
 			}
+			if (currentPasswordMD5.equals(newPassword)) {
+				throw new BSUserException("La nueva clave es igual a la anterior");
+			}
 		}
 
-		newPassword = md5(newPassword);
 		user.setPassword(newPassword);
+		user.setLastChangePass(BSDateTimeUtil.calendar2Date(Calendar.getInstance()));
 		bu.update(conn, user);
 		cf.closeConnection(conn);
 
@@ -83,13 +91,26 @@ public class ChangePassword extends BSHttpServlet {
 				user.getMail());
 		cf.closeConnection(connDomain);
 
-		String next = "/servlet/common/LoadTable";
-		next = "/servlet/system/user/UserManager";
-		if (goHome != null) {
-			next = "/servlet/Home";
-		}
-		forward(request, response, next);
+		// String next = "/servlet/common/LoadTable";
+		next = next == null ? "/servlet/Home" : next;
+		// if (goHome != null && next == null) {
+		// next = "/servlet/Home";
+		// }
 
+		response.sendRedirect(next);
+		// forward(request, response, next);
+
+	}
+
+	private boolean getReset(HttpServletRequest request) {
+		String reset = request.getParameter("Reset");
+		Boolean out = null;
+		if (reset == null) {
+			out = false;
+		} else {
+			out = reset.equalsIgnoreCase("True");
+		}
+		return out;
 	}
 
 	private void validatePassword(Connection conn, String newPassword, String commitPassword) {
@@ -112,7 +133,8 @@ public class ChangePassword extends BSHttpServlet {
 		Integer numberChar = c.getInteger(conn, PASS_NUM_CHR, Integer.valueOf(0));
 
 		if (newPassword.length() < minLen) {
-			throw new BSUserException("La password es demaciado corta, mínimo " + minLen + " caracteres.");
+			throw new BSUserException("La password es demaciado corta, mínimo " + minLen + " caracter" + (minLen > 1 ? "es" : "")
+					+ ".");
 		}
 
 		if (countInString(newPassword, NUMBERS) < numberChar) {
@@ -123,10 +145,10 @@ public class ChangePassword extends BSHttpServlet {
 			throw new BSUserException("La password debe tener al menos " + upperChar + " letra" + (upperChar > 1 ? "s" : "")
 					+ " mayuscula" + (upperChar > 1 ? "s" : "") + ".");
 		}
-		
+
 		Integer validCharsCount = countInString(newPassword, ALL_VALID_CHARS);
-		if(newPassword.length()-validCharsCount<specChar){
-			throw new BSUserException("La password debe tener al menos " + specChar + " caracter" + (specChar> 1 ? "es" : "")
+		if (newPassword.length() - validCharsCount < specChar) {
+			throw new BSUserException("La password debe tener al menos " + specChar + " caracter" + (specChar > 1 ? "es" : "")
 					+ " especial" + (upperChar > 1 ? "es" : "") + ".");
 		}
 	}
