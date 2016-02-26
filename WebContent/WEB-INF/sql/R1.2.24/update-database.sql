@@ -98,8 +98,6 @@ begin
 	update tOption SET cLabel='Reporte Completo (Excel)' WHERE cKey ='REP_PLAIN';
 	update tOption SET cLabel='Reportes' WHERE cKey ='REP_LIST';
 	update tOption SET cLabel='Turnos' WHERE cKey ='TURN';
-
-	
 	
 END$$
 DELIMITER ;
@@ -126,7 +124,7 @@ DELIMITER $$
 create procedure pUpdateData_Temp()
 begin
 
-	IF EXISTS(	SELECT * 
+	IF NOT EXISTS(	SELECT * 
 				FROM information_schema.COLUMNS 
 				WHERE TABLE_SCHEMA = 'bsframework' 
 					AND TABLE_NAME = 'tUser' 

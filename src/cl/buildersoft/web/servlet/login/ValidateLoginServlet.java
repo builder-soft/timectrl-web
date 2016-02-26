@@ -105,6 +105,8 @@ public class ValidateLoginServlet extends HttpServlet {
 					if (user != null) {
 						domains = getDomains(connBSframework, user);
 						if (domains.size() == 0) {
+							cf.closeConnection(connDomain);
+							cf.closeConnection(connBSframework);
 							throw new BSUserException("El usuario '" + user.getMail() + "' no tiene dominios configurados");
 						}
 						defaultDomain = domains.get(0);
@@ -115,6 +117,8 @@ public class ValidateLoginServlet extends HttpServlet {
 						if (rols.size() == 0) {
 							String msg = "Usuario no tiene roles configurados";
 							eventLog.writeEntry(connDomain, user.getId(), "CONFIG_FAIL", msg, null);
+							cf.closeConnection(connDomain);
+							cf.closeConnection(connBSframework);
 							throw new BSUserException(msg);
 						}
 					}
