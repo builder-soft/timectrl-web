@@ -3,9 +3,16 @@ package cl.buildersoft.web.filter;
 import static cl.buildersoft.framework.util.BSUtils.array2ObjectArray;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,22 +27,50 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
+import cl.buildersoft.framework.beans.Domain;
 import cl.buildersoft.framework.exception.BSConfigurationException;
 import cl.buildersoft.framework.exception.BSDataBaseException;
+import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
+import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.timectrl.util.LicenseValidationUtil;
 
 @WebFilter(urlPatterns = { "/servlet/*" }, dispatcherTypes = { DispatcherType.REQUEST })
 public class LicenseValidation implements Filter {
 	private static final Logger LOG = Logger.getLogger(LicenseValidation.class.getName());
-	private Boolean activeFilter = null;
-
-	// private FilterConfig filterConfig = null;
+	private Map<String, Boolean> activeFilter = null;
 
 	public void init(FilterConfig filterConfig) throws ServletException {
 		if (activeFilter == null) {
-			// this.filterConfig = filterConfig;
+			this.activeFilter = new HashMap<String, Boolean>();
+			LOG.log(Level.INFO, "Loading license list");
 			ServletContext context = filterConfig.getServletContext();
+			BSConfig config = new BSConfig();
+
+			String path = context.getRealPath("/WEB-INF");
+			path = config.fixPath(path);
+			LOG.log(Level.INFO, path);
+
+			InputStream in;
+			try {
+				in = new FileInputStream(path + "license.properties");
+
+				Properties prop = new Properties();
+				prop.load(in);
+
+				Enumeration e = prop.propertyNames();
+				while (e.hasMoreElements()) {
+					String key = (String) e.nextElement();
+					this.activeFilter.put(key, Boolean.parseBoolean(prop.getProperty(key)));
+				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			/**
+			 * <code>			
 			String activeFilterString = context.getInitParameter("bsframework.license.validate");
 			try {
 				this.activeFilter = Boolean.parseBoolean(activeFilterString);
@@ -45,11 +80,16 @@ public class LicenseValidation implements Filter {
 						array2ObjectArray(activeFilterString, this.activeFilter));
 
 			}
+</code>
+			 */
+
 		}
 	}
 
 	public void destroy() {
-
+		LOG.log(Level.INFO, "Clearing license list");
+		this.activeFilter.clear();
+		this.activeFilter = null;
 	}
 
 	public void doFilter(ServletRequest rq, ServletResponse rs, FilterChain chain) throws IOException, ServletException {
@@ -57,34 +97,16 @@ public class LicenseValidation implements Filter {
 
 		Boolean success = true;
 
-		if (activeFilter) {
+		Domain domain = (Domain) request.getSession(false).getAttribute("Domain");
+		Boolean activeFilter = this.activeFilter.get("bsframework.license.validate." + domain.getDatabase());
+
+		if (activeFilter == null || activeFilter) {
 			try {
 				success = licenseValidation(request);
 			} catch (Exception e) {
-				e.printStackTrace();
+				LOG.log(Level.SEVERE, "Can not validate license", e);
 				success = false;
 			}
-
-			/**
-			 * <code>
-			 * buscar licencia desde archivo 
-			 * desencriptar archivo 
-			 * split numeros de series 
-			 * comparar series con los de la base de datos 
-			 * SI ¿todas las series son correctas? ENTONCES 
-			 * 		parsea fecha 
-			 * 		SI la fecha actual > fecha de licencia THEN 
-			 * 			calcula días vencidos 
-			 * 			obtener random entre 1 y 100 
-			 * 			SI dias vencidos >= numero random ENTONCES
-			 * 				lanzar error 
-			 * 			FIN SI 
-			 * 		FIN SI 
-			 * 	SINO 
-			 * 		lanzar error 
-			 * 	FIN SI
-			 </code>
-			 */
 
 		}
 
@@ -96,7 +118,6 @@ public class LicenseValidation implements Filter {
 			// request.getRequestDispatcher(failUrl).forward(request,
 			// response);
 		}
-
 	}
 
 	private Boolean licenseValidation(HttpServletRequest request) {

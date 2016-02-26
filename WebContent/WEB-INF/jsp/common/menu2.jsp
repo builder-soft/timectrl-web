@@ -12,7 +12,6 @@
 <%@page import="java.util.List"%>
 <%
 String gravatar = BSWeb.getGravatar((User) session.getAttribute("User"));
-
 %>
 <!-- 
 http://getbootstrap.com/components/#navbar
