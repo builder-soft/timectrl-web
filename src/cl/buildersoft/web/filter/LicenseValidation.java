@@ -51,7 +51,7 @@ public class LicenseValidation implements Filter {
 			path = config.fixPath(path);
 			LOG.log(Level.INFO, path);
 
-			InputStream in;
+			InputStream in = null;
 			try {
 				in = new FileInputStream(path + "license.properties");
 
@@ -69,19 +69,7 @@ public class LicenseValidation implements Filter {
 				e.printStackTrace();
 			}
 
-			/**
-			 * <code>			
-			String activeFilterString = context.getInitParameter("bsframework.license.validate");
-			try {
-				this.activeFilter = Boolean.parseBoolean(activeFilterString);
-			} catch (Exception e) {
-				this.activeFilter = Boolean.TRUE;
-				LOG.log(Level.WARNING, "Can't parsing {0} as Boolean value, will be {1}",
-						array2ObjectArray(activeFilterString, this.activeFilter));
-
-			}
-</code>
-			 */
+			
 
 		}
 	}
@@ -102,12 +90,11 @@ public class LicenseValidation implements Filter {
 
 		if (activeFilter == null || activeFilter) {
 			try {
-				success = licenseValidation(request);
+				success = licenseValidation(request, domain.getDatabase());
 			} catch (Exception e) {
 				LOG.log(Level.SEVERE, "Can not validate license", e);
 				success = false;
 			}
-
 		}
 
 		if (success) {
@@ -115,12 +102,10 @@ public class LicenseValidation implements Filter {
 		} else {
 			request.getSession(false).invalidate();
 			throw new BSConfigurationException("Some configuration files are wrong!");
-			// request.getRequestDispatcher(failUrl).forward(request,
-			// response);
 		}
 	}
 
-	private Boolean licenseValidation(HttpServletRequest request) {
+	private Boolean licenseValidation(HttpServletRequest request, String domainKey) {
 		Connection conn = null;
 		Boolean out = null;
 		BSConnectionFactory cf = new BSConnectionFactory();
@@ -135,7 +120,7 @@ public class LicenseValidation implements Filter {
 				out = true;
 			} else {
 				String pathFile = request.getSession(false).getServletContext().getRealPath("/") + "WEB-INF" + File.separator
-						+ "LicenseFile.dat";
+						+ "license." + domainKey + ".dat";
 
 				LicenseValidationUtil lv = new LicenseValidationUtil();
 				String fileContent = lv.readFile(pathFile);
