@@ -1,7 +1,5 @@
 package cl.buildersoft.web.filter;
 
-import static cl.buildersoft.framework.util.BSUtils.array2ObjectArray;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,7 +30,6 @@ import cl.buildersoft.framework.exception.BSConfigurationException;
 import cl.buildersoft.framework.exception.BSDataBaseException;
 import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
-import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.timectrl.util.LicenseValidationUtil;
 
 @WebFilter(urlPatterns = { "/servlet/*" }, dispatcherTypes = { DispatcherType.REQUEST })
@@ -58,7 +55,7 @@ public class LicenseValidation implements Filter {
 				Properties prop = new Properties();
 				prop.load(in);
 
-				Enumeration e = prop.propertyNames();
+				Enumeration<?> e = prop.propertyNames();
 				while (e.hasMoreElements()) {
 					String key = (String) e.nextElement();
 					this.activeFilter.put(key, Boolean.parseBoolean(prop.getProperty(key)));
@@ -68,8 +65,6 @@ public class LicenseValidation implements Filter {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
-			
 
 		}
 	}
@@ -138,11 +133,6 @@ public class LicenseValidation implements Filter {
 		} catch (SQLException e) {
 			throw new BSDataBaseException(e);
 		}
-	}
-
-	private Connection getConnection(HttpServletRequest request) {
-		BSConnectionFactory cf = new BSConnectionFactory();
-		return cf.getConnection(request);
 	}
 
 }
