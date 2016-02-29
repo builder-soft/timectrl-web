@@ -67,7 +67,7 @@ public class EmployeeManager extends HttpServletCRUD {
 		action.setUrl("/servlet/timectrl/employeeLicensing/LoadLicensing");
 //		table.addAction(action);
 
-		table.getAction("DELETE").setLabel("Desvincular");;
+		table.getAction("DELETE").setLabel("Desvincular");
 		
 		return table;
 	}

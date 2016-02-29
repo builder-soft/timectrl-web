@@ -122,16 +122,28 @@
 						if (BSWeb.canUse(action.getCode(), request, conn)) {
 							String id = capitalize(action.getDefaultCode());
 							String msg = action.getWarningMessage();
+							String method = action.getMethod() != null ? "&Method=" + action.getMethod() : "";
+							
 							out.print("<button class='btn btn-default' type='button' ");
 							out.print("id='o" + id + "' ");
 							out.print(action.getDisabled() ? "disabled" : "");
 
 							msg =  action.getWarningMessage();
 							if(msg==null){
-								msg="";
+								msg="¿Esta seguro que desea ejecutar esta accion?";
 							}
 							
-							out.print(" onclick='javascript:f" + id + "(\""+msg+"\");'");
+							
+							String js = " onclick='javascript:";
+							js+= "if(confirm(\""+msg+"\")){";
+							js+=" doAction(\"" + ctxPath + action.getUrl() + "\", \"" + action.getCode()
+									+ method + "\");";
+							js+="}'";
+							
+//							out.print(js + ":doAction(\"" + ctxPath + action.getUrl() + "\", \"" + action.getCode()
+//									+ method + "\");'");
+//							out.print(" onclick='javascript:f" + id + "(\""+msg+"\");'");
+							out.print(js);
 							out.print(">" + action.getLabel() + "</button>");
 						}
 					}

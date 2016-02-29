@@ -57,19 +57,9 @@ public class EmployeeTurnManager extends HttpServletCRUD {
 		action.setUrl("/servlet/timectrl/employee/TurnsOfEmployee");
 		table.addAction(action);
 
-		action = new BSAction("LICENSE", BSActionType.Record);
-		action.setLabel("Licencias médicas o permisos");
-		action.setUrl("/servlet/timectrl/employee/LicenseOfEmployee");
-//		table.addAction(action);
-
-		action = new BSAction("MARK_MODIFY", BSActionType.Record);
-		action.setLabel("Administración de Marcas");
-		action.setUrl("/servlet/timectrl/employee/MarkAdmin");
-//		table.addAction(action);
-
-		action = new BSAction("LOAD_LICENSE", BSActionType.Table);
-		action.setLabel("Archivo Licencias");
-		action.setUrl("/servlet/timectrl/employeeLicensing/LoadLicensing");
+		action = new BSAction("MASSIVE_TURN", BSActionType.MultiRecord);
+		action.setLabel("Asignacion masiva de turnos");
+		action.setUrl("/servlet/timectrl/employee/MassiveTurnsOfEmployee");
 //		table.addAction(action);
 
 		return table;

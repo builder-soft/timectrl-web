@@ -11,7 +11,7 @@
 <%@page import="cl.buildersoft.framework.util.BSWeb"%>
 <%@page import="java.util.List"%>
 <%
-String gravatar = BSWeb.getGravatar((User) session.getAttribute("User"));
+ String gravatar = BSWeb.getGravatar((User) session.getAttribute("User"));
 %>
 <!-- 
 http://getbootstrap.com/components/#navbar
@@ -32,7 +32,7 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 		<ul class="nav navbar-nav">
 			<li>
 			<%if(showMenu(session)){ %>
-			<a	href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString()%>">Inicio</a>
+			<a	href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString() %>">Inicio</a>
 				<%} %>
 				
 				</li>

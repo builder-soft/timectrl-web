@@ -33,8 +33,8 @@ import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.timectrl.util.LicenseValidationUtil;
 
 @WebFilter(urlPatterns = { "/servlet/*" }, dispatcherTypes = { DispatcherType.REQUEST })
-public class LicenseValidation implements Filter {
-	private static final Logger LOG = Logger.getLogger(LicenseValidation.class.getName());
+public class LicenseValidationFilter implements Filter {
+	private static final Logger LOG = Logger.getLogger(LicenseValidationFilter.class.getName());
 	private Map<String, Boolean> activeFilter = null;
 
 	public void init(FilterConfig filterConfig) throws ServletException {
