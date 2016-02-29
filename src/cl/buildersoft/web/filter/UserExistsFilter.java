@@ -32,7 +32,7 @@ public class UserExistsFilter implements Filter {
 
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException,
 			ServletException {
-		LOG.log(Level.INFO, "User Exists Filter");
+		LOG.log(Level.FINE, "User Exists Filter");
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 		Boolean goHome = Boolean.FALSE;

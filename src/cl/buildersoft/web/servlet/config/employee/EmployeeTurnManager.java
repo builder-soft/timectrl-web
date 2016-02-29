@@ -60,7 +60,7 @@ public class EmployeeTurnManager extends HttpServletCRUD {
 		action = new BSAction("MASSIVE_TURN", BSActionType.MultiRecord);
 		action.setLabel("Asignacion masiva de turnos");
 		action.setUrl("/servlet/timectrl/employee/MassiveTurnsOfEmployee");
-//		table.addAction(action);
+		table.addAction(action);
 
 		return table;
 	}

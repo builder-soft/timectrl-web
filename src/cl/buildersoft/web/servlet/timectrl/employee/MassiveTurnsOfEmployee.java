@@ -51,7 +51,7 @@ public class MassiveTurnsOfEmployee extends BSHttpServlet {
 		String dateFormat = BSDateTimeUtil.getFormatDate(conn);
 		List<Turn> turns = getTurns(conn);
 
-		String page =  "/WEB-INF/jsp/timectrl/employee/turns-of-employee2.jsp";
+		String page =  "/WEB-INF/jsp/timectrl/employee/massive-turns-of-employee2.jsp";
 		closeConnection(conn);
 
 		request.setAttribute("Employee", employee);

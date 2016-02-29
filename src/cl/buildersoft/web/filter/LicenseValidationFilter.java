@@ -38,7 +38,7 @@ public class LicenseValidationFilter implements Filter {
 	private Map<String, Boolean> activeFilter = null;
 
 	public void init(FilterConfig filterConfig) throws ServletException {
-				if (activeFilter == null) {
+		if (activeFilter == null) {
 			this.activeFilter = new HashMap<String, Boolean>();
 			LOG.log(Level.FINEST, "Loading license list");
 			ServletContext context = filterConfig.getServletContext();
@@ -77,7 +77,7 @@ public class LicenseValidationFilter implements Filter {
 
 	public void doFilter(ServletRequest rq, ServletResponse rs, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) rq;
-LOG.log(Level.INFO,"In License Filter");
+		LOG.log(Level.FINE, "In License Filter");
 		Boolean success = true;
 
 		Domain domain = (Domain) request.getSession(false).getAttribute("Domain");
