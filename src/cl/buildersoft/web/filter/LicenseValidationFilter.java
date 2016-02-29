@@ -32,15 +32,15 @@ import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.timectrl.util.LicenseValidationUtil;
 
-@WebFilter(urlPatterns = { "/servlet/*" }, dispatcherTypes = { DispatcherType.REQUEST })
+// @ WebFilter(urlPatterns = { "/servlet/*" }, dispatcherTypes = { DispatcherType.REQUEST })
 public class LicenseValidationFilter implements Filter {
 	private static final Logger LOG = Logger.getLogger(LicenseValidationFilter.class.getName());
 	private Map<String, Boolean> activeFilter = null;
 
 	public void init(FilterConfig filterConfig) throws ServletException {
-		if (activeFilter == null) {
+				if (activeFilter == null) {
 			this.activeFilter = new HashMap<String, Boolean>();
-			LOG.log(Level.INFO, "Loading license list");
+			LOG.log(Level.FINEST, "Loading license list");
 			ServletContext context = filterConfig.getServletContext();
 			BSConfig config = new BSConfig();
 
@@ -70,14 +70,14 @@ public class LicenseValidationFilter implements Filter {
 	}
 
 	public void destroy() {
-		LOG.log(Level.INFO, "Clearing license list");
+		LOG.log(Level.FINEST, "Clearing license list");
 		this.activeFilter.clear();
 		this.activeFilter = null;
 	}
 
 	public void doFilter(ServletRequest rq, ServletResponse rs, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) rq;
-
+LOG.log(Level.INFO,"In License Filter");
 		Boolean success = true;
 
 		Domain domain = (Domain) request.getSession(false).getAttribute("Domain");
