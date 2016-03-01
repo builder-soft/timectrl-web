@@ -13,6 +13,7 @@
 	List<EmployeeTurn> exceptionTurns = (List<EmployeeTurn>) request.getAttribute("ExceptionTurn");
 	String dateFormat = (String) request.getAttribute("DateFormat");
 	List<Turn> turns = (List<Turn>) request.getAttribute("Turns");
+	Boolean exception = (Boolean) request.getAttribute("Exception");
 %>
 <script
 	src="${pageContext.request.contextPath}/js/timectrl/turn/turns-of-employee.js?<%=BSWeb.randomString()%>">
@@ -26,9 +27,9 @@
 
 
 <ul class="nav nav-tabs">
-	<li class="active"><a data-toggle="tab" href="#regular"
+	<li <%=exception?"": "class='active'"%>><a data-toggle="tab" href="#regular"
 		onclick="javascript:toggleException(false)">Regulares</a></li>
-	<li><a data-toggle="tab" href="#exception"
+	<li <%=exception?"class='active'":""%>><a data-toggle="tab" href="#exception"
 		onclick="javascript:toggleException(true)">Excepcionales</a></li>
 </ul>
 

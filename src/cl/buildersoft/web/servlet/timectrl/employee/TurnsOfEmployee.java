@@ -65,6 +65,7 @@ public class TurnsOfEmployee extends BSHttpServlet {
 		request.setAttribute("ExceptionTurn", exceptionTurns);
 		request.setAttribute("DateFormat", dateFormat);
 		request.setAttribute("Turns", turns);
+		request.setAttribute("Exception", exception);
 
 		forward(request, response, page);
 		// request.getRequestDispatcher(page).forward(request, response);
