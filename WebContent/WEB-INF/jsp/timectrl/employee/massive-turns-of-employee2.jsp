@@ -1,16 +1,12 @@
-<%@page import="cl.buildersoft.timectrl.business.beans.Employee"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.Turn"%>
-<%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
-<%@page import="cl.buildersoft.timectrl.business.beans.EmployeeTurn"%>
-<%@page import="cl.buildersoft.timectrl.business.beans.Post"%>
-<%@page import="cl.buildersoft.timectrl.business.beans.Area"%>
+<%@page import="cl.buildersoft.timectrl.business.beans.Employee"%>
 <%@ include file="/WEB-INF/jsp/common/header2.jsp"%>
 <%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
 <%
-	Employee employee = (Employee) request.getAttribute("Employee");
+	List<Employee> employee = (List<Employee>) request.getAttribute("EmployeeList");
 
-	List<EmployeeTurn> employeeTurns = (List<EmployeeTurn>) request.getAttribute("EmployeeTurn");
-	List<EmployeeTurn> exceptionTurns = (List<EmployeeTurn>) request.getAttribute("ExceptionTurn");
+//	List<EmployeeTurn> employeeTurns = (List<EmployeeTurn>) request.getAttribute("EmployeeTurn");
+//	List<EmployeeTurn> exceptionTurns = (List<EmployeeTurn>) request.getAttribute("ExceptionTurn");
 	String dateFormat = (String) request.getAttribute("DateFormat");
 	List<Turn> turns = (List<Turn>) request.getAttribute("Turns");
 %>
@@ -49,22 +45,22 @@
 				</tr>
 			</thead>
 			<%
-				for (EmployeeTurn employeeTurn : employeeTurns) {
+			//	for (EmployeeTurn employeeTurn : employeeTurns) {
 			%>
 			<tbody>
 				<tr>
-					<td class='cDataTD'><%=employeeTurn.getTurnName()%></td>
-					<td class='cDataTD'><%=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%></td>
-					<td class='cDataTD'><%=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%></td>
+					<td class='cDataTD'>< %=employeeTurn.getTurnName()%></td>
+					<td class='cDataTD'>< %=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%></td>
+					<td class='cDataTD'>< %=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%></td>
 					<td class='cDataTD'>
 						<button
-							onclick="javascript:editEmployeeTurn(this, <%=employeeTurn.getId()%>, <%=employeeTurn.getTurn()%>, '<%=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%>', '<%=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%>', <%=employeeTurn.getEmployee()%>)">Editar</button>
+							onclick="javascript:editEmployeeTurn(this, < %=employeeTurn.getId()%>, < %=employeeTurn.getTurn()%>, '< %=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%>', '< %=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%>', < %=employeeTurn.getEmployee()%>)">Editar</button>
 						<button
-							onclick="javascript:deleteEmployeeTurn(<%=employeeTurn.getId()%>, <%=employee.getId()%>, '<%=employee.getName()%>')">Borrar</button>
+							onclick="javascript:deleteEmployeeTurn(< %=employeeTurn.getId()%>, < %=employee.getId()%>, '< %=employee.getName()%>')">Borrar</button>
 					</td>
 				</tr>
 				<%
-					}
+				//	}
 				%>
 			</tbody>
 		</table>
@@ -86,29 +82,29 @@
 				</tr>
 			</thead>
 			<%
-				for (EmployeeTurn employeeTurn : exceptionTurns) {
+		//		for (EmployeeTurn employeeTurn : exceptionTurns) {
 			%>
 			<tbody>
 				<tr>
-					<td class='cDataTD'><%=employeeTurn.getTurnName()%></td>
-					<td class='cDataTD'><%=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%></td>
-					<td class='cDataTD'><%=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%></td>
+					<td class='cDataTD'>< %=employeeTurn.getTurnName()%></td>
+					<td class='cDataTD'>< %=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%></td>
+					<td class='cDataTD'>< %=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%></td>
 					<td class='cDataTD'>
 						<button
-							onclick="javascript:editEmployeeTurn(this, <%=employeeTurn.getId()%>, <%=employeeTurn.getTurn()%>, '<%=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%>', '<%=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%>', <%=employeeTurn.getEmployee()%>)">Editar</button>
+							onclick="javascript:editEmployeeTurn(this, < %=employeeTurn.getId()%>, < %=employeeTurn.getTurn()%>, '< %=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%>', '< %=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%>', < %=employeeTurn.getEmployee()%>)">Editar</button>
 						<button
-							onclick="javascript:deleteEmployeeTurn(<%=employeeTurn.getId()%>, <%=employee.getId()%>, '<%=employee.getName()%>')">Borrar</button>
+							onclick="javascript:deleteEmployeeTurn(< %=employeeTurn.getId()%>, < %=employee.getId()%>, '< %=employee.getName()%>')">Borrar</button>
 					</td>
 				</tr>
 				<%
-					}
+		//			}
 				%>
 			</tbody>
 		</table>
 	</div>
 
 </div>
-<button onclick="addNew(<%=employee.getId()%>);" id="addButton" class='btn btn-default'>Agregar
+<button onclick="addNew(< %=employee.getId()%>);" id="addButton" class='btn btn-default'>Agregar
 	Turno</button>
 
 <button class='btn btn-link'

@@ -32,33 +32,33 @@ public class MassiveTurnsOfEmployee extends BSHttpServlet {
 		BSBeanUtils bu = new BSBeanUtils();
 
 		Connection conn = getConnection(request);
-		Employee employee = getEmployee(request, bu, conn);
-		Post post = getPostEmployee(conn, bu, employee);
-		Area area = getAreaEmployee(conn, bu, employee);
-		List<EmployeeTurn> tempTurns = getEmployeeTurns(conn, employee);
+		List<Employee> employee = getEmployee(request, bu, conn);
+		// Post post = getPostEmployee(conn, bu, employee);
+		// Area area = getAreaEmployee(conn, bu, employee);
+		// List<EmployeeTurn> tempTurns = getEmployeeTurns(conn, employee);
 
-		List<EmployeeTurn> employeeTurns = new ArrayList<EmployeeTurn>();
-		List<EmployeeTurn> exceptionTurns = new ArrayList<EmployeeTurn>();
-
-		for (EmployeeTurn current : tempTurns) {
-			if (current.getException()) {
-				exceptionTurns.add(current);
-			} else {
-				employeeTurns.add(current);
-			}
-		}
+//		List<EmployeeTurn> employeeTurns = new ArrayList<EmployeeTurn>();
+//		List<EmployeeTurn> exceptionTurns = new ArrayList<EmployeeTurn>();
+//
+//		for (EmployeeTurn current : tempTurns) {
+//			if (current.getException()) {
+//				exceptionTurns.add(current);
+//			} else {
+//				employeeTurns.add(current);
+//			}
+//		}
 
 		String dateFormat = BSDateTimeUtil.getFormatDate(conn);
 		List<Turn> turns = getTurns(conn);
 
-		String page =  "/WEB-INF/jsp/timectrl/employee/massive-turns-of-employee2.jsp";
+		String page = "/WEB-INF/jsp/timectrl/employee/massive-turns-of-employee2.jsp";
 		closeConnection(conn);
 
-		request.setAttribute("Employee", employee);
-		request.setAttribute("Post", post);
-		request.setAttribute("Area", area);
-		request.setAttribute("EmployeeTurn", employeeTurns);
-		request.setAttribute("ExceptionTurn", exceptionTurns);
+		request.setAttribute("EmployeeList", employee);
+//		request.setAttribute("Post", post);
+//		request.setAttribute("Area", area);
+//		request.setAttribute("EmployeeTurn", employeeTurns);
+//		request.setAttribute("ExceptionTurn", exceptionTurns);
 		request.setAttribute("DateFormat", dateFormat);
 		request.setAttribute("Turns", turns);
 
@@ -74,7 +74,7 @@ public class MassiveTurnsOfEmployee extends BSHttpServlet {
 
 		return out;
 	}
-
+/**<code>
 	private List<EmployeeTurn> getEmployeeTurns(Connection conn, Employee employee) {
 		EmployeeTurnService service = new EmployeeTurnServiceImpl();
 		return service.listAllEmployeeTurns(conn, employee.getId());
@@ -94,25 +94,36 @@ public class MassiveTurnsOfEmployee extends BSHttpServlet {
 		bu.search(conn, post);
 		return post;
 	}
+</code>*/
+	
+	private List<Employee> getEmployee(HttpServletRequest request, BSBeanUtils bu, Connection conn) {
+		List<Employee> out = new ArrayList<Employee>();
 
-	private Employee getEmployee(HttpServletRequest request, BSBeanUtils bu, Connection conn) {
-		Long id = Long.parseLong(getEmployeeId(request));
-		Employee employee = new Employee();
-		employee.setId(id);
+		String[] ids = getEmployeeId(request);
 
-		bu.search(conn, employee);
-		return employee;
+		for (String id : ids) {
+			Employee employee = new Employee();
+			employee.setId(Long.parseLong(id));
+
+			if (bu.search(conn, employee)) {
+				out.add(employee);
+			}
+
+		}
+
+		// Long id = Long.parseLong();
+		// Employee employee = new Employee();
+		// employee.setId(id);
+		//
+		// bu.search(conn, employee);
+		return out;
 	}
 
-	private String getEmployeeId(HttpServletRequest request) {
-		String out = null;
+	private String[] getEmployeeId(HttpServletRequest request) {
+		String[] out = null;
 
-		Object idObject = request.getAttribute("cId");
-		if (idObject != null) {
-			out = (String) idObject;
-		} else {
-			out = request.getParameter("cId");
-		}
+		out = request.getParameterValues("cId");
+
 		return out;
 	}
 

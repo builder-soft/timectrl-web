@@ -3,6 +3,8 @@ package cl.buildersoft.web.servlet.timectrl.employee;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,12 +16,15 @@ import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.EmployeeTurn;
 import cl.buildersoft.timectrl.business.services.EmployeeTurnService;
 import cl.buildersoft.timectrl.business.services.impl.EmployeeTurnServiceImpl;
+import cl.buildersoft.web.servlet.login.ValidateLoginServlet;
 
 /**
  * Servlet implementation class SaveNewTurn
  */
 @WebServlet("/servlet/timectrl/employee/SaveNewTurn")
 public class SaveNewTurn extends BSHttpServlet {
+	private static final Logger LOG = Logger.getLogger(SaveNewTurn.class.getName());
+	
 	private static final long serialVersionUID = 3010813754466559516L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,6 +35,8 @@ public class SaveNewTurn extends BSHttpServlet {
 
 		String turnId = request.getParameter("TurnId");
 		Boolean exception = Boolean.parseBoolean(request.getParameter("Exception"));
+		
+		LOG.log(Level.FINE, "Exception : {0}", exception);
 
 		Connection conn = getConnection(request);
 		String formatDate = BSDateTimeUtil.getFormatDate(conn);
@@ -57,6 +64,7 @@ public class SaveNewTurn extends BSHttpServlet {
 		closeConnection(conn);
 
 		request.setAttribute("cId", employee.toString());
+		request.setAttribute("Exception", exception);
 
 		forward(request, response, "/servlet/timectrl/employee/TurnsOfEmployee");
 

@@ -37,6 +37,7 @@ public class TurnsOfEmployee extends BSHttpServlet {
 		Employee employee = getEmployee(request, bu, conn);
 		Post post = getPostEmployee(conn, bu, employee);
 		Area area = getAreaEmployee(conn, bu, employee);
+		Boolean exception = getException(request);
 		List<EmployeeTurn> tempTurns = getEmployeeTurns(conn, employee);
 
 		List<EmployeeTurn> employeeTurns = new ArrayList<EmployeeTurn>();
@@ -65,9 +66,14 @@ public class TurnsOfEmployee extends BSHttpServlet {
 		request.setAttribute("DateFormat", dateFormat);
 		request.setAttribute("Turns", turns);
 
-		
 		forward(request, response, page);
-//		request.getRequestDispatcher(page).forward(request, response);
+		// request.getRequestDispatcher(page).forward(request, response);
+	}
+
+	private Boolean getException(HttpServletRequest request) {
+		Object mayBeException = request.getAttribute("Exception");
+		Boolean out = mayBeException != null ? Boolean.parseBoolean(mayBeException.toString()) : false;
+		return out;
 	}
 
 	@SuppressWarnings("unchecked")
