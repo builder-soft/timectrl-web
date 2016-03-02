@@ -18,6 +18,8 @@ public class DeleteEmployeeTurn extends BSHttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Long employeeTurnId = Long.parseLong(request.getParameter("EmployeeTurn"));
 		Long employee = Long.parseLong(request.getParameter("Employee"));
+		Boolean exception = Boolean.parseBoolean(request.getParameter("Exception"));
+		
 
 		String sql = "DELETE FROM tR_EmployeeTurn WHERE cId=?";
 		BSmySQL mysql = new BSmySQL();
@@ -28,7 +30,9 @@ public class DeleteEmployeeTurn extends BSHttpServlet {
 
 		mysql.closeConnection(conn);
 
-		request.setAttribute("cId", "" + employee);
+		request.setAttribute("cId", employee.toString());
+		request.setAttribute("Exception", exception);
+		
 		forward(request, response, "/servlet/timectrl/employee/TurnsOfEmployee");
 
 	}

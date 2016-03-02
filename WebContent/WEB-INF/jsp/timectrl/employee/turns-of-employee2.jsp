@@ -18,6 +18,9 @@
 <script
 	src="${pageContext.request.contextPath}/js/timectrl/turn/turns-of-employee.js?<%=BSWeb.randomString()%>">
 </script>
+<script>
+var exception = <%=exception%>;
+</script>
 
 <div class="page-header">
 	<h1>Configuración de turnos</h1>
@@ -35,7 +38,7 @@
 
 
 <div class="tab-content">
-	<div id="regular" class="tab-pane fade in active">
+	<div id="regular" class="tab-pane fade <%=exception?"": "in active"%>">
 		<h2>Turnos regulares</h2>
 
 		<table
@@ -72,7 +75,7 @@
 
 	</div>
 
-	<div id="exception" class="tab-pane fade">
+	<div id="exception" class="tab-pane fade <%=exception?"in active": ""%>">
 		<h2>Turnos excepcionales</h2>
 
 		<table
@@ -144,7 +147,7 @@
 	<!-- id del registro de la tabla de relacion, se utiliza para el update -->
 	<input type="hidden" name="cId" id="cId">
 	<!-- Campo que indica si es un turno excepcional -->
-	<input type="hidden" name="Exception" id="Exception" value="false">
+	<input type="hidden" name="Exception" id="Exception" value="<%=exception%>">
 </form>
 
 <%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>
