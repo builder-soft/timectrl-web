@@ -32,7 +32,7 @@ public class MassiveTurnsOfEmployee extends BSHttpServlet {
 		BSBeanUtils bu = new BSBeanUtils();
 
 		Connection conn = getConnection(request);
-		List<Employee> employee = getEmployee(request, bu, conn);
+		List<Employee> employeeList = getEmployee(request, bu, conn);
 		// Post post = getPostEmployee(conn, bu, employee);
 		// Area area = getAreaEmployee(conn, bu, employee);
 		// List<EmployeeTurn> tempTurns = getEmployeeTurns(conn, employee);
@@ -54,7 +54,7 @@ public class MassiveTurnsOfEmployee extends BSHttpServlet {
 		String page = "/WEB-INF/jsp/timectrl/employee/massive-turns-of-employee2.jsp";
 		closeConnection(conn);
 
-		request.setAttribute("EmployeeList", employee);
+		request.setAttribute("EmployeeList", employeeList);
 //		request.setAttribute("Post", post);
 //		request.setAttribute("Area", area);
 //		request.setAttribute("EmployeeTurn", employeeTurns);

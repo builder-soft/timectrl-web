@@ -3,116 +3,62 @@
 <%@ include file="/WEB-INF/jsp/common/header2.jsp"%>
 <%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
 <%
-	List<Employee> employee = (List<Employee>) request.getAttribute("EmployeeList");
+	List<Employee> employeeList = (List<Employee>) request.getAttribute("EmployeeList");
 
-//	List<EmployeeTurn> employeeTurns = (List<EmployeeTurn>) request.getAttribute("EmployeeTurn");
-//	List<EmployeeTurn> exceptionTurns = (List<EmployeeTurn>) request.getAttribute("ExceptionTurn");
+	//	List<EmployeeTurn> employeeTurns = (List<EmployeeTurn>) request.getAttribute("EmployeeTurn");
+	//	List<EmployeeTurn> exceptionTurns = (List<EmployeeTurn>) request.getAttribute("ExceptionTurn");
 	String dateFormat = (String) request.getAttribute("DateFormat");
 	List<Turn> turns = (List<Turn>) request.getAttribute("Turns");
 %>
 <script
-	src="${pageContext.request.contextPath}/js/timectrl/turn/turns-of-employee.js?<%=BSWeb.randomString()%>">
+	src="${pageContext.request.contextPath}/js/timectrl/turn/massive-turns-of-employee.js?<%=BSWeb.randomString()%>">
 </script>
 
 <div class="page-header">
-	<h1>Configuración Masiva de turnos</h1>
+	<h1>Asignacion Masiva de turnos</h1>
 </div>
 
-<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info2.jsp"%>
-
-
-<ul class="nav nav-tabs">
-	<li class="active"><a data-toggle="tab" href="#regular"
-		onclick="javascript:toggleException(false)">Regulares</a></li>
-	<li><a data-toggle="tab" href="#exception"
-		onclick="javascript:toggleException(true)">Excepcionales</a></li>
-</ul>
-
-
-<div class="tab-content">
-	<div id="regular" class="tab-pane fade in active">
-		<h2>Turnos regulares</h2>
-
+<form 
+_action="${pageContext.request.contextPath}/servlet/ShowParameters" 
+action="${pageContext.request.contextPath}/servlet/timectrl/employee/SaveNewMassiveTurn" 
+method="post">
+<div class="row">
+	<div class="col-sm-12">
 		<table
-			class="table table-striped table-bordered table-hover table-condensed"
-			id="detailTable">
+			class="table table-striped table-bordered table-hover table-condensed table-responsive">
+			<caption>Lista de Emploeados:</caption>
 			<thead>
 				<tr>
-					<td>Turno</td>
-					<td>Desde</td>
-					<td>Hasta</td>
-					<td>Acción</td>
+					<th>Llave</th>
+					<th>Rut</th>
+					<th>Nombre</th>
 				</tr>
 			</thead>
-			<%
-			//	for (EmployeeTurn employeeTurn : employeeTurns) {
-			%>
 			<tbody>
-				<tr>
-					<td class='cDataTD'>< %=employeeTurn.getTurnName()%></td>
-					<td class='cDataTD'>< %=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%></td>
-					<td class='cDataTD'>< %=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%></td>
-					<td class='cDataTD'>
-						<button
-							onclick="javascript:editEmployeeTurn(this, < %=employeeTurn.getId()%>, < %=employeeTurn.getTurn()%>, '< %=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%>', '< %=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%>', < %=employeeTurn.getEmployee()%>)">Editar</button>
-						<button
-							onclick="javascript:deleteEmployeeTurn(< %=employeeTurn.getId()%>, < %=employee.getId()%>, '< %=employee.getName()%>')">Borrar</button>
-					</td>
-				</tr>
 				<%
-				//	}
+					for (Employee employee : employeeList) {
 				%>
-			</tbody>
-		</table>
-
-	</div>
-
-	<div id="exception" class="tab-pane fade">
-		<h2>Turnos excepcionales</h2>
-
-		<table
-			class="table table-striped table-bordered table-hover table-condensed"
-			id="exceptionTable">
-			<thead>
 				<tr>
-					<td>Turno</td>
-					<td>Desde</td>
-					<td>Hasta</td>
-					<td>Acción</td>
-				</tr>
-			</thead>
-			<%
-		//		for (EmployeeTurn employeeTurn : exceptionTurns) {
-			%>
-			<tbody>
-				<tr>
-					<td class='cDataTD'>< %=employeeTurn.getTurnName()%></td>
-					<td class='cDataTD'>< %=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%></td>
-					<td class='cDataTD'>< %=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%></td>
-					<td class='cDataTD'>
-						<button
-							onclick="javascript:editEmployeeTurn(this, < %=employeeTurn.getId()%>, < %=employeeTurn.getTurn()%>, '< %=BSDateTimeUtil.calendar2String(employeeTurn.getStartDate(), dateFormat)%>', '< %=BSDateTimeUtil.calendar2String(employeeTurn.getEndDate(), dateFormat)%>', < %=employeeTurn.getEmployee()%>)">Editar</button>
-						<button
-							onclick="javascript:deleteEmployeeTurn(< %=employeeTurn.getId()%>, < %=employee.getId()%>, '< %=employee.getName()%>')">Borrar</button>
-					</td>
+					<td><input type="hidden" name="Employee" value="<%=employee.getId()%>"><%=employee.getKey()%></td>
+					<td><%=employee.getRut()%></td>
+					<td><%=employee.getName()%></td>
 				</tr>
 				<%
-		//			}
+					}
 				%>
 			</tbody>
 		</table>
 	</div>
-
 </div>
-<button onclick="addNew(< %=employee.getId()%>);" id="addButton" class='btn btn-default'>Agregar
-	Turno</button>
 
-<button class='btn btn-link'
-	onclick="returnTo('${pageContext.request.contextPath}/servlet/config/employee/EmployeeTurnManager');">Volver</button>
-
-
-		<div id="TurnsContainer" style="display: none">
-			<select id="DTurn">
+<div class="well">
+<div class="row">
+	<div class="col-sm-12">
+		<div class="col-sm-offset-1 col-sm-2">
+			<label for="DTurn">Turno:</label>
+		</div>
+		<div class="col-sm-8">
+			<select id="Turn" name="Turn">
 				<%
 					for (Turn turn : turns) {
 				%>
@@ -122,24 +68,46 @@
 				%>
 			</select>
 		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="col-sm-offset-1 col-sm-2 ">
+			<label for="StartDate">Desde:</label>
+		</div>
+		<div class="col-sm-8 ">
+			<input type="text" id="StartDate" name="StartDate">
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="col-sm-offset-1 col-sm-2 ">
+			<label for="EndDate">Hasta:</label>
+		</div>
+		<div class="col-sm-8 ">
+			<input type="text" id="EndDate" name="EndDate">
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="col-sm-offset-1 col-sm-2 ">
+			<label for="EndDate">Fecha excepcional:</label>
+		</div>
+		<div class="col-sm-8 ">
+			<input type="checkbox" id="Exception" name="Exception" checked value="true">
+		</div>
+	</div>
+</div>
+</div>
 
-<form id='form' method="post">
-	<!-- Id del registro de la tabla tr_employeeturn -->
-	<input type="hidden" name="TurnId" id="TurnId">
-	<!-- Este valor no se ocupa, evaluar si se requiere, en caso contrario eliminar -->
-	<input type="hidden" name="EmployeeTurn" id="EmployeeTurn">
-	<!-- Id del empleado -->
-	<input type="hidden" name="Employee" id="Employee">
-	<!-- Id del turno, corresponde a la tabla tTurn -->
-	<input type="hidden" name="Turn" id="Turn">
-	<!-- fecha de inicio -->
-	<input type="hidden" name="StartDate" id="StartDate">
-	<!-- fecha de termino -->
-	<input type="hidden" name="EndDate" id="EndDate">
-	<!-- id del registro de la tabla de relacion, se utiliza para el update -->
-	<input type="hidden" name="cId" id="cId">
-	<!-- Campo que indica si es un turno excepcional -->
-	<input type="hidden" name="Exception" id="Exception" value="false">
+
+
+
+<button type="submit" class='btn btn-default'>Confirmar</button>
+<button class='btn btn-link' type="button"
+	onclick="returnTo('${pageContext.request.contextPath}/servlet/config/employee/EmployeeTurnManager');">Volver</button>
 </form>
 
 <%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>

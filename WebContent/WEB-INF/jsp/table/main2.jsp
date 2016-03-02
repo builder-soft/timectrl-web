@@ -128,18 +128,21 @@
 							out.print("id='o" + id + "' ");
 							out.print(action.getDisabled() ? "disabled" : "");
 
-							msg =  action.getWarningMessage();
+						//	msg =  action.getWarningMessage();
 							if(msg==null){
 								msg="¿Esta seguro que desea ejecutar esta accion?";
 							}
-							
-							
-							String js = " onclick='javascript:";
-							js+= "if(confirm(\""+msg+"\")){";
-							js+=" doAction(\"" + ctxPath + action.getUrl() + "\", \"" + action.getCode()
-									+ method + "\");";
-							js+="}'";
-							
+							String js = "";
+							if(msg.length()>0){
+								js += " onclick='javascript:";
+								js += "if(confirm(\""+msg+"\")){";
+								js += " doAction(\"" + ctxPath + action.getUrl() + "\", \"" + action.getCode()
+										+ method + "\");";
+								js += "}'";
+							}else{
+								js += " onclick='javascript:doAction(\"" + ctxPath + action.getUrl() + "\", \"" + action.getCode()
+										+ method + "\");'";
+							}
 //							out.print(js + ":doAction(\"" + ctxPath + action.getUrl() + "\", \"" + action.getCode()
 //									+ method + "\");'");
 //							out.print(" onclick='javascript:f" + id + "(\""+msg+"\");'");
