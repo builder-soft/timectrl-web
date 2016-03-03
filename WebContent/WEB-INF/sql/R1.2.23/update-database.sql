@@ -81,6 +81,7 @@ drop procedure if exists pUpdateData_Temp;
 
 INSERT INTO tOption(cKey, cLabel, cURL, cParent, cType, cOrder, cEnable, cIsAdmin) VALUES('EVENT_VIEWER', 'Visor de eventos', '/servlet/admin/eventViewer/EventViewerMain', 7, 1, 3, true, false);
 
-
+insert into tEventType(cKey, cName) VALUES('UPDATE_TURN', 'Actualizacion de turno');
+insert into tEventType(cKey, cName) VALUES('INSERT_TURN', 'Actualizacion de turno');
 
 UPDATE tVersion SET cVersion='1.2.23', cUpdated=NOW() WHERE cKey = 'DBT';

@@ -66,7 +66,7 @@
 %>
 
 <%@ include file="/WEB-INF/jsp/common/header2.jsp"%>
-<%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
+<%@ include file="/WEB-INF/jsp/common/menu2.jsp"%> 
 <script>
 	var showed = false;
 	function showHideInfo(o) {

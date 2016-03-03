@@ -24,6 +24,7 @@ public class AbstractServletUtil extends BSHttpServlet {
 	private static final Logger LOG = Logger.getLogger(AbstractServletUtil.class.getName());
 	private static final long serialVersionUID = -34792656017725168L;
 
+	@Deprecated
 	protected String getFieldsNamesWithCommas(BSField[] fields) {
 		String out = "";
 		if (fields.length == 0) {

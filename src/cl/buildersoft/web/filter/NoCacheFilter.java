@@ -2,6 +2,8 @@ package cl.buildersoft.web.filter;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,8 +14,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter(urlPatterns = { "/servlet/*", "/jsp/*" })
+// @ WebFilter(urlPatterns = { "/servlet/*", "/jsp/*" })
 public class NoCacheFilter implements Filter {
+	private static final Logger LOG = Logger.getLogger(NoCacheFilter.class.getName());
 
 	public NoCacheFilter() {
 	}
@@ -24,6 +27,7 @@ public class NoCacheFilter implements Filter {
 
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException,
 			ServletException {
+		LOG.log(Level.FINEST, "No Cache Filter");
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 		response.setDateHeader("Date", new Date().getTime());
 		response.setDateHeader("Expires", 0);

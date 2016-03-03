@@ -1,3 +1,7 @@
+<%@page import="java.sql.Connection"%>
+<%@page import="cl.buildersoft.framework.util.BSConnectionFactory"%>
+<%@page import="cl.buildersoft.framework.services.impl.BSMenuServiceImpl"%>
+<%@page import="cl.buildersoft.framework.services.BSMenuService"%>
 <%@page import="cl.buildersoft.framework.beans.User"%>
 <%@page import="cl.buildersoft.framework.beans.Option"%>
 <%@page import="cl.buildersoft.framework.beans.Submenu"%>
@@ -7,7 +11,7 @@
 <%@page import="cl.buildersoft.framework.util.BSWeb"%>
 <%@page import="java.util.List"%>
 <%
-	String grabatar = BSWeb.getGravatar((User)session.getAttribute("User"));
+ String gravatar = BSWeb.getGravatar((User) session.getAttribute("User"));
 %>
 <!-- 
 http://getbootstrap.com/components/#navbar
@@ -26,8 +30,12 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 	</div>
 	<div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav">
-			<li><a
-				href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString()%>">Inicio</a></li>
+			<li>
+			<%if(showMenu(session)){ %>
+			<a	href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString() %>">Inicio</a>
+				<%} %>
+				
+				</li>
 
 			<%=write_menu_in_menu_jsp(session, request)%>
 		</ul>
@@ -35,7 +43,7 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 			<li> 
 			
 			  <a href="#">
-			  <img src="<%=grabatar%>">&nbsp;
+			  <img src="<%=gravatar%>">&nbsp;
 			  <!-- 
 			  <img src="http://www.gravatar.com/avatar/06557b0ffbce34613baba8ba2513fe18?s=25">&nbsp;
 			   -->
@@ -43,76 +51,87 @@ http://vadikom.github.io/smartmenus/src/demo/bootstrap-navbar.html
 					${sessionScope.User.mail}
 					
 					</a>
-				<ul class="dropdown-menu">
-					<%
-					Object domainsAsObject = session.getAttribute("Domains");
-					if(domainsAsObject!=null){
-						List<Domain> domains = (List<Domain>) session.getAttribute("Domains");
-						if(domains.size()>1){
-					%>
-					<li><a href="#">Dominio actual: ${sessionScope.Domain.name} (<%=domains.size()-1%>+)</a>
 					
+				<ul class="dropdown-menu">
+					<%if(showMenu(session)){ %>
+					<%
+						Object domainsAsObject = session.getAttribute("Domains");
+						if (domainsAsObject != null) {
+							List<Domain> domains = (List<Domain>) session.getAttribute("Domains");
+							if (domains.size() > 1) {
+					%>
+					<li><a href="#">Dominio actual: ${sessionScope.Domain.name} (<%=domains.size() - 1%>+)</a>
 						<ul class="dropdown-menu">
 						<%
-							Long currentDomainId = ((Domain)session.getAttribute("Domain")).getId();
-							for(Domain domain : domains){
-								if(!domain.getId().equals(currentDomainId)){
+							Long currentDomainId = ((Domain) session.getAttribute("Domain")). getId();
+									for (Domain domain : domains) {
+										if (!domain.getId().equals(currentDomainId)) {
 						%>
 							<li><a href="${pageContext.request.contextPath}/servlet/system/user/ChangeDomain?cId=<%=domain.getId()%>&<%=BSWeb.randomString()%>"><%=domain.getName()%></a></li>
 							<%
-								} 
-							}
+								}
+										}
 							%>
 							
 						</ul>
 						</li>
 						<%
-						} else {
+							} else {
 						%>
 					<li><a href="${pageContext.request.contextPath}/servlet/Home?<%=BSWeb.randomString()%>">Dominio: ${sessionScope.Domain.name}</a></li>
 <%
 	}
-}
+	}
 %>
 					<li class="divider"></li>
-					<li> <!-- <span class="glyphicon glyphicon-off"/>
-					 -->
+					<li><%=getChPasswordOption(request)%></li>
+					<li class="divider"></li>
+					<%} %>
+					<li> 
 					<a   
 						href="${pageContext.request.contextPath}/jsp/login/logout.jsp?<%=BSWeb.randomString()%>">Salir</a></li>
-				</ul></li>
+				</ul>
+				
+				
+				</li>
 		</ul>
 	</div>
 	<!--/.nav-collapse -->
 </div>
 <%
-String s = "";
-Enumeration<String> names = session.getAttributeNames();%>
- <% 	while (names.hasMoreElements()) {
-		String name = (String) names.nextElement();
-		s=name + ": "+ session.getAttribute(name);	
-}
+	String s = "";
+	Enumeration<String> names = session.getAttributeNames();
 %>
+ <%
+ 	while (names.hasMoreElements()) {
+ 		String name = (String) names.nextElement();
+ 		s = name + ": " + session.getAttribute(name);
+ 	}
+ %>
 <!-- 
 < % = s % >
  -->
 
 <div class="container">
 <%!private String write_menu_in_menu_jsp(HttpSession session, HttpServletRequest request) {
-		Menu menuUser = (Menu) session.getAttribute("Menu");
+		//Object mayBeMenu = session.getAttribute("Menu");
 		String out = "";
-		//Boolean haveMore = null;
-		if (menuUser != null) {
-			String ctxPath = request.getContextPath();
-			List<Submenu> main = menuUser.list();
-			Option opt = null;
-			String url = null;
-			String label = null;
-			for (Submenu submenu : main) {
-				opt = submenu.getOption();
-				out += "<li" + (submenu.list().size() > 0 ? " " : "") + ">";
-				out += option2String(opt, ctxPath, true);
-				out += writeSubMenu(submenu, ctxPath);
-				out += "</li>\n";
+		if(showMenu(session)){
+			Menu menuUser = (Menu) session.getAttribute("Menu");
+			//Boolean haveMore = null;
+			if (menuUser != null) {
+				String ctxPath = request.getContextPath();
+				List<Submenu> main = menuUser.list();
+				Option opt = null;
+				String url = null;
+				String label = null;
+				for (Submenu submenu : main) {
+					opt = submenu.getOption();
+					out += "<li" + (submenu.list().size() > 0 ? " " : "") + ">";
+					out += option2String(opt, ctxPath, true);
+					out += writeSubMenu(submenu, ctxPath);
+					out += "</li>\n";
+				}
 			}
 		}
 		return out;
@@ -169,5 +188,32 @@ Enumeration<String> names = session.getAttributeNames();%>
 		}
 		out += count > 0 ? "</ul>\n" : "\n";
 		return out;
-	}%>
+	}
+
+	private String getChPasswordOption(HttpServletRequest request) {
+		String out = "";
+		//		String out = "<a href=\"#\">Cambiar mi Clave</a>";
+		BSMenuService ms = new BSMenuServiceImpl();
+
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
+		Option option = ms.searchOptionByKey(conn, "CH_PASS");
+		cf.closeConnection(conn);
+
+		if (option != null) {
+			out = "<a href='" +  request.getContextPath() + option.getUrl() + "'>" + option.getLabel() + "</a>";
+		}
+		return out;
+	}
+	
+	private Boolean showMenu(HttpSession session){
+		Boolean out = false;
+		Object mayBeMenu = session.getAttribute("Menu");
+		
+		if(mayBeMenu != null){
+			out = mayBeMenu instanceof Menu;
+		}
+		return out;
+	}
+	%>
 

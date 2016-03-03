@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Report;
 
@@ -22,7 +22,8 @@ public class ExecutionReport extends BSHttpServlet {
 	private static final long serialVersionUID = 5522309239924345512L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection conn = getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 		List<Report> reports = getReportList(conn);
 		request.setAttribute("ReportList", reports);
 
@@ -32,7 +33,7 @@ public class ExecutionReport extends BSHttpServlet {
 		} else {
 			page = "/WEB-INF/jsp/timectrl/report/execute/report-list.jsp";
 		}
-		(new BSmySQL()).closeConnection(conn);
+		cf.closeConnection(conn);
 		forward(request, response, page);
 	}
 

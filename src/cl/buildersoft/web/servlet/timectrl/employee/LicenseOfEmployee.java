@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.Area;
@@ -47,7 +48,8 @@ public class LicenseOfEmployee extends BSHttpServlet {
 
 		Long employeeId = Long.parseLong(readParameterOrAttribute(request, "cId"));
 //		Long employeeId = Long.parseLong(request.getParameter("cId"));
-		Connection conn = getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
 
 		BSBeanUtils bu = new BSBeanUtils();
 		@SuppressWarnings("unchecked")
@@ -61,6 +63,8 @@ public class LicenseOfEmployee extends BSHttpServlet {
 
 		request.setAttribute("Licenses", licenses);
 		request.setAttribute("LicenseCause", getLicenseCause(conn));
+		cf.closeConnection(conn);
+		
 		request.setAttribute("Employee", employee);
 		request.setAttribute("Post", post);
 		request.setAttribute("Area", area);

@@ -2,6 +2,7 @@ package cl.buildersoft.web.servlet.system.changepassword;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,9 +13,11 @@ import cl.buildersoft.framework.beans.User;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.web.servlet.timectrl.employeeLicense.ReadExcelWithLicensing;
 
 @WebServlet("/servlet/system/changepassword/SearchPassword")
 public class SearchPassword extends BSHttpServlet {
+	private static final Logger LOG = Logger.getLogger(SearchPassword.class.getName());
 	private static final long serialVersionUID = 7455312993130724891L;
 
 	public SearchPassword() {
@@ -25,6 +28,9 @@ public class SearchPassword extends BSHttpServlet {
 		Long id;
 
 		String idString = request.getParameter("cId");
+		Boolean reset = request.getParameter("Reset") != null;
+	 
+
 		if (idString == null) {
 			User user = (User) request.getSession(false).getAttribute("User");
 			id = user.getId();
@@ -42,7 +48,7 @@ public class SearchPassword extends BSHttpServlet {
 		user.setId(id);
 		bu.search(conn, user);
 
-		request.setAttribute("PASS_IS_NULL", user.getPassword() == null);
+		request.setAttribute("PASS_IS_NULL", user.getPassword() == null || reset);
 
 		String page = null;
 		if (bootstrap(connDomain)) {

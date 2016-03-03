@@ -38,8 +38,6 @@ public class ListEmployeeAjax extends BSHttpServlet {
 
 		if ("employee".equalsIgnoreCase(type) || "boss".equalsIgnoreCase(type)) {
 			listEmployeeOrBoss(request, rut, name, type);
-		} else {
-
 		}
 
 		forward(request, response, "/WEB-INF/jsp/timectrl/report/execute/params/list-employees-json.jsp");
@@ -74,13 +72,30 @@ public class ListEmployeeAjax extends BSHttpServlet {
 
 		if ("boss".equalsIgnoreCase(type)) {
 			where = (where == null ? "" : where + " AND ");
-			where += "cId IN (SELECT DISTINCT(cBoss) FROM tEmployee WHERE NOT cBoss IS NULL)";
-
+			where += "cId IN (SELECT DISTINCT(cBoss) FROM tEmployee WHERE NOT cBoss IS NULL AND cEnabled=TRUE)";
 		}
+
+		/**
+		 * <code>
+		if(where == null){
+			where = " cEnabled = TRUE ";
+		}else{
+			where += " AND cEnabled = TRUE ";
+		}
+		</code>
+		 */
+
+		if (where != null) {
+			where += " AND ";
+		} else {
+			where = "";
+		}
+		where += " cEnabled = TRUE ";
+
 		BSConnectionFactory cf = new BSConnectionFactory();
 		Connection conn = cf.getConnection(request);
 		list = (List<Employee>) bu.list(conn, new Employee(), where, params);
-		cf.closeConnection(conn);		
+		cf.closeConnection(conn);
 
 		request.setAttribute("EmployeeList", list);
 		request.setAttribute("Type", type);

@@ -1,0 +1,55 @@
+Lista de SP's que usan la tabla tEmployee
+
+OK - pAbsence OK
+OK - pAbsence2 OK
+N/A - pGetEmployeeInfo: es usado desde el reporte.
+OK - pHoursWorked: Cambio aplicado, al parecer este SP no se utiliza.
+OK - pListAttendance3: Cambio aplicado, no se ejecuta por que desde la aplicacion no se puede seleccionar un empleado eliminado. Si se ejecuta directo el SP, solo trae una lista de fechas pero sin marcas. 
+OK - pListAttendance4: idem al caso anterior, la diferencia es que este SP es llamado para completar un Excel.
+OK - pListAttendanceAsExcel3: se prueba con el listado en Excel grande, no contempla los empleados que fueron borrados.
+OK - pListBoss: Se prueba con el llamado directo, no retorna a jefatura eliminada.
+N/A - pListEmployee: No aplicado, alguna vez se ingreso como configuracion en la tabla tReportParamType, pero ya no existe. Este SP se remplazó por la clase ListEmployeeAjax
+OK - pListLater: Probado con la ejecución de reporte de atrasos.
+OK - pListMarkOfEmployee: Aplicado, se ejecuta el SP directo por que desde la aplicacion no se puede. El resultado es igual a entregar un ID que no existe.
+OK - pListSummaryReport: Se ejecuta el SP directo, se toma en cuenta el parametro de los empleados del jefe.
+N/A pOvertime: Este SP, no se esta llamando desde la aplicacion.
+N/A pTest: Esta llamada es para probar lo del Split.
+pTopAbsence
+
+
+El empleado borrado para probar es 13681760-4
+Un jefe de prueba sería 10239081-4, el ID es 5
+
+El menú quedará organizado así:
+- Archivos
+   - Empleados
+      - Datos Básicos
+      - Licencias
+      - Turnos
+      - Marcas
+      - Desvinculado
+   - Cargos
+   - Areas
+   - Feriados
+   - Permisos y licencias
+   - Grupos
+- Configuracion
+   - Seguridad
+      - Usuarios
+      - Roles
+      - Permiso Roles
+   - Dominio
+      - Parmaétros
+      - Dominios
+      - Atributos
+   - Asistencia
+      - Turnos
+      - Relojes
+      - Reportes
+- Reportes
+   - Visor de eventos
+   - Reporte de Asistencia
+   - Reporte Completo (xls)
+   - Reporte Atrasos
+   - Reporte Inasistencias
+   - Otros

@@ -13,9 +13,13 @@
 	List<EmployeeTurn> exceptionTurns = (List<EmployeeTurn>) request.getAttribute("ExceptionTurn");
 	String dateFormat = (String) request.getAttribute("DateFormat");
 	List<Turn> turns = (List<Turn>) request.getAttribute("Turns");
+	Boolean exception = (Boolean) request.getAttribute("Exception");
 %>
 <script
 	src="${pageContext.request.contextPath}/js/timectrl/turn/turns-of-employee.js?<%=BSWeb.randomString()%>">
+</script>
+<script>
+var exception = <%=exception%>;
 </script>
 
 <div class="page-header">
@@ -26,15 +30,15 @@
 
 
 <ul class="nav nav-tabs">
-	<li class="active"><a data-toggle="tab" href="#regular"
+	<li <%=exception?"": "class='active'"%>><a data-toggle="tab" href="#regular"
 		onclick="javascript:toggleException(false)">Regulares</a></li>
-	<li><a data-toggle="tab" href="#exception"
+	<li <%=exception?"class='active'":""%>><a data-toggle="tab" href="#exception"
 		onclick="javascript:toggleException(true)">Excepcionales</a></li>
 </ul>
 
 
 <div class="tab-content">
-	<div id="regular" class="tab-pane fade in active">
+	<div id="regular" class="tab-pane fade <%=exception?"": "in active"%>">
 		<h2>Turnos regulares</h2>
 
 		<table
@@ -71,7 +75,7 @@
 
 	</div>
 
-	<div id="exception" class="tab-pane fade">
+	<div id="exception" class="tab-pane fade <%=exception?"in active": ""%>">
 		<h2>Turnos excepcionales</h2>
 
 		<table
@@ -112,7 +116,7 @@
 	Turno</button>
 
 <button class='btn btn-link'
-	onclick="returnTo('${pageContext.request.contextPath}/servlet/config/employee/EmployeeManager');">Volver</button>
+	onclick="returnTo('${pageContext.request.contextPath}/servlet/config/employee/EmployeeTurnManager');">Volver</button>
 
 
 		<div id="TurnsContainer" style="display: none">
@@ -143,7 +147,7 @@
 	<!-- id del registro de la tabla de relacion, se utiliza para el update -->
 	<input type="hidden" name="cId" id="cId">
 	<!-- Campo que indica si es un turno excepcional -->
-	<input type="hidden" name="Exception" id="Exception" value="false">
+	<input type="hidden" name="Exception" id="Exception" value="<%=exception%>">
 </form>
 
 <%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>

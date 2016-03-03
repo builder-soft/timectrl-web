@@ -1,3 +1,11 @@
+function onLoadPage(){
+	//toggleException(exception);
+	/**
+	<li <%=exception?"class='active'":""%>><a data-toggle="tab" href="#exception"
+		onclick="javascript:toggleException(true)">Excepcionales</a></li>
+		*/
+}
+
 function toggleException(status) {
 	document.getElementById("Exception").value = status;
 }

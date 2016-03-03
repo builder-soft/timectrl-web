@@ -19,7 +19,8 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class UserExists
  */
-@WebFilter(urlPatterns = { "/servlet/*" }, dispatcherTypes = { DispatcherType.REQUEST, DispatcherType.FORWARD })
+// @ WebFilter(urlPatterns = { "/servlet/*" }, dispatcherTypes = {
+// DispatcherType.REQUEST, DispatcherType.FORWARD })
 public class UserExistsFilter implements Filter {
 	private static final Logger LOG = Logger.getLogger(UserExistsFilter.class.getName());
 
@@ -31,6 +32,7 @@ public class UserExistsFilter implements Filter {
 
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException,
 			ServletException {
+		LOG.log(Level.FINE, "User Exists Filter");
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 		Boolean goHome = Boolean.FALSE;
@@ -44,8 +46,8 @@ public class UserExistsFilter implements Filter {
 		} else {
 			Object user = session.getAttribute("User");
 			Object rol = session.getAttribute("Rol");
-			Object menu = session.getAttribute("Menu");
-			if (user == null || rol == null || menu == null) {
+			Object domain = session.getAttribute("Domain");
+			if (user == null || rol == null || domain == null) {
 				goHome = Boolean.TRUE;
 			}
 		}

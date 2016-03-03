@@ -15,14 +15,15 @@ import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSConnectionFactory;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.util.BSFactory;
 import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.framework.util.BSWeb;
 import cl.buildersoft.framework.util.crud.BSField;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
+import cl.buildersoft.web.servlet.common.crud.BSHttpServletCRUD;
 
 @WebServlet("/servlet/common/UpdateRecord")
-public class UpdateRecord extends BSHttpServlet {
+public class UpdateRecord extends BSHttpServletCRUD {
 	private static final Logger LOG = Logger.getLogger(UpdateRecord.class.getName());
 	private static final long serialVersionUID = 729493572423196326L;
 
@@ -33,8 +34,10 @@ public class UpdateRecord extends BSHttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		BSTableConfig table = null;
+		String businessClass = null;
 		synchronized (session) {
 			table = (BSTableConfig) session.getAttribute("BSTable");
+			businessClass = (String) session.getAttribute("BusinessClass");
 		}
 
 		// BSField[] fields = table.getFields();
@@ -42,8 +45,7 @@ public class UpdateRecord extends BSHttpServlet {
 		BSField[] fields = new BSField[0];
 		BSField[] fieldsWidthoutId = table.deleteId();
 		fieldsWidthoutId = table.getNotReadonly(fieldsWidthoutId);
-		
-		
+
 		Integer index = 0;
 
 		Integer len = showInFormCount(fieldsWidthoutId);
@@ -68,7 +70,7 @@ public class UpdateRecord extends BSHttpServlet {
 		 */
 		String sql = getSQL(table, fields, idField);
 
-		List<Object> params;
+		List<Object> params = null;
 
 		Connection conn = null;
 		BSmySQL mysql = new BSmySQL();
@@ -76,7 +78,12 @@ public class UpdateRecord extends BSHttpServlet {
 		conn = cf.getConnection(request);
 		params = getParams(conn, request, fields, idField);
 
+		fillTableWithRecord(conn, table, idField.getValueAsLong());
+		writeEventLog(conn, businessClass, request, table);
+		
 		mysql.update(conn, sql, params);
+
+
 		cf.closeConnection(conn);
 
 		request.getRequestDispatcher("/servlet/common/LoadTable").forward(request, response);
@@ -111,5 +118,13 @@ public class UpdateRecord extends BSHttpServlet {
 		sql += " WHERE " + idField.getName() + "=?";
 
 		return sql;
+	}
+
+	private void writeEventLog(Connection conn, String businessClass, HttpServletRequest request, BSTableConfig table) {
+		BSFactory factory = new BSFactory();
+		HttpServletCRUD crudManager = (HttpServletCRUD) factory.getInstance(businessClass);
+
+		crudManager.writeEventLog(conn, "UPDATE", request, table);
+
 	}
 }

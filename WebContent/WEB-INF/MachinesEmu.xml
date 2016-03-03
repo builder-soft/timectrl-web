@@ -19,4 +19,80 @@
 		<Employees/>
 		<Attendances/>
 	</Machine>
+
+	<Machine IP="10.140.135.91" Port="4370" Serie="k54v25n0ne9vbdvbpn0j">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.137.175" Port="4370" Serie="ifdqnlbfl6bjgpk8ka3e">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.136.202" Port="4370" Serie="qdr03802468ke38nbhg4">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+
+	<Machine IP="10.140.168.146" Port="4370" Serie="2vtba5119jnl33iq4bjb">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.167.158" Port="4370" Serie="sc6smnvo452rr07g697p">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.143.164" Port="4370" Serie="b7p1rop1pk7bvhj8cu4l">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.156.140" Port="4370" Serie="jrmb77ve4bgn5hcef4i6">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.157.140" Port="4370" Serie="g9chh6u7dhidoqv580eq">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.158.140" Port="4370" Serie="rm478qs84smttv8mvtjb">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.159.140" Port="4370" Serie="c13gu94i0hh9tfcafftt">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.161.140" Port="4370" Serie="8ravmg99bnn01ul7h6su">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.160.140" Port="4370" Serie="kkr2tqq33fldjkj5m513">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.162.140" Port="4370" Serie="9i5l4l3m7ni2grtnckg3">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.163.140" Port="4370" Serie="e53h20sltgbmi4q3shub">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.164.140" Port="4370" Serie="o07inpsev661m5qvth5f">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="10.140.165.140" Port="4370" Serie="q3a9e97scabte4gubnd1">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+
+	<Machine IP="192.168.0.22" Port="4370" Serie="qshc78n4f0j0v1r1jlk2">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	<Machine IP="192.168.0.25" Port="4370" Serie="5bsaid5fsk23k2jm91je">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+
 </Machines>

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.beans.Domain;
+import cl.buildersoft.framework.beans.User;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.exception.BSConfigurationException;
 import cl.buildersoft.framework.exception.BSProgrammerException;
@@ -28,7 +29,9 @@ import cl.buildersoft.timectrl.business.beans.ReportType;
 import cl.buildersoft.timectrl.business.console.BuildReport3;
 import cl.buildersoft.timectrl.business.process.impl.BuildReport4;
 import cl.buildersoft.timectrl.business.services.EmployeeService;
+import cl.buildersoft.timectrl.business.services.EventLogService;
 import cl.buildersoft.timectrl.business.services.ReportService;
+import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 
 /**
@@ -60,6 +63,8 @@ public class BuildReportServlet extends BSHttpServlet {
 
 		List<String> responseList = br4.doExecute(parameters);
 
+		writeToLog(conn, reportKey, getCurrentUser(request));
+		
 		closeConnection(conn);
 
 		/**************************/
@@ -76,6 +81,12 @@ public class BuildReportServlet extends BSHttpServlet {
 		forward(request, response, page);
 		/**************************/
 
+	}
+
+	private void writeToLog(Connection conn, String reportKey, User user) {
+		EventLogService els = ServiceFactory.createEventLogService();
+		els.writeEntry(conn, user.getId(), "BUILD_REPORT", "Ejecuta el reporte %s", reportKey);
+		
 	}
 
 	private Long keyToReportId(Connection conn, String key) {
@@ -102,7 +113,7 @@ public class BuildReportServlet extends BSHttpServlet {
 		return out;
 	}
 
-	protected void service_(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void service_(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection conn = getConnection(request);
 		String reportKey = readParameterOrAttribute(request, REPORT_KEY);
 		Report report = getReport(conn, reportKey);

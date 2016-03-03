@@ -8,8 +8,9 @@
 <%
 	EventLogService eventLog = ServiceFactory.createEventLogService();
 	BSConnectionFactory cf = new BSConnectionFactory();
-	Connection conn = cf.getConnection(request);
+	Connection conn = null;
 	try {
+		conn = cf.getConnection(request);
 		User user = (User) request.getSession(false).getAttribute("User");
 		eventLog.writeEntry(conn, user.getId(), "SECURITY_LOGOUT", "Salida del sistema", null);
 	} catch(NullPointerException e) {

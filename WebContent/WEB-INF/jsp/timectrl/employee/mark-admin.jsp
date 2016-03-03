@@ -110,7 +110,7 @@
  -->
 &nbsp;&nbsp;&nbsp;
 <a class="cCancel"
-	href="${pageContext.request.contextPath}/servlet/config/employee/EmployeeManager">Volver</a>
+	href="${pageContext.request.contextPath}/servlet/config/employee/EmployeeMarkManager">Volver</a>
 
 <div id="divShowDetail" style="display: none">
 	<h2 class="cTitle2">Nueva marca</h2>
