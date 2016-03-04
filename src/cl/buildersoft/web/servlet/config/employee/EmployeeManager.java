@@ -140,6 +140,13 @@ public class EmployeeManager extends HttpServletCRUD {
 
 		}
 
+		if ("DELETE".equalsIgnoreCase(action)) {
+			eventLog.writeEntry(conn, getCurrentUser(request).getId(), "EMPLOYEE_DELETE",
+					"Se desvincula el empleado \"%s\", Rut: %s. (Id=%s)", table.getField("cName").getValue(),
+					table.getField("cRut").getValue(), table.getField("cId").getValue());
+
+		}
+
 	}
 
 	private Object[] getParams(Connection conn, BSTableConfig table) {
