@@ -15,6 +15,8 @@ import cl.buildersoft.framework.beans.Domain;
 import cl.buildersoft.framework.beans.DomainAttribute;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.timectrl.business.services.EventLogService;
+import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.web.servlet.login.ValidateLoginServlet;
 
 @WebServlet("/servlet/system/user/ChangeDomain")
@@ -24,12 +26,37 @@ public class ChangeDomain extends BSHttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Long id = Long.parseLong(request.getParameter("cId"));
 		HttpSession session = request.getSession(false);
-		// Connection conn = getConnection(request);
+		Long userId = getCurrentUser(request).getId();
 		BSConnectionFactory cf = new BSConnectionFactory();
-		Connection conn = cf.getConnection();
 
-		List<Domain> domains = (List<Domain>) request.getSession(false).getAttribute("Domains");
+		Connection connFramework = null;
+		Connection connOldDomain = null;
+		Connection connNewDomain = null;
 
+		try {
+			Domain oldDomain = getCurrentDomain(request);
+			connFramework = cf.getConnection();
+			connOldDomain = cf.getConnection(request);
+
+			switchDomain(connFramework, session, id);
+			
+			Domain newDomain = getCurrentDomain(request);
+			connNewDomain = cf.getConnection(request);
+
+			EventLogService eventLog = ServiceFactory.createEventLogService();
+			eventLog.writeEntry(connOldDomain, userId, "CHANGE_DOMAIN", "Saltó del dominio \"%s\" al \"%s\".",
+					oldDomain.getName(), newDomain.getName());
+			eventLog.writeEntry(connNewDomain, userId, "CHANGE_DOMAIN", "Saltó desde el dominio \"%s\".", oldDomain.getName());
+		} finally {
+			cf.closeConnection(connFramework);
+			cf.closeConnection(connOldDomain);
+			cf.closeConnection(connNewDomain);
+		}
+		forward(request, response, "/servlet/login/GetMenuServlet");
+	}
+
+	private void switchDomain(Connection conn, HttpSession session, Long id) {
+		List<Domain> domains = (List<Domain>) session.getAttribute("Domains");
 		for (Domain domain : domains) {
 			if (domain.getId().equals(id)) {
 				session.setAttribute("Domain", domain);
@@ -37,10 +64,6 @@ public class ChangeDomain extends BSHttpServlet {
 				break;
 			}
 		}
-		cf.closeConnection(conn);
-
-		forward(request, response, "/servlet/login/GetMenuServlet");
-		// forward(request, response, "/servlet/Home");
 	}
 
 	private Map<String, DomainAttribute> getDomainAttribute(Connection conn, Domain defaultDomain) {

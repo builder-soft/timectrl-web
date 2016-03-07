@@ -10,9 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
+import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.timectrl.business.beans.License;
+import cl.buildersoft.timectrl.business.services.EmployeeService;
+import cl.buildersoft.timectrl.business.services.EventLogService;
+import cl.buildersoft.timectrl.business.services.ServiceFactory;
+import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 
 /**
  * Servlet implementation class SaveNewLicense
@@ -40,11 +45,28 @@ public class SaveNewLicense extends BSHttpServlet {
 		license.setLicenseCause(Long.parseLong(cause));
 		license.setDocument(document);
 
-		Connection conn = getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+		Connection conn = cf.getConnection(request);
+
+		// Connection conn = getConnection(request);
 		bu.save(conn, license);
+
+		String dateFormat = getApplicationValue(request, "DateFormat").toString();
+
+		EventLogService eventLog = ServiceFactory.createEventLogService();
+		eventLog.writeEntry(conn, getCurrentUser(request).getId(), "NEW_LICENSE",
+				"Agregó licencia o permiso al empleado '%s' de manera online. Para el día %s al %s.",
+				idToRut(conn, license.getEmployee()), BSDateTimeUtil.date2String(license.getStartDate(), dateFormat),
+				BSDateTimeUtil.date2String(license.getEndDate(), dateFormat));
+		cf.closeConnection(conn);
 
 		request.setAttribute("cId", employeeId);
 		forward(request, response, "/servlet/timectrl/employee/LicenseOfEmployee");
 
+	}
+
+	private Object idToRut(Connection conn, Long employee) {
+		EmployeeService es = new EmployeeServiceImpl();
+		return es.getEmployee(conn, employee).getRut();
 	}
 }

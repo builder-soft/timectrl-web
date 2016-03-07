@@ -14,6 +14,8 @@ import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSActionType;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
+import cl.buildersoft.timectrl.business.services.EventLogService;
+import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.web.servlet.common.HttpServletCRUD;
 
 /**
@@ -37,29 +39,22 @@ public class EmployeeDetachedManager extends HttpServletCRUD {
 		table.getField("cGroup").setLabel("Grupo");
 		table.getField("cBoss").setLabel("Superior");
 		table.getField("cPrivilege").setLabel("Tipo de usuario");
-//		table.getField("cEnabled").setLabel("Activado");
+		// table.getField("cEnabled").setLabel("Activado");
 		table.getField("cUsername").setLabel("Nombre Usuario");
 		table.getField("cMail").setLabel("Correo electrónico");
 
 		this.hideFields(table, "cMail", "cArea", "cPrivilege");
 		table.removeField("cEnabled");
-		
+
 		table.setDeleteSP("pIncorporateEmployee");
-		
+
 		table.removeAction("INSERT");
 		table.removeAction("EDIT");
 		BSAction delete = table.getAction("DELETE");
 		delete.setLabel("Re-incorporar");
 		delete.setWarningMessage("Esta seguro de reincorporar estos empleados?");
-		
-//		table.removeAction("DELETE");
-		
+
 		table.setWhere("cEnabled=FALSE");
-		
-//		BSAction action = new BSAction("INCORPORATE", BSActionType.Record);
-//		action.setLabel("Re-incorporar");
-//		action.setUrl("/servlet/config/employee/Incorporate");
-//		table.addAction(action);
 
 		return table;
 	}
@@ -104,7 +99,14 @@ public class EmployeeDetachedManager extends HttpServletCRUD {
 
 	@Override
 	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
-		// TODO Auto-generated method stub
+		LOG.log(Level.FINE, "Action={0}", action);
+		EventLogService eventLog = ServiceFactory.createEventLogService();
+		if ("DELETE".equals(action)) {
+			eventLog.writeEntry(conn, getCurrentUser(request).getId(), "INCORPORATE_EMPL",
+					"Reincorpora al empleado '%s'(%s, Id=%s).", table.getField("cName").getValue(), table.getField("cRut")
+							.getValue(), table.getField("cId").getValue());
+		}
 
 	}
+
 }

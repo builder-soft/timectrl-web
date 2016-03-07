@@ -17,7 +17,9 @@ import cl.buildersoft.timectrl.business.beans.AttendanceLog;
 import cl.buildersoft.timectrl.business.beans.AttendanceModify;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.services.EmployeeService;
+import cl.buildersoft.timectrl.business.services.EventLogService;
 import cl.buildersoft.timectrl.business.services.MachineService2;
+import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 import cl.buildersoft.timectrl.business.services.impl.MachineServiceImpl2;
 
@@ -31,6 +33,7 @@ public class SaveNewMark extends BSHttpServlet {
 		String dateTimeString = request.getParameter("DateTimeMark");
 		Long markType = Long.parseLong(request.getParameter("MarkType"));
 		String today = request.getParameter("Today");
+
 		Connection conn = getConnection(request);
 
 		String dateTimeFormat = BSDateTimeUtil.getFormatDatetime(conn);
@@ -46,7 +49,17 @@ public class SaveNewMark extends BSHttpServlet {
 
 		bu.save(conn, attendanceModify);
 
-		request.setAttribute("cId", "" + employeeId);
+		Employee employee = searchEmployeeById(conn, employeeId);
+		EventLogService eventLog = ServiceFactory.createEventLogService();
+		eventLog.writeEntry(
+				conn,
+				getCurrentUser(request).getId(),
+				"NEW_MARK",
+				"Agregó la marca al empleado '%s'(%s, Id=%s) de manera online. Los datos son los siguientes:\n-Reloj:%s\n-Fecha:%s\n-Tipo de marca:%s.",
+				employee.getName(), employee.getRut(), employee.getId(), machine.toString(), dateTimeString, markType);
+		closeConnection(conn);
+
+		request.setAttribute("cId",   employeeId.toString());
 		request.setAttribute("Today", today);
 
 		forward(request, response, "/servlet/timectrl/employee/MarkAdmin");

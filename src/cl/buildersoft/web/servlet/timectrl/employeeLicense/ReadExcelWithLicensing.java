@@ -26,6 +26,8 @@ import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.License;
 import cl.buildersoft.timectrl.business.beans.LicenseCause;
+import cl.buildersoft.timectrl.business.services.EventLogService;
+import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.web.servlet.timectrl.employee.DetailFile;
 
 public class ReadExcelWithLicensing {
@@ -137,6 +139,7 @@ public class ReadExcelWithLicensing {
 
 	private void validateRut(Connection conn, BSBeanUtils bu, DetailFile detail) {
 		Employee employee = new Employee();
+		detail.setRut(detail.getRut().trim());
 		String rut = detail.getRut();
 		if (!bu.search(conn, employee, "cRut=?", rut)) {
 			detail.setMessage("Rut " + rut + " no encontrado");
@@ -274,11 +277,16 @@ public class ReadExcelWithLicensing {
 		return out + 1;
 	}
 
-	public void saveList(Connection conn, List<DetailFile> list) {
+	public void saveList(Connection conn, List<DetailFile> list, Long userId) {
 		BSBeanUtils bu = new BSBeanUtils();
+		EventLogService eventLog = ServiceFactory.createEventLogService();
+		// License license =null;
 		for (DetailFile detail : list) {
 			if (detail.getMessage() == null) {
 				saveDetail(conn, bu, detail);
+				eventLog.writeEntry(conn, userId, "NEW_LICENSE",
+						"Agregó licencia o permiso al empleado '%s' a través de archivo. Para el día %s al %s.", detail.getRut(),
+						detail.getStart(), detail.getEnd());
 			}
 		}
 	}
