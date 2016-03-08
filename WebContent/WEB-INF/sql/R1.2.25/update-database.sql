@@ -8,6 +8,8 @@ insert into tEventType(cKey, cName) VALUES('INCORPORATE_EMPL', 'Incorporación d
 
 
 
+#ALTER TABLE tEmployee CHANGE COLUMN cRut cRut VARCHAR(11) UNIQUE;
+
 UPDATE tVersion SET cVersion='1.2.25', cUpdated=NOW() WHERE cKey = 'DBT';
 
 
