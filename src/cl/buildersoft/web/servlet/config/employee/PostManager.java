@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
+import cl.buildersoft.timectrl.business.services.EventLogService;
+import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.web.servlet.common.HttpServletCRUD;
 
 @WebServlet("/servlet/config/employee/PostManager")
@@ -36,7 +38,20 @@ public class PostManager extends HttpServletCRUD {
 
 	@Override
 	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
-		// TODO Auto-generated method stub
-
+		EventLogService eventLog = ServiceFactory.createEventLogService();
+		if ("INSERT".equalsIgnoreCase(action)) {
+			eventLog.writeEntry(conn, getCurrentUser(request).getId(), "INSERT_POST", "Agrega nuevo cargo %s (%s)", table
+					.getField("cName").getValue(), table.getField("cKey").getValue());
+		}
+		if ("UPDATE".equalsIgnoreCase(action)) {
+			eventLog.writeEntry(conn, getCurrentUser(request).getId(), "UPDATE_POST",
+					"Actualiza cargo, los datos eran: Key:'%s', Nombre:'%s', Id:%s", table.getField("cKey").getValue(), table
+							.getField("cName").getValue(), table.getField("cId").getValue());
+		}
+		if ("DELETE".equalsIgnoreCase(action)) {
+			eventLog.writeEntry(conn, getCurrentUser(request).getId(), "DELETE_POST",
+					"Elimina cargo, los datos eran: Key:'%s', Nombre:'%s'", table.getField("cKey").getValue(), table
+							.getField("cName").getValue());
+		}
 	}
 }

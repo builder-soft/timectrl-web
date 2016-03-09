@@ -5,6 +5,9 @@ insert into tEventType(cKey, cName) VALUES('CHANGE_DOMAIN', 'Cambio a otro domin
 insert into tEventType(cKey, cName) VALUES('NEW_LICENSE', 'Nueva licencia o permiso');
 insert into tEventType(cKey, cName) VALUES('NEW_MARK', 'Nueva marca');
 insert into tEventType(cKey, cName) VALUES('INCORPORATE_EMPL', 'Incorporación de empleado.');
+insert into tEventType(cKey, cName) VALUES('INSERT_POST', 'Nuevo Cargo.');
+insert into tEventType(cKey, cName) VALUES('UPDATE_POST', 'Actualiza cargo.');
+insert into tEventType(cKey, cName) VALUES('DELETE_POST', 'Borra cargo.');
 
 
 
