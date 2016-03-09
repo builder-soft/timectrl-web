@@ -50,10 +50,16 @@ public class EmployeeDetachedManager extends HttpServletCRUD {
 
 		table.removeAction("INSERT");
 		table.removeAction("EDIT");
-		BSAction delete = table.getAction("DELETE");
-		delete.setLabel("Re-incorporar");
-		delete.setWarningMessage("Esta seguro de reincorporar estos empleados?");
-
+		BSAction action = table.getAction("DELETE");
+		action.setLabel("Re-incorporar");
+		action.setWarningMessage("Esta seguro de reincorporar estos empleados?");
+		
+		action = new BSAction("PURGE", BSActionType.Record);
+		action.setLabel("Borrado definitivo");
+		action.setWarningMessage("¿Esta seguro de eliminar este empleado? Los datos asociados a él se perderán");
+action.setUrl("/servlet/timectrl/employee/PurgeEmployee");
+		table.addAction(action);
+		
 		table.setWhere("cEnabled=FALSE");
 
 		return table;
