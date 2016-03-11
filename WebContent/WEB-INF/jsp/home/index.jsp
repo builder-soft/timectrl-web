@@ -23,6 +23,8 @@
   
 <div id="CurrentVersion" style="position: absolute">
 	<label class="cLabel"> Versión:</label> <label class="cData"><%=request.getAttribute("CurrentVersion")%></label><br>
+	<!-- 
 	<label class="cLabel"> Última Lectura:</label> <label class="cData"><%=request.getAttribute("LastRead")%></label>
+	 -->
 </div>
 <%@ include file="/WEB-INF/jsp/common/footer.jsp"%>
