@@ -1,1 +1,1 @@
-call pGetLaterCount('2016-02-10 15:00:00');
+call pGetLaterCount('2016-02-10 10:00:00');

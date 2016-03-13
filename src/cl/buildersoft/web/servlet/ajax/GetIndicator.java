@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSDataUtils;
 import cl.buildersoft.framework.util.BSUtils;
 
@@ -41,6 +42,8 @@ public class GetIndicator extends AbstractAjaxServlet {
 				out = getEmployeeWORut(conn);
 			} else if ("CurrentMarks".equalsIgnoreCase(key)) {
 				out = getCurrentMarks(conn);
+			} else if ("LaterCount".equalsIgnoreCase(key)) {
+				out = getLaterCount(conn);
 			}
 		} finally {
 			closeConnection(conn);
@@ -66,6 +69,18 @@ public class GetIndicator extends AbstractAjaxServlet {
 		endWrite(writeToBrowser(response, out));
 	}
 
+	private String getLaterCount(Connection conn) {
+		BSmySQL mysql = new BSmySQL();
+		String spName = "pGetLaterCount";
+		ResultSet rs = mysql.callSingleSP(conn, spName, Calendar.getInstance());
+		String[] defaultData = null;
+
+		String[] out = new String[2];
+		out=	fixTwoData(rs, out, defaultData);
+
+		return dataToString(out);
+	}
+
 	private String getCurrentMarks(Connection conn) {
 		String out = null;
 		Calendar c = Calendar.getInstance();
@@ -78,6 +93,13 @@ public class GetIndicator extends AbstractAjaxServlet {
 		String sql = "SELECT COUNT(cId) AS cValue FROM tAttendanceLog WHERE cDate BETWEEN ? AND NOW() AND cMarkType=1 GROUP BY cMarkType UNION SELECT COUNT(cId) AS cValue FROM tEmployee;";
 		String[] data = getTwoData(conn, sql, null, BSUtils.array2List(c));
 
+		out = dataToString(data);
+
+		return out;
+	}
+
+	private String dataToString(String[] data) {
+		String out;
 		if (data == null) {
 			out = "Sin registros hoy";
 		} else {
@@ -85,7 +107,6 @@ public class GetIndicator extends AbstractAjaxServlet {
 			Integer b = Integer.parseInt(data[1]);
 			out = ((a * 100) / b) + "%";
 		}
-
 		return out;
 	}
 
@@ -122,6 +143,12 @@ public class GetIndicator extends AbstractAjaxServlet {
 
 		ResultSet rs = du.queryResultSet(conn, sql, params);
 
+		out = fixTwoData(rs, out, defaultData);
+
+		return out;
+	}
+
+	private String[] fixTwoData(ResultSet rs, String[] out, String[] defaultData) {
 		try {
 			if (rs.next()) {
 				out[0] = rs.getString(1);
@@ -137,7 +164,6 @@ public class GetIndicator extends AbstractAjaxServlet {
 		} catch (SQLException e) {
 			LOG.log(Level.SEVERE, "Error SQL: {0}", e);
 		}
-
 		return out;
 	}
 

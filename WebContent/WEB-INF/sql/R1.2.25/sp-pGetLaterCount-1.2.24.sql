@@ -33,20 +33,23 @@ BEGIN
 	DECLARE vStartMark	TIMESTAMP;
 
 
-	DECLARE vLaterCount		INTEGER; 
+	DECLARE vLaterCount		INTEGER DEFAULT 0; 
 	DECLARE vEmployeeCount	INTEGER;
 
 	DECLARE vDone BOOLEAN DEFAULT FALSE;
 	DECLARE cursorEmployee CURSOR FOR
 		SELECT a.cId AS cId, a.cKey AS cKey
 		FROM tEmployee AS a
-		WHERE a.cEnabled=TRUE;
+		WHERE a.cEnabled=TRUE
+; #and cid=708;
+
 
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET vDone = TRUE;
 	
 	SELECT	COUNT(cId) INTO vEmployeeCount
 	FROM	tEmployee
-	WHERE	cEnabled=TRUE;
+	WHERE	cEnabled=TRUE
+; #and cid=708;
 	
 	SET vTolerance = fGetTolerance();
 	SET vHoursWorkday = fGetHoursWorkday();
@@ -65,7 +68,7 @@ BEGIN
 #		WHILE vCurrent != vEndDate DO
 			SET vFlexible = fIsFlexible(vDate, vEmployeeId);
 #			SET vComment = '';
-			IF(NOT vFlexible IS NULL) THEN
+#			IF(NOT vFlexible IS NULL) THEN
 #				SET vComment = fAppendComment(vComment, 'Sin turno');			
 #			ELSE
 				IF(vFlexible) THEN
@@ -81,7 +84,7 @@ BEGIN
 				SET vStartTime = fStartTime(vStartMark, vBusinessDay, vTurnDayId);
 				SET vStartDiffI = fExtraTimeAsMins6(vStartMark, vStartTime, TRUE, vTurnDayId);
 				
-				select vStartMark, vStartTime; 
+#				select vStartMark, vStartTime, vEmployeeId, vEmployeeKey, vStartDiffI; 
 				
 				IF(vStartDiffI < 0) THEN
 					SET vLaterCount = vLaterCount + 1;
@@ -115,7 +118,7 @@ BEGIN
 #							vRut, vName, vArea, vCC, vTurn, vStart, vEnd);
 				END IF;
 				
-			END IF;
+#			END IF;
 #			SET vCurrent = DATE_ADD(vCurrent, INTERVAL 1 DAY);
 #		END WHILE;
 

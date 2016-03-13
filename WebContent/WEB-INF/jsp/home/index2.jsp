@@ -9,7 +9,7 @@
 	function onLoadPage() {
 		try {
 			loadCurrentMarks();
-//			loadOverdue();
+			loadOverdue();
 			loadCurrentVersion();
 			loadLastRead();
 			loadOfflineMch();
@@ -23,6 +23,10 @@
 //	CurrentMarksLabel
 //	OverdueLabel
 	
+	
+	function loadOverdue(){
+		getData("LaterCount", "OverdueLabel");
+	}
 	
 	function loadCurrentMarks(){
 		getData("CurrentMarks", "CurrentMarksLabel");
