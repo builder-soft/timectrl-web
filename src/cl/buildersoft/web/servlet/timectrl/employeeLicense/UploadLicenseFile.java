@@ -23,6 +23,8 @@ import cl.buildersoft.framework.exception.BSConfigurationException;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.exception.BSSystemException;
 import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.timectrl.business.services.EventLogService;
+import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.web.servlet.timectrl.employee.DetailFile;
 
 /**
@@ -47,7 +49,7 @@ public class UploadLicenseFile extends BSHttpServlet {
 		}
 		Connection conn = getConnection(request);
 		rewl.validateFile(conn, list);
-		rewl.saveList(conn, list);
+		rewl.saveList(conn, list, getCurrentUser(request).getId());
 
 		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/employee/result-license-file2.jsp"
 				: "/WEB-INF/jsp/timectrl/employee/result-license-file.jsp";

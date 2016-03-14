@@ -29,10 +29,10 @@ public class Home extends BSHttpServlet {
 		loadDateFormat(request);
 		if (!bootstrap) {
 			String currentVersion = getServletContext().getInitParameter("CurrentVersion");
-			String lastRead = getLastRead(getConnection(request));
+//			String lastRead = getLastRead(getConnection(request));
 
 			request.setAttribute("CurrentVersion", currentVersion);
-			request.setAttribute("LastRead", lastRead);
+//			request.setAttribute("LastRead", lastRead);
 		}
 		closeConnection(conn);
 		forward(request, response, page);

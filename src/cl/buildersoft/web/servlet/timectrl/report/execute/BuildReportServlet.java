@@ -21,6 +21,7 @@ import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.exception.BSConfigurationException;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
@@ -63,8 +64,8 @@ public class BuildReportServlet extends BSHttpServlet {
 
 		List<String> responseList = br4.doExecute(parameters);
 
-		writeToLog(conn, reportKey, getCurrentUser(request));
-		
+		writeToLog(conn, reportKey, getCurrentUser(request), parameters);
+
 		closeConnection(conn);
 
 		/**************************/
@@ -83,10 +84,11 @@ public class BuildReportServlet extends BSHttpServlet {
 
 	}
 
-	private void writeToLog(Connection conn, String reportKey, User user) {
+	private void writeToLog(Connection conn, String reportKey, User user, String[] params) {
 		EventLogService els = ServiceFactory.createEventLogService();
-		els.writeEntry(conn, user.getId(), "BUILD_REPORT", "Ejecuta el reporte %s", reportKey);
-		
+		els.writeEntry(conn, user.getId(), "BUILD_REPORT", "Ejecuta el reporte (online) %s, los parametros fueron: [%s]", reportKey,
+				BSUtils.unSplitString(params, ", "));
+
 	}
 
 	private Long keyToReportId(Connection conn, String key) {

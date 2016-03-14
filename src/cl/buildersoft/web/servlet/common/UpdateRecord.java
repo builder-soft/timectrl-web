@@ -58,16 +58,6 @@ public class UpdateRecord extends BSHttpServletCRUD {
 			}
 		}
 
-		/**
-		 * <code>
-		for (BSField currentField : fieldsWidthoutId) {
-			if (currentField.getShowInForm()) {
-				System.arraycopy(fieldsWidthoutId, index, fields, 0, fields.length);
-			}
-			index++;
-		}
-</code>
-		 */
 		String sql = getSQL(table, fields, idField);
 
 		List<Object> params = null;
@@ -75,17 +65,17 @@ public class UpdateRecord extends BSHttpServletCRUD {
 		Connection conn = null;
 		BSmySQL mysql = new BSmySQL();
 		BSConnectionFactory cf = new BSConnectionFactory();
-		conn = cf.getConnection(request);
-		params = getParams(conn, request, fields, idField);
+		try {
+			conn = cf.getConnection(request);
+			params = getParams(conn, request, fields, idField);
 
-		fillTableWithRecord(conn, table, idField.getValueAsLong());
-		writeEventLog(conn, businessClass, request, table);
-		
-		mysql.update(conn, sql, params);
+			fillTableWithRecord(conn, table, idField.getValueAsLong());
+			writeEventLog(conn, businessClass, request, table);
 
-
-		cf.closeConnection(conn);
-
+			mysql.update(conn, sql, params);
+		} finally {
+			cf.closeConnection(conn);
+		}
 		request.getRequestDispatcher("/servlet/common/LoadTable").forward(request, response);
 	}
 
