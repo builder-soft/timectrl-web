@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import cl.buildersoft.framework.beans.BSBean;
+import cl.buildersoft.framework.business.services.EventLogService;
+import cl.buildersoft.framework.business.services.ServiceFactory;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.type.Semaphore;
@@ -22,8 +24,6 @@ import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Group;
 import cl.buildersoft.timectrl.business.beans.Post;
 import cl.buildersoft.timectrl.business.beans.Privilege;
-import cl.buildersoft.timectrl.business.services.EventLogService;
-import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.web.servlet.common.HttpServletCRUD;
 
 /**

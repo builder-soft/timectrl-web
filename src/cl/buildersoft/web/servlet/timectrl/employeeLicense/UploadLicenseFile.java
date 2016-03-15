@@ -23,8 +23,6 @@ import cl.buildersoft.framework.exception.BSConfigurationException;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.exception.BSSystemException;
 import cl.buildersoft.framework.util.BSHttpServlet;
-import cl.buildersoft.timectrl.business.services.EventLogService;
-import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.web.servlet.timectrl.employee.DetailFile;
 
 /**

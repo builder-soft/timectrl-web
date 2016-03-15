@@ -1,10 +1,8 @@
+<%@page import="cl.buildersoft.framework.business.services.ServiceFactory"%>
 <%@page import="cl.buildersoft.framework.beans.User"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="cl.buildersoft.framework.util.BSConnectionFactory"%>
-<%@page
-	import="cl.buildersoft.timectrl.business.services.ServiceFactory"%>
-<%@page
-	import="cl.buildersoft.timectrl.business.services.EventLogService"%>
+<%@page import="cl.buildersoft.framework.business.services.EventLogService"%>
 <%
 	EventLogService eventLog = ServiceFactory.createEventLogService();
 	BSConnectionFactory cf = new BSConnectionFactory();
