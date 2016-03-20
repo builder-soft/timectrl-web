@@ -1,8 +1,8 @@
+<%@page import="cl.buildersoft.framework.beans.EventBean"%>
+<%@page import="cl.buildersoft.framework.beans.EventType"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
-<%@page import="cl.buildersoft.timectrl.business.beans.EventBean"%>
 <%@page import="cl.buildersoft.framework.beans.User"%>
-<%@page import="cl.buildersoft.timectrl.business.beans.EventType"%>
 <%@ include file="/WEB-INF/jsp/common/header2.jsp"%>
 <%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
 <%

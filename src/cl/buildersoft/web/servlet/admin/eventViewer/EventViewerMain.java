@@ -10,6 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cl.buildersoft.framework.beans.EventBean;
+import cl.buildersoft.framework.beans.EventType;
 import cl.buildersoft.framework.beans.User;
 import cl.buildersoft.framework.business.services.EventLogService;
 import cl.buildersoft.framework.business.services.ServiceFactory;
@@ -19,8 +21,6 @@ import cl.buildersoft.framework.services.impl.BSUserServiceImpl;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.framework.util.BSHttpServlet;
-import cl.buildersoft.timectrl.business.beans.EventBean;
-import cl.buildersoft.timectrl.business.beans.EventType;
 
 /**
  * Servlet implementation class EventViewerMain
