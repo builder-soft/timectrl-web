@@ -18,13 +18,14 @@ import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSDataUtils;
 import cl.buildersoft.framework.util.BSUtils;
 
-@WebServlet("/servlet/ajax/GetIndicator")
+@WebServlet(asyncSupported = true, value = "/servlet/ajax/GetIndicator")
 public class GetIndicator extends AbstractAjaxServlet {
-	private static final int WAIT_CLIENT = 300;
+	private static final int WAIT_CLIENT = 0;
 	private final static Logger LOG = Logger.getLogger(GetIndicator.class.getName());
 	private static final long serialVersionUID = -915879276301350536L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		AsyncContext x = request.startAsync();
 		String key = request.getParameter("Key");
 		String out = "Key '" + key + "' not found";
 
@@ -67,6 +68,7 @@ public class GetIndicator extends AbstractAjaxServlet {
 
 		setHeaders(response);
 		endWrite(writeToBrowser(response, out));
+		
 	}
 
 	private String getLaterCount(Connection conn) {
@@ -76,7 +78,7 @@ public class GetIndicator extends AbstractAjaxServlet {
 		String[] defaultData = null;
 
 		String[] out = new String[2];
-		out=	fixTwoData(rs, out, defaultData);
+		out = fixTwoData(rs, out, defaultData);
 
 		return dataToString(out);
 	}
