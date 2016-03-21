@@ -41,11 +41,11 @@ import cl.buildersoft.framework.util.BSUtils;
  */
 
 @WebServlet(urlPatterns = "/login/ValidateLoginServlet")
-public class ValidateLoginServlet extends HttpServlet {
-	private static final Logger LOG = Logger.getLogger(ValidateLoginServlet.class.getName());
+public class ValidateLoginServletDeleteme extends HttpServlet {
+	private static final Logger LOG = Logger.getLogger(ValidateLoginServletDeleteme.class.getName());
 	private static final long serialVersionUID = -4481703270849068766L;
 
-	public ValidateLoginServlet() {
+	public ValidateLoginServletDeleteme() {
 		super();
 	}
 

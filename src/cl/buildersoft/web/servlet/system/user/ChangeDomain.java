@@ -17,7 +17,7 @@ import cl.buildersoft.framework.business.services.EventLogService;
 import cl.buildersoft.framework.business.services.ServiceFactory;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSHttpServlet;
-import cl.buildersoft.web.servlet.login.ValidateLoginServlet;
+import cl.buildersoft.web.servlet.login.ValidateLoginServletDeleteme;
 
 @WebServlet("/servlet/system/user/ChangeDomain")
 public class ChangeDomain extends BSHttpServlet {
@@ -67,7 +67,7 @@ public class ChangeDomain extends BSHttpServlet {
 	}
 
 	private Map<String, DomainAttribute> getDomainAttribute(Connection conn, Domain defaultDomain) {
-		ValidateLoginServlet validateLoginServlet = new ValidateLoginServlet();
+		ValidateLoginServletDeleteme validateLoginServlet = new ValidateLoginServletDeleteme();
 		return validateLoginServlet.getDomainAttribute(conn, defaultDomain);
 	}
 

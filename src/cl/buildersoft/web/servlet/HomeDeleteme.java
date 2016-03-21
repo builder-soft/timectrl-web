@@ -16,8 +16,8 @@ import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.framework.util.BSHttpServlet;
 
 @WebServlet("/servlet/Home")
-public class Home extends BSHttpServlet {
-	private static final Logger LOG = Logger.getLogger(Home.class.getName());
+public class HomeDeleteme extends BSHttpServlet {
+	private static final Logger LOG = Logger.getLogger(HomeDeleteme.class.getName());
 	private static final String DATE_FORMAT = "DateFormat";
 	private static final long serialVersionUID = -3485155081742992753L;
 
