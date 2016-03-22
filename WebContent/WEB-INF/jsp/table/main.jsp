@@ -2,8 +2,8 @@
 <%@page import="cl.buildersoft.framework.util.crud.BSAction"%>
 <%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
 <%@page import="cl.buildersoft.framework.database.BSmySQL"%>
-<%@page import="cl.buildersoft.framework.type.Semaphore"%>
-<%@page import="cl.buildersoft.web.servlet.common.HttpServletCRUD"%>
+<%@page import="cl.buildersoft.framework.Semaphore"%>
+<%@page import="cl.buildersoft.framework.web.servlet.HttpServletCRUD"%>
  
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.ResultSet"%>

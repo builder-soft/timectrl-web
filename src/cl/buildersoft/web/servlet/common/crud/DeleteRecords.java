@@ -17,8 +17,8 @@ import cl.buildersoft.framework.util.BSFactory;
 import cl.buildersoft.framework.util.BSUtils;
 import cl.buildersoft.framework.util.crud.BSField;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
+import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 import cl.buildersoft.web.servlet.common.AbstractServletUtil;
-import cl.buildersoft.web.servlet.common.HttpServletCRUD;
 
 @WebServlet("/servlet/common/crud/DeleteRecords")
 public class DeleteRecords extends AbstractServletUtil {
