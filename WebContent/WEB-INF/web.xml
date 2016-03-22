@@ -7,7 +7,7 @@
 	</welcome-file-list>
 	<context-param>
 		<param-name>CurrentVersion</param-name>
-		<param-value>R1.2.25</param-value>
+		<param-value>R1.2.26</param-value>
 	</context-param>
 	<!-- <context-param> <param-name>bsframework.license.validate</param-name> <param-value>true</param-value> </context-param> -->
 	<error-page>
@@ -32,6 +32,7 @@
 		<url-pattern>/servlet/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
+	<!-- 
 	<filter>
 		<filter-name>UserExistsFilter</filter-name>
 		<filter-class>cl.buildersoft.framework.web.filter.UserExistsFilter</filter-class>
@@ -42,7 +43,7 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
-
+ -->
 <!--  
 	<filter>
 		<filter-name>LV</filter-name>

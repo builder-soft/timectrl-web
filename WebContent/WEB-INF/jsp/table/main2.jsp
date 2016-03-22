@@ -24,7 +24,7 @@
 <%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
 <%@ include file="/WEB-INF/jsp/table/functions.jsp"%>
 
-<script src="${pageContext.request.contextPath}/js/table/table.js?<%=Math.random()%>"></script>
+<script src="${applicationScope['STATIC_CONTEXT']}/js/table/table.js?<%=Math.random()%>"></script>
 <%
 	if (script.length() > 0) {
 %>
