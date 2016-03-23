@@ -1,16 +1,3 @@
-<%@page import="cl.buildersoft.framework.dataType.BSDataTypeEnum"%>
-<%@page import="cl.buildersoft.framework.dataType.BSDataType"%>
-<%@page import="cl.buildersoft.framework.type.Semaphore"%>
-<%@page import="cl.buildersoft.framework.web.servlet.HttpServletCRUD"%>
-<%@page import="cl.buildersoft.framework.util.crud.BSField"%>
-<%@page import="cl.buildersoft.framework.util.crud.BSActionType"%>
-<%@page import="cl.buildersoft.framework.util.crud.BSAction"%>
-<%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
- 
- 
-<%@page import="cl.buildersoft.framework.database.BSmySQL"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.sql.ResultSet"%>
 <%
 	ResultSet rs = (ResultSet) request.getAttribute("Data");
 	Connection conn = (Connection) request.getAttribute("Conn");
@@ -23,13 +10,19 @@
 	BSAction[] multirecordActions = table.getActions(BSActionType.MultiRecord);
 
 	Integer selectorType = getSelectorType(tableActions, recordActions, multirecordActions, request, conn);
-%>
-
-<%@ include file="/WEB-INF/jsp/common/header2.jsp"%>
+%><%@ include file="/WEB-INF/jsp/common/header2.jsp"%>
 <%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
-
-
 <script src="${applicationScope['STATIC_CONTEXT']}/js/table/table.js?<%=Math.random()%>"></script>
+<%@page import="cl.buildersoft.framework.dataType.BSDataTypeEnum,cl.buildersoft.framework.dataType.BSDataType,cl.buildersoft.framework.type.Semaphore"%>
+<%@page import="cl.buildersoft.framework.web.servlet.HttpServletCRUD"%>
+<%@page import="cl.buildersoft.framework.util.crud.BSField"%>
+<%@page import="cl.buildersoft.framework.util.crud.BSActionType"%>
+<%@page import="cl.buildersoft.framework.util.crud.BSAction"%>
+<%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
+<%@page import="cl.buildersoft.framework.database.BSmySQL"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.ResultSet"%>
+
 <%
 	if (script.length() > 0) {
 %>

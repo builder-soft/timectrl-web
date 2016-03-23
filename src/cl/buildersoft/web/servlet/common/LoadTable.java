@@ -14,12 +14,13 @@ import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSPaging;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 
 /**
  * Servlet implementation class LoadTable
  */
 @WebServlet("/servlet/common/LoadTable")
-public class LoadTable extends AbstractServletUtil {
+public class LoadTable extends BSHttpServlet_ {
 	private static final long serialVersionUID = -2257837165074641521L;
 
 	public LoadTable() {
@@ -37,23 +38,24 @@ public class LoadTable extends AbstractServletUtil {
 
 		BSConnectionFactory cf = new BSConnectionFactory();
 		Connection conn = cf.getConnection(request);
+		try {
+			table.configFields(conn, mysql);
 
-		table.configFields(conn, mysql);
+			BSPaging paging = new BSPaging(conn, mysql, table, request);
+			ResultSet rs = mysql.queryResultSet(conn, table, paging);
 
-		BSPaging paging = new BSPaging(conn, mysql, table, request);
-		ResultSet rs = mysql.queryResultSet(conn, table, paging);
+			request.setAttribute("Data", rs);
+			request.setAttribute("Conn", conn);
+			request.setAttribute("Paging", paging);
+			request.setAttribute("Search", paging.getSearchValue(request));
 
-		request.setAttribute("Data", rs);
-		request.setAttribute("Conn", conn);
-		request.setAttribute("Paging", paging);
-		request.setAttribute("Search", paging.getSearchValue(request));
-
-		synchronized (session) {
-			session.setAttribute("BSTable", table);
+			synchronized (session) {
+				session.setAttribute("BSTable", table);
+			}
+		} finally {
+//			cf.closeConnection(conn);
 		}
+		forward(request, response, "/WEB-INF/jsp/common/main2.jsp");
 
-		forward(request, response, bootstrap(conn) ? "/WEB-INF/jsp/table/main2.jsp" : "/WEB-INF/jsp/table/main.jsp");
-
-		cf.closeConnection(conn);
 	}
 }
