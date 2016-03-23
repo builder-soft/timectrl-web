@@ -20,7 +20,7 @@ import cl.buildersoft.framework.util.BSUtils;
 
 @WebServlet(asyncSupported = true, value = "/servlet/ajax/GetIndicator")
 public class GetIndicator extends AbstractAjaxServlet {
-	private static final int WAIT_CLIENT = 0;
+	private static final int WAIT_CLIENT = 250;
 	private final static Logger LOG = Logger.getLogger(GetIndicator.class.getName());
 	private static final long serialVersionUID = -915879276301350536L;
 
