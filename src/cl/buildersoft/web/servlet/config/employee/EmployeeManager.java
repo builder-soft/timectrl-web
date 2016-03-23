@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import cl.buildersoft.framework.Semaphore;
+import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.beans.BSBean;
 import cl.buildersoft.framework.business.services.EventLogService;
 import cl.buildersoft.framework.business.services.ServiceFactory;
