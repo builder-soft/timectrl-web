@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
+import cl.buildersoft.framework.beans.LogInfoBean;
 import cl.buildersoft.framework.business.services.EventLogService;
 import cl.buildersoft.framework.business.services.ServiceFactory;
 import cl.buildersoft.framework.database.BSmySQL;
@@ -15,14 +16,14 @@ import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSActionType;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 
 /**
  * Servlet implementation class EmployeeManager
  */
 @WebServlet("/servlet/config/employee/EmployeeDetachedManager")
-public class EmployeeDetachedManager extends HttpServletCRUD {
+public class EmployeeDetachedManager extends BSHttpServletCRUD {
 	private static final Logger LOG = Logger.getLogger(EmployeeDetachedManager.class.getName());
 	private static final long serialVersionUID = -7665593692157885850L;
 
@@ -53,13 +54,15 @@ public class EmployeeDetachedManager extends HttpServletCRUD {
 		BSAction action = table.getAction("DELETE");
 		action.setLabel("Re-incorporar");
 		action.setWarningMessage("Esta seguro de reincorporar estos empleados?");
-		
+
 		action = new BSAction("PURGE", BSActionType.Record);
 		action.setLabel("Borrado definitivo");
 		action.setWarningMessage("¿Esta seguro de eliminar este empleado? Los datos asociados a él se perderán");
-action.setUrl("/servlet/timectrl/employee/PurgeEmployee");
-//		table.addAction(action);
-		
+		action.setUrl("/servlet/timectrl/employee/PurgeEmployee");
+		// table.addAction(action);
+
+		configEventLog(table, getCurrentUser(request).getId());
+
 		table.setWhere("cEnabled=FALSE");
 
 		return table;
@@ -98,20 +101,27 @@ action.setUrl("/servlet/timectrl/employee/PurgeEmployee");
 		return out;
 	}
 
+	/**
+	 * <code>
+	 * 
+	 * @Override public void writeEventLog(Connection conn, String action,
+	 *           HttpServletRequest request, BSTableConfig table) {
+	 *           LOG.log(Level.FINE, "Action={0}", action); EventLogService
+	 *           eventLog = ServiceFactory.createEventLogService(); if
+	 *           ("DELETE".equals(action)) { eventLog.writeEntry(conn,
+	 *           getCurrentUser(request).getId(), "INCORPORATE_EMPL",
+	 *           "Reincorpora al empleado '%s'(%s, Id=%s).",
+	 *           table.getField("cName").getValue(), table.getField("cRut")
+	 *           .getValue(), table.getField("cId").getValue()); } } </code>
+	 */
 	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
-
-	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
-		LOG.log(Level.FINE, "Action={0}", action);
-		EventLogService eventLog = ServiceFactory.createEventLogService();
-		if ("DELETE".equals(action)) {
-			eventLog.writeEntry(conn, getCurrentUser(request).getId(), "INCORPORATE_EMPL",
-					"Reincorpora al empleado '%s'(%s, Id=%s).", table.getField("cName").getValue(), table.getField("cRut")
-							.getValue(), table.getField("cId").getValue());
-		}
+	protected void configEventLog(BSTableConfig table, Long userId) {
+		LogInfoBean li = new LogInfoBean();
+		li.setAction("DELETE");
+		li.setEventKey("INCORPORATE_EMPL");
+		li.setMessage("Reincorpora al empleado");
+		li.setUserId(userId);
+		table.addLogInfo(li);
 
 	}
 

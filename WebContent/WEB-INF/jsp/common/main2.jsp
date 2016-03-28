@@ -1,3 +1,4 @@
+<%@page import="cl.buildersoft.framework.util.crud.BSHttpServletCRUD"%>
 <%
 	ResultSet rs = (ResultSet) request.getAttribute("Data");
 	Connection conn = (Connection) request.getAttribute("Conn");
@@ -14,7 +15,7 @@
 <%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
 <script src="${applicationScope['STATIC_CONTEXT']}/js/table/table.js?<%=Math.random()%>"></script>
 <%@page import="cl.buildersoft.framework.dataType.BSDataTypeEnum,cl.buildersoft.framework.dataType.BSDataType,cl.buildersoft.framework.type.Semaphore"%>
-<%@page import="cl.buildersoft.framework.web.servlet.HttpServletCRUD"%>
+
 <%@page import="cl.buildersoft.framework.util.crud.BSField"%>
 <%@page import="cl.buildersoft.framework.util.crud.BSActionType"%>
 <%@page import="cl.buildersoft.framework.util.crud.BSAction"%>
@@ -189,7 +190,7 @@ conn=null;
 
 		Object servletObject = request.getAttribute("ServletManager");
 		if (servletObject != null) {
-			HttpServletCRUD servletCRUD = (HttpServletCRUD) servletObject;
+			BSHttpServletCRUD  servletCRUD = (BSHttpServletCRUD) servletObject;
 			Semaphore semaphore = servletCRUD.setSemaphore(conn, values);
 			if (semaphore != null) {
 				switch (semaphore) {
@@ -362,6 +363,4 @@ conn=null;
 
 	private String capitalize(String s) {
 		return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
-	}
-	
-	%>
+	}%>

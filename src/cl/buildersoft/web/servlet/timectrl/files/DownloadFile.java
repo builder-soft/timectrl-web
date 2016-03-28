@@ -11,14 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSConnectionFactory;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.File;
 import cl.buildersoft.timectrl.business.beans.FileContent;
-import cl.buildersoft.web.servlet.common.AbstractServletUtil;
 
 @WebServlet("/servlet/timectrl/files/DownloadFile")
-public class DownloadFile extends AbstractServletUtil {
+public class DownloadFile extends BSHttpServlet_ {
 	private static final long serialVersionUID = 5707424258094726391L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

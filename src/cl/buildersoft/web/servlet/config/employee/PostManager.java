@@ -5,14 +5,15 @@ import java.sql.Connection;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import cl.buildersoft.framework.type.Semaphore;
+import cl.buildersoft.framework.beans.LogInfoBean;
 import cl.buildersoft.framework.business.services.EventLogService;
 import cl.buildersoft.framework.business.services.ServiceFactory;
+import cl.buildersoft.framework.type.Semaphore;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 
 @WebServlet("/servlet/config/employee/PostManager")
-public class PostManager extends HttpServletCRUD {
+public class PostManager extends BSHttpServletCRUD {
 	private static final long serialVersionUID = -6279916596879232684L;
 
 	@Override
@@ -23,6 +24,8 @@ public class PostManager extends HttpServletCRUD {
 		table.getField("cKey").setLabel("Llave");
 		table.getField("cName").setLabel("Descripción");
 
+		configEventLog(table, getCurrentUser(request).getId());
+		
 		return table;
 	}
 
@@ -31,12 +34,9 @@ public class PostManager extends HttpServletCRUD {
 		return null;
 	}
 
-	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
-
-	@Override
+	 
+/**<code>
+	@ Override
 	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
 		EventLogService eventLog = ServiceFactory.createEventLogService();
 		if ("INSERT".equalsIgnoreCase(action)) {
@@ -53,5 +53,30 @@ public class PostManager extends HttpServletCRUD {
 					"Elimina cargo, los datos eran: Key:'%s', Nombre:'%s'", table.getField("cKey").getValue(), table
 							.getField("cName").getValue());
 		}
+	}
+</code>*/
+	@Override
+	protected void configEventLog(BSTableConfig table, Long userId) {
+		LogInfoBean li = new LogInfoBean();
+		li.setAction("INSERT");
+		li.setEventKey("INSERT_POST");
+		li.setMessage("Agrega nuevo cargo");
+		li.setUserId(userId);
+		table.addLogInfo(li);
+		
+		li = new LogInfoBean();
+		li.setAction("UPDATE");
+		li.setEventKey("UPDATE_POST");
+		li.setMessage("Actualiza cargo");
+		li.setUserId(userId);
+		table.addLogInfo(li);
+		
+		li = new LogInfoBean();
+		li.setAction("DELETE");
+		li.setEventKey("DELETE_POST");
+		li.setMessage("Elimina cargo");
+		li.setUserId(userId);
+		table.addLogInfo(li);
+		
 	}
 }

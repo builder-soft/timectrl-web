@@ -68,7 +68,6 @@ public class TurnsOfEmployee extends BSHttpServlet {
 		request.setAttribute("Exception", exception);
 
 		forward(request, response, page);
-		// request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	private Boolean getException(HttpServletRequest request) {

@@ -5,17 +5,17 @@ import java.sql.Connection;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.BSConnectionFactory;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 
 /**
  * Servlet implementation class DomainAttributeManager
  */
 @WebServlet("/servlet/system/DomainAttributeManager")
-public class DomainAttributeManager extends HttpServletCRUD {
+public class DomainAttributeManager extends BSHttpServletCRUD {
 	private static final long serialVersionUID = -8184294919790127733L;
 
 	@Override
@@ -43,14 +43,11 @@ public class DomainAttributeManager extends HttpServletCRUD {
 		return null;
 	}
 
-	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
+	 
 
 	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
-		// TODO Auto-generated method stub
-
+	protected void configEventLog(BSTableConfig table, Long userId) {
+		// TODO Configurar eventos
+		
 	}
 }

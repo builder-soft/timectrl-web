@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSActionType;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 
 //import cl.buildersoft.web.servlet.BSHttpServlet;
 
 @WebServlet("/servlet/timectrl/turns/TurnManager")
-public class TurnManager extends HttpServletCRUD {
+public class TurnManager extends BSHttpServletCRUD {
 	private static final long serialVersionUID = -6279916596879232684L;
 
 	@Override
@@ -38,12 +38,7 @@ public class TurnManager extends HttpServletCRUD {
 	}
 
 	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
-
-	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+	protected void configEventLog(BSTableConfig table, Long userId) {
 		// TODO Auto-generated method stub
 
 	}

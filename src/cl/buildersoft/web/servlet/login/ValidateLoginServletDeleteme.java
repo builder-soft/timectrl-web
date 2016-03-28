@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -34,6 +33,7 @@ import cl.buildersoft.framework.services.impl.BSUserServiceImpl;
 import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
+import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.framework.util.BSUtils;
 
 /**
@@ -41,7 +41,7 @@ import cl.buildersoft.framework.util.BSUtils;
  */
 
 @WebServlet(urlPatterns = "/login/ValidateLoginServlet")
-public class ValidateLoginServletDeleteme extends HttpServlet {
+public class ValidateLoginServletDeleteme extends BSHttpServlet {
 	private static final Logger LOG = Logger.getLogger(ValidateLoginServletDeleteme.class.getName());
 	private static final long serialVersionUID = -4481703270849068766L;
 
@@ -161,7 +161,7 @@ public class ValidateLoginServletDeleteme extends HttpServlet {
 		if (page == null) {
 			page = "/";
 		}
-		request.getRequestDispatcher(page).forward(request, response);
+		forward(request, response, page);
 	}
 
 	private boolean passwordExpired(Connection conn, User user) {

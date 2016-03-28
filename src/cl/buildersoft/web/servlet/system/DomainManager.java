@@ -6,11 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import cl.buildersoft.framework.type.Semaphore;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 
 @WebServlet("/servlet/system/DomainManager")
-public class DomainManager extends HttpServletCRUD {
+public class DomainManager extends BSHttpServletCRUD {
 	private static final long serialVersionUID = -2730980972177816284L;
 
 	@Override
@@ -33,14 +33,11 @@ public class DomainManager extends HttpServletCRUD {
 		return null;
 	}
 
-	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
+	 
 
 	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
-		// TODO Auto-generated method stub
-
+	protected void configEventLog(BSTableConfig table, Long userId) {
+		// TODO Configurar eventos
+		
 	}
 }

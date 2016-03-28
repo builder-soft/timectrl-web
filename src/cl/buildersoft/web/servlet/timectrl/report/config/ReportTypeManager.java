@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSActionType;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 
 /**
  * Servlet implementation class ReportOutType
  */
 @WebServlet("/servlet/timectrl/report/config/ReportTypeManager")
-public class ReportTypeManager extends HttpServletCRUD {
+public class ReportTypeManager extends BSHttpServletCRUD {
 	private static final long serialVersionUID = 4459912514967689438L;
 
 	@Override
@@ -40,12 +40,7 @@ public class ReportTypeManager extends HttpServletCRUD {
 	}
 
 	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
-
-	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+	protected void configEventLog(BSTableConfig table, Long userId) {
 		// TODO Auto-generated method stub
 
 	}

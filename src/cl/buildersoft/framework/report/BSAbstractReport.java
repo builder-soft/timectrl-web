@@ -73,7 +73,6 @@ public abstract class BSAbstractReport extends BSHttpServlet_ {
 		request.setAttribute("DateFormat", dateFormat);
 
 		forward(request, response, url);
-//		request.getRequestDispatcher(url).forward(request, response);
 	}
 
 	private String getAction(HttpServletRequest request) {

@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.util.BSDateTimeUtil;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.IdRut;
 import cl.buildersoft.timectrl.business.console.BuildReport;
 
 @WebServlet("/servlet/timectrl/report/AttendanceReport")
-public class AttendanceReport extends BSHttpServlet {
+public class AttendanceReport extends BSHttpServlet_ {
 	private static final long serialVersionUID = -8798025729031240172L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,7 +34,7 @@ public class AttendanceReport extends BSHttpServlet {
 		request.setAttribute("IdRutList", idRutList);
 		request.setAttribute("DateFormat", dateFormat);
 
-		request.getRequestDispatcher("/WEB-INF/jsp/timectrl/report/attendance-report.jsp").forward(request, response);
+		forward(request, response, "/WEB-INF/jsp/timectrl/report/attendance-report.jsp");
 
 	}
 

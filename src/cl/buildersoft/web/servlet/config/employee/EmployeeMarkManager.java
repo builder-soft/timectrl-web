@@ -7,20 +7,20 @@ import java.util.logging.Logger;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSActionType;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 
 /**
  * Servlet implementation class EmployeeManager
  */
 @WebServlet("/servlet/config/employee/EmployeeMarkManager")
-public class EmployeeMarkManager extends HttpServletCRUD {
+public class EmployeeMarkManager extends BSHttpServletCRUD {
 	private static final Logger LOG = Logger.getLogger(EmployeeMarkManager.class.getName());
 	private static final long serialVersionUID = -7665593692157885850L;
 
@@ -37,28 +37,28 @@ public class EmployeeMarkManager extends HttpServletCRUD {
 		table.getField("cGroup").setLabel("Grupo");
 		table.getField("cBoss").setLabel("Superior");
 		table.getField("cPrivilege").setLabel("Tipo de usuario");
-//		table.getField("cEnabled").setLabel("Activado");
+		// table.getField("cEnabled").setLabel("Activado");
 		table.getField("cUsername").setLabel("Nombre Usuario");
 		table.getField("cMail").setLabel("Correo electrónico");
 
 		this.hideFields(table, "cMail", "cArea", "cPrivilege");
 		table.removeField("cEnabled");
-		
+
 		table.removeAction("INSERT");
 		table.removeAction("EDIT");
 		table.removeAction("DELETE");
 
 		table.setWhere("cEnabled=TRUE");
-		
+
 		BSAction action = new BSAction("TURNS", BSActionType.Record);
 		action.setLabel("Asignación de Turnos");
 		action.setUrl("/servlet/timectrl/employee/TurnsOfEmployee");
-//		table.addAction(action);
+		// table.addAction(action);
 
 		action = new BSAction("LICENSE", BSActionType.Record);
 		action.setLabel("Licencias médicas o permisos");
 		action.setUrl("/servlet/timectrl/employee/LicenseOfEmployee");
-//		table.addAction(action);
+		// table.addAction(action);
 
 		action = new BSAction("MARK_MODIFY", BSActionType.Record);
 		action.setLabel("Administración de Marcas");
@@ -68,8 +68,10 @@ public class EmployeeMarkManager extends HttpServletCRUD {
 		action = new BSAction("LOAD_LICENSE", BSActionType.Table);
 		action.setLabel("Archivo Licencias");
 		action.setUrl("/servlet/timectrl/employeeLicensing/LoadLicensing");
-//		table.addAction(action);
+		// table.addAction(action);
 
+		configEventLog(table, getCurrentUser(request).getId());
+		
 		return table;
 	}
 
@@ -107,12 +109,7 @@ public class EmployeeMarkManager extends HttpServletCRUD {
 	}
 
 	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
-
-	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+	protected void configEventLog(BSTableConfig table, Long userId) {
 		// TODO Auto-generated method stub
 
 	}

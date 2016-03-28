@@ -6,14 +6,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import cl.buildersoft.framework.type.Semaphore;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 
 /**
  * Servlet implementation class AreaManager
  */
 @WebServlet("/servlet/config/employee/AreaManager")
-public class AreaManager extends HttpServletCRUD {
+public class AreaManager extends BSHttpServletCRUD {
 	private static final long serialVersionUID = -3721313666029459182L;
 
 	@Override
@@ -35,13 +35,8 @@ public class AreaManager extends HttpServletCRUD {
 	}
 
 	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
-
-	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
-		// TODO Auto-generated method stub
+	protected void configEventLog(BSTableConfig table, Long userId) {
+		// TODO Configurar eventos
 
 	}
 }

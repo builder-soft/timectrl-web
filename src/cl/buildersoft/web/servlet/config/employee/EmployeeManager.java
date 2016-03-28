@@ -7,19 +7,18 @@ import java.util.logging.Logger;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.beans.BSBean;
-import cl.buildersoft.framework.business.services.EventLogService;
-import cl.buildersoft.framework.business.services.ServiceFactory;
+import cl.buildersoft.framework.beans.LogInfoBean;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
+import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSActionType;
 import cl.buildersoft.framework.util.crud.BSField;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 import cl.buildersoft.timectrl.business.beans.Area;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Group;
@@ -30,7 +29,7 @@ import cl.buildersoft.timectrl.business.beans.Privilege;
  * Servlet implementation class EmployeeManager
  */
 @WebServlet("/servlet/config/employee/EmployeeManager")
-public class EmployeeManager extends HttpServletCRUD {
+public class EmployeeManager extends BSHttpServletCRUD {
 	private static final Logger LOG = Logger.getLogger(EmployeeManager.class.getName());
 	private static final long serialVersionUID = -7665593692157885850L;
 
@@ -79,6 +78,8 @@ public class EmployeeManager extends HttpServletCRUD {
 
 		table.getAction("DELETE").setLabel("Desvincular");
 
+		configEventLog(table, getCurrentUser(request).getId());
+
 		return table;
 	}
 
@@ -115,12 +116,9 @@ public class EmployeeManager extends HttpServletCRUD {
 		return out;
 	}
 
-	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
-
-	@Override
+	/**
+	 * <code>
+	@ Override
 	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
 		EventLogService eventLog = ServiceFactory.createEventLogService();
 		if ("INSERT".equalsIgnoreCase(action)) {
@@ -146,6 +144,33 @@ public class EmployeeManager extends HttpServletCRUD {
 					table.getField("cRut").getValue(), table.getField("cId").getValue());
 
 		}
+
+	}
+		</code>
+	 */
+
+	@Override
+	protected void configEventLog(BSTableConfig table, Long userId) {
+		LogInfoBean li = new LogInfoBean();
+		li.setAction("INSERT");
+		li.setEventKey("EMPLOYEE_INSERT");
+		li.setMessage("Se crea el empleado");
+		li.setUserId(userId);
+		table.addLogInfo(li);
+
+		li = new LogInfoBean();
+		li.setAction("UPDATE");
+		li.setEventKey("EMPLOYEE_UPDATE");
+		li.setMessage("Modificacion de empleado");
+		li.setUserId(userId);
+		table.addLogInfo(li);
+
+		li = new LogInfoBean();
+		li.setAction("DELETE");
+		li.setEventKey("EMPLOYEE_DELETE");
+		li.setMessage("Desvinculacion de empleado");
+		li.setUserId(userId);
+		table.addLogInfo(li);
 
 	}
 
@@ -206,4 +231,5 @@ public class EmployeeManager extends HttpServletCRUD {
 		return boss.getId() == null ? "Nadie" : boss.getName();
 
 	}
+
 }

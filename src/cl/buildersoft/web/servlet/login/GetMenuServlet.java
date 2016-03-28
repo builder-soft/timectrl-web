@@ -47,7 +47,7 @@ public class GetMenuServlet extends BSHttpServlet {
 		cf.closeConnection(conn);
 		String page = nextServlet != null ? nextServlet : "/servlet/Home";
 		forward(request, response, page);
-		// request.getRequestDispatcher(page).forward(request, response);
+
 	}
 
 }

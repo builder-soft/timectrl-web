@@ -3,22 +3,21 @@ package cl.buildersoft.web.servlet.admin;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSConnectionFactory;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 
 @WebServlet("/servlet/admin/PersonFK")
-public class PersonFK extends HttpServlet {
+public class PersonFK extends BSHttpServlet_ {
 	private static final long serialVersionUID = -614956026680417724L;
 
 	public PersonFK() {
@@ -39,7 +38,7 @@ public class PersonFK extends HttpServlet {
 		cf.closeConnection(conn);
 		request.setAttribute("Data", data);
 
-		request.getRequestDispatcher("/WEB-INF/jsp/admin/person-fk.jsp").forward(request, response);
+		forward(request, response, "/WEB-INF/jsp/admin/person-fk.jsp");
 
 	}
 }

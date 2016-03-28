@@ -5,17 +5,16 @@ import java.sql.Connection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSConnectionFactory;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.TurnDay;
 
 @WebServlet("/servlet/timectrl/turns/DeleteTurn")
-public class DeleteTurn extends HttpServlet {
+public class DeleteTurn extends BSHttpServlet_ {
 	private static final long serialVersionUID = 1427361088388282595L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,7 +32,7 @@ public class DeleteTurn extends HttpServlet {
 		cf.closeConnection(conn);
 
 		request.setAttribute("cId", "" + parent);
-		request.getRequestDispatcher("/servlet/timectrl/turns/TurnsDayByTurn").forward(request, response);
+		forward(request, response, "/servlet/timectrl/turns/TurnsDayByTurn", false);
 	}
 
 }

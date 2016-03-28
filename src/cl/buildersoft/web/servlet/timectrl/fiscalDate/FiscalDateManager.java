@@ -6,11 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import cl.buildersoft.framework.type.Semaphore;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 
 @WebServlet("/servlet/timectrl/fiscalDate/FiscalDateManager")
-public class FiscalDateManager extends HttpServletCRUD {
+public class FiscalDateManager extends BSHttpServletCRUD {
 	private static final long serialVersionUID = 239341883519379947L;
 
 	@Override
@@ -22,6 +22,8 @@ public class FiscalDateManager extends HttpServletCRUD {
 		table.getField("cDate").setLabel("Fecha");
 
 		table.setSortField("cDate");
+		configEventLog(table, getCurrentUser(request).getId());
+		
 		return table;
 	}
 
@@ -30,14 +32,10 @@ public class FiscalDateManager extends HttpServletCRUD {
 		return null;
 	}
 
+	 
 	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
-
-	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+	protected void configEventLog(BSTableConfig table, Long userId) {
 		// TODO Auto-generated method stub
-
+		
 	}
 }

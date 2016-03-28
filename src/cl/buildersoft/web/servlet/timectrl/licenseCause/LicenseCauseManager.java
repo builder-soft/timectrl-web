@@ -6,14 +6,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import cl.buildersoft.framework.type.Semaphore;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 
 /**
  * Servlet implementation class LicenseCause
  */
 @WebServlet("/servlet/timectrl/licenseCause/LicenseCauseManager")
-public class LicenseCauseManager extends HttpServletCRUD {
+public class LicenseCauseManager extends BSHttpServletCRUD {
 	private static final long serialVersionUID = 5784069118987822401L;
 
 	@Override
@@ -32,12 +32,7 @@ public class LicenseCauseManager extends HttpServletCRUD {
 	}
 
 	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
-
-	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
+	protected void configEventLog(BSTableConfig table, Long userId) {
 		// TODO Auto-generated method stub
 
 	}

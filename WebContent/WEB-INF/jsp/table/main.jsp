@@ -1,10 +1,11 @@
+<%@page import="cl.buildersoft.framework.util.crud.BSHttpServletCRUD"%>
 <%@page import="cl.buildersoft.framework.type.Semaphore"%>
 <%@page import="cl.buildersoft.framework.util.crud.BSActionType"%>
 <%@page import="cl.buildersoft.framework.util.crud.BSAction"%>
 <%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
 <%@page import="cl.buildersoft.framework.database.BSmySQL"%>
 
-<%@page import="cl.buildersoft.framework.web.servlet.HttpServletCRUD"%>
+
  
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.ResultSet"%>
@@ -196,7 +197,7 @@
 
 		Object servletObject = request.getAttribute("ServletManager");
 		if (servletObject != null) {
-			HttpServletCRUD servletCRUD = (HttpServletCRUD) servletObject;
+			BSHttpServletCRUD servletCRUD = (BSHttpServletCRUD) servletObject;
 			Semaphore semaphore = servletCRUD.setSemaphore(conn, values);
 			if(semaphore!=null){
 				switch (semaphore) {

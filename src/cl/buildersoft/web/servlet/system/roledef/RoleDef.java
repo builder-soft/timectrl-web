@@ -19,13 +19,13 @@ import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.services.BSMenuService;
 import cl.buildersoft.framework.services.impl.BSMenuServiceImpl;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 
 /**
  * Servlet implementation class RoleDef
  */
 @WebServlet("/servlet/system/roleDef/RoleDef")
-public class RoleDef extends BSHttpServlet {
+public class RoleDef extends BSHttpServlet_ {
 	private static final Logger LOG = Logger.getLogger(RoleDef.class.getName());
 	private static final long serialVersionUID = 111140893680994718L;
 
@@ -58,7 +58,8 @@ public class RoleDef extends BSHttpServlet {
 		request.setAttribute("RolMenu", rolMenu);
 		request.setAttribute("cId", idRolLong);
 
-		request.getRequestDispatcher("/WEB-INF/jsp/system/role-def/role-def.jsp").forward(request, response);
+		forward(request, response, "/WEB-INF/jsp/system/role-def/role-def.jsp");
+//		request.getRequestDispatcher("/WEB-INF/jsp/system/role-def/role-def.jsp").forward(request, response);
 
 	}
 

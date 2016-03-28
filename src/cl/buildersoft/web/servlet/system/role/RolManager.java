@@ -5,17 +5,17 @@ import java.sql.Connection;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
-import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.beans.Domain;
+import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.crud.BSField;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 
 /**
  * Servlet implementation class RolManager
  */
 @WebServlet("/servlet/system/role/RolManager")
-public class RolManager extends HttpServletCRUD {
+public class RolManager extends BSHttpServletCRUD {
 	private static final long serialVersionUID = 9083620122736457949L;
 
 	public RolManager() {
@@ -44,14 +44,11 @@ public class RolManager extends HttpServletCRUD {
 		return null;
 	}
 
-	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
+	 
 
 	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
-		// TODO Auto-generated method stub
-
+	protected void configEventLog(BSTableConfig table, Long userId) {
+		// TODO Configurar eventos
+		
 	}
 }

@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,9 +14,10 @@ import javax.servlet.http.HttpSession;
 import cl.buildersoft.framework.beans.Rol;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSConnectionFactory;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 
 @WebServlet("/servlet/system/roledef/SaveRoleDef")
-public class SaveRoleDef extends HttpServlet {
+public class SaveRoleDef extends BSHttpServlet_ {
 	private static final long serialVersionUID = -2938011475821935220L;
 
 	public SaveRoleDef() {
@@ -62,7 +62,7 @@ public class SaveRoleDef extends HttpServlet {
 			}
 		}
 
-		request.getRequestDispatcher(nextServlet).forward(request, response);
+		forward(request, response, nextServlet);
 
 	}
 

@@ -13,14 +13,14 @@ import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSActionType;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.framework.web.servlet.HttpServletCRUD;
 
 /**
  * Servlet implementation class EmployeeManager
  */
 @WebServlet("/servlet/config/employee/EmployeeLicenseManager")
-public class EmployeeLicenseManager extends HttpServletCRUD {
+public class EmployeeLicenseManager extends BSHttpServletCRUD {
 	private static final Logger LOG = Logger.getLogger(EmployeeLicenseManager.class.getName());
 	private static final long serialVersionUID = -7665593692157885850L;
 
@@ -96,14 +96,11 @@ public class EmployeeLicenseManager extends HttpServletCRUD {
 		return out;
 	}
 
-	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
+	 
 
 	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
-		// TODO Auto-generated method stub
-
+	protected void configEventLog(BSTableConfig table, Long userId) {
+		// TODO Configurar evento
+		
 	}
 }
