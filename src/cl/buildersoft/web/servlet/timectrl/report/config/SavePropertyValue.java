@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSDataBaseException;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.ReportProperty;
 import cl.buildersoft.timectrl.business.beans.ReportType;
 
 @WebServlet("/servlet/timectrl/report/config/SavePropertyValue")
-public class SavePropertyValue extends BSHttpServlet {
+public class SavePropertyValue extends BSHttpServlet_ {
 	private static final long serialVersionUID = 8260858993171587707L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

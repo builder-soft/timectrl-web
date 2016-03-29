@@ -11,10 +11,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 
 @WebServlet("/servlet/timectrl/report/execute/DownloadReport")
-public class DownloadReport extends BSHttpServlet {
+public class DownloadReport extends BSHttpServlet_ {
 	private static final long serialVersionUID = -5077833737463039976L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

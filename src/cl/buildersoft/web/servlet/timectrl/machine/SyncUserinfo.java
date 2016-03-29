@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.api._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.Machine;
 import cl.buildersoft.timectrl.business.services.MachineService2;
@@ -19,7 +19,7 @@ import cl.buildersoft.timectrl.business.services.impl.MachineServiceImpl2;
  * Servlet implementation class SyncUserinfo
  */
 @WebServlet("/servlet/timectrl/machine/SyncUserinfo")
-public class SyncUserinfo extends BSHttpServlet {
+public class SyncUserinfo extends BSHttpServlet_ {
 	private static final long serialVersionUID = 662776837866166715L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

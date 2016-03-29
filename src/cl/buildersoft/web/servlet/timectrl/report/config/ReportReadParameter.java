@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSFactory;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
 import cl.buildersoft.timectrl.business.beans.ReportParameterType;
@@ -22,7 +22,7 @@ import cl.buildersoft.timectrl.business.services.ReportService;
  * Servlet implementation class InConfigByReport
  */
 @WebServlet("/servlet/timectrl/report/config/ReportReadParameter")
-public class ReportReadParameter extends BSHttpServlet {
+public class ReportReadParameter extends BSHttpServlet_ {
 	private static final long serialVersionUID = -436174125408673922L;
 
 	// @ SuppressWarnings("unchecked")

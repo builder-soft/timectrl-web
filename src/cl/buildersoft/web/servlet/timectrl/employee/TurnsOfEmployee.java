@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Area;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.EmployeeTurn;
@@ -25,7 +25,7 @@ import cl.buildersoft.timectrl.business.services.impl.EmployeeTurnServiceImpl;
  * Servlet implementation class Turns
  */
 @WebServlet("/servlet/timectrl/employee/TurnsOfEmployee")
-public class TurnsOfEmployee extends BSHttpServlet {
+public class TurnsOfEmployee extends BSHttpServlet_ {
 	private static final long serialVersionUID = 2424628512723044632L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

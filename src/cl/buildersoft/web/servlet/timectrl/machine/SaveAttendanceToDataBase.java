@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.exception.BSException;
 import cl.buildersoft.framework.util.BSConnectionFactory;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.api._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.AttendanceLog;
 import cl.buildersoft.timectrl.business.beans.Machine;
@@ -24,7 +24,7 @@ import cl.buildersoft.timectrl.business.services.impl.MachineServiceImpl2;
  * Servlet implementation class SaveAttendanceToDataBase
  */
 @WebServlet("/servlet/timectrl/machine/SaveAttendanceToDataBase")
-public class SaveAttendanceToDataBase extends BSHttpServlet {
+public class SaveAttendanceToDataBase extends BSHttpServlet_ {
 	private static final String ATTENDANCES = "Attendances";
 	private static final long serialVersionUID = 4061684288079220007L;
 

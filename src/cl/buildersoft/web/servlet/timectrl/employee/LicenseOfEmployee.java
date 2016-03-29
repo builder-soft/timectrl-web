@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Area;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.License;
@@ -25,7 +25,7 @@ import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
  * Servlet implementation class LicenseOfEmployee
  */
 @WebServlet("/servlet/timectrl/employee/LicenseOfEmployee")
-public class LicenseOfEmployee extends BSHttpServlet {
+public class LicenseOfEmployee extends BSHttpServlet_ {
 	private static final long serialVersionUID = -4255968488922758974L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

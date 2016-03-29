@@ -14,7 +14,7 @@ import cl.buildersoft.framework.business.services.EventLogService;
 import cl.buildersoft.framework.business.services.ServiceFactory;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.EmployeeTurn;
 import cl.buildersoft.timectrl.business.beans.Turn;
@@ -25,7 +25,7 @@ import cl.buildersoft.timectrl.business.services.impl.EmployeeTurnServiceImpl;
  * Servlet implementation class SaveNewTurn
  */
 @WebServlet("/servlet/timectrl/employee/SaveNewMassiveTurn")
-public class SaveNewMassiveTurn extends BSHttpServlet {
+public class SaveNewMassiveTurn extends BSHttpServlet_ {
 	private static final long serialVersionUID = SaveNewMassiveTurn.class.getName().hashCode();
 	private static final Logger LOG = Logger.getLogger(SaveNewMassiveTurn.class.getName());
 

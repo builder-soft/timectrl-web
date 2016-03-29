@@ -33,15 +33,15 @@ import cl.buildersoft.framework.services.impl.BSUserServiceImpl;
 import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
-import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.framework.util.BSUtils;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 
 /**
  * Servlet implementation class ValidateServlet
  */
 
 @WebServlet(urlPatterns = "/login/ValidateLoginServlet")
-public class ValidateLoginServletDeleteme extends BSHttpServlet {
+public class ValidateLoginServletDeleteme extends BSHttpServlet_ {
 	private static final Logger LOG = Logger.getLogger(ValidateLoginServletDeleteme.class.getName());
 	private static final long serialVersionUID = -4481703270849068766L;
 

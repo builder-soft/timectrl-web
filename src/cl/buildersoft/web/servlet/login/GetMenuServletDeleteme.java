@@ -15,13 +15,13 @@ import cl.buildersoft.framework.beans.Rol;
 import cl.buildersoft.framework.services.BSMenuService;
 import cl.buildersoft.framework.services.impl.BSMenuServiceImpl;
 import cl.buildersoft.framework.util.BSConnectionFactory;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 
 /**
  * Servlet implementation class GetMenu
  */
 @WebServlet(urlPatterns = "/servlet/login/GetMenuServlet")
-public class GetMenuServlet extends BSHttpServlet {
+public class GetMenuServletDeleteme extends BSHttpServlet_ {
 	private static final long serialVersionUID = -4457825801379197051L;
 
 	@SuppressWarnings("unchecked")

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.api._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.Area;
 import cl.buildersoft.timectrl.business.beans.Employee;
@@ -28,7 +28,7 @@ import cl.buildersoft.timectrl.business.services.impl.MachineServiceImpl2;
  * Servlet implementation class ReadEmployee
  */
 @WebServlet("/servlet/timectrl/machine/ReadEmployee")
-public class ReadEmployee extends BSHttpServlet {
+public class ReadEmployee extends BSHttpServlet_ {
 	private static final long serialVersionUID = 4736128480177088600L;
 
 	@SuppressWarnings("unchecked")

@@ -17,7 +17,7 @@ import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Machine;
 import cl.buildersoft.timectrl.business.beans.MarkType;
@@ -26,7 +26,7 @@ import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 
 @WebServlet("/servlet/timectrl/employee/MarkAdmin")
 @SuppressWarnings("unchecked")
-public class MarkAdmin extends BSHttpServlet {
+public class MarkAdmin extends BSHttpServlet_ {
 	private Integer range = 7;
 	private static final long serialVersionUID = -6230848143914428453L;
 

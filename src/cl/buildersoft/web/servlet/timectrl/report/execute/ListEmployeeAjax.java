@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSConnectionFactory;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Employee;
 
 @WebServlet("/servlet/timectrl/report/execute/ListEmployeeAjax")
-public class ListEmployeeAjax extends BSHttpServlet {
+public class ListEmployeeAjax extends BSHttpServlet_ {
 	private static final long serialVersionUID = Long.MAX_VALUE - Long.MIN_VALUE;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

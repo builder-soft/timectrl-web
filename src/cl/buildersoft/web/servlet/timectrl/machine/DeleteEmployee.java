@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSConnectionFactory;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.api._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.Machine;
 import cl.buildersoft.timectrl.business.services.MachineService2;
@@ -20,7 +20,7 @@ import cl.buildersoft.timectrl.business.services.impl.MachineServiceImpl2;
  * Servlet implementation class DeleteEmployee
  */
 @WebServlet("/servlet/timectrl/machine/DeleteEmployee")
-public class DeleteEmployee extends BSHttpServlet {
+public class DeleteEmployee extends BSHttpServlet_ {
 	private static final long serialVersionUID = 8751209270314151392L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

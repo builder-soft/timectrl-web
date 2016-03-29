@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSFactory;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportPropertyBean;
 import cl.buildersoft.timectrl.business.beans.ReportType;
@@ -21,7 +21,7 @@ import cl.buildersoft.timectrl.business.services.ReportService;
  * Servlet implementation class OutConfigByReport
  */
 @WebServlet("/servlet/timectrl/report/config/ReportReadProperties")
-public class ReportReadProperties extends BSHttpServlet {
+public class ReportReadProperties extends BSHttpServlet_ {
 	private static final long serialVersionUID = 144367458920654781L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

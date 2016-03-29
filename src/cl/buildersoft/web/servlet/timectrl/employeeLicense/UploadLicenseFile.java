@@ -22,14 +22,14 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import cl.buildersoft.framework.exception.BSConfigurationException;
 import cl.buildersoft.framework.exception.BSProgrammerException;
 import cl.buildersoft.framework.exception.BSSystemException;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.web.servlet.timectrl.employee.DetailFile;
 
 /**
  * Servlet implementation class UploadLicenseFile
  */
 @WebServlet("/servlet/timectrl/employeeLicense/UploadLicenseFile")
-public class UploadLicenseFile extends BSHttpServlet {
+public class UploadLicenseFile extends BSHttpServlet_ {
 	private static final Logger LOG = Logger.getLogger(UploadLicenseFile.class.getName());
 	private static final int SIZE_15_MB = 1024 * 1024 * 15;
 	private static final long serialVersionUID = -1220077678998963276L;
