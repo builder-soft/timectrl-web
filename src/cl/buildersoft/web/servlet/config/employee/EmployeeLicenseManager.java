@@ -52,11 +52,13 @@ public class EmployeeLicenseManager extends BSHttpServletCRUD {
 
 		BSAction action = new BSAction("LICENSE", BSActionType.Record);
 		action.setLabel("Licencias médicas o permisos");
+		action.setContext("TIMECTRL_CONTEXT");
 		action.setUrl("/servlet/timectrl/employee/LicenseOfEmployee");
 		table.addAction(action);
 
 		action = new BSAction("LOAD_LICENSE", BSActionType.Table);
 		action.setLabel("Archivo Licencias");
+		action.setContext("TIMECTRL_CONTEXT");
 		action.setUrl("/servlet/timectrl/employeeLicensing/LoadLicensing");
 		table.addAction(action);
 
