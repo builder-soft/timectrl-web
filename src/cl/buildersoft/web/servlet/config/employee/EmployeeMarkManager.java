@@ -63,6 +63,7 @@ public class EmployeeMarkManager extends BSHttpServletCRUD {
 		action = new BSAction("MARK_MODIFY", BSActionType.Record);
 		action.setLabel("Administración de Marcas");
 		action.setUrl("/servlet/timectrl/employee/MarkAdmin");
+		action.setContext("TIMECTRL_CONTEXT");
 		table.addAction(action);
 
 		action = new BSAction("LOAD_LICENSE", BSActionType.Table);

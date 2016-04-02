@@ -54,14 +54,16 @@ public class EmployeeTurnManager extends BSHttpServletCRUD {
 		BSAction action = new BSAction("TURNS", BSActionType.Record);
 		action.setLabel("Asignación de Turnos");
 		action.setUrl("/servlet/timectrl/employee/TurnsOfEmployee");
+		action.setContext("TIMECTRL_CONTEXT");
 		table.addAction(action);
 
 		action = new BSAction("MASSIVE_TURN", BSActionType.MultiRecord);
 		action.setLabel("Asignacion masiva de turnos");
 		action.setUrl("/servlet/timectrl/employee/MassiveTurnsOfEmployee");
 		action.setWarningMessage("");
-
+		action.setContext("TIMECTRL_CONTEXT");
 		table.addAction(action);
+		
 		configEventLog(table, getCurrentUser(request).getId());
 
 		return table;
