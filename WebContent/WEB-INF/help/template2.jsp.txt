@@ -1,7 +1,13 @@
 <%@ include file="/WEB-INF/jsp/common/header2.jsp"%>
 <%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
+<%
+Calendar startDate = (Calendar) request.getAttribute("StartDate");
+Calendar endDate = (Calendar) request.getAttribute("EndDate");
+
+String dateFormat = request.getServletContext().getAttribute("DateFormat").toString();
+%>
 <script
-	src="${pageContext.request.contextPath}/js/...FILE.js?<%=Math.random()%>">	
+	src="${applicationScope['STATIC_CONTEXT']}/js/...FILE.js?<%=Math.random()%>">	
 </script>
 
 <div class="page-header">
@@ -10,21 +16,36 @@
 
 <script type="text/javascript">
 <!--
-	function onLoadPage() {
-		$( "#datepicker" ).datepicker();
-		
-$("#DStartDate").datepicker({
-		dateFormat : fixDateFormat(dateFormat),
-		appendText : " (" + dateFormat.toLowerCase() + ")",
-		defaultDate : "-1m",
-		changeMonth : true,
-		numberOfMonths : 1,
-		onSelect : function(selectedDate) {
-			$("#DEndDate").datepicker("option", "minDate", selectedDate);
-		}
-	});
+	function selectDateAtStart(selectedDate){
+		$("#DEndDate").datepicker("option", "minDate", selectedDate);
+	}
 	
-			
+	function selectDateAtEnd(selectedDate){
+		$("#DStartDate").datepicker("option", "maxDate", selectedDate);
+	}
+	
+	function onLoadPage() {
+		$("#DStartDate").datepicker({
+			dateFormat : fixDateFormat(dateFormat),
+			appendText : " (" + dateFormat.toLowerCase() + ")",
+			changeMonth : true,
+			numberOfMonths : 1,
+			onSelect : selectDateAtStart
+		});
+		
+		$("#DEndDate").datepicker({
+			dateFormat : fixDateFormat(dateFormat),
+			appendText : " (" + dateFormat.toLowerCase() + ")",
+			defaultDate : "1d",
+			changeMonth : true,
+			numberOfMonths : 1,
+			onSelect : selectDateAtEnd
+		});
+
+		$("#DStartDate").datepicker("setDate", "<%=BSDateTimeUtil.calendar2String(startDate, dateFormat)%>");
+		$("#DEndDate").datepicker("setDate", "<%=BSDateTimeUtil.calendar2String(endDate, dateFormat)%>");
+		selectDateAtStart("<%=BSDateTimeUtil.calendar2String(startDate, dateFormat)%>");
+		selectDateAtEnd("<%=BSDateTimeUtil.calendar2String(endDate, dateFormat)%>");
 	}
 //-->
 </script>
@@ -95,27 +116,6 @@ value="<%=BSWeb.formatDouble(request, 1234.567)%>">
 
 <button class='btn btn-link'
 	onclick="returnTo('${pageContext.request.contextPath}/servlet/config/employee/EmployeeManager');">Volver</button>
-
-<div id="divShowDetail" style="display: none">
-	<h2 class="cTitle2">Detalle de valores</h2>
-
-	<div class="contentScroll">
-		<table class="cList" cellpadding="0" cellspacing="0" id="movesTable">
-			<tr>
-				<td class="cHeadTD">Detalle</td>
-				<td class="cHeadTD">Comentario</td>
-				<td class="cHeadTD">Tipo</td>
-				<td class="cHeadTD">Monto</td>
-			</tr>
-		</table>
-	</div>
-	<br /> 
-
-	<button type="button" class='btn btn-link'
-		onclick="javascript:closeTooltip()">Cancelar</button>
-
-</div>
-
 
 <%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>
 

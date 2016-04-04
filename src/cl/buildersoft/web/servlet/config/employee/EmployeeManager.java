@@ -38,7 +38,7 @@ public class EmployeeManager extends BSHttpServletCRUD {
 		BSTableConfig table = initTable(request, "tEmployee", this);
 		table.setSortField(getSortField(request));
 
-		table.setTitle("Mantención de empleados");
+		table.setTitle("Datos básicos de empleados");
 
 		table.getField("cName").setLabel("Nombre");
 		table.getField("cPost").setLabel("Cargo");
@@ -47,7 +47,7 @@ public class EmployeeManager extends BSHttpServletCRUD {
 		table.getField("cBoss").setLabel("Superior");
 		table.getField("cPrivilege").setLabel("Tipo de usuario");
 		// table.getField("cEnabled").setLabel("Activado");
-		table.getField("cUsername").setLabel("Nombre Usuario");
+		table.getField("cUsername").setLabel("Usuario");
 		table.getField("cMail").setLabel("Correo electrónico");
 
 		this.hideFields(table, "cMail", "cArea", "cPrivilege");

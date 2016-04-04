@@ -2,7 +2,6 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
 	<display-name>timectrl-web</display-name>
-
 	<context-param>
 		<param-name>CurrentContext</param-name>
 		<param-value>TIMECTRL_CONTEXT</param-value>
@@ -11,25 +10,18 @@
 		<param-name>CurrentVersion</param-name>
 		<param-value>R1.2.26</param-value>
 	</context-param>
-
 	<welcome-file-list>
 		<welcome-file>jsp/login/start.jsp</welcome-file>
 	</welcome-file-list>
-
-	<!-- <context-param> <param-name>bsframework.license.validate</param-name> <param-value>true</param-value> </context-param> -->
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/servlet/ErrorHandler</location>
 	</error-page>
-
 	<servlet>
 		<servlet-name>StartupServlet</servlet-name>
 		<servlet-class>cl.buildersoft.framework.web.servlet.StartupServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-
-
-	<!-- -->
 	<filter>
 		<filter-name>SessionFilter</filter-name>
 		<filter-class>cl.buildersoft.framework.web.filter.SessionFilter</filter-class>
@@ -39,11 +31,6 @@
 		<url-pattern>/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
-	<!-- <filter> <filter-name>UserExistsFilter</filter-name> <filter-class>cl.buildersoft.framework.web.filter.UserExistsFilter</filter-class> 
-		</filter> <filter-mapping> <filter-name>UserExistsFilter</filter-name> <url-pattern>/servlet/*</url-pattern> <dispatcher>REQUEST</dispatcher> 
-		<dispatcher>FORWARD</dispatcher> </filter-mapping> -->
-	<!-- <filter> <filter-name>LV</filter-name> <filter-class>cl.buildersoft.framework.web.filter.LicenseValidationFilter</filter-class> 
-		</filter> <filter-mapping> <filter-name>LV</filter-name> <url-pattern>/servlet/*</url-pattern> <dispatcher>REQUEST</dispatcher> </filter-mapping> -->
 	<filter>
 		<filter-name>EncodingFilter</filter-name>
 		<filter-class>cl.buildersoft.framework.web.filter.EncodingFilter</filter-class>
@@ -67,7 +54,14 @@
 		<url-pattern>/jsp/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
-	<!-- -->
-
+	<filter>
+		<filter-name>LoadApplicationValuesFilter</filter-name>
+		<filter-class>cl.buildersoft.framework.web.filter.LoadApplicationValuesFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoadApplicationValuesFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
 
 </web-app>

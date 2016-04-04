@@ -145,7 +145,7 @@ public class MarkAdmin extends BSHttpServlet_ {
 
 		BSmySQL mysql = new BSmySQL();
 		ResultSet rs = mysql.callSingleSP(conn, "pListMarkOfEmployee", parms);
-		List<Object[]> matrix = mysql.resultSet2Matrix2(rs);
+		List<Object[]> matrix = mysql.resultSet2Matrix(rs);
 		mysql.closeSQL(rs);
 		mysql.closeSQL();
 		

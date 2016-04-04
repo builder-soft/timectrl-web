@@ -7,17 +7,22 @@
 <%@page import="cl.buildersoft.framework.database.BSBeanUtils"%>
 <%@page import="java.sql.Connection"%>
 
-<%@include file="/WEB-INF/jsp/common/header.jsp"%>
-<%@include file="/WEB-INF/jsp/common/menu.jsp"%>
+<%@include file="/WEB-INF/jsp/common/header2.jsp"%>
+<%@include file="/WEB-INF/jsp/common/menu2.jsp"%>
 <%
 	List<License> licenses = (List<License>) request.getAttribute("Licenses");
-	List<LicenseCause> causes = (List<LicenseCause>) request.getAttribute("LicenseCause");
+//	List<LicenseCause> causes = (List<LicenseCause>) request.getAttribute("LicenseCause");
 	String employeeId = (String) request.getAttribute("cId");
-	String dateFormat =(String)request.getAttribute("DateFormat");
+//	String dateFormat =(String)request.getAttribute("DateFormat");
 %>
 
 <script type="text/javascript">
 <!--
+	function addNewLicense(){
+//		alert('Nueva licencia');
+		document.getElementById("NewLicenseForm").submit();
+	}
+
 	function showDialog() {
 		showTooltip('divShowDetail');
 		//$( "#StartDate" ).datepicker();
@@ -44,35 +49,44 @@
 </script>
 <h1 class="cTitle">Licencias de empleado</h1>
 
-<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info.jsp"%>
+<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info2.jsp"%>
 
-<table class="cList" cellpadding="0" cellspacing="0">
-	<tr>
-		<td class='cHeadTD'>Fecha Inicio</td>
-		<td class='cHeadTD'>Fecha Termino</td>
-		<td class='cHeadTD'>Motivo</td>
-		<td class='cHeadTD'>Documento</td>
-	</tr>
+<table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+	<thead>
+		<tr>
+			<th>Fecha Inicio</td>
+			<th>Fecha Termino</td>
+			<th>Motivo</td>
+			<th>Documento</td>
+		</tr>
+	</thead>
+	<tbody>
 	<%
 		Integer index = 0;
 		for (License license : licenses) {
 			index++;
 	%>
 	<tr>
-		<td class='<%=index % 2 == 0 ? "cDataTD" : "cDataTD_odd"%>'><%=BSDateTimeUtil.date2String(license.getStartDate(), dateFormat)%></td>
-		<td class='<%=index % 2 == 0 ? "cDataTD" : "cDataTD_odd"%>'><%=BSDateTimeUtil.date2String(license.getEndDate(), dateFormat)%></td>
-		<td class='<%=index % 2 == 0 ? "cDataTD" : "cDataTD_odd"%>'><%=getCause(request, license)%></td>
-		<td class='<%=index % 2 == 0 ? "cDataTD" : "cDataTD_odd"%>'><%=license.getDocument() == null ? "" : license.getDocument()%></td>
+		<td><%=BSDateTimeUtil.date2String(license.getStartDate(), application.getAttribute("DateFormat").toString())%></td>
+		<td><%=BSDateTimeUtil.date2String(license.getEndDate(), application.getAttribute("DateFormat").toString())%></td>
+		<td><%=getCause(request, license)%></td>
+		<td><%=license.getDocument() == null ? "" : license.getDocument()%></td>
 	</tr>
 	<%
 		}
 	%>
+	<tbody>
 </table>
 
 <hr>
-<button onclick="javascript:showDialog()">Agregar</button>
+<button onclick="javascript:addNewLicense()">Agregar</button>
+
 <a class="cCancel"
 	href="${pageContext.request.contextPath}/servlet/config/employee/EmployeeLicenseManager">Volver</a>
+
+<form action="${applicationScope['TIMECTRL_CONTEXT']}/servlet/timectrl/employee/NewLicenseForm" Method="post" id="NewLicenseForm">
+	<input type="hidden" name="cId" value="${requestScope.Employee.id}">
+</form>
 
 <div id="divShowDetail" style="display: none">
 	<h2 class="cTitle2">Detalle de licencia</h2>
@@ -94,11 +108,11 @@
 				<td class="cLabel">Motivo:</td>
 				<td><select name="Cause">
 						<%
-							for (LicenseCause cause : causes) {
+//							for (LicenseCause cause : causes) {
 						%>
-						<option value="<%=cause.getId()%>"><%=cause.getName()%></option>
+						<option value="< % =cause.getId()%>">< % =cause.getName()%></option>
 						<%
-							}
+//							}
 						%>
 				</select></td>
 			</tr>
@@ -116,8 +130,8 @@
 	</form>
 </div>
 
-<%@ include file="/WEB-INF/jsp/common/footer.jsp"%>
-<%!private String getCause(HttpServletRequest request, License license) {
+<%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>
+<%! private String getCause(HttpServletRequest request, License license) {
 	BSConnectionFactory cf = new BSConnectionFactory();
 	Connection conn = cf.getConnection(request);
 	BSmySQL mysql = new BSmySQL();

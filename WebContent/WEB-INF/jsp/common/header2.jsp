@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
  
-<title>DALEA T&amp;A - Buildersoft</title>
+<title>DALEA T&amp;A - BuilderSoft</title>
 
 <link
 	href="${applicationScope['STATIC_CONTEXT']}/bootstrap-334-dist/css/bootstrap.css"
@@ -28,6 +28,8 @@
 	var contextPath = "${applicationScope['TIMECTRL_CONTEXT']}";
 	var speed = "fast";// "slow" "fast";
 	var dateFormat = "${applicationScope.DateFormat}";
+//	alert("${applicationScope.DateFormat}");
+//	alert("${applicationScope['DateFormat']}");
 	
 	function fixDateFormat(dateFormat) {
 		//alert(dateFormat);

@@ -70,7 +70,7 @@ public class LicenseOfEmployee extends BSHttpServlet_ {
 		request.setAttribute("Area", area);
 		request.setAttribute("DateFormat", BSDateTimeUtil.getFormatDate(request));
 		
-		forward(request, response, "/WEB-INF/jsp/timectrl/employee/license-of-employee.jsp");
+		forward(request, response, "/WEB-INF/jsp/timectrl/employee/license-of-employee2.jsp");
 	 
 	}
 

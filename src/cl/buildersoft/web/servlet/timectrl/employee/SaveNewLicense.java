@@ -37,6 +37,7 @@ public class SaveNewLicense extends BSHttpServlet_ {
 
 		BSBeanUtils bu = new BSBeanUtils();
 		Calendar date = BSDateTimeUtil.string2Calendar(request, startDate);
+		date = BSDateTimeUtil.string2Calendar(startDate, getApplicationValue(request, "DateFormat").toString());
 		license.setStartDate(BSDateTimeUtil.calendar2Date(date));
 		date = BSDateTimeUtil.string2Calendar(request, endDate);
 		license.setEndDate(BSDateTimeUtil.calendar2Date(date));
