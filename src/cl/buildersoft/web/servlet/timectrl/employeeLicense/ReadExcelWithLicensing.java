@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,6 +25,7 @@ import cl.buildersoft.framework.business.services.ServiceFactory;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSConfigurationException;
+import cl.buildersoft.framework.exception.BSUserException;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.License;
@@ -175,7 +177,12 @@ public class ReadExcelWithLicensing {
 		try {
 			workbook = new XSSFWorkbook(file);
 		} catch (Exception e) {
-			e.printStackTrace();
+			String msg = "Archivo no es del formato esperado.";
+			LOG.log(Level.SEVERE, msg, e);
+			throw new BSUserException(msg);
+			
+		//	LOG.log(Level.SEVERE, e.getMessage(), e);
+			//throw new BSUserException(e);
 		}
 		XSSFSheet sheet = workbook.getSheetAt(0);
 

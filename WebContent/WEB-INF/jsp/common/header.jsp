@@ -39,7 +39,7 @@
 	}
 </script>
 <script
-	src="${pageContext.request.contextPath}/js/common/framework.js?<%=Math.random() %>"></script>
+	src="${applicationScope['DALEA_CONTEXT']}/js/common/framework.js?<%=Math.random() %>"></script>
 
 <script
 	src="${pageContext.request.contextPath}/plugin/jquery/<%=JQUERY_VERSION %>/jquery-<%=JQUERY_VERSION %>.js"></script>
