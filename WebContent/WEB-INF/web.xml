@@ -60,7 +60,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>LoadApplicationValuesFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/servlet/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 
