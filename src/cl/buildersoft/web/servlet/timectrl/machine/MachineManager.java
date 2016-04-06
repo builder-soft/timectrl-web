@@ -37,16 +37,19 @@ public class MachineManager extends BSHttpServletCRUD {
 		BSAction ping = new BSAction("PING", BSActionType.MultiRecord);
 		ping.setLabel("Probar conección");
 		ping.setUrl("/servlet/timectrl/machine/TestConnection");
+		ping.setContext("TIMECTRL_CONTEXT");
 		table.addAction(ping);
 
 		BSAction readAttendance = new BSAction("READ_ATTENDANCE", BSActionType.Record);
 		readAttendance.setLabel("Asistencias");
 		readAttendance.setUrl("/servlet/timectrl/machine/ReadAttendance");
+		readAttendance.setContext("TIMECTRL_CONTEXT");
 		table.addAction(readAttendance);
 
 		BSAction readEmployees = new BSAction("READ_EMPLOYEES", BSActionType.Record);
 		readEmployees.setLabel("Empleados");
 		readEmployees.setUrl("/servlet/timectrl/machine/ReadEmployee");
+		readEmployees.setContext("TIMECTRL_CONTEXT");
 		table.addAction(readEmployees);
 
 		return table;

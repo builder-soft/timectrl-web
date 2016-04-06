@@ -26,6 +26,7 @@ public class TurnManager extends BSHttpServletCRUD {
 		BSAction turnsAction = new BSAction("TURNS_DAY", BSActionType.Record);
 		turnsAction.setLabel("Horarios de turnos");
 		turnsAction.setUrl("/servlet/timectrl/turns/TurnsDayByTurn");
+		turnsAction.setContext("TIMECTRL_CONTEXT");
 
 		table.addAction(turnsAction);
 
