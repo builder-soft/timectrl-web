@@ -39,7 +39,9 @@ public class DeleteEmployee extends BSHttpServlet_ {
 		_zkemProxy api = machineService.connect(conn, machine);
 		cf.closeConnection(conn);
 
-		machineService.deleteEmployees(api, keys);
+		if (keys != null) {
+			machineService.deleteEmployees(api, keys);
+		}
 		machineService.disconnect(api);
 		forward(request, response, "/servlet/timectrl/machine/MachineManager");
 

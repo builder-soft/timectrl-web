@@ -37,7 +37,10 @@ public class SyncUserinfo extends BSHttpServlet_ {
 
 		MachineService2 machineService = new MachineServiceImpl2();
 		_zkemProxy api = machineService.connect(conn, machine);
-		machineService.syncEmployees(conn, api, keys);
+
+		if (keys != null) {
+			machineService.syncEmployees(conn, api, keys);
+		}
 		// bu.closeConnection(conn);
 		machineService.disconnect(api);
 
