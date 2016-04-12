@@ -20,12 +20,12 @@ import cl.buildersoft.framework.util.BSUtils;
 
 @WebServlet(asyncSupported = true, value = "/servlet/ajax/GetIndicator")
 public class GetIndicator extends AbstractAjaxServlet {
-	private static final int WAIT_CLIENT = 250;
+	private final static int WAIT_CLIENT = 250;
 	private final static Logger LOG = Logger.getLogger(GetIndicator.class.getName());
-	private static final long serialVersionUID = -915879276301350536L;
+	private final static long serialVersionUID = -915879276301350536L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		AsyncContext x = request.startAsync();
+		// AsyncContext x = request.startAsync();
 		String key = request.getParameter("Key");
 		String out = "Key '" + key + "' not found";
 
@@ -68,7 +68,7 @@ public class GetIndicator extends AbstractAjaxServlet {
 
 		setHeaders(response);
 		endWrite(writeToBrowser(response, out));
-		
+
 	}
 
 	private String getLaterCount(Connection conn) {
