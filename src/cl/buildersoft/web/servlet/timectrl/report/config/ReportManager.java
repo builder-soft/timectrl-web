@@ -32,11 +32,13 @@ public class ReportManager extends BSHttpServletCRUD {
 		BSAction action = new BSAction("PROPERTIES", BSActionType.Record);
 		action.setLabel("Propiedades");
 		action.setUrl("/servlet/timectrl/report/config/ReportReadProperties");
+		action.setContext("TIMECTRL_CONTEXT");
 		table.addAction(action);
 
 		action = new BSAction("PARAMETERS", BSActionType.Record);
 		action.setLabel("Parámetros");
 		action.setUrl("/servlet/timectrl/report/config/ReportReadParameter");
+		action.setContext("TIMECTRL_CONTEXT");
 		table.addAction(action);
 
 		table.removeAction("EDIT");
