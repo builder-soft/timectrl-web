@@ -22,15 +22,29 @@
 		<servlet-class>cl.buildersoft.framework.web.servlet.StartupServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
+	<!-- FILTROS -->
 	<filter>
-		<filter-name>SessionFilter</filter-name>
-		<filter-class>cl.buildersoft.framework.web.filter.SessionFilter</filter-class>
+		<filter-name>RestoreSessionFilter</filter-name>
+		<filter-class>cl.buildersoft.framework.web.filter.RestoreSessionFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>SessionFilter</filter-name>
+		<filter-name>RestoreSessionFilter</filter-name>
 		<url-pattern>/servlet/*</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
+	<filter>
+		<filter-name>UserExistsFilter</filter-name>
+		<filter-class>cl.buildersoft.framework.web.filter.UserExistsFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>UserExistsFilter</filter-name>
+		<url-pattern>/servlet/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+
+
 	<filter>
 		<filter-name>EncodingFilter</filter-name>
 		<filter-class>cl.buildersoft.framework.web.filter.EncodingFilter</filter-class>
