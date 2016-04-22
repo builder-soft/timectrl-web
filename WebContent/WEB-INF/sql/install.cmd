@@ -1,3 +1,4 @@
+@echo off
 IF "%1" == "" GOTO err_handler
 	cls
 	call msg.cmd Version R1.0.0 

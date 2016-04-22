@@ -10,6 +10,8 @@ update toption set cIsAdmin = true where cKey = 'DOMAIN_ATTR_MGR';
 
 DROP VIEW IF EXISTS bsframework.vUser;
 
+#desc bsframework.tDomain;
+
 DROP VIEW IF EXISTS vUser;
 CREATE VIEW vUser
 AS
@@ -17,9 +19,8 @@ AS
 		FROM 		bsframework.tUser AS a
 		LEFT JOIN	bsframework.tR_UserDomain AS b ON a.cId = b.cUser
 		LEFT JOIN	bsframework.tDomain AS c ON b.cDomain = c.cId 
-		WHERE		!a.cAdmin AND c.cDatabase = DATABASE();
+		WHERE		!a.cAdmin AND c.cAlias = DATABASE();
 
-		
 CREATE TABLE IF NOT EXISTS tVersion (
 	cId				BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     cKey			VARCHAR(3) NOT NULL COMMENT 'Identificador del elemento versionado',
