@@ -50,7 +50,7 @@ public class EmployeeManager extends BSHttpServletCRUD {
 		table.getField("cUsername").setLabel("Usuario");
 		table.getField("cMail").setLabel("Correo electrónico");
 
-		this.hideFields(table, "cMail", "cArea", "cPrivilege");
+		this.hideFields(table, "cMail", "cArea", "cPrivilege", "cBirthDate", "cAddress", "cComuna", "cCountry", "cGenere", "cPhone", "cMaritalStatus");
 		table.removeField("cEnabled");
 
 		table.setDeleteSP("pDeleteEmployee");

@@ -44,7 +44,7 @@ public class EmployeeDetachedManager extends BSHttpServletCRUD {
 		table.getField("cUsername").setLabel("Nombre Usuario");
 		table.getField("cMail").setLabel("Correo electrónico");
 
-		this.hideFields(table, "cMail", "cArea", "cPrivilege");
+		this.hideFields(table, "cMail", "cArea", "cPrivilege", "cBirthDate", "cAddress", "cComuna", "cCountry", "cGenere", "cPhone", "cMaritalStatus");
 		table.removeField("cEnabled");
 
 		table.setDeleteSP("pIncorporateEmployee");
