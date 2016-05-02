@@ -63,11 +63,11 @@ public class ListEmployeeAjax extends BSHttpServlet_ {
 			where = "cRut LIKE ? AND cName LIKE ?";
 			params = new String[2];
 			params[0] = rut + "%";
-			params[1] = name + "%";
+			params[1] = "%" + name + "%";
 		} else if (rut.length() == 0 && name.length() > 0) {
 			where = "cName LIKE ?";
 			params = new String[1];
-			params[0] = name + "%";
+			params[0] = "%" + name + "%";
 		}
 
 		if ("boss".equalsIgnoreCase(type)) {
