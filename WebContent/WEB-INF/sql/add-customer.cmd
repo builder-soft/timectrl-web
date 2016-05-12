@@ -77,7 +77,7 @@ IF "%1" == "" GOTO err_handler
 	call run-once.cmd %1
 	call ..\msg.cmd R1.2.10 
 	cd ..\R1.2.10
-	call run-once.cmd %1
+	call run-once-4add.cmd %1
 	call ..\msg.cmd R1.2.12
 	cd ..\R1.2.12
 	call run-once.cmd %1
