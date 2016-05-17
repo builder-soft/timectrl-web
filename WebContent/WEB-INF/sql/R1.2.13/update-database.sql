@@ -7,6 +7,10 @@ CREATE TABLE IF NOT EXISTS tCrewLog(
 ) ENGINE=innoDB;
 
 #select 'Creating Indexs to tCrewLog...';
+
+ALTER TABLE tCrewLog DROP FOREIGN KEY CrewLog_To_AttendanceLog; 
+drop index CrewLog_index_AttendanceLog on tCrewLog;
+
 ALTER TABLE tCrewLog
 ADD INDEX CrewLog_index_AttendanceLog (cAttendanceLog ASC),
 ADD CONSTRAINT CrewLog_To_AttendanceLog FOREIGN KEY (cAttendanceLog) REFERENCES tAttendanceLog(cId);
@@ -23,6 +27,8 @@ CREATE TABLE IF NOT EXISTS tCrewProcess(
 
 #select 'Creating Index tCrewProcess...';
 
+ALTER TABLE tCrewProcess DROP FOREIGN KEY CrewProcess_To_Employee ; 
+drop index CrewProcess_index_Employee on tCrewProcess;
 ALTER TABLE tCrewProcess
 ADD INDEX CrewProcess_index_Employee (cEmployee ASC),
 ADD CONSTRAINT CrewProcess_To_Employee FOREIGN KEY (cEmployee) REFERENCES tEmployee(cId);
