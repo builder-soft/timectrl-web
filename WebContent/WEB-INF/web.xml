@@ -8,11 +8,15 @@
 	</context-param>
 	<context-param>
 		<param-name>CurrentVersion</param-name>
-		<param-value>R1.2.26</param-value>
+		<param-value>R1.3.0</param-value>
 	</context-param>
 	<welcome-file-list>
 		<welcome-file>jsp/login/start.jsp</welcome-file>
 	</welcome-file-list>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/servlet/common/NotFoundServlet</location>
+	</error-page>
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/servlet/ErrorHandler</location>
