@@ -5,6 +5,11 @@ Procedimientos y funciones que utilizan la tabla tAttendanceLog
 - fGetRealMark3
 - fLunchMark
 - fStartMark
+- fEndMark
+- fLunchMark
+- fReturnMark
+- fFindMarkOnDay
+- fGetRealMark3
 - pAbsence
 - pAbsence2
 - pExistsAttendanceLog
