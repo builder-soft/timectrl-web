@@ -1,0 +1,20 @@
+Procedimientos y funciones que utilizan la tabla tAttendanceLog
+
+- fEndMark
+- fFindMarkOnDay
+- fGetRealMark3
+- fLunchMark
+- fStartMark
+- pAbsence
+- pAbsence2
+- pExistsAttendanceLog
+- pListAttendance3
+- pListAttendance4
+- pListAttendanceAsExcel3
+- pListLater
+- pListMarkOfEmployee
+- pOvertime
+- pSaveAttendanceLog
+- pSaveAttendanceLog2
+- pTopAbsence
+
