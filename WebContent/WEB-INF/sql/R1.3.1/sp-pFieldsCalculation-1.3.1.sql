@@ -389,9 +389,22 @@ BEGIN
 		SET vOut = fAppendComment(vOut, vReason);
 	END IF;
 	
-	IF(EXISTS(SELECT cId FROM tAttendanceLog WHERE cDate = DATE(vMark) AND fGetHash(cEmployeeKey, cMachine,cDate,cMarkType) != cHash ))
+	IF(	EXISTS	(
+					SELECT a.cId 
+					FROM tAttendanceLog AS a
+					LEFT JOIN tEmployee AS b ON a.cEmployeeKey = b.cKey
+					WHERE	DATE(cDate) = DATE(vMark) AND 
+							fGetHash(a.cEmployeeKey, a.cMachine,a.cDate,a.cMarkType) != a.cHash AND
+							b.cId = vEmployeeId
+				)
+		) THEN
 		SET vOut = fAppendComment(vOut, 'Marca alterada');
 	END IF;
+
+#set vout =	EXISTS(SELECT cId FROM tAttendanceLog WHERE DATE(cDate) = DATE(vMark) AND fGetHash(cEmployeeKey, cMachine,cDate,cMarkType) != cHash );
+	
+#	return vOut;
+	
 	
 	IF(vStartMark IS NULL AND vEndMark IS NULL) THEN
 		IF(vBusinessDay = TRUE) THEN
