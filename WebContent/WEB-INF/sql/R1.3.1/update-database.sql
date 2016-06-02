@@ -6,3 +6,7 @@ DROP TRIGGER if exists InsertOnAttendanceLog;
 CREATE TRIGGER InsertOnAttendanceLog before INSERT ON tAttendanceLog
 FOR EACH ROW
 	SET NEW.cHash=fGetHash(NEW.cEmployeeKey, NEW.cMachine, NEW.cDate, NEW.cMarkType);
+
+	
+	
+UPDATE tVersion SET cVersion='1.3.1', cUpdated=NOW() WHERE cKey = 'DBT';
