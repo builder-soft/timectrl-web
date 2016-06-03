@@ -22,6 +22,9 @@
 	<div class="row">
 		<div class="col-sm-12">
 			<button type="submit">Cargar</button>
+			<a class='btn btn-link'
+	href="${applicationScope['DALEA_CONTEXT']}/servlet/config/employee/EmployeeLicenseManager">Volver</a>
+			
 		</div>
 	</div>
 

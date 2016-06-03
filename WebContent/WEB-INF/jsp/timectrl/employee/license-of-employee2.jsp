@@ -81,8 +81,8 @@
 <hr>
 <button onclick="javascript:addNewLicense()">Agregar</button>
 
-<a class="cCancel"
-	href="${pageContext.request.contextPath}/servlet/config/employee/EmployeeLicenseManager">Volver</a>
+<a class='btn btn-link'
+	href="${applicationScope['DALEA_CONTEXT']}/servlet/config/employee/EmployeeLicenseManager">Volver</a>
 
 <form action="${applicationScope['TIMECTRL_CONTEXT']}/servlet/timectrl/employee/NewLicenseForm" Method="post" id="NewLicenseForm">
 	<input type="hidden" name="cId" value="${requestScope.Employee.id}">
