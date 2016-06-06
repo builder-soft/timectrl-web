@@ -33,4 +33,16 @@ public class ComunaManager extends BSHttpServletCRUD {
 
 	}
 
+	@Override
+	protected void preExecuteAction(BSTableConfig table, String action, Long userId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void postExecuteAction(BSTableConfig table, String action, Long userId) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
