@@ -8,8 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import cl.buildersoft.framework.beans.LogInfoBean;
-import cl.buildersoft.framework.business.services.EventLogService;
-import cl.buildersoft.framework.business.services.ServiceFactory;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.BSConfig;
@@ -44,7 +42,8 @@ public class EmployeeDetachedManager extends BSHttpServletCRUD {
 		table.getField("cUsername").setLabel("Nombre Usuario");
 		table.getField("cMail").setLabel("Correo electrónico");
 
-		this.hideFields(table, "cMail", "cArea", "cPrivilege", "cBirthDate", "cAddress", "cComuna", "cCountry", "cGenere", "cPhone", "cMaritalStatus");
+		this.hideFields(table, "cMail", "cArea", "cPrivilege", "cBirthDate", "cAddress", "cComuna", "cCountry", "cGenere",
+				"cPhone", "cMaritalStatus");
 		table.removeField("cEnabled");
 
 		table.setDeleteSP("pIncorporateEmployee");
@@ -126,15 +125,15 @@ public class EmployeeDetachedManager extends BSHttpServletCRUD {
 	}
 
 	@Override
-	protected void preExecuteAction(BSTableConfig table, String action, Long userId) {
+	public void preExecuteAction(BSTableConfig table, String action, Long userId) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	protected void postExecuteAction(BSTableConfig table, String action, Long userId) {
+	public void postExecuteAction(BSTableConfig table, String action, Long userId) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
