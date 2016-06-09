@@ -1,5 +1,6 @@
 package cl.buildersoft.web.servlet.config.employee;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,9 +21,9 @@ import cl.buildersoft.framework.util.crud.BSTableConfig;
  * Servlet implementation class EmployeeManager
  */
 @WebServlet("/servlet/config/employee/EmployeeTurnManager")
-public class EmployeeTurnManager extends BSHttpServletCRUD {
+public class EmployeeTurnManager extends BSHttpServletCRUD implements Serializable {
 	private static final Logger LOG = Logger.getLogger(EmployeeTurnManager.class.getName());
-	private static final long serialVersionUID = -7665593692157885850L;
+	private static final long serialVersionUID = -314593692157885850L;
 
 	@Override
 	protected BSTableConfig getBSTableConfig(HttpServletRequest request) {
