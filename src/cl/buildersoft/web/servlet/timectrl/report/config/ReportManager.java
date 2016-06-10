@@ -26,7 +26,7 @@ public class ReportManager extends BSHttpServletCRUD {
 		table.getField("cJavaClass").setShowInForm(false);
 		table.getField("cJavaClass").setReadonly(true);
 
-		table.setSaveSP("pSaveReport");
+		table.setInsertSP("pSaveReport");
 		table.setDeleteSP("pDeleteReport");
 
 		BSAction action = new BSAction("PROPERTIES", BSActionType.Record);
