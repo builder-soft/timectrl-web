@@ -114,6 +114,8 @@ value="<%=BSWeb.formatDouble(request, 1234.567)%>">
 </div>
 </div>
 
+<button class="btn btn-default">Aceptar</button>
+
 <button class='btn btn-link'
 	onclick="returnTo('${pageContext.request.contextPath}/servlet/config/employee/EmployeeManager');">Volver</button>
 

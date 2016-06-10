@@ -45,16 +45,6 @@ public class ReportTypeManager extends BSHttpServletCRUD {
 
 	}
 
-	@Override
-	public void preExecuteAction(BSTableConfig table, String action, Long userId) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void postExecuteAction(BSTableConfig table, String action, Long userId) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 }

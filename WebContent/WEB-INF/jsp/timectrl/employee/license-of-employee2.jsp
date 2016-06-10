@@ -79,7 +79,7 @@
 </table>
 
 <hr>
-<button onclick="javascript:addNewLicense()">Agregar</button>
+<button onclick="javascript:addNewLicense()" class="btn btn-default">Agregar</button>
 
 <a class='btn btn-link'
 	href="${applicationScope['DALEA_CONTEXT']}/servlet/config/employee/EmployeeLicenseManager">Volver</a>
