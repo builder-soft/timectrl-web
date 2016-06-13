@@ -118,7 +118,6 @@ var exception = <%=exception%>;
 <button class='btn btn-link'
 	onclick="returnTo('${pageContext.request.contextPath}/servlet/config/employee/EmployeeTurnManager');">Volver</button>
 
-
 		<div id="TurnsContainer" style="display: none">
 			<select id="DTurn">
 				<%

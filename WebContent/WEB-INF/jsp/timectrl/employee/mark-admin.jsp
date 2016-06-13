@@ -2,8 +2,8 @@
 <%@page import="cl.buildersoft.timectrl.business.beans.MarkType"%>
 <%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
 <%@page import="java.sql.ResultSet"%>
-<%@ include file="/WEB-INF/jsp/common/header2.jsp"%>
-<%@ include file="/WEB-INF/jsp/common/menu2.jsp"%>
+<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+<%@ include file="/WEB-INF/jsp/common/menu.jsp"%>
 <%
 	List<Object[]> matrix = (List<Object[]>) request.getAttribute("Matrix");
 	String dateTimeFormat = (String) request.getAttribute("DateTimeFormat");
@@ -16,7 +16,7 @@
 	var currentDay = '${requestScope.Today}';
 </script>
 <script
-	src="${pageContext.request.contextPath}/js/timectrl/employee/mark-admin.js">
+	src="${pageContext.request.contextPath}/js/timectrl/employee/mark-admin.js?<%=BSWeb.randomString()%>">
 	
 </script>
 
@@ -171,7 +171,7 @@
 
 
 </div>
-<%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>
+<%@ include file="/WEB-INF/jsp/common/footer.jsp"%>
 
 
 <%!private String boldIfNew(Boolean isNew, Object value) {

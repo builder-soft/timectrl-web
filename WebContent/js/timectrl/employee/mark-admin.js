@@ -2,7 +2,7 @@
  * 
  */
 function resetDate() {
-	document.getElementById("Today").value = today;
+	document.getElementById("Today").value = currentDay;
 	document.getElementById("SearchForm").submit();
 }
 

@@ -65,7 +65,7 @@ function convertToDatePicker() {
 	$("#DEndDate").datepicker({
 		dateFormat : fixDateFormat(dateFormat),
 		appendText : " (" + dateFormat.toLowerCase() + ")",
-		defaultDate : "+6m",
+		defaultDate : ifExceptionSelected() ? "+0m" : "+6m",
 		changeMonth : true,
 		numberOfMonths : 1,
 		onSelect : function(selectedDate) {
