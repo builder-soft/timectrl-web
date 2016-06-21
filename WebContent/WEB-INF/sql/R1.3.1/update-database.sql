@@ -17,7 +17,8 @@ AS
 		LEFT JOIN	bsframework.tDomain AS c ON b.cDomain = c.cId 
 		WHERE		!a.cAdmin AND c.cDatabase = DATABASE();
 
-	
+		
+
 	
 	
 UPDATE tVersion SET cVersion='1.3.1', cUpdated=NOW() WHERE cKey = 'DBT';
