@@ -86,12 +86,11 @@ String dateTimeFormat=(String)request.getAttribute("DateTimeFormat");
 	<%
 		}
 	%>
-	
-	<button class='btn btn-link'
-		onclick="returnTo('${pageContext.request.contextPath}/servlet/timectrl/machine/MachineManager');">Volver</button>
 
 </form>
 
+	<button class='btn btn-link'
+		onclick="returnTo('${pageContext.request.contextPath}/servlet/timectrl/machine/MachineManager');">Volver</button>
 
 
 <%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>

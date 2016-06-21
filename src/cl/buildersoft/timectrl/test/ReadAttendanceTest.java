@@ -12,7 +12,7 @@ public class ReadAttendanceTest {
 	private static final Logger LOG = Logger.getLogger(ReadAttendanceTest.class.getName());
 
 	public static void main(String[] args) {
-		_zkemProxy api = ClassFactory.createzkemProxy();
+		_zkemProxy api = ClassFactory.createzkemProxy(null);
 		int machime = 1;
 
 		Integer port = 4370;
