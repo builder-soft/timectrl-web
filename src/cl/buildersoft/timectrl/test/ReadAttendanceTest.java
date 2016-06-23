@@ -3,8 +3,8 @@ package cl.buildersoft.timectrl.test;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import cl.buildersoft.timectrl.api.ClassFactory;
-import cl.buildersoft.timectrl.api._zkemProxy;
+import cl.buildersoft.timectrl.api.com4j._zkemProxy;
+import cl.buildersoft.timectrl.api.impl.ClassFactory;
 
 import com4j.Holder;
 

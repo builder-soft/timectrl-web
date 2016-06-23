@@ -14,7 +14,7 @@ import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.exception.BSException;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
-import cl.buildersoft.timectrl.api._zkemProxy;
+import cl.buildersoft.timectrl.api.com4j._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.AttendanceLog;
 import cl.buildersoft.timectrl.business.beans.Machine;
 import cl.buildersoft.timectrl.business.services.MachineService2;
