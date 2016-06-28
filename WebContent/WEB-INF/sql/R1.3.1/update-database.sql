@@ -17,8 +17,35 @@ AS
 		LEFT JOIN	bsframework.tDomain AS c ON b.cDomain = c.cId 
 		WHERE		!a.cAdmin AND c.cDatabase = DATABASE();
 
-		
+drop procedure if exists pUpdateData_Temp;
 
+DELIMITER $$
+
+create procedure pUpdateData_Temp()
+begin
+	DECLARE RolId BIGINT(20);
+
+	INSERT INTO tRol(cName, cDeleted) VALUES('Empleador', false);
+	SET @RolId = LAST_INSERT_ID();
 	
+	insert into tr_roloption(cRol, cOption) 
+		select @RolId, cid from toption where cContext IN ('DALEA_CONTEXT', 'TIMECTRL_CONTEXT') or cContext is null;
 	
+	INSERT INTO tRol(cName, cDeleted) VALUES('Fiscalizador', false);
+	SET @RolId = LAST_INSERT_ID();
+	
+	insert into tr_roloption(cRol, cOption) 
+		select @RolId, cid from toption where cKey IN ('FILES', 'ENTERPRISE', 'AREA', 'POST',
+							'EMPLOYEE', 'EMPLOYEE_DATA', 'EMPLOYEE_LICENSE', 'EMPLOYEE_TURN', 'EMPLOYEE_MARK',
+							'CONFIG', 'SECURITY', 'USER', 'ROL','ALLOW','REPORT','EVENT_VIEWER','EXECUTE_REPORT');
+	
+END$$
+
+DELIMITER ;
+
+call pUpdateData_Temp;
+drop procedure if exists pUpdateData_Temp;
+
+update tEventType SET cName='Nuevo turno' where cKey='INSERT_TURN';
+
 UPDATE tVersion SET cVersion='1.3.1', cUpdated=NOW() WHERE cKey = 'DBT';

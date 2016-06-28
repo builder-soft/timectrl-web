@@ -1,6 +1,7 @@
 @echo off
 echo -- 1.3.1 --
 IF "%1" == "" GOTO error
+	echo Updating scripts...
 	for %%i in (fn-*.sql) do mysql -D%1 -t -u root --default-character-set=utf8 < %%i
 
 	for %%i in (sp-*.sql) do mysql -D%1 -t -u root --default-character-set=utf8 < %%i
