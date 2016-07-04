@@ -48,4 +48,12 @@ drop procedure if exists pUpdateData_Temp;
 
 update tEventType SET cName='Nuevo turno' where cKey='INSERT_TURN';
 
+INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('MAIL_mail.smtp.host', 'Servidor de correo', 'smtp.gmail.com', (select cid from tDataType where ckey='String'));
+INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('MAIL_mail.smtp.port', 'Servidor de correo', '587', (select cid from tDataType where ckey='Integer'));
+INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('MAIL_mail.smtp.starttls.enable', 'Servidor de correo', 'true', (select cid from tDataType where ckey='Boolean'));
+INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('MAIL_mail.smtp.auth', 'Usa autenticacion', 'true', (select cid from tDataType where ckey='Boolean'));
+INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('MAIL_mail.smtp.user', 'Usuario de correo', 'informes@aitex.cl', (select cid from tDataType where ckey='String'));
+INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('MAIL_mail.smtp.password', 'Password de correo', 'Moreno2013', (select cid from tDataType where ckey='String'));
+INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('MAIL_mail.destiny', 'Correo de destino frente a errores', 'claudio.moscoso@gmail.com', (select cid from tDataType where ckey='String'));
+
 UPDATE tVersion SET cVersion='1.3.1', cUpdated=NOW() WHERE cKey = 'DBT';
