@@ -106,5 +106,11 @@
 		<Employees />
 		<Attendances />
 	</Machine>
+	
+	<Machine IP="ossacctv.mine.nu" Port="4370" >
+		<Employees />
+		<Attendances />
+	</Machine>
+	
 
 </Machines>
