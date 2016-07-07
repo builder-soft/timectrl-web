@@ -9,4 +9,7 @@
 
 #call pOvertime(6,2014,10);
 
-call pListSummaryReport('395', '87,145,473,88,355', 1,2016,1,2016);
+#call pListSummaryReport('395', '87,145,473,88,355', 1,2016,1,2016);
+
+call pListAttendance3(1,'2016-06-01', '2016-06-30');
+
