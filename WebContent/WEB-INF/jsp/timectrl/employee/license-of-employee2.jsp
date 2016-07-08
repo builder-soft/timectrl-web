@@ -48,9 +48,13 @@
 //-->
 </script>
 <h1 class="cTitle">Licencias de empleado</h1>
-
-<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info2.jsp"%>
-
+<!-- 
+ <jsp:include page="/servlet/dalea/web/EmployeeInfo" flush="true"/>
+ < % @ include file="/servlet/dalea/web/EmployeeInfo" % >
+ -->
+ 
+<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info2_.jsp"%>
+ 
 <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
 	<thead>
 		<tr>
