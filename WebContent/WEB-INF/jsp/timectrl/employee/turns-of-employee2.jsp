@@ -26,7 +26,7 @@ var exception = <%=exception%>;
 	<h1>Configuración de turnos</h1>
 </div>
 
-<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info2.jsp"%>
+<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info2_.jsp"%>
 
 
 <ul class="nav nav-tabs">

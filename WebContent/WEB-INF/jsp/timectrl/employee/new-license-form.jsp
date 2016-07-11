@@ -63,7 +63,8 @@ function send(){
 //-->
 </script>
 
-<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info2.jsp"%>
+<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info2_.jsp"%>
+
 
 <!-- 
 <div class="row">
