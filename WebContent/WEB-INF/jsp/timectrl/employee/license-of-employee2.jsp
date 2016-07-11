@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page import="cl.buildersoft.framework.util.BSConnectionFactory"%>
 <%@page import="cl.buildersoft.framework.database.BSmySQL"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.LicenseCause"%>
@@ -6,6 +8,7 @@
 <%@page import="java.util.List"%>
 <%@page import="cl.buildersoft.framework.database.BSBeanUtils"%>
 <%@page import="java.sql.Connection"%>
+
 
 <%@include file="/WEB-INF/jsp/common/header2.jsp"%>
 <%@include file="/WEB-INF/jsp/common/menu2.jsp"%>
@@ -49,11 +52,53 @@
 </script>
 <h1 class="cTitle">Licencias de empleado</h1>
 <!-- 
- <jsp:include page="/servlet/dalea/web/EmployeeInfo" flush="true"/>
+ < jsp : include page="/servlet/dalea/web/EmployeeInfo" flush="true"/>
  < % @ include file="/servlet/dalea/web/EmployeeInfo" % >
+ < % @ include file="/WEB-INF/jsp/timectrl/common/employee-info2_.jsp" % >
+ 
+ 
+ 
+< %String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() ; %>
+<br>
+< %=url %><br>
+
+<c:set var="xurl" value="${url}"/>
+xurl= {xurl}<br>
+
+-> ${req.xurl}/${applicationScope['STATIC_CONTEXT']}/test.jsp <-<br> 
+
+< c : import 
+  url="${url}/${applicationScope['STATIC_CONTEXT']}/test.jsp" />
  -->
  
-<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info2_.jsp"%>
+<!-- 
+<c:set var="req" value="${pageContext.request}" />
+<c:set var="url">${req.requestURL}</c:set>
+<c:set var="uri" value="${req.pathInfo}" />
+
+<c:set var="ruta" value="${requestScope.scheme}://localhost:8080/dalea-web/test.jsp"/>
+
+< c :set var="baseURL" value=" $ { fn:replace(pageContext.request.requestURL, pageContext.request.requestURI, pageContext.request.contextPath)}" / >
+-->
+<!-- 
+${pageContext.request.requestURL }<br>
+${pageContext.request.requestURI }<br>
+${pageContext.request.contextPath}<br>
+ -->
+<!-- 
+*${uri}*<br>
++${ruta}+<br>
+
+_${request.serverName}_
+ -->
+<!-- 
+< c :import 
+  url="${ruta}" />
+*<br>
+-
+< c : import url="/servlet/dalea/web/GetEmployeeInfo" / >
+-
+ -->
  
 <table class="table table-striped table-bordered table-hover table-condensed table-responsive">
 	<thead>

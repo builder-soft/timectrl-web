@@ -21,6 +21,13 @@
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/servlet/ErrorHandler</location>
 	</error-page>
+
+
+	
+
+
+	
+	
 	<servlet>
 		<servlet-name>StartupServlet</servlet-name>
 		<servlet-class>cl.buildersoft.framework.web.servlet.StartupServlet</servlet-class>
