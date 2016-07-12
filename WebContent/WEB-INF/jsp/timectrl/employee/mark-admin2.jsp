@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="cl.buildersoft.timectrl.business.beans.Machine"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.MarkType"%>
 <%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
@@ -22,7 +23,10 @@
 
 <h1 class="cTitle">Administración de marcas</h1>
 
-<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info.jsp"%>
+<c:import url="/servlet/dalea/web/GetEmployeeInfo" />
+<!-- 
+< % @ include file="/WEB-INF/jsp/timectrl/common/employee-info.jsp"%>
+-->
 
 <form id="SearchForm"
 	action="${pageContext.request.contextPath }/servlet/timectrl/employee/MarkAdmin"
@@ -115,7 +119,10 @@
 <div id="divShowDetail" style="display: none">
 	<h2 class="cTitle2">Nueva marca</h2>
 
-	<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info.jsp"%>
+	<c:import url="/servlet/dalea/web/GetEmployeeInfo" />
+	<!-- 
+	< % @ include file="/WEB-INF/jsp/timectrl/common/employee-info.jsp"%>
+	-->
 	<br> <br>
 	<form id="SaveForm"
 		action="${pageContext.request.contextPath}/servlet/config/employee/SaveNewMark">

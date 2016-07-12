@@ -57,4 +57,6 @@ INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('mail.smtp.user',
 INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('mail.smtp.password', 'Password de correo', 'Moreno2013', (select cid from tDataType where ckey='String'));
 INSERT INTO tParameter(cKey, cLabel, cValue, cDataType) VALUES('mail.destiny', 'Correo de destino frente a errores', 'claudio.moscoso@gmail.com', (select cid from tDataType where ckey='String'));
 
+
+
 UPDATE tVersion SET cVersion='1.3.1', cUpdated=NOW() WHERE cKey = 'DBT';

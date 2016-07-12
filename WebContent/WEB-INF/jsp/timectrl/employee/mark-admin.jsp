@@ -115,7 +115,10 @@
 <div id="divShowDetail" style="display: none">
 	<h2 class="cTitle2">Nueva marca</h2>
 
-	<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info.jsp"%>
+	<c:import url="/servlet/dalea/web/GetEmployeeInfo" />
+	<!-- 
+	< % @ include file="/WEB-INF/jsp/timectrl/common/employee-info.jsp"%>
+	-->
 	<br> <br>
 	<form id="SaveForm"
 		action="${pageContext.request.contextPath}/servlet/config/employee/SaveNewMark">

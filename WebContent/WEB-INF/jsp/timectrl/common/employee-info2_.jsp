@@ -1,3 +1,4 @@
+<div class="row well">
 <div class="row">
 	<div class="col-sm-4">
 		<label>Lleve:</label> ${requestScope.Employee.key}
@@ -20,3 +21,4 @@
 	<div class="col-sm-offset-4"></div>
 </div>
 
+</div>
