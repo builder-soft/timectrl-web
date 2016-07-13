@@ -41,7 +41,6 @@ public class ReportTypeManager extends BSHttpServletCRUD {
 
 	@Override
 	protected void configEventLog(BSTableConfig table, Long userId) {
-		// TODO Auto-generated method stub
 
 	}
 

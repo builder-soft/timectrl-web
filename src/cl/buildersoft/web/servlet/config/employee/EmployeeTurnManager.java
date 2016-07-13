@@ -106,7 +106,6 @@ public class EmployeeTurnManager extends BSHttpServletCRUD implements Serializab
 
 	@Override
 	protected void configEventLog(BSTableConfig table, Long userId) {
-		// TODO Auto-generated method stub
 
 	}
 

@@ -8,7 +8,7 @@
 %>
 
 <script
-	src="${pageContext.request.contextPath}/js/timectrl/turn/turns-detail.js?<%=BSWeb.randomString()%>">
+	src="${pageContext.request.contextPath}/js/timectrl/turn/turns-detail2.js?<%=BSWeb.randomString()%>">
 </script>
 
 <div class="page-header">

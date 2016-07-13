@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +20,8 @@ import cl.buildersoft.framework.util.BSUtils;
 
 @WebServlet(asyncSupported = true, value = "/servlet/ajax/GetIndicator")
 public class GetIndicator extends AbstractAjaxServlet {
+	private static final Logger LOG = LogManager.getLogger(GetIndicator.class);
 	private final static int WAIT_CLIENT = 250;
-	private final static Logger LOG = Logger.getLogger(GetIndicator.class.getName());
 	private final static long serialVersionUID = -915879276301350536L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -60,10 +60,10 @@ public class GetIndicator extends AbstractAjaxServlet {
 		}
 
 		try {
-			LOG.log(Level.FINE, "Time: {0}", time);
+			LOG.trace(String.format("Time: %d", time));
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
-			LOG.log(Level.SEVERE, "Error: {0}", e);
+			LOG.error(e);
 		}
 
 		setHeaders(response);
@@ -164,7 +164,7 @@ public class GetIndicator extends AbstractAjaxServlet {
 				out = defaultData;
 			}
 		} catch (SQLException e) {
-			LOG.log(Level.SEVERE, "Error SQL: {0}", e);
+			LOG.error(e);
 		}
 		return out;
 	}
