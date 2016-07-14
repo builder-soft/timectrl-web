@@ -76,7 +76,7 @@
 	action="${pageContext.request.contextPath}/servlet/timectrl/machine/SaveAttendanceToDataBase"
 	method="post">
 	<input type="hidden" value="<%=machine.getId()%>" name="Machine">
-	<input type="hidden" checked name="DeleteFromDevice" ID="DeleteFromDevice">
+	<input type="hidden" name="DeleteFromDevice" ID="DeleteFromDevice">
 </form>
 <%
 	if (attendanceObject != null) {

@@ -48,7 +48,7 @@ public class SaveAttendanceToDataBase extends BSHttpServlet_ {
 				} catch (BSException e) {
 					log("Fail to save (WEB Channel)" + attendance.toString() + " Detail:" + e.toString());
 				}
-//				service.saveAttendanceLog(conn, attendance);
+				// service.saveAttendanceLog(conn, attendance);
 				// bu.save(conn, attendance);
 			} else {
 				noSavedCount++;
@@ -58,9 +58,9 @@ public class SaveAttendanceToDataBase extends BSHttpServlet_ {
 		if (deleteFromDevice(request)) {
 			deleteInfo(machine, conn);
 		}
-				
+
 		cf.closeConnection(conn);
-		
+
 		session.setAttribute(ATTENDANCES, null);
 
 		forward(request, response, "/servlet/timectrl/machine/MachineManager");
@@ -77,7 +77,8 @@ public class SaveAttendanceToDataBase extends BSHttpServlet_ {
 	}
 
 	private boolean deleteFromDevice(HttpServletRequest request) {
-		return request.getParameter("DeleteFromDevice") != null;
+		String deleteFromDevice = request.getParameter("DeleteFromDevice");
+		return deleteFromDevice != null && Boolean.parseBoolean(deleteFromDevice);
 	}
 
 	private Machine getMachine(Connection conn, HttpServletRequest request) {
