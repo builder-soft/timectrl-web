@@ -81,10 +81,10 @@
 <%
 	if (attendanceObject != null) {
 %>
-<button onclick="javascript:saveToDatabase()">Grabar en base de
+<button class="btn btn-primary" onclick="javascript:saveToDatabase()">Grabar en base de
 	datos</button>
 <input type="checkbox" checked id="DDeleteFromDevice">
-<span class="cLabel">Borrar información del reloj</span>
+<label for="DDeleteFromDevice">Borrar información del reloj</label>
 &nbsp;&nbsp;&nbsp;
 <%
 	}
