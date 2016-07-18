@@ -86,6 +86,8 @@ function send(){
 			<div class="col-sm-4">
 				<input type="text" id="EndDate" name="EndDate">
 			</div>
+		</div><div class="row">
+		<div class="col-sm-12">&nbsp;</div>
 		</div>
 		<div class="row">
 			<div class="col-sm-2 ">Motivo:</div>
@@ -108,7 +110,7 @@ function send(){
 		</div>
 	</div>
 </form>
-<button onclick='javascript:send();'>Aceptar</button>
+<button onclick='javascript:send();' class="btn btn-primary">Aceptar</button>
 <button class='btn btn-link'
 	onclick="javascript:returnTo('${applicationScope['TIMECTRL_CONTEXT']}/servlet/timectrl/employee/LicenseOfEmployee?CodeAction=LICENSE&cId=${requestScope.Employee.id}');">Cancelar</button>
 

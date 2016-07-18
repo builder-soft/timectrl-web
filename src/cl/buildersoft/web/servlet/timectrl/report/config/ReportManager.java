@@ -22,9 +22,10 @@ public class ReportManager extends BSHttpServletCRUD {
 	protected BSTableConfig getBSTableConfig(HttpServletRequest request) {
 		BSTableConfig table = initTable(request, "tReport");
 		table.setTitle("Reportes");
-		table.getField("cJavaClass").setShowInTable(false);
-		table.getField("cJavaClass").setShowInForm(false);
-		table.getField("cJavaClass").setReadonly(true);
+		table.removeField("cJavaClass");
+//		table.getField("cJavaClass").setShowInTable(false);
+//		table.getField("cJavaClass").setShowInForm(false);
+//		table.getField("cJavaClass").setReadonly(true);
 
 		table.setInsertSP("pSaveReport");
 		table.setDeleteSP("pDeleteReport");
