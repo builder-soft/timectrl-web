@@ -50,9 +50,10 @@ public class GetIndicator extends AbstractAjaxServlet {
 			closeConnection(conn);
 		}
 
-		Long endTime = System.currentTimeMillis();
-		Long time = endTime - startTime;
+		Long time = System.currentTimeMillis() - startTime;
 
+		LOG.trace(String.format("Time: %d miliseconds, ask about %s", time, key));
+		
 		if (time < WAIT_CLIENT) {
 			time = WAIT_CLIENT - time;
 		} else {
@@ -60,7 +61,6 @@ public class GetIndicator extends AbstractAjaxServlet {
 		}
 
 		try {
-			LOG.trace(String.format("Time: %d", time));
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
 			LOG.error(e);
