@@ -8,7 +8,7 @@
 	</context-param>
 	<context-param>
 		<param-name>CurrentVersion</param-name>
-		<param-value>R1.3.1</param-value>
+		<param-value>R1.3.2</param-value>
 	</context-param>
 	<welcome-file-list>
 		<welcome-file>jsp/login/start.jsp</welcome-file>
