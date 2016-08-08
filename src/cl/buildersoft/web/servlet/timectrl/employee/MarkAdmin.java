@@ -74,7 +74,7 @@ public class MarkAdmin extends BSHttpServlet_ {
 
 		cf.closeConnection(conn);
 		
-		forward(request, response, "/WEB-INF/jsp/timectrl/employee/mark-admin.jsp");
+		forward(request, response, "/WEB-INF/jsp/timectrl/employee/mark-admin2.jsp");
 	}
 
 	private void updateRange(Connection conn) {

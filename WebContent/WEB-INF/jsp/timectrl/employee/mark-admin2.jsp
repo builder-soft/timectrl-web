@@ -20,6 +20,23 @@
 	src="${pageContext.request.contextPath}/js/timectrl/employee/mark-admin.js">
 	
 </script>
+<style type="text/css">
+
+.topmenu .active a,
+.topmenu .active a:hover {
+    background-color: white;
+}
+.topmenu > li > a{
+    color: Gray;
+    font-weight:bold;
+}
+.topmenu > li > a:hover {
+    color: black;
+    background:white;
+} 
+
+</style>
+
 
 <h1 class="cTitle">Administración de marcas</h1>
 
@@ -32,7 +49,7 @@
 	action="${pageContext.request.contextPath }/servlet/timectrl/employee/MarkAdmin"
 	method="post">
 	<input type="hidden" name="cId" value="${requestScope.cId}">
-	<table border="0">
+<%-- 	<table border="0" class="table table-striped table-bordered table-hover table-condensed table-responsive" >
 		<tr>
 			<td class="cLabel">Rango desde:</td>
 			<td class="cData">${requestScope.StartDate}</td>
@@ -47,10 +64,19 @@
 				<button type="submit">Buscar</button>
 			</td>
 			<td><button type="submit" onclick="javascript:resetDate()">Hoy</button></td>
-	</table>
+	</table> --%>
+	<div class="row well">
+		<div class="row">
+			<div class="col-sm-3 ">Rango desde &nbsp;:&nbsp;&nbsp;${requestScope.StartDate}</div>
+			<div class="col-sm-2 ">Hasta&nbsp;:&nbsp;&nbsp;<input type="text" name="Today" id="Today" size="10" readonly></div>
+			<div class="col-sm-4 "><button type="submit">Buscar</button>&nbsp;&nbsp;<button type="submit" onclick="javascript:resetDate()">Hoy</button></div>
+			<div class="col-sm-6 ">&nbsp;</div>
+		</div>
+	</div>		
+	
 </form>
 
-<a
+<%-- <a
 	href="${pageContext.request.contextPath }/servlet/timectrl/employee/MarkAdmin?cId=${requestScope.cId}&Today=${requestScope.StartRange}"
 	class="cLink">${requestScope.Range} días antes</a>
 &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -64,20 +90,35 @@
 &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a
 	href="${pageContext.request.contextPath }/servlet/timectrl/employee/MarkAdmin?cId=${requestScope.cId}&Today=${requestScope.EndRange}"
-	class="cLink">${requestScope.Range} días después</a>
+	class="cLink">${requestScope.Range} días después</a> --%>
+
+<div id="top-menu">
+	<ul class="nav menu nav-pills topmenu">
+		<li class="item-109"><a href="${pageContext.request.contextPath }/servlet/timectrl/employee/MarkAdmin?cId=${requestScope.cId}&Today=${requestScope.StartRange}"
+			class="cLink">${requestScope.Range} días antes</a></li>
+		<li class="item-138"><a href="${pageContext.request.contextPath }/servlet/timectrl/employee/MarkAdmin?cId=${requestScope.cId}&Today=${requestScope.OneDayBefore}"
+		class="cLink">1 día antes</a></li>
+		<li class="item-110"><a href="${pageContext.request.contextPath }/servlet/timectrl/employee/MarkAdmin?cId=${requestScope.cId}&Today=${requestScope.OneDayAfter}"
+		class="cLink">1 día después</a></li>
+		<li class="item-120"><a href="${pageContext.request.contextPath }/servlet/timectrl/employee/MarkAdmin?cId=${requestScope.cId}&Today=${requestScope.EndRange}"
+		class="cLink">${requestScope.Range} días después</a></li>
+	</ul>
+</div>
+
 
 <br>
 <br>
-<table class="cList" cellpadding="0" cellspacing="0">
+<table class="table table-striped table-bordered table-hover table-condensed table-responsive">
+  <thead>		
 	<tr>
-		<td class='cHeadTD' style="text-align: center">Sel.</td>
-		<td class='cHeadTD'>Reloj</td>
-		<td class='cHeadTD'>Fecha/Hora Marca</td>
-		<td class='cHeadTD'>Día</td>
-		<td class='cHeadTD'>Tipo de Marca</td>
-		<td class='cHeadTD'>Comentario</td>
+		<th class='cHeadTD' style="text-align: center">Sel.</th>
+		<th class='cHeadTD'>Reloj</th>
+		<th class='cHeadTD'>Fecha/Hora Marca</th>
+		<th class='cHeadTD'>Día</th>
+		<th class='cHeadTD'>Tipo de Marca</th>
+		<th class='cHeadTD'>Comentario</th>
 	</tr>
-
+  </thead>
 	<%
 		String style = "";
 		Integer i = 0;
@@ -87,6 +128,7 @@
 			style = i % 2 == 0 ? "cDataTD" : "cDataTD_odd";
 			isNew = row[7].equals("N");
 	%>
+   <tbody>
 	<tr>
 		<td class='<%=style%>' style="text-align: center"><input
 			type="radio" name="MarkId" onclick="selectingMark(this)"
@@ -97,6 +139,7 @@
 		<td class='<%=style%>'><%=boldIfNew(isNew, row[6])%></td>
 		<td class='<%=style%>'><%=boldIfNew(isNew, isNew ? "Nuevo" : "")%></td>
 	</tr>
+  </tbody>		
 	<%
 		}
 	%>
@@ -129,7 +172,7 @@
 		<input type="hidden" name="Employee" value="${requestScope.cId}">
 		<input type="hidden" name="Today" value="${requestScope.EndDate}">
 
-		<table border="0" width="80%">
+		<table class="table table-striped table-bordered table-hover table-condensed table-responsive">
 			<tr>
 				<td class="cLabel">Reloj:</td>
 				<td><select Name="Machine">
