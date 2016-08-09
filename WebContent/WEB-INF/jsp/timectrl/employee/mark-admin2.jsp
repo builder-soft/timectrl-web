@@ -148,15 +148,15 @@
 
 <hr>
 
-<button onclick="javascript:showDialog();">Agregar Marca</button>
-<button onclick="javascript:showDialog();" disabled>Modificar Marca (agrega y deshabilita)</button>
+<button onclick="javascript:showDialog();" class='btn btn-default'>Agregar Marca</button>
+<button onclick="javascript:showDialog();" class='btn' disabled>Modificar Marca (agrega y deshabilita)</button>
 <!-- 
 <button onclick="javascript:editMark('divShowDetail');" disabled id="modifyButton">Modificar
 	Marca</button>
 <button disabled="true">Eliminar Marca</button>
  -->
 &nbsp;&nbsp;&nbsp;
-<a class="cCancel"
+<a class='btn btn-link'
 	href="${pageContext.request.contextPath}/servlet/config/employee/EmployeeMarkManager">Volver</a>
 
 <div id="divShowDetail" style="display: none">
