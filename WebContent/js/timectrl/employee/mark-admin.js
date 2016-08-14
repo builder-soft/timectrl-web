@@ -7,14 +7,25 @@ function resetDate() {
 }
 
 function onLoadPage() {
+	
 	$("#Today").datepicker({
 		dateFormat : fixDateFormat(dateFormat),
 		changeMonth : true,
 		numberOfMonths : 1
 	});
 	$("#Today").datepicker("setDate", today);
-
+	
+	$("#DateMark").datepicker({
+		dateFormat : fixDateFormat(dateFormat),
+		changeMonth : true,
+		numberOfMonths : 1
+	});
+	$("#DateMark").datepicker("setDate", currentDay);
+	
 }
+
+
+
 
 function saveNewMark() {
 	// alert('saveNewMark');
