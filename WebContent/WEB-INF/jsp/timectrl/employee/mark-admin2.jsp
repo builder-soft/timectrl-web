@@ -131,15 +131,12 @@
 		%>
 
 	</table>
-
 	<hr>
-
 	<button class='btn btn-default'>Agregar
-		Marca</button>
-
+		Marca</button>&nbsp;
 	<button class='btn' disabled>Modificar
 		Marca (agrega y deshabilita)</button>
-	&nbsp;&nbsp;&nbsp; <a class='btn btn-link'
+	&nbsp;&nbsp; <a class='btn btn-link'
 		href="${pageContext.request.contextPath}/servlet/config/employee/EmployeeMarkManager">Volver</a>
 </form>
 

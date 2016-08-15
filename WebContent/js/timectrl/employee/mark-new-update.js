@@ -1,22 +1,16 @@
 /**
  * 
  */
-function resetDate() {
-	document.getElementById("Today").value = currentDay;
-	document.getElementById("SearchForm").submit();
-}
-
-function onLoadPage() {
+function onLoadPage() {	
 	
-	$("#Today").datepicker({
+	$("#DateMark").datepicker({
 		dateFormat : fixDateFormat(dateFormat),
 		changeMonth : true,
 		numberOfMonths : 1
 	});
-	$("#Today").datepicker("setDate", today);
+	$("#DateMark").datepicker("setDate", dateMark);
+	
 }
-
-
 
 
 function saveNewMark() {
@@ -27,17 +21,5 @@ function saveNewMark() {
 			+ document.getElementById("SS").value;
 
 	document.getElementById("DateTimeMark").value = dateTimeMark;
-
 	document.getElementById("SaveForm").submit();
-}
-
-function showDialog() {
-	showTooltip('divShowDetail');
-	$("#DateMark").datepicker({
-		dateFormat : fixDateFormat(dateFormat),
-		changeMonth : true,
-		numberOfMonths : 1
-	});
-	$("#DateMark").datepicker("setDate", currentDay);
-
 }

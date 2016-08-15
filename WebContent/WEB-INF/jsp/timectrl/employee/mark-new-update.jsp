@@ -11,14 +11,16 @@
 	List<MarkType> markTypes = (List<MarkType>) request.getAttribute("MarkTypes");
 	//Integer range = (Integer) request.getAttribute("Range");
 %>
-<script>
-	var today = '${requestScope.EndDate}';
-	var currentDay = '${requestScope.Today}';
-</script>
+
 <script
-	src="${pageContext.request.contextPath}/js/timectrl/employee/mark-admin.js">
+	src="${pageContext.request.contextPath}/js/timectrl/employee/mark-new-update.js">
 	
 </script>
+<script>
+	var dateMark = '${requestScope.today}';
+	var currentDay = '${requestScope.today}';
+</script>
+
 <style type="text/css">
 .topmenu .active a, .topmenu .active a:hover {
 	background-color: white;
@@ -35,12 +37,9 @@
 }
 </style>
 
-<h1 class="cTitle2">Nueva marca</h1>
+<h1 class="cTitle">Nueva marca</h1>
 
 <c:import url="/servlet/dalea/web/GetEmployeeInfo" />
-<!-- 
-	< % @ include file="/WEB-INF/jsp/timectrl/common/employee-info.jsp"%>
-	-->
 <br>
 <br>
 <form id="SaveForm"
@@ -64,19 +63,13 @@
 		</tr>
 		<tr>
 			<td class="cLabel">Fecha/Hora</td>
-			<td class="cLabel"><input type="text" id="DateMark" name="DateMark" size="10" readonly> <select
-				id="HH">
-					<%=options(0, 23, 9)%>
-			</select>: <select id="MM">
-					<%=options(0, 59, 0)%>
-			</select>: <select id="SS">
-					<%=options(0, 59, 0)%>
-			</select> <input name="DateTimeMark" id="DateTimeMark" type="hidden">
-				<!-- 
-							<input name="DateTimeMark"
-								placeholder="${DateTimeFormat}"
-								onblur="javascript:dateTimeBlur(this);">
-								 --></td>
+			<td class="cLabel">
+				<input type="text" id="DateMark" name="DateMark" size="10" readonly> 
+				<select id="HH"><%=options(0, 23, 9)%></select>: 
+				<select id="MM"><%=options(0, 59, 0)%></select>: 
+				<select id="SS"><%=options(0, 59, 0)%></select> 
+				<input name="DateTimeMark" id="DateTimeMark" type="hidden">
+			</td>
 		</tr>
 		<tr>
 			<td class="cLabel">Tipo de marca</td>
@@ -92,9 +85,10 @@
 		</tr>
 	</table>
 	<br> <br>
-	<button type="button" onclick="javascript:saveNewMark()" class='btn btn-default'>Aceptar</button>
-<!-- 	<button type="button" onclick="javascript:closeTooltip()" class='btn' >Cancelar</button> -->
-	<a class="btn btn-link" role="button"href="javascript:history.back()">Volver</a>
+	<button type="button" onclick="javascript:saveNewMark()"
+		class='btn btn-default'>Aceptar</button>
+	<!-- 	<button type="button" onclick="javascript:closeTooltip()" class='btn' >Cancelar</button> -->
+	<a class="btn btn-link" role="button" href="javascript:history.back()">Volver</a>
 </form>
 
 
@@ -102,7 +96,6 @@
 
 
 <%!
-
 	private String options(Integer start, Integer end, Integer def) {
 		String out = "";
 		String s = "";

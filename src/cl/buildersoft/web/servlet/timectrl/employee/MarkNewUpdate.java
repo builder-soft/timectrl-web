@@ -55,6 +55,8 @@ public class MarkNewUpdate extends BSHttpServlet_ {
 		request.setAttribute("MarkTypes", getMarkType(conn));
 		request.setAttribute("cId", id);
 		request.setAttribute("Employee", employee);
+		request.setAttribute("Area", service.readAreaOfEmployee(conn, employee));
+		request.setAttribute("Post", service.readPostOfEmployee(conn, employee));		
 		request.setAttribute("today", today);
 		
 		cf.closeConnection(conn);
