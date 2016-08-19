@@ -22,7 +22,6 @@ public class ShowParameters extends HttpServlet {
 	}
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		request.getRequestDispatcher("/WEB-INF/jsp/common/header.jsp").include(request, response);
 		request.getRequestDispatcher("/WEB-INF/jsp/common/menu.jsp").include(request, response);
 

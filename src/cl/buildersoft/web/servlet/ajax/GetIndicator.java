@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,13 +18,14 @@ import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.util.BSDataUtils;
 import cl.buildersoft.framework.util.BSUtils;
 
-@WebServlet("/servlet/ajax/GetIndicator")
+@WebServlet(asyncSupported = true, value = "/servlet/ajax/GetIndicator")
 public class GetIndicator extends AbstractAjaxServlet {
-	private static final int WAIT_CLIENT = 300;
-	private final static Logger LOG = Logger.getLogger(GetIndicator.class.getName());
-	private static final long serialVersionUID = -915879276301350536L;
+	private static final Logger LOG = LogManager.getLogger(GetIndicator.class);
+	private final static int WAIT_CLIENT = 250;
+	private final static long serialVersionUID = -915879276301350536L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// AsyncContext x = request.startAsync();
 		String key = request.getParameter("Key");
 		String out = "Key '" + key + "' not found";
 
@@ -49,9 +50,10 @@ public class GetIndicator extends AbstractAjaxServlet {
 			closeConnection(conn);
 		}
 
-		Long endTime = System.currentTimeMillis();
-		Long time = endTime - startTime;
+		Long time = System.currentTimeMillis() - startTime;
 
+		LOG.trace(String.format("Time: %d miliseconds, ask about %s", time, key));
+		
 		if (time < WAIT_CLIENT) {
 			time = WAIT_CLIENT - time;
 		} else {
@@ -59,14 +61,14 @@ public class GetIndicator extends AbstractAjaxServlet {
 		}
 
 		try {
-			LOG.log(Level.FINE, "Time: {0}", time);
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
-			LOG.log(Level.SEVERE, "Error: {0}", e);
+			LOG.error(e);
 		}
 
 		setHeaders(response);
 		endWrite(writeToBrowser(response, out));
+
 	}
 
 	private String getLaterCount(Connection conn) {
@@ -76,7 +78,7 @@ public class GetIndicator extends AbstractAjaxServlet {
 		String[] defaultData = null;
 
 		String[] out = new String[2];
-		out=	fixTwoData(rs, out, defaultData);
+		out = fixTwoData(rs, out, defaultData);
 
 		return dataToString(out);
 	}
@@ -162,7 +164,7 @@ public class GetIndicator extends AbstractAjaxServlet {
 				out = defaultData;
 			}
 		} catch (SQLException e) {
-			LOG.log(Level.SEVERE, "Error SQL: {0}", e);
+			LOG.error(e);
 		}
 		return out;
 	}

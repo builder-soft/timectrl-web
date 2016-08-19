@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSConnectionFactory;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Report;
 
 /**
  * Servlet implementation class ExecutionReport
  */
 @WebServlet("/servlet/timectrl/report/execute/ExecutionReport")
-public class ExecutionReport extends BSHttpServlet {
+public class ExecutionReport extends BSHttpServlet_ {
 	private static final long serialVersionUID = 5522309239924345512L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

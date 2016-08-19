@@ -10,22 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.util.BSConnectionFactory;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Turn;
 import cl.buildersoft.timectrl.business.beans.TurnDay;
 
 @WebServlet("/servlet/timectrl/turns/TurnsDayByTurn")
-public class TurnsDayByTurn extends BSHttpServlet {
+public class TurnsDayByTurn extends BSHttpServlet_ {
 	private static final long serialVersionUID = -8708209647234498026L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Long id = Long.parseLong (readParameterOrAttribute(request, "cId"));
-//		Long id = Long.parseLong(getId(request));
-		
+		Long id = Long.parseLong(readParameterOrAttribute(request, "cId"));
+		// Long id = Long.parseLong(getId(request));
 
 		BSBeanUtils bu = new BSBeanUtils();
 
-		Connection conn = getConnection(request);
+		BSConnectionFactory cf = new BSConnectionFactory();
+
+		Connection conn = cf.getConnection(request);
 
 		TurnDay turnDay = new TurnDay();
 		Turn turn = new Turn();
@@ -34,12 +36,15 @@ public class TurnsDayByTurn extends BSHttpServlet {
 		turn.setId(id);
 		bu.search(conn, turn);
 
-		closeConnection(conn);
+		String page = bootstrap(conn) ? "/WEB-INF/jsp/timectrl/employee/turns-detail2.jsp"
+				: "/WEB-INF/jsp/timectrl/employee/turns-detail.jsp";
+
+		cf.closeConnection(conn);
 
 		request.setAttribute("TurnDays", turnDays);
 		request.setAttribute("Turn", turn);
 
-		forward(request, response, "/WEB-INF/jsp/timectrl/employee/turns-detail.jsp");
+		forward(request, response, page);
 	}
 
 	private String getId(HttpServletRequest request) {

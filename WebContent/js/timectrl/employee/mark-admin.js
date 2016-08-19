@@ -2,19 +2,22 @@
  * 
  */
 function resetDate() {
-	document.getElementById("Today").value = today;
+	document.getElementById("Today").value = currentDay;
 	document.getElementById("SearchForm").submit();
 }
 
 function onLoadPage() {
+	
 	$("#Today").datepicker({
 		dateFormat : fixDateFormat(dateFormat),
 		changeMonth : true,
 		numberOfMonths : 1
 	});
 	$("#Today").datepicker("setDate", today);
-
 }
+
+
+
 
 function saveNewMark() {
 	// alert('saveNewMark');

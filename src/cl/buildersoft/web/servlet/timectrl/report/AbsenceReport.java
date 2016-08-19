@@ -7,13 +7,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 
 /**
  * Servlet implementation class AbsenceReport
  */
 @WebServlet("/servlet/timectrl/report/AbsenceReport")
-public class AbsenceReport extends BSHttpServlet {
+public class AbsenceReport extends BSHttpServlet_ {
 	private static final long serialVersionUID = -1660248937245379215L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

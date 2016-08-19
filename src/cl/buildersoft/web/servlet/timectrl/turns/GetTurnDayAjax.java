@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.TurnDay;
 
 /**
  * Servlet implementation class GetTurnDayAjax
  */
 @WebServlet("/servlet/timectrl/turns/GetTurnDayAjax")
-public class GetTurnDayAjax extends BSHttpServlet {
+public class GetTurnDayAjax extends BSHttpServlet_ {
 
 	private static final long serialVersionUID = "/servlet/timectrl/turns/GetTurnDayAjax".hashCode();
 

@@ -1,5 +1,6 @@
 package cl.buildersoft.web.servlet.config.employee;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,16 +14,16 @@ import cl.buildersoft.framework.util.BSConfig;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSActionType;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.web.servlet.common.HttpServletCRUD;
 
 /**
  * Servlet implementation class EmployeeManager
  */
 @WebServlet("/servlet/config/employee/EmployeeTurnManager")
-public class EmployeeTurnManager extends HttpServletCRUD {
+public class EmployeeTurnManager extends BSHttpServletCRUD implements Serializable {
 	private static final Logger LOG = Logger.getLogger(EmployeeTurnManager.class.getName());
-	private static final long serialVersionUID = -7665593692157885850L;
+	private static final long serialVersionUID = -314593692157885850L;
 
 	@Override
 	protected BSTableConfig getBSTableConfig(HttpServletRequest request) {
@@ -37,32 +38,35 @@ public class EmployeeTurnManager extends HttpServletCRUD {
 		table.getField("cGroup").setLabel("Grupo");
 		table.getField("cBoss").setLabel("Superior");
 		table.getField("cPrivilege").setLabel("Tipo de usuario");
-//		table.getField("cEnabled").setLabel("Activado");
+		// table.getField("cEnabled").setLabel("Activado");
 		table.getField("cUsername").setLabel("Nombre Usuario");
 		table.getField("cMail").setLabel("Correo electrónico");
 
-		this.hideFields(table, "cMail", "cArea", "cPrivilege");
+		this.hideFields(table, "cMail", "cArea", "cPrivilege", "cBirthDate", "cAddress", "cComuna", "cCountry", "cGenere",
+				"cPhone", "cMaritalStatus");
 		table.removeField("cEnabled");
 
 		table.removeAction("INSERT");
 		table.removeAction("EDIT");
 		table.removeAction("DELETE");
-		
-		
-//		table.setDeleteSP("pDeleteEmployee");
+
+		// table.setDeleteSP("pDeleteEmployee");
 		table.setWhere("cEnabled=TRUE");
-		
+
 		BSAction action = new BSAction("TURNS", BSActionType.Record);
 		action.setLabel("Asignación de Turnos");
 		action.setUrl("/servlet/timectrl/employee/TurnsOfEmployee");
+		action.setContext("TIMECTRL_CONTEXT");
 		table.addAction(action);
 
 		action = new BSAction("MASSIVE_TURN", BSActionType.MultiRecord);
 		action.setLabel("Asignacion masiva de turnos");
 		action.setUrl("/servlet/timectrl/employee/MassiveTurnsOfEmployee");
 		action.setWarningMessage("");
-		
+		action.setContext("TIMECTRL_CONTEXT");
 		table.addAction(action);
+
+		configEventLog(table, getCurrentUser(request).getId());
 
 		return table;
 	}
@@ -101,13 +105,9 @@ public class EmployeeTurnManager extends HttpServletCRUD {
 	}
 
 	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
-
-	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
-		// TODO Auto-generated method stub
+	protected void configEventLog(BSTableConfig table, Long userId) {
 
 	}
+
+
 }

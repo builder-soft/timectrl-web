@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.exception.BSConfigurationException;
 import cl.buildersoft.framework.util.BSConnectionFactory;
-import cl.buildersoft.framework.util.BSHttpServlet;
-import cl.buildersoft.timectrl.api._zkemProxy;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
+import cl.buildersoft.timectrl.api.com4j._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.Machine;
 import cl.buildersoft.timectrl.business.services.MachineService2;
 import cl.buildersoft.timectrl.business.services.impl.MachineServiceImpl2;
@@ -25,7 +25,7 @@ import cl.buildersoft.timectrl.business.services.impl.MachineServiceImpl2;
  * Servlet implementation class Ping
  */
 @WebServlet("/servlet/timectrl/machine/TestConnection")
-public class TestConnection extends BSHttpServlet {
+public class TestConnection extends BSHttpServlet_ {
 	private static final Logger LOG = Logger.getLogger(TestConnection.class.getName());
 	private static final long serialVersionUID = -6238788213123204507L;
 

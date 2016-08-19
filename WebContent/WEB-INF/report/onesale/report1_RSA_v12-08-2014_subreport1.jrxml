@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1_RSA_v12-08-2014_subreport1" language="groovy" pageWidth="572" pageHeight="752" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b88b2ff0-e334-4e11-bdfa-47f4932d5bc0">
+	<property name="ireport.zoom" value="1.2396694214876032"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="UserId" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[call pGetEmployeeInfo($P{UserId});]]>
+	</queryString>
+	<field name="cId" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cRut" class="java.lang.String">
+		<fieldDescription><![CDATA[Rut]]></fieldDescription>
+	</field>
+	<field name="cName" class="java.lang.String">
+		<fieldDescription><![CDATA[Nombre]]></fieldDescription>
+	</field>
+	<field name="cPost" class="java.lang.Long">
+		<fieldDescription><![CDATA[Codigo Cargo]]></fieldDescription>
+	</field>
+	<field name="cArea" class="java.lang.Long">
+		<fieldDescription><![CDATA[Codigo Area]]></fieldDescription>
+	</field>
+	<field name="cPrivilege" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cUsername" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cAreaName" class="java.lang.String"/>
+	<field name="cCC" class="java.lang.String"/>
+	<field name="cTurnName" class="java.lang.String"/>
+	<field name="cHorary" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="55" splitType="Stretch">
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="45" y="30" width="189" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="ef22aeb8-f49a-4824-87ad-84cc84f1e665"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cRut}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="6" width="40" height="20" uuid="818dd657-7475-41e1-a289-a92a8199e0a9"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="5" y="30" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="8ede97ce-9e21-4b7f-b2cd-02c62a976803"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[RUT:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="45" y="6" width="189" height="20" uuid="f8456970-5cdf-4758-a993-0cf8d141072d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="234" y="30" width="51" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="dbacaf64-d515-4d43-9a81-53f918508ff7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[C. Costos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="234" y="6" width="51" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="48324f67-8dcd-43c9-a389-cc62dd3d950d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Gerencia:]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="285" y="30" width="171" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="0cdd8af9-5ed5-4036-b3c7-0ec410c144ba"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cCC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="461" y="30" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="5d87f297-477c-4065-bbfe-34fae7c0617c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Horario:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="461" y="6" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="de046932-f1b6-4042-b36f-c5bd07b282d4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Turno:]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="501" y="6" width="70" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="873fbb11-8b5c-42a6-8c7f-093479482878"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cTurnName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="501" y="30" width="70" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="be71c110-a882-4e00-b725-787c77bc483b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cHorary}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="285" y="6" width="171" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="71e28084-1ced-44d2-a04c-9cae4597fd24"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cAreaName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+</jasperReport>

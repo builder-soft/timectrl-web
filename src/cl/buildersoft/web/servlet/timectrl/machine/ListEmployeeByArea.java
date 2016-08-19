@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSConnectionFactory;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Privilege;
 import cl.buildersoft.timectrl.business.services.EmployeeService;
@@ -22,7 +22,7 @@ import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
  * Servlet implementation class ListEmployeeByArea
  */
 @WebServlet("/servlet/timectrl/machine/ListEmployeeByArea")
-public class ListEmployeeByArea extends BSHttpServlet {
+public class ListEmployeeByArea extends BSHttpServlet_ {
 	private static final long serialVersionUID = 6918804998890181213L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -12,7 +12,6 @@ import org.junit.Test;
 import cl.buildersoft.framework.beans.User;
 import cl.buildersoft.framework.services.impl.BSUserServiceImpl;
 import cl.buildersoft.framework.util.BSConnectionFactory;
-import cl.buildersoft.framework.util.BSDataUtils;
 
 public class ValidateLoginTest {
 

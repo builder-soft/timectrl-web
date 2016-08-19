@@ -4,7 +4,7 @@
 <%@page import="cl.buildersoft.framework.util.BSWeb"%>
 <%@ page import="java.util.List"%>
 <ul class="jd_menu" style="z-index: 1">
-	<li><a href="${pageContext.request.contextPath}/servlet/Home">Inicio</a></li>
+	<li><a href="${applicationScope['DALEA_CONTEXT']}/servlet/Home">Inicio</a></li>
 	<%=write_menu_in_menu_jsp(session, request)%>
 	<li><a
 		href="${pageContext.request.contextPath}/jsp/login/logout.jsp">Salir</a></li>

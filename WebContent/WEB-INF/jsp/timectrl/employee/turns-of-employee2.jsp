@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="cl.buildersoft.timectrl.business.beans.Employee"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.Turn"%>
 <%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
@@ -26,7 +27,10 @@ var exception = <%=exception%>;
 	<h1>Configuración de turnos</h1>
 </div>
 
-<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info2.jsp"%>
+<c:import url="/servlet/dalea/web/GetEmployeeInfo" />
+<!-- 
+< % @ include file="/WEB-INF/jsp/timectrl/common/employee-info2_.jsp"% >
+ -->
 
 
 <ul class="nav nav-tabs">
@@ -117,7 +121,6 @@ var exception = <%=exception%>;
 
 <button class='btn btn-link'
 	onclick="returnTo('${pageContext.request.contextPath}/servlet/config/employee/EmployeeTurnManager');">Volver</button>
-
 
 		<div id="TurnsContainer" style="display: none">
 			<select id="DTurn">

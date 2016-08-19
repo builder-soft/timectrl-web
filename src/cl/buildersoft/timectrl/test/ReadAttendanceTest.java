@@ -3,8 +3,8 @@ package cl.buildersoft.timectrl.test;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import cl.buildersoft.timectrl.api.ClassFactory;
-import cl.buildersoft.timectrl.api._zkemProxy;
+import cl.buildersoft.timectrl.api.com4j._zkemProxy;
+import cl.buildersoft.timectrl.util.BSFactoryTimectrl;
 
 import com4j.Holder;
 
@@ -12,7 +12,8 @@ public class ReadAttendanceTest {
 	private static final Logger LOG = Logger.getLogger(ReadAttendanceTest.class.getName());
 
 	public static void main(String[] args) {
-		_zkemProxy api = ClassFactory.createzkemProxy();
+		BSFactoryTimectrl tcf = new BSFactoryTimectrl();
+		_zkemProxy api = tcf.createzkemProxy(null);
 		int machime = 1;
 
 		Integer port = 4370;

@@ -1,9 +1,9 @@
+<%@page import="cl.buildersoft.framework.util.crud.BSHttpServletCRUD"%>
+<%@page import="cl.buildersoft.framework.type.Semaphore"%>
 <%@page import="cl.buildersoft.framework.util.crud.BSActionType"%>
 <%@page import="cl.buildersoft.framework.util.crud.BSAction"%>
 <%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
 <%@page import="cl.buildersoft.framework.database.BSmySQL"%>
-<%@page import="cl.buildersoft.framework.type.Semaphore"%>
-<%@page import="cl.buildersoft.web.servlet.common.HttpServletCRUD"%>
  
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.ResultSet"%>
@@ -33,21 +33,21 @@
 		Boolean haveMultirecordActions = Boolean.FALSE;
 
 		for (BSAction action : tableActions) {
-			if (BSWeb.canUse(action.getCode(), request, conn)) {
+			if (BSWeb.canUse(action.getCode(), request)) {
 				haveTableActions = Boolean.TRUE;
 				break;
 			}
 		}
 
 		for (BSAction action : multirecordActions) {
-			if (BSWeb.canUse(action.getCode(), request, conn)) {
+			if (BSWeb.canUse(action.getCode(), request)) {
 				haveMultirecordActions = Boolean.TRUE;
 				break;
 			}
 		}
 
 		for (BSAction action : recordActions) {
-			if (BSWeb.canUse(action.getCode(), request, conn)) {
+			if (BSWeb.canUse(action.getCode(), request)) {
 				haveRecordActions = Boolean.TRUE;
 				break;
 			}
@@ -135,7 +135,7 @@
 
 			out.print("<div id='TableActions' style='float:left;'>");
 			for(BSAction action : tableActions) {
-		if (BSWeb.canUse(action.getCode(), request, conn)) {
+		if (BSWeb.canUse(action.getCode(), request)) {
 			String id = capitalize(action.getCode());
 			out.print("<button type='button' ");
 			out.print("id='o" + id + "' ");
@@ -150,7 +150,7 @@
 
 			out.print("<div id='MultirecordActions' style='float:left;display:none;'>");
 			for(BSAction action : multirecordActions) {
-		if (BSWeb.canUse(action.getCode(), request, conn)) {
+		if (BSWeb.canUse(action.getCode(), request)) {
 			String id = capitalize(action.getDefaultCode());
 			out.print("<button type='button' ");
 			out.print("id='o" + id + "' ");
@@ -164,7 +164,7 @@
 
 			out.print("<div id='RecordActions' style='float:left;display:none;'>");
 			for(BSAction action : recordActions) {
-		if (BSWeb.canUse(action.getCode(), request, conn)) {
+		if (BSWeb.canUse(action.getCode(), request)) {
 			String id = capitalize(action.getCode());
 			String method = action.getMethod() != null ? "&Method=" + action.getMethod() : "";
 			out.print("<button type='button' ");
@@ -195,7 +195,7 @@
 
 		Object servletObject = request.getAttribute("ServletManager");
 		if (servletObject != null) {
-			HttpServletCRUD servletCRUD = (HttpServletCRUD) servletObject;
+			BSHttpServletCRUD servletCRUD = (BSHttpServletCRUD) servletObject;
 			Semaphore semaphore = servletCRUD.setSemaphore(conn, values);
 			if(semaphore!=null){
 				switch (semaphore) {

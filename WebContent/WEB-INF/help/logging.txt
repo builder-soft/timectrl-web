@@ -1,6 +1,44 @@
 http://www.iteramos.com/pregunta/18699/buenos-ejemplos-usando-javautillogging
-
 https://danjared.wordpress.com/2009/05/11/usar-logs-en-java-parte-1/
-
 http://programacion.jias.es/2013/03/log4j-tutorial-configuracion-rapida/
 
+http://andrew-flower.com/blog/Basic_Log4j2_Configuration
+
+Quick guide.
+
+Replace:
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
+By:
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+private static final Logger LOG = LogManager.getLogger(MYCLASS.class);
+
+LOG.trace(String.format("Connecting for %s:%d", "AN IP", 999));
+
+
+-----------------------
+Put log4j2.xml file in classpath of Tomcat, for example in %catalina_home%\lib
+That content is:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="5">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36}.%method(%line) - %msg%n" />
+		</Console>
+		<File name="FileAppender" fileName="${env:CATALINA_HOME}/logs/buildersoft.log">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36}.%method(%line) - %msg%n"/>
+		</File>
+	</Appenders>
+
+	<Loggers>
+		<Root level="trace">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="FileAppender" />
+		</Root>
+	</Loggers>
+</Configuration> 

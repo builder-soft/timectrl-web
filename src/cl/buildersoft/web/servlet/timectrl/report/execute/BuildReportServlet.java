@@ -17,11 +17,13 @@ import javax.servlet.http.HttpSession;
 
 import cl.buildersoft.framework.beans.Domain;
 import cl.buildersoft.framework.beans.User;
+import cl.buildersoft.framework.business.services.EventLogService;
+import cl.buildersoft.framework.business.services.ServiceFactory;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.exception.BSConfigurationException;
 import cl.buildersoft.framework.exception.BSProgrammerException;
-import cl.buildersoft.framework.util.BSHttpServlet;
 import cl.buildersoft.framework.util.BSUtils;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
@@ -30,16 +32,14 @@ import cl.buildersoft.timectrl.business.beans.ReportType;
 import cl.buildersoft.timectrl.business.console.BuildReport3;
 import cl.buildersoft.timectrl.business.process.impl.BuildReport4;
 import cl.buildersoft.timectrl.business.services.EmployeeService;
-import cl.buildersoft.timectrl.business.services.EventLogService;
 import cl.buildersoft.timectrl.business.services.ReportService;
-import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 
 /**
  * Servlet implementation class BuildReport
  */
 @WebServlet("/servlet/timectrl/report/execute/BuildReportServlet")
-public class BuildReportServlet extends BSHttpServlet {
+public class BuildReportServlet extends BSHttpServlet_ {
 	private static final Logger LOG = Logger.getLogger(BuildReportServlet.class.getName());
 	private static final String REPORT_KEY = "ReportKey";
 	private static final long serialVersionUID = 9102806701827080369L;

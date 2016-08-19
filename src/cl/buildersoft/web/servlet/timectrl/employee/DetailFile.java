@@ -1,6 +1,9 @@
 package cl.buildersoft.web.servlet.timectrl.employee;
 
-public class DetailFile {
+import java.io.Serializable;
+
+public class DetailFile implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private Integer rowNumber = null;
 	private String message = null;
 	private String type = null;

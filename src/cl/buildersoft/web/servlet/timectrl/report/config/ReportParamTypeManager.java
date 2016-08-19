@@ -6,14 +6,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import cl.buildersoft.framework.type.Semaphore;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.web.servlet.common.HttpServletCRUD;
 
 /**
  * Servlet implementation class ReportParamType
  */
 @WebServlet("/servlet/timectrl/report/config/ReportParamTypeManager")
-public class ReportParamTypeManager extends HttpServletCRUD {
+public class ReportParamTypeManager extends BSHttpServletCRUD {
 	private static final long serialVersionUID = -6922319250040502348L;
 
 	@Override
@@ -30,13 +30,9 @@ public class ReportParamTypeManager extends HttpServletCRUD {
 	}
 
 	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
-
-	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
-		// TODO Auto-generated method stub
+	protected void configEventLog(BSTableConfig table, Long userId) {
 
 	}
+
+	
 }

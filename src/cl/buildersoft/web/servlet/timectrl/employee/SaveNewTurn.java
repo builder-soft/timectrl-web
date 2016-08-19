@@ -11,22 +11,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cl.buildersoft.framework.business.services.EventLogService;
+import cl.buildersoft.framework.business.services.ServiceFactory;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.EmployeeTurn;
 import cl.buildersoft.timectrl.business.beans.Turn;
 import cl.buildersoft.timectrl.business.services.EmployeeTurnService;
-import cl.buildersoft.timectrl.business.services.EventLogService;
-import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.timectrl.business.services.impl.EmployeeTurnServiceImpl;
 
 /**
  * Servlet implementation class SaveNewTurn
  */
 @WebServlet("/servlet/timectrl/employee/SaveNewTurn")
-public class SaveNewTurn extends BSHttpServlet {
+public class SaveNewTurn extends BSHttpServlet_ {
 	private static final Logger LOG = Logger.getLogger(SaveNewTurn.class.getName());
 
 	private static final long serialVersionUID = 3010813754466559516L;
