@@ -16,7 +16,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <LINK rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/default.css" />
+	href="${applicationScope['STATIC_CONTEXT']}/css/default.css" />
 
 <title>DALEA T&amp;A - Buildersoft</title>
 <script>
@@ -39,7 +39,7 @@
 	}
 </script>
 <script
-	src="${pageContext.request.contextPath}/js/common/framework.js?<%=Math.random() %>"></script>
+	src="${applicationScope['DALEA_CONTEXT']}/js/common/framework.js?<%=Math.random() %>"></script>
 
 <script
 	src="${pageContext.request.contextPath}/plugin/jquery/<%=JQUERY_VERSION %>/jquery-<%=JQUERY_VERSION %>.js"></script>

@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSConfig;
-import cl.buildersoft.framework.util.BSHttpServlet;
-import cl.buildersoft.timectrl.api.IZKEMException;
-import cl.buildersoft.timectrl.api._zkemProxy;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
+import cl.buildersoft.timectrl.api.com4j._zkemProxy;
+import cl.buildersoft.timectrl.api.impl.IZKEMException;
 import cl.buildersoft.timectrl.business.beans.AttendanceLog;
 import cl.buildersoft.timectrl.business.beans.Machine;
 import cl.buildersoft.timectrl.business.services.MachineService2;
@@ -23,7 +23,7 @@ import cl.buildersoft.timectrl.business.services.impl.MachineServiceImpl2;
  * Servlet implementation class ReadAttendance
  */
 @WebServlet("/servlet/timectrl/machine/ReadAttendance")
-public class ReadAttendance extends BSHttpServlet {
+public class ReadAttendance extends BSHttpServlet_ {
 	private static final long serialVersionUID = 31499791488695127L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

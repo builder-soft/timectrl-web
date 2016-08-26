@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.util.BSDateTimeUtil;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 
 @WebServlet("/servlet/timectrl/report/PlainReport")
-public class PlainReport extends BSHttpServlet {
+public class PlainReport extends BSHttpServlet_ {
 	private static final long serialVersionUID = -4353948710355765036L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -19,7 +19,7 @@ public class PlainReport extends BSHttpServlet {
 
 		request.setAttribute("DateFormat", dateFormat);
 
-		request.getRequestDispatcher("/WEB-INF/jsp/timectrl/report/plain-report.jsp").forward(request, response);
+		forward(request, response, "/WEB-INF/jsp/timectrl/report/plain-report.jsp");
 
 	}
 

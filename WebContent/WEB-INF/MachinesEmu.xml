@@ -9,7 +9,17 @@
 			<Attendance EnrollNumber="130" VerifyMode="1" InOutMode="4" Year="2017" Month="1" Day="27" Hour="18" Minute="18" Second="20" WorkCode="1"/>
 		</Attendances>
 	</Machine>
-
+	<Machine IP="200.28.182.83" Port="4370" Serie="6t7s37vfmnooee94fdmf">
+		<Employees>
+			<Employee EnrollNumber="303" Name="Juan Perez" Password="" Privilege="1" Enabled="1"/>
+		</Employees>
+		<Attendances>
+			<Attendance EnrollNumber="130" VerifyMode="1" InOutMode="1" Year="2017" Month="1" Day="27" Hour="08" Minute="38" Second="21" WorkCode="1"/>
+			<Attendance EnrollNumber="130" VerifyMode="1" InOutMode="4" Year="2017" Month="1" Day="27" Hour="18" Minute="18" Second="22" WorkCode="1"/>
+		</Attendances>
+	</Machine>
+	
+	
 	<Machine IP="10.140.135.146" Port="4370" Serie="be540phb5i3e7tf0me4f">
 		<Employees/>
 		<Attendances/>
@@ -94,5 +104,11 @@
 		<Employees/>
 		<Attendances/>
 	</Machine>
+	
+	<Machine IP="ossacctv.mine.nu" Port="4370" Serie="sonppgm1c5i3md7uakum">
+		<Employees/>
+		<Attendances/>
+	</Machine>
+	
 
 </Machines>

@@ -1,5 +1,5 @@
-<%@page import="cl.buildersoft.timectrl.business.beans.MarkType"%>
 <%@page import="cl.buildersoft.timectrl.business.beans.Machine"%>
+<%@page import="cl.buildersoft.timectrl.business.beans.MarkType"%>
 <%@page import="cl.buildersoft.framework.util.BSDateTimeUtil"%>
 <%@page import="java.sql.ResultSet"%>
 <%@ include file="/WEB-INF/jsp/common/header.jsp"%>
@@ -16,7 +16,7 @@
 	var currentDay = '${requestScope.Today}';
 </script>
 <script
-	src="${pageContext.request.contextPath}/js/timectrl/employee/mark-admin.js">
+	src="${pageContext.request.contextPath}/js/timectrl/employee/mark-admin.js?<%=BSWeb.randomString()%>">
 	
 </script>
 
@@ -115,7 +115,10 @@
 <div id="divShowDetail" style="display: none">
 	<h2 class="cTitle2">Nueva marca</h2>
 
-	<%@ include file="/WEB-INF/jsp/timectrl/common/employee-info.jsp"%>
+	<c:import url="/servlet/dalea/web/GetEmployeeInfo" />
+	<!-- 
+	< % @ include file="/WEB-INF/jsp/timectrl/common/employee-info.jsp"%>
+	-->
 	<br> <br>
 	<form id="SaveForm"
 		action="${pageContext.request.contextPath}/servlet/config/employee/SaveNewMark">

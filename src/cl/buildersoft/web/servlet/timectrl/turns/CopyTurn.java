@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.TurnDay;
 
 /**
  * Servlet implementation class CopyTurn
  */
 @WebServlet("/servlet/timectrl/turns/CopyTurn")
-public class CopyTurn extends BSHttpServlet {
+public class CopyTurn extends BSHttpServlet_ {
 	private static final long serialVersionUID = -588251031998891982L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

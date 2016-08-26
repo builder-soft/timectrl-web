@@ -10,7 +10,6 @@ import java.util.Map;
 public class ReflectionUtils {
 	public ReflectionUtils() {
 		super();
-		// TODO Generado por el editor - NECTA QA
 	}
 
 	public static Object execute(String nameMethod, Object subject, Object[] objects, Class[] classes) throws Exception,
@@ -25,7 +24,6 @@ public class ReflectionUtils {
 		Class[] classes = ReflectionUtils.getTypes(parameters);
 		Class clazz = subject.getClass();
 		// Method method = clazz.getMethod(nameMethod, classes );
-		// TODO revisar
 		Method method = null;
 		Method methods[] = clazz.getMethods();
 		boolean foundIt = false;

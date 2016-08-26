@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSProgrammerException;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Report;
 import cl.buildersoft.timectrl.business.beans.ReportParameterBean;
 import cl.buildersoft.timectrl.business.beans.ReportType;
@@ -26,7 +26,7 @@ import cl.buildersoft.timectrl.business.services.ReportService;
  * Servlet implementation class ReadParameters
  */
 @WebServlet("/servlet/timectrl/report/execute/ReadParameters")
-public class ReadParameters extends BSHttpServlet {
+public class ReadParameters extends BSHttpServlet_ {
 	private static final long serialVersionUID = -1242130448055981992L;
 
 	@SuppressWarnings("unchecked")

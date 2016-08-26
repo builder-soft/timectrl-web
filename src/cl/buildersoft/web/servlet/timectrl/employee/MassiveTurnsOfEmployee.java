@@ -12,20 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
-import cl.buildersoft.framework.util.BSHttpServlet;
-import cl.buildersoft.timectrl.business.beans.Area;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Employee;
-import cl.buildersoft.timectrl.business.beans.EmployeeTurn;
-import cl.buildersoft.timectrl.business.beans.Post;
 import cl.buildersoft.timectrl.business.beans.Turn;
-import cl.buildersoft.timectrl.business.services.EmployeeTurnService;
-import cl.buildersoft.timectrl.business.services.impl.EmployeeTurnServiceImpl;
 
 /**
  * Servlet implementation class Turns
  */
 @WebServlet("/servlet/timectrl/employee/MassiveTurnsOfEmployee")
-public class MassiveTurnsOfEmployee extends BSHttpServlet {
+public class MassiveTurnsOfEmployee extends BSHttpServlet_ {
 	private static final long serialVersionUID = MassiveTurnsOfEmployee.class.getName().hashCode();
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

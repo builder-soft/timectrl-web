@@ -10,21 +10,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cl.buildersoft.framework.business.services.EventLogService;
+import cl.buildersoft.framework.business.services.ServiceFactory;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.AttendanceLog;
 import cl.buildersoft.timectrl.business.beans.AttendanceModify;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.services.EmployeeService;
-import cl.buildersoft.timectrl.business.services.EventLogService;
 import cl.buildersoft.timectrl.business.services.MachineService2;
-import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 import cl.buildersoft.timectrl.business.services.impl.MachineServiceImpl2;
 
 @WebServlet("/servlet/config/employee/SaveNewMark")
-public class SaveNewMark extends BSHttpServlet {
+public class SaveNewMark extends BSHttpServlet_ {
 	private static final long serialVersionUID = 7636128427858862866L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
