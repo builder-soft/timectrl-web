@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import cl.buildersoft.framework.type.Semaphore;
 import cl.buildersoft.framework.util.crud.BSAction;
 import cl.buildersoft.framework.util.crud.BSActionType;
+import cl.buildersoft.framework.util.crud.BSHttpServletCRUD;
 import cl.buildersoft.framework.util.crud.BSTableConfig;
-import cl.buildersoft.web.servlet.common.HttpServletCRUD;
 
 /**
  * Servlet implementation class MachineManager
  */
 @WebServlet("/servlet/timectrl/machine/MachineManager")
-public class MachineManager extends HttpServletCRUD {
+public class MachineManager extends BSHttpServletCRUD {
 	private static final long serialVersionUID = -7311070196774405342L;
 
 	@Override
@@ -37,16 +37,19 @@ public class MachineManager extends HttpServletCRUD {
 		BSAction ping = new BSAction("PING", BSActionType.MultiRecord);
 		ping.setLabel("Probar conección");
 		ping.setUrl("/servlet/timectrl/machine/TestConnection");
+		ping.setContext("TIMECTRL_CONTEXT");
 		table.addAction(ping);
 
 		BSAction readAttendance = new BSAction("READ_ATTENDANCE", BSActionType.Record);
 		readAttendance.setLabel("Asistencias");
 		readAttendance.setUrl("/servlet/timectrl/machine/ReadAttendance");
+		readAttendance.setContext("TIMECTRL_CONTEXT");
 		table.addAction(readAttendance);
 
 		BSAction readEmployees = new BSAction("READ_EMPLOYEES", BSActionType.Record);
 		readEmployees.setLabel("Empleados");
 		readEmployees.setUrl("/servlet/timectrl/machine/ReadEmployee");
+		readEmployees.setContext("TIMECTRL_CONTEXT");
 		table.addAction(readEmployees);
 
 		return table;
@@ -58,13 +61,9 @@ public class MachineManager extends HttpServletCRUD {
 	}
 
 	@Override
-	public String getBusinessClass() {
-		return this.getClass().getName();
-	}
-
-	@Override
-	public void writeEventLog(Connection conn, String action, HttpServletRequest request, BSTableConfig table) {
-		// TODO Auto-generated method stub
+	protected void configEventLog(BSTableConfig table, Long userId) {
 
 	}
+
+	
 }

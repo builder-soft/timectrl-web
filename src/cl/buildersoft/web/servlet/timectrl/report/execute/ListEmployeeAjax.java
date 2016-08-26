@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSConnectionFactory;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Employee;
 
 @WebServlet("/servlet/timectrl/report/execute/ListEmployeeAjax")
-public class ListEmployeeAjax extends BSHttpServlet {
+public class ListEmployeeAjax extends BSHttpServlet_ {
 	private static final long serialVersionUID = Long.MAX_VALUE - Long.MIN_VALUE;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -63,11 +63,11 @@ public class ListEmployeeAjax extends BSHttpServlet {
 			where = "cRut LIKE ? AND cName LIKE ?";
 			params = new String[2];
 			params[0] = rut + "%";
-			params[1] = name + "%";
+			params[1] = "%" + name + "%";
 		} else if (rut.length() == 0 && name.length() > 0) {
 			where = "cName LIKE ?";
 			params = new String[1];
-			params[0] = name + "%";
+			params[0] = "%" + name + "%";
 		}
 
 		if ("boss".equalsIgnoreCase(type)) {

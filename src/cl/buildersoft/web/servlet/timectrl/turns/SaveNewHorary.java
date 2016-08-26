@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.database.BSmySQL;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.TurnDay;
 
 @WebServlet("/servlet/timectrl/turns/SaveNewHorary")
-public class SaveNewHorary extends BSHttpServlet {
+public class SaveNewHorary extends BSHttpServlet_ {
 	private static final long serialVersionUID = -7071535493708573254L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

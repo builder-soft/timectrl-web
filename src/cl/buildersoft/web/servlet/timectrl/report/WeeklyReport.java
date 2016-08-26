@@ -9,12 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.IdRut;
 import cl.buildersoft.timectrl.business.console.BuildReport;
 
 @WebServlet("/servlet/timectrl/report/WeeklyReport")
-public class WeeklyReport extends BSHttpServlet {  
+public class WeeklyReport extends BSHttpServlet_ {  
 	private static final long serialVersionUID = 8430832862128615541L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,7 +33,7 @@ public class WeeklyReport extends BSHttpServlet {
 		request.setAttribute("IdRutList", idRutList);
 //		request.setAttribute("DateFormat", dateFormat);
 
-		request.getRequestDispatcher("/WEB-INF/jsp/timectrl/report/weekly-report.jsp").forward(request, response);
+		forward(request, response, "/WEB-INF/jsp/timectrl/report/weekly-report.jsp");
 
 	}
 

@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSmySQL;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 
 @WebServlet("/servlet/timectrl/employee/DeleteEmployeeTurn")
-public class DeleteEmployeeTurn extends BSHttpServlet {
+public class DeleteEmployeeTurn extends BSHttpServlet_ {
 	private static final long serialVersionUID = -5978358494434969344L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

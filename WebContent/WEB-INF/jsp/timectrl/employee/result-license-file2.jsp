@@ -48,8 +48,8 @@
 </Label>
 <br>
 <br>
-<a class="cCancel"
-	href="${pageContext.request.contextPath}/servlet/config/employee/EmployeeManager">Aceptar</a>
+<a class='btn btn-default'
+	href="${applicationScope['DALEA_CONTEXT']}/servlet/config/employee/EmployeeLicenseManager">Aceptar</a>
 
 <%@ include file="/WEB-INF/jsp/common/footer2.jsp"%>
 

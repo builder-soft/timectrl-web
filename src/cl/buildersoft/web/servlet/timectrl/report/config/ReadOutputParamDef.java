@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.ReportType;
 
 /**
  * Servlet implementation class ReadOutputParamDef
  */
 @WebServlet("/servlet/timectrl/report/config/ReadOutputParamDef")
-public class ReadOutputParamDef extends BSHttpServlet {
+public class ReadOutputParamDef extends BSHttpServlet_ {
 	private static final long serialVersionUID = -3818087279889911563L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

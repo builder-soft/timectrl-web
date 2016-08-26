@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.util.BSHttpServlet;
-import cl.buildersoft.timectrl.api._zkemProxy;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
+import cl.buildersoft.timectrl.api.com4j._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.beans.Fingerprint;
 import cl.buildersoft.timectrl.business.beans.Machine;
@@ -26,7 +26,7 @@ import cl.buildersoft.timectrl.business.services.impl.PrivilegeServiceImpl;
  * Servlet implementation class AddEmployee
  */
 @WebServlet("/servlet/timectrl/machine/AddEmployee")
-public class AddEmployee extends BSHttpServlet {
+public class AddEmployee extends BSHttpServlet_ {
 	private static final long serialVersionUID = -514331423472719202L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

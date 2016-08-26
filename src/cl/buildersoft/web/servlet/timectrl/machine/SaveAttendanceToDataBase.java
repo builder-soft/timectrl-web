@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.exception.BSException;
 import cl.buildersoft.framework.util.BSConnectionFactory;
-import cl.buildersoft.framework.util.BSHttpServlet;
-import cl.buildersoft.timectrl.api._zkemProxy;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
+import cl.buildersoft.timectrl.api.com4j._zkemProxy;
 import cl.buildersoft.timectrl.business.beans.AttendanceLog;
 import cl.buildersoft.timectrl.business.beans.Machine;
 import cl.buildersoft.timectrl.business.services.MachineService2;
@@ -24,7 +24,7 @@ import cl.buildersoft.timectrl.business.services.impl.MachineServiceImpl2;
  * Servlet implementation class SaveAttendanceToDataBase
  */
 @WebServlet("/servlet/timectrl/machine/SaveAttendanceToDataBase")
-public class SaveAttendanceToDataBase extends BSHttpServlet {
+public class SaveAttendanceToDataBase extends BSHttpServlet_ {
 	private static final String ATTENDANCES = "Attendances";
 	private static final long serialVersionUID = 4061684288079220007L;
 
@@ -48,7 +48,7 @@ public class SaveAttendanceToDataBase extends BSHttpServlet {
 				} catch (BSException e) {
 					log("Fail to save (WEB Channel)" + attendance.toString() + " Detail:" + e.toString());
 				}
-//				service.saveAttendanceLog(conn, attendance);
+				// service.saveAttendanceLog(conn, attendance);
 				// bu.save(conn, attendance);
 			} else {
 				noSavedCount++;
@@ -58,9 +58,9 @@ public class SaveAttendanceToDataBase extends BSHttpServlet {
 		if (deleteFromDevice(request)) {
 			deleteInfo(machine, conn);
 		}
-				
+
 		cf.closeConnection(conn);
-		
+
 		session.setAttribute(ATTENDANCES, null);
 
 		forward(request, response, "/servlet/timectrl/machine/MachineManager");
@@ -77,7 +77,8 @@ public class SaveAttendanceToDataBase extends BSHttpServlet {
 	}
 
 	private boolean deleteFromDevice(HttpServletRequest request) {
-		return request.getParameter("DeleteFromDevice") != null;
+		String deleteFromDevice = request.getParameter("DeleteFromDevice");
+		return deleteFromDevice != null && Boolean.parseBoolean(deleteFromDevice);
 	}
 
 	private Machine getMachine(Connection conn, HttpServletRequest request) {

@@ -1,17 +1,21 @@
-select 'Starting script version 1.2.13...';
-select 'Creating tCrewLog...';
+#select 'Starting script version 1.2.13...';
+#select 'Creating tCrewLog...';
 CREATE TABLE IF NOT EXISTS tCrewLog(
 	cId				BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	cAttendanceLog	BIGINT NOT NULL,
 	cWhen			DATETIME NOT NULL
 ) ENGINE=innoDB;
 
-select 'Creating Indexs to tCrewLog...';
+#select 'Creating Indexs to tCrewLog...';
+
+ALTER TABLE tCrewLog DROP FOREIGN KEY CrewLog_To_AttendanceLog; 
+drop index CrewLog_index_AttendanceLog on tCrewLog;
+
 ALTER TABLE tCrewLog
 ADD INDEX CrewLog_index_AttendanceLog (cAttendanceLog ASC),
 ADD CONSTRAINT CrewLog_To_AttendanceLog FOREIGN KEY (cAttendanceLog) REFERENCES tAttendanceLog(cId);
 
-select 'Creating tCrewProcess...';
+#select 'Creating tCrewProcess...';
 CREATE TABLE IF NOT EXISTS tCrewProcess(
 	cId				BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	cDate			DATE NOT NULL,
@@ -21,8 +25,10 @@ CREATE TABLE IF NOT EXISTS tCrewProcess(
 	cHired			BIT DEFAULT 0 COMMENT 'Indica que la persona tiene turno de trabajo ese día.'
 ) ENGINE=innoDB;
 
-select 'Creating Index tCrewProcess...';
+#select 'Creating Index tCrewProcess...';
 
+ALTER TABLE tCrewProcess DROP FOREIGN KEY CrewProcess_To_Employee ; 
+drop index CrewProcess_index_Employee on tCrewProcess;
 ALTER TABLE tCrewProcess
 ADD INDEX CrewProcess_index_Employee (cEmployee ASC),
 ADD CONSTRAINT CrewProcess_To_Employee FOREIGN KEY (cEmployee) REFERENCES tEmployee(cId);
@@ -68,10 +74,10 @@ where b.cid is null and date(cdate) = '2014-05-30';
 
 /* FIN DATOS PARA HACER PRUEBAS*/
 
-select 'Droping temp procedure...';
+#select 'Droping temp procedure...';
 drop procedure if exists pUpdateData_Temp;
 
-select 'Creating temp procedure...';
+#select 'Creating temp procedure...';
 DELIMITER $$
 create procedure pUpdateData_Temp()
 begin
@@ -87,12 +93,12 @@ begin
 END$$
 DELIMITER ;
 
-select 'Calling temp procedure...';
+#select 'Calling temp procedure...';
 call pUpdateData_Temp;
 
-select 'Second droping procedure...';
+#select 'Second droping procedure...';
 drop procedure if exists pUpdateData_Temp;
 
-select 'Updating version...';
+#select 'Updating version...';
 
 UPDATE tVersion SET cVersion='1.2.13', cUpdated=NOW() WHERE cKey = 'DBT';

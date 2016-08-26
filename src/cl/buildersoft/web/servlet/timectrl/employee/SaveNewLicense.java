@@ -9,21 +9,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import cl.buildersoft.framework.business.services.EventLogService;
+import cl.buildersoft.framework.business.services.ServiceFactory;
 import cl.buildersoft.framework.database.BSBeanUtils;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.License;
 import cl.buildersoft.timectrl.business.services.EmployeeService;
-import cl.buildersoft.timectrl.business.services.EventLogService;
-import cl.buildersoft.timectrl.business.services.ServiceFactory;
 import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 
 /**
  * Servlet implementation class SaveNewLicense
  */
 @WebServlet("/servlet/timectrl/employee/SaveNewLicense")
-public class SaveNewLicense extends BSHttpServlet {
+public class SaveNewLicense extends BSHttpServlet_ {
 	private static final long serialVersionUID = -7874524353479527912L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,6 +37,7 @@ public class SaveNewLicense extends BSHttpServlet {
 
 		BSBeanUtils bu = new BSBeanUtils();
 		Calendar date = BSDateTimeUtil.string2Calendar(request, startDate);
+		date = BSDateTimeUtil.string2Calendar(startDate, getApplicationValue(request, "DateFormat").toString());
 		license.setStartDate(BSDateTimeUtil.calendar2Date(date));
 		date = BSDateTimeUtil.string2Calendar(request, endDate);
 		license.setEndDate(BSDateTimeUtil.calendar2Date(date));

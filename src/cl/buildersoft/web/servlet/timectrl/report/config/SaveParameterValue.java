@@ -8,19 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cl.buildersoft.framework.database.BSBeanUtils;
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.ReportParameter;
 
 /**
  * Servlet implementation class SaveParameterValue
  */
 @WebServlet("/servlet/timectrl/report/config/SaveParameterValue")
-public class SaveParameterValue extends BSHttpServlet {
+public class SaveParameterValue extends BSHttpServlet_ {
 	private static final long serialVersionUID = 3080538300402997426L;
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-/**
- <code>
+		/**
+		 * <code>
 Report
 10
 ParamId
@@ -33,28 +33,28 @@ Type
 Order
 1 
   </code>
- * 
- * */		
-		
-		
+		 * 
+		 * */
+
 		Long reportId = Long.parseLong(request.getParameter("Report"));
 		String name = request.getParameter("Name");
 		String label = request.getParameter("Label");
 		Long type = Long.parseLong(request.getParameter("Type"));
-//		String value = request.getParameter("Value");
-//		Boolean fromUser = Boolean.parseBoolean(request.getParameter("FromUser"));
+		// String value = request.getParameter("Value");
+		// Boolean fromUser =
+		// Boolean.parseBoolean(request.getParameter("FromUser"));
 		Integer order = Integer.parseInt(request.getParameter("Order"));
 
 		BSBeanUtils bu = new BSBeanUtils();
 		ReportParameter rip = new ReportParameter();
 
-//		rip.setFromUser(fromUser);
+		// rip.setFromUser(fromUser);
 		rip.setName(name);
 		rip.setLabel(label);
 		rip.setOrder(order);
 		rip.setReport(reportId);
 		rip.setType(type);
-//		rip.setValue(value == null ? "" : value);
+		// rip.setValue(value == null ? "" : value);
 
 		bu.save(getConnection(request), rip);
 		request.setAttribute("cId", reportId.toString());

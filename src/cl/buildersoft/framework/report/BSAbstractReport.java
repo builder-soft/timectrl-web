@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,11 +17,12 @@ import cl.buildersoft.framework.database.BSmySQL;
 import cl.buildersoft.framework.exception.BSDataBaseException;
 import cl.buildersoft.framework.util.BSConnectionFactory;
 import cl.buildersoft.framework.util.BSDateTimeUtil;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.BSParamReport;
 import cl.buildersoft.timectrl.type.BSParamReportType;
 
 // @WebServlet("/servlet/Report")
-public abstract class BSAbstractReport extends HttpServlet {
+public abstract class BSAbstractReport extends BSHttpServlet_ {
 	private static final long serialVersionUID = 5237687092259523326L;
 
 	protected abstract BSReport getReportSpec(HttpServletRequest request);
@@ -72,7 +72,7 @@ public abstract class BSAbstractReport extends HttpServlet {
 		String dateFormat = BSDateTimeUtil.getFormatDate(request);
 		request.setAttribute("DateFormat", dateFormat);
 
-		request.getRequestDispatcher(url).forward(request, response);
+		forward(request, response, url);
 	}
 
 	private String getAction(HttpServletRequest request) {

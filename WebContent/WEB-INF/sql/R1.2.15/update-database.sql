@@ -1,4 +1,5 @@
 ALTER TABLE tArea ADD cParent BIGINT(20) NULL AFTER cCostCenter;
+
 ALTER TABLE tArea
 ADD INDEX area_index_area (cParent ASC),
 ADD CONSTRAINT AreaToArea FOREIGN KEY (cParent) REFERENCES tArea(cId);

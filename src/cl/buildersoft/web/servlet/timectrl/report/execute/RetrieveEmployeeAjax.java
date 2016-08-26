@@ -10,13 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cl.buildersoft.framework.util.BSHttpServlet;
+import cl.buildersoft.framework.web.servlet.BSHttpServlet_;
 import cl.buildersoft.timectrl.business.beans.Employee;
 import cl.buildersoft.timectrl.business.services.EmployeeService;
 import cl.buildersoft.timectrl.business.services.impl.EmployeeServiceImpl;
 
 @WebServlet("/servlet/timectrl/report/execute/RetrieveEmployeeAjax")
-public class RetrieveEmployeeAjax extends BSHttpServlet {
+public class RetrieveEmployeeAjax extends BSHttpServlet_ {
 	private static final long serialVersionUID = "/servlet/timectrl/report/execute/RetrieveEmployeeAjax".hashCode();
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
